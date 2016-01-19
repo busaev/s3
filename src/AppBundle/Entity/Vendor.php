@@ -19,6 +19,8 @@ class Vendor
     /**
      * @var integer $id
      *
+     * @Description("id", title="Id", dataType="integer")
+     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -29,7 +31,7 @@ class Vendor
      * @var string $title
      *
      * @Description("title", title="Title", dataType="string")
-     * 
+     *
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
@@ -40,51 +42,51 @@ class Vendor
      * @ORM\Column(name="description", type="text", unique=false, nullable=true)
      */
     private $description;
-    
+
     /**
      * @var string $description
-     * 
+     *
      * @Description("shortDescription", title="Short description", dataType="string")
-     * 
+     *
      * @ORM\Column(name="short_description", type="text", unique=false, nullable=true)
      */
     private $shortDescription;
 
     /**
      * @var string $path
-     * 
+     *
      * @Description("path", title="Path", dataType="string")
      *
      * @ORM\Column(name="path", type="string", length=255)
      */
     private $path;
-    
+
     /**
      * @var boolean $disabled
-     * 
+     *
      * @ORM\Column(name="disabled", type="boolean", unique=false, nullable=true)
      */
     private $disabled;
 
     /**
      * @var string $website
-     * 
+     *
      * @Description("website", title="Website", dataType="string")
      *
      * @ORM\Column(name="website", type="string", length=255, nullable=true)
      */
     private $website;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Image", mappedBy="vendor", cascade={"persist"})
      */
     //protected $images;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Product", mappedBy="vendor", cascade={"persist"})
      */
     //protected $products;
-    
+
     /**
      * Constructor
      */
@@ -93,22 +95,22 @@ class Vendor
 //        $this->images = new ArrayCollection();
 //        $this->product = new ArrayCollection();
     }
-    
+
     public function __toString()
     {
         return $this ->getTitle();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
     }
-    
+
     /**
      * Set title
      *
@@ -118,14 +120,14 @@ class Vendor
     public function setTitle($title)
     {
         $this->title = $title;
-    
+
         return $this;
     }
 
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -141,14 +143,14 @@ class Vendor
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -164,14 +166,14 @@ class Vendor
     public function setPath($path)
     {
         $this->path = $path;
-    
+
         return $this;
     }
 
     /**
      * Get path
      *
-     * @return string 
+     * @return string
      */
     public function getPath()
     {
@@ -187,30 +189,30 @@ class Vendor
     public function setWebsite($website)
     {
         $this->website = $website;
-    
+
         return $this;
     }
 
     /**
      * Get website
      *
-     * @return string 
+     * @return string
      */
     public function getWebsite()
     {
         return $this->website;
     }
-    
+
     function getDisabled()
     {
         return $this->disabled;
     }
 
-    function setDisabled($disabled) 
+    function setDisabled($disabled)
     {
         $this->disabled = $disabled;
     }
-    
+
     /**
      * Add images
      *
@@ -221,7 +223,7 @@ class Vendor
     {
         $images->setVendor($this);
         $this->images[] = $images;
-    
+
         return $this;
     }
 
@@ -238,7 +240,7 @@ class Vendor
     /**
      * Get images
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getImages()
     {
@@ -254,7 +256,7 @@ class Vendor
     public function addProduct(\Shop\CatalogBundle\Entity\Product $products)
     {
         $this->products[] = $products;
-    
+
         return $this;
     }
 
@@ -271,7 +273,7 @@ class Vendor
     /**
      * Get products
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getProducts()
     {
@@ -287,20 +289,20 @@ class Vendor
     public function setShortDescription($shortDescription)
     {
         $this->shortDescription = $shortDescription;
-    
+
         return $this;
     }
 
     /**
      * Get short_description
      *
-     * @return string 
+     * @return string
      */
     public function getShortDescription()
     {
         return $this->shortDescription;
     }
-    
+
     public function getSlug()
     {
         $path = $this->getPath();

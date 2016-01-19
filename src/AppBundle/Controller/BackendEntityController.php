@@ -55,29 +55,32 @@ class BackendEntityController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        //запись
+        // запись
         $entity = $em->getRepository($this->getRepositoryLogicalName($entityCode))->find($id);
+        // история записи
+        $histories = $em->getRepository($this->getRepositoryLogicalName('History'))->findBy([
+          'entity' => $entityCode,
+          'entryId'=> $id
+        ]);
+
+        // VarDumper::dump($histories);
+        // die();
 
         //крошки
         $breadcrumbs->addItem(
                 $translator->trans($this->getEntityTitle($entityCode), [], 'global'),
-                $this->get("router")->generate("backend_entity_list", [
-                    'entityCode' => $entityCode
-                ]));
-
-        $breadcrumbs->addItem(
-                $entity,
-                $this->get("router")->generate("backend_entity_show", [
-                    'id' => $id
-                ]));
-
+                $this->get("router")->generate("backend_entity_list", ['entityCode' => $entityCode]));
+        $breadcrumbs->addItem($entity,$this->get("router")->generate("backend_entity_show", ['id' => $id ]));
         $breadcrumbs->addItem($translator->trans('History', [], 'backend'));
+
+        // VarDumper::dump($this->get('annotations')->fillProperties('History', $histories));
+        // die();
 
         //рендер
         return $this->render('backend/entity/history.html.twig', array(
             'entityCode' => $entityCode,
-            'entity'   => $this->get('annotations')->fillOneProperties($entityCode, $entity),
-            'histories' => $em->getRepository('AppBundle:History')->getEntityEntryHistory($entityCode, $id),
+            'entity'     => $this->get('annotations')->fillOneProperties($entityCode, $entity),
+            'histories'  => $this->get('annotations')->fillProperties('History', $histories),
         ));
     }
 

@@ -17,6 +17,8 @@ class History
     /**
      * @var int
      *
+     * @Description("id", title="Id", dataType="integer")
+     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -25,7 +27,7 @@ class History
 
     /**
      * @var \DateTime
-     * 
+     *
      * @Description("createdAt", title="Created at", dataType="datetime")
      *
      * @ORM\Column(name="createdAt", type="datetime")
@@ -62,17 +64,17 @@ class History
 
     /**
      * @var string
-     * 
+     *
      * @Description("log", title="Log", dataType="string")
      *
      * @ORM\Column(name="log", type="text", nullable=true)
      */
     private $log;
-    
-    
+
+
     /**
      * @Description("user", title="User", dataType="string")
-     * 
+     *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="history")
      * @ORM\JoinColumn(name="createdBy", referencedColumnName="id")
      */
@@ -184,7 +186,7 @@ class History
     {
         return $this->type;
     }
-    
+
     function getEntryId()
     {
         return $this->entryId;
@@ -195,7 +197,7 @@ class History
         $this->entryId = $entryId;
     }
 
-    
+
     /**
      * Set log
      *

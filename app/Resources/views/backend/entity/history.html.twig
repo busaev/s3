@@ -34,29 +34,27 @@
             <table class="table table-hover table-striped" id="entities-list">
                 <thead>
                     <tr>
-                        <th>#</th>
-                        {% for field in entity.fields %}
-                            <th>{{ entity.titles[field]|trans({}, "backend") }}</th>
+                        {% for field in histories.fields %}
+                            <th>{{ histories.titles[field]|trans({}, "backend") }}</th>
                         {% endfor %}
                     </tr>
                 </thead>
                 <tbody>
-                {% for idx, history in histories %}
+                {% for idx, history in histories.entities %}
                     <tr>
-                        <td>{{ entity.id }}</td>
-                        {% for field in entity.fields %}
-                            {% if entity.dataTypes[field] == 'string' %}
-                                <td>{{ attribute(entity, field)|raw }}</td>
-                            {% elseif entity.dataTypes[field] == 'array' %}
+                        {% for field in histories.fields %}
+                            {% if histories.dataTypes[field] == 'string' %}
+                                <td>{{ history[field]|raw }}</td>
+                            {% elseif histories.dataTypes[field] == 'array' %}
                                 <td>
-                                    {% if attribute(entity, field) is iterable %}
-                                        {{ attribute(entity, field)|join(', ') }}
+                                    {% if history[field] is iterable %}
+                                        {{ history[field]|join(', ') }}
                                     {% endif %}
                                 </td>
-                            {% elseif entity.dataTypes[field] == 'datetime' %}
-                                <td>{{ attribute(entity, field)|date(format_datetime) }}</td>
+                            {% elseif histories.dataTypes[field] == 'datetime' %}
+                                <td>{{ history[field]|date(format_datetime) }}</td>
                             {% else %}
-                                <td>{{ attribute(entity, field) }}</td>
+                                <td>{{ history[field]}}</td>
                             {% endif %}
                         {% endfor %}
                     </tr>
