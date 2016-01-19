@@ -1,0 +1,32 @@
+zindex-100 {
+    z-index: 100 !important;
+}
+
+/**
+  * ################
+  *     SHADOWS
+  * ################
+  */
+.shadow-10 {
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+#entities-actions ul {
+    list-style: none;
+    padding-left: 0px;
+}
+
+#entities-actions li {
+    float: left;
+    margin-right: 20px;
+}
+
+.action-buttons {
+    list-style: none;
+}
+
+.action-buttons li {
+    float: left;
+    margin-right: 20px;
+}

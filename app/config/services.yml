@@ -1,0 +1,36 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+    logger.entity:
+        class: AppBundle\EventListener\EntityLogger
+        arguments: ["@service_container"]
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+#            - { name: doctrine.event_listener, event: preUpdate }
+#            - { name: doctrine.event_listener, event: postFlush }
+
+    history:
+        class: AppBundle\Services\History
+        arguments: ["@doctrine.orm.entity_manager", "@security.token_storage", "@translator"]
+
+    annotations:
+        class: AppBundle\Services\Annotations
+
+    form_authenticator:
+        class: AppBundle\Security\FormAuthenticator
+        arguments: ["@router", "@doctrine.orm.entity_manager", "@security.password_encoder", "@translator"]
+        
+    memory_authenticator:
+        class: AppBundle\Security\MemoryAuthenticator
+        arguments: ["@router"]
+
+    token_authenticator:
+        class: AppBundle\Security\TokenAuthenticator
+        arguments: ["@doctrine.orm.entity_manager"]

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="/assets/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+    
+    <!-- DataTables CSS -->
+    <link href="/assets/DataTables/datatables.min.css" rel="stylesheet">
+
+    <!-- SB-Admin-2 -->
+    <link href="/assets/sb-admin-2.1/dist/css/timeline.css" rel="stylesheet">
+    <link href="/assets/sb-admin-2.1/dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="/assets/morrisjs/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    
+    <!-- wysiwyg -->
+    <link href="/assets/wysiwyg/summernote.css" rel="stylesheet" type="text/css">
+    
+    {% stylesheets '../app/Resources/public/backend/css/common.css' 
+                   '../app/Resources/public/backend/css/entities.css' 
+                   '../app/Resources/public/backend/css/spaces.css' 
+      filter='cssrewrite' output="css/compiled/backend.css" %}
+        <link href="{{ asset_url }}" rel="stylesheet" />
+    {% endstylesheets %}
+
+    {% block stylesheets %}{% endblock %}
+    
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+    <body>
+        <div id="wrapper">
+
+            {% include 'backend/navigation.html.twig' %}
+
+            <div id="page-wrapper">
+                {% block body %}{% endblock %}     
+            </div>
+            <!-- /#page-wrapper -->
+
+        </div>
+        <!-- /#wrapper -->
+        
+        
+        <!-- jQuery -->
+        <script src="/assets/jquery/jquery-2.1.4.min.js"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="/assets/metisMenu/dist/metisMenu.min.js"></script>
+
+        <!-- SB-Admin-2 JavaScript -->
+        <script src="/assets/sb-admin-2.1/dist/js/sb-admin-2.js"></script>
+        
+        <!-- Morris Charts JavaScript -->
+        <{#script src="/assets/raphael/raphael-min.js"></script>
+        <script src="/assets/morrisjs/morris.min.js"></script>
+        <script src="/assets/morrisjs/morris-data.js"></script>#}
+        
+        <!-- DataTables JavaScript -->
+        <script src="/assets/DataTables/datatables.min.js"></script>
+        
+        <!-- wysiwyg -->
+        <script src="/assets/wysiwyg/summernote.min.js"></script>
+
+        <!-- Page-Level Demo Scripts - Notifications - Use for reference -->
+        <script>
+        // tooltip demo
+        $('.tooltip-demo').tooltip({
+            selector: "[data-toggle=tooltip]",
+            container: "body"
+        })
+
+        // popover demo
+        $("[data-toggle=popover]")
+            .popover()
+        </script>
+
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

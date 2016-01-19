@@ -1,0 +1,56 @@
+{% extends 'backend/base.html.twig' %}
+
+{% block body %}
+    
+    <div class="row">
+        <div class="col-lg-12">
+            {{ wo_render_breadcrumbs({separator: '', listClass: "breadcrumb margin-top-20"}) }}                  
+        </div>
+    </div>
+        
+    <div class="row">
+        <div class="col-lg-12">            
+            <div id="entities-actions" style="z-index: 10; margin-top: 20px;">                
+                <ul>
+                    <li>
+                        <a href="{{ path('backend_entity_list', {'entityCode': entityCode}) }}" class="btn btn-default">{{ 'Back to the list'|trans({}, "backend") }}</a>
+                    </li>
+                    <li>
+                        <a href="#"  class="btn btn-success save-form">{{ 'Save'|trans({}, "backend") }}</a>
+                    </li>
+                </ul>
+            </div>                    
+        </div>
+    </div>
+                    
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>{{ 'Creating'|trans({}, "backend") }}</h1>
+
+            {{ form_start(form, {'attr': {'class': 'entity-form'}}) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {% stylesheets '../app/Resources/public/backend/css/common.css' 
+                   '../app/Resources/public/backend/css/entities.css' 
+      filter='cssrewrite' output="css/compiled/backend.css" %}
+        <link href="{{ asset_url }}" rel="stylesheet" />
+    {% endstylesheets %}
+{% endblock stylesheets %}
+
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function() {
+            $(".wysiwyg").summernote();
+        });
+        $(".save-form").click(function() {
+            $('.entity-form').submit();
+        });
+    </script>
+{% endblock javascripts %}

@@ -1,0 +1,25 @@
+----------------------------------------
+При ошибке
+Maximum function nesting level of '100' reached
+Правим конфиг php
+xdebug.max_nesting_level = 1000
+-----------------------------------------
+
+Правила именования полей
+
+Повторяющиеся поля
+createdAt
+createtBy
+editedAt
+editedBy
+
+hidden   - убрано из навигации, но доступно
+disabled - показывается или полностью недоступен
+
+Правила наименования в аннотациях роутинга
+ name=${BUNDLE_NAME}.${CONTROLLER}_${ACTION}
+Например: 
+           Контроллер @ShopCatalogBundle:Category
+               name="catalog.category_index"
+           Контроллер @ShopCatalogBundle:AdminCategory
+               name="catalog.admin_category_index"
