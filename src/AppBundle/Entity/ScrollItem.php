@@ -10,7 +10,7 @@ use AppBundle\Model\ScrollItemSubjectInterface;
 
 /**
  * ScrollItem
- * 
+ *
  * @DescriptionObject("scroll items", title="Scroll items")
  *
  * @ORM\Table(name="scroll_item")
@@ -20,6 +20,8 @@ class ScrollItem implements ScrollItemSubjectInterface
 {
     /**
      * @var int
+     *
+     * @Description("id", title="Id", dataType="integer")
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -36,7 +38,7 @@ class ScrollItem implements ScrollItemSubjectInterface
 
     /**
      * @var string
-     * 
+     *
      * @Description("code", title="Code", dataType="string")
      *
      * @ORM\Column(name="code", type="string", length=255)
@@ -45,7 +47,7 @@ class ScrollItem implements ScrollItemSubjectInterface
 
     /**
      * @var string
-     * 
+     *
      * @Description("title", title="Title", dataType="string")
      *
      * @ORM\Column(name="title", type="string", length=255)
@@ -54,21 +56,21 @@ class ScrollItem implements ScrollItemSubjectInterface
 
     /**
      * @var int
-     * 
+     *
      * @Description("position", title="Position", dataType="integer")
      *
      * @ORM\Column(name="position", type="integer")
      */
     private $position;
-    
+
     /**
      * @Description("scroll", title="Scroll", dataType="string")
-     * 
+     *
      * @ORM\ManyToOne(targetEntity="Scroll", inversedBy="items")
      * @ORM\JoinColumn(name="id_scroll", referencedColumnName="id")
      */
     private $scroll;
-    
+
     public function __toString() {
         return $this->getTitle();
     }

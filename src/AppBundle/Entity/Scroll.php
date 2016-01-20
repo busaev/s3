@@ -18,6 +18,8 @@ class Scroll
     /**
      * @var int
      *
+     * @Description("id", title="Id", dataType="integer")
+     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -26,7 +28,7 @@ class Scroll
 
     /**
      * @var string
-     * 
+     *
      * @Description("code", title="Code", dataType="string")
      *
      * @ORM\Column(name="code", type="string", length=255, unique=true)
@@ -35,7 +37,7 @@ class Scroll
 
     /**
      * @var string
-     * 
+     *
      * @Description("title", title="Title", dataType="string")
      *
      * @ORM\Column(name="title", type="string", length=255)
@@ -44,22 +46,22 @@ class Scroll
 
     /**
      * @var int
-     * 
+     *
      * @Description("position", title="Position", dataType="integer")
      *
      * @ORM\Column(name="position", type="integer", nullable=true)
      */
     private $position;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="ScrollItem", mappedBy="scroll")
      */
     private $items;
-    
+
     public function __construct() {
         $this->items = new ArrayCollection();
     }
-    
+
     public function __toString() {
         return $this->getTitle();
     }
