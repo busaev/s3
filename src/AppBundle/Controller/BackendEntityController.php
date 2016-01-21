@@ -39,8 +39,6 @@ class BackendEntityController extends Controller
                          ->getQuery()
                          ->getResult();
 
-        VarDumper::dump($entityCode);die();
-
         return $this->render('backend/entity/list.html.twig', array(
             'entityCode' => $entityCode,
             'entities' => $this->get('annotations')->fillProperties($entityCode, $entities),
@@ -253,62 +251,62 @@ class BackendEntityController extends Controller
      */
     private function getRepositoryLogicalName($entityCode)
     {
-        return "AppBundle:" . $this->normalizeEntityName($entityCode);
+        $utils = $this->container->get('utils');
+        $entityCode = $utils->getCamelCase($entityCode);
+
+        return "AppBundle:" . $entityCode;
     }
 
     private function getEntityTypeNamspace($entityCode)
     {
-        return 'AppBundle\\Form\\' . $this->normalizeEntityName($entityCode) . 'Type';
+        $utils = $this->container->get('utils');
+        $entityCode = $utils->getCamelCase($entityCode);
+
+        return 'AppBundle\\Form\\' . $entityCode . 'Type';
     }
 
     private function createNewEntityType($entityCode)
     {
-        $class = 'AppBundle\\Form\\' . $this->normalizeEntityName($entityCode) . 'Type';
+        $utils = $this->container->get('utils');
+        $entityCode = $utils->getCamelCase($entityCode);
+
+        $class = 'AppBundle\\Form\\' . $entityCode . 'Type';
 
         return new $class;
     }
 
     private function getEntityNamspace($entityCode)
     {
-        return 'AppBundle\\Entity\\' . $this->normalizeEntityName($entityCode);
+        $utils = $this->container->get('utils');
+        $entityCode = $utils->getCamelCase($entityCode);
+
+        return 'AppBundle\\Entity\\' . $entityCode;
     }
 
 
     private function createNewEntity($entityCode)
     {
-        $class = 'AppBundle\\Entity\\' . $this->normalizeEntityName($entityCode);
+        $utils = $this->container->get('utils');
+        $entityCode = $utils->getCamelCase($entityCode);
+
+        $class = 'AppBundle\\Entity\\' . $entityCode;
 
         return new $class;
     }
 
-    private function normalizeEntityName($entityCode)
-    {
-        if(strpos($entityCode, '_'))
-        {
-            $retrun = '';
-            $parts = explode('_', $entityCode);
-            foreach($parts as $part) {
-                $retrun .= ucfirst(strtolower($part));
-            }
-            return $retrun;
-        }
-        return ucfirst(strtolower($entityCode));
-    }
-
     private function getEntityTitle($entityCode)
     {
-        //аннотации
-        $annotations = $this->get('annotations')->getAll($this->normalizeEntityName($entityCode));
+        $utils = $this->container->get('utils');
+        $entityCode = $utils->getCamelCase($entityCode);
 
-        $title = false;
+        $title = $entityCode;
+
+        //аннотации
+        $annotations = $this->get('annotations')->getAll($entityCode);
 
         if(isset($annotations['object']['data']) && is_object($annotations['object']['data']))
         {
             $title = $annotations['object']['data']->getTitle();
-        }
-
-        if(!$title || '' == $title) {
-            $title = $this->normalizeEntityName($entityCode);
         }
 
         return $title;

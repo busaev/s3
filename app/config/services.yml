@@ -22,11 +22,16 @@ services:
 
     annotations:
         class: AppBundle\Services\Annotations
+        arguments: ['@service_container']
+
+    utils:
+        class: AppBundle\Services\Utils
+        arguments: ['@service_container']
 
     form_authenticator:
         class: AppBundle\Security\FormAuthenticator
         arguments: ["@router", "@doctrine.orm.entity_manager", "@security.password_encoder", "@translator"]
-        
+
     memory_authenticator:
         class: AppBundle\Security\MemoryAuthenticator
         arguments: ["@router"]
