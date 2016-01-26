@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+
 use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
 
@@ -66,6 +67,13 @@ class News
      * @ORM\ManyToOne(targetEntity="\AppBundle\Model\ScrollItemSubjectInterface")
      */
     private $entryStatus;
+    
+    /**
+     * @Description("seo", title="Seo", dataType="string",  property="seo.title")
+     * 
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Model\SeoSubjectInterface")
+     */
+    private $seo;
     
 
     /**

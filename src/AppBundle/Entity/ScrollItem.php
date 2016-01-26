@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
+
 use AppBundle\Model\ScrollItemSubjectInterface;
 
 /**
