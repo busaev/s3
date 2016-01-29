@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Model\SeoSubjectInterface;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="seo")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\SeoRepository")
  */
-class Seo
+class Seo implements SeoSubjectInterface
 {
     /**
      * @var int

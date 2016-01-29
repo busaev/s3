@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Model\RouteSubjectInterface;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="route")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\RouteRepository")
  */
-class Route
+class Route implements RouteSubjectInterface
 {
     /**
      * @var int
