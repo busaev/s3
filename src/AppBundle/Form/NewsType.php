@@ -7,6 +7,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+
+use AppBundle\Form\SeoType;
+use AppBundle\Form\RouteType;
 
 class NewsType extends AbstractType
 {
@@ -44,6 +48,9 @@ class NewsType extends AbstractType
                         ->orderBy('i.position', 'ASC');
                 },
             ])
+            ->add('route', CollectionType::class, array(
+                'entry_type' => RouteType::class
+            ));
         ;
     }
     

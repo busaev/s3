@@ -97,7 +97,12 @@ class BackendEntityController extends Controller
 
         $entity     = $this->createNewEntity($entityCode);
         $entityType = $this->getEntityTypeNamspace($entityCode);
-
+        
+        $route = new \AppBundle\Entity\Route;
+        $route->setRoute('/test/');
+        
+        //$entity->setRoute($route);
+        
         $form = $this->createForm($entityType, $entity);
         $form->handleRequest($request);
 
@@ -117,10 +122,14 @@ class BackendEntityController extends Controller
                 $translator->trans($this->getEntityTitle($entityCode), [], 'global'),
                 $this->get("router")->generate("backend_entity_list", ['entityCode' => $entityCode]));
         $breadcrumbs->addItem($translator->trans('Creating', [], 'backend'));
+        
+//        $a = $this->get('annotations')->fillOneProperties($entityCode, $entity);
+//        VarDumper::dump($a);die();
 
         return $this->render('backend/entity/new.html.twig', array(
             'entityCode' => $entityCode,
             'entity'     => $entity,
+            'annotations'=> $this->get('annotations')->fillOneProperties($entityCode, $entity),
             'form'       => $form->createView(),
         ));
     }

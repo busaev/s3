@@ -75,6 +75,13 @@ class News
      */
     private $seo;
     
+    /**
+     * @Description("route", title="Route", dataType="string", property="route.route")
+     * 
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Model\RouteSubjectInterface")
+     */
+    private $route;
+    
 
     /**
      * 
@@ -191,5 +198,53 @@ class News
     public function getEntryStatus()
     {
         return $this->entryStatus;
+    }
+
+    /**
+     * Set seo
+     *
+     * @param \AppBundle\Entity\Seo $seo
+     *
+     * @return News
+     */
+    public function setSeo(\AppBundle\Entity\Seo $seo = null)
+    {
+        $this->seo = $seo;
+
+        return $this;
+    }
+
+    /**
+     * Get seo
+     *
+     * @return \AppBundle\Entity\Seo
+     */
+    public function getSeo()
+    {
+        return $this->seo;
+    }
+
+    /**
+     * Set route
+     *
+     * @param \AppBundle\Entity\Route $route
+     *
+     * @return News
+     */
+    public function setRoute(\AppBundle\Entity\Route $route = null)
+    {
+        $this->route = $route;
+        
+        return $this;
+    }
+
+    /**
+     * Get route
+     *
+     * @return \AppBundle\Entity\Route
+     */
+    public function getRoute()
+    {
+        return $this->route;
     }
 }

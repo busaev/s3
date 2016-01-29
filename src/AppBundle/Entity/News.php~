@@ -5,15 +5,16 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+
 use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
 
 
 /**
  * AppBundle\Entity\News
- *
+ * 
  * @DescriptionObject("news", title="News")
- *
+ * 
  * @ORM\Table(name="news")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\NewsRepository")
  */
@@ -22,82 +23,73 @@ class News
     /**
      * @var integer $id
      *
+     * @Description("id", title="Id", dataType="integer")
+     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    // /**
-    //  * @var int
-    //  *
-    //  * @ORM\Column(name="id_status", type="integer", nullable="true")
-    //  */
-    // private $idStatus;
-
+    
     /**
      *
      * @var string $title
-     *
+     * 
      * @Description("title", title="Title", dataType="string")
-     *
+     * 
      * @ORM\Column(name="title", type="string", unique=false, nullable=true, length=255)
-     *
+     * 
      */
     private $title;
-
+    
     /**
      *
      * @var string $short_content
-     *
+     * 
      * @Description("shortContent", title="Short content", dataType="string")
-     *
+     * 
      * @ORM\Column(name="short_content", type="text", unique=false, nullable=true)
-     *
+     * 
      */
     private $shortContent;
-
+    
     /**
      * @var string $content
-     *
+     * 
      * @ORM\Column(name="content", type="text", unique=false, nullable=true)
-     *
+     * 
      */
     private $content;
-
+    
     /**
-     * @var boolean $visible
-     *
-     * @Description("hidden", title="Hidden", dataType="boolean")
-     *
-     * @ORM\Column(name="hidden", type="boolean", unique=false, nullable=true)
-     */
-    private $hidden = false;
-
-    /**
-     * @var boolean $disabled
-     *
-     * @Description("disabled", title="Disabled", dataType="boolean")
-     *
-     * @ORM\Column(name="disabled", type="boolean", unique=false, nullable=true)
-     */
-    private $disabled = false;
-
-    /**
-     * @Description("entryStatus", title="Entry status", dataType="string")
-     *
+     * @Description("entryStatus", title="Entry status", dataType="string",  property="entryStatus.title")
+     * 
      * @ORM\ManyToOne(targetEntity="\AppBundle\Model\ScrollItemSubjectInterface")
      */
     private $entryStatus;
-
+    
+    /**
+     * @Description("seo", title="Seo", dataType="string",  property="seo.title")
+     * 
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Model\SeoSubjectInterface")
+     */
+    private $seo;
+    
+    /**
+     * @Description("route", title="Route", dataType="string",  property="route.route")
+     * 
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Model\RouteSubjectInterface")
+     */
+    private $route;
+    
 
     /**
-     *
+     * 
      */
     public function __construct()
     {
     }
-
+    
     public function __toString() {
         $title = $this->getTitle();
         if(is_string($title))
@@ -108,7 +100,7 @@ class News
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -124,20 +116,20 @@ class News
     public function setTitle($title)
     {
         $this->title = $title;
-
+    
         return $this;
     }
 
     /**
      * Get title
      *
-     * @return string
+     * @return string 
      */
     public function getTitle()
     {
         return $this->title;
     }
-
+    
     /**
      * Set short_content
      *
@@ -147,14 +139,14 @@ class News
     public function setShortContent($shortContent)
     {
         $this->shortContent = $shortContent;
-
+    
         return $this;
     }
 
     /**
      * Get short_content
      *
-     * @return string
+     * @return string 
      */
     public function getShortContent()
     {
@@ -170,33 +162,65 @@ class News
     public function setContent($content)
     {
         $this->content = $content;
-
+    
         return $this;
     }
 
     /**
      * Get content
      *
-     * @return string
+     * @return string 
      */
     public function getContent()
     {
         return $this->content;
     }
 
-    function getHidden() {
-        return $this->hidden;
+    /**
+     * Set entryStatus
+     *
+     * @param \AppBundle\Entity\ScrollItem $entryStatus
+     *
+     * @return News
+     */
+    public function setEntryStatus(\AppBundle\Entity\ScrollItem $entryStatus = null)
+    {
+        $this->entryStatus = $entryStatus;
+
+        return $this;
     }
 
-    function getDisabled() {
-        return $this->disabled;
+    /**
+     * Get entryStatus
+     *
+     * @return \AppBundle\Entity\ScrollItem
+     */
+    public function getEntryStatus()
+    {
+        return $this->entryStatus;
     }
 
-    function setHidden($hidden) {
-        $this->hidden = $hidden;
+    /**
+     * Set seo
+     *
+     * @param \AppBundle\Entity\Seo $seo
+     *
+     * @return News
+     */
+    public function setSeo(\AppBundle\Entity\Seo $seo = null)
+    {
+        $this->seo = $seo;
+
+        return $this;
     }
 
-    function setDisabled($disabled) {
-        $this->disabled = $disabled;
+    /**
+     * Get seo
+     *
+     * @return \AppBundle\Entity\Seo
+     */
+    public function getSeo()
+    {
+        return $this->seo;
     }
 }
