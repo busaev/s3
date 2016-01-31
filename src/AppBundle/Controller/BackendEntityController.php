@@ -19,7 +19,6 @@ class BackendEntityController extends Controller
      */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you need
         return $this->render('backend/index.html.twig', [
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
         ]);
@@ -44,6 +43,7 @@ class BackendEntityController extends Controller
             'entities' => $this->get('annotations')->fillProperties($entityCode, $entities),
         ));
     }
+    
 
     /**
      * @Route("/{entityCode}/{id}/history", name="backend_entity_history", defaults={"entityCode" = "news"})
@@ -84,6 +84,7 @@ class BackendEntityController extends Controller
         ));
     }
 
+    
     /**
      * Creates a new News entity.
      *
@@ -97,11 +98,6 @@ class BackendEntityController extends Controller
 
         $entity     = $this->createNewEntity($entityCode);
         $entityType = $this->getEntityTypeNamspace($entityCode);
-        
-        $route = new \AppBundle\Entity\Route;
-        $route->setRoute('/test/');
-        
-        //$entity->setRoute($route);
         
         $form = $this->createForm($entityType, $entity);
         $form->handleRequest($request);
@@ -134,6 +130,7 @@ class BackendEntityController extends Controller
         ));
     }
 
+    
     /**
      * Finds and displays a News entity.
      *
@@ -155,7 +152,7 @@ class BackendEntityController extends Controller
                 $this->get("router")->generate("backend_entity_list", ['entityCode' => $entityCode]));
         $breadcrumbs->addItem($entity);
         $breadcrumbs->addItem($translator->trans('Viewing', [], 'backend'));
-
+        
         // рендер
         return $this->render('backend/entity/show.html.twig', array(
             'entityCode' => $entityCode,

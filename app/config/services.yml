@@ -15,6 +15,13 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
 #            - { name: doctrine.event_listener, event: preUpdate }
 #            - { name: doctrine.event_listener, event: postFlush }
+    
+    # Custom route loader
+    app.routing_loader:
+        class: AppBundle\Routing\ExtraLoader
+        arguments: ["@service_container"]
+        tags:
+            - { name: routing.loader }
 
     history:
         class: AppBundle\Services\History

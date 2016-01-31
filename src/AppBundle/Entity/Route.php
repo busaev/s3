@@ -2,17 +2,16 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Model\RouteSubjectInterface;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Route
  *
- * @ORM\Table(name="route")
+ * @ORM\Table(name="routes")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\RouteRepository")
  */
-class Route implements RouteSubjectInterface
+class Route
 {
     /**
      * @var int
@@ -26,9 +25,9 @@ class Route implements RouteSubjectInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="route", type="string", length=255, unique=true)
+     * @ORM\Column(name="route_path", type="string", length=255, unique=false)
      */
-    private $route;
+    private $routePath;
 
     /**
      * @var string
@@ -36,15 +35,30 @@ class Route implements RouteSubjectInterface
      * @ORM\Column(name="controller", type="string", length=255, nullable=true)
      */
     private $controller;
-
+    
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="content_type", type="string", length=255, nullable=false)
+     */
+    private $contentType="content"; // content|module
+    
     /**
      * @var int
      *
      * @ORM\Column(name="entryId", type="integer", nullable=true)
      */
     private $entryId;
+    
+    /**
+     * @return string
+     */
+    public function __toString() {
+        return $this->getRoutePath();
+    }
 
-
+    
     /**
      * Get id
      *
@@ -62,9 +76,9 @@ class Route implements RouteSubjectInterface
      *
      * @return Route
      */
-    public function setRoute($route)
+    public function setRoutePath($routePath)
     {
-        $this->route = $route;
+        $this->routePath = $routePath;
 
         return $this;
     }
@@ -74,9 +88,9 @@ class Route implements RouteSubjectInterface
      *
      * @return string
      */
-    public function getRoute()
+    public function getRoutePath()
     {
-        return $this->route;
+        return $this->routePath;
     }
 
     /**
@@ -120,10 +134,34 @@ class Route implements RouteSubjectInterface
     /**
      * Get entryId
      *
-     * @return int
+     * @return integer
      */
     public function getEntryId()
     {
         return $this->entryId;
+    }
+
+    /**
+     * Set contentType
+     *
+     * @param string $contentType
+     *
+     * @return Route
+     */
+    public function setContentType($contentType)
+    {
+        $this->contentType = $contentType;
+
+        return $this;
+    }
+
+    /**
+     * Get contentType
+     *
+     * @return string
+     */
+    public function getContentType()
+    {
+        return $this->contentType;
     }
 }

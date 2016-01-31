@@ -5,6 +5,9 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+
+use AppBundle\Entity\ContentBaseEntity;
+
 use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
 
@@ -14,7 +17,7 @@ use AppBundle\Annotations\DescriptionObject;
  * @ORM\Table(name="vendors")
  * @ORM\Entity(repositoryClass="AppBundle\Entity\VendorRepository")
  */
-class Vendor
+class Vendor extends ContentBaseEntity
 {
     /**
      * @var integer $id
@@ -51,22 +54,6 @@ class Vendor
      * @ORM\Column(name="short_description", type="text", unique=false, nullable=true)
      */
     private $shortDescription;
-
-    /**
-     * @var string $path
-     *
-     * @Description("path", title="Path", dataType="string")
-     *
-     * @ORM\Column(name="path", type="string", length=255)
-     */
-    private $path;
-
-    /**
-     * @var boolean $disabled
-     *
-     * @ORM\Column(name="disabled", type="boolean", unique=false, nullable=true)
-     */
-    private $disabled;
 
     /**
      * @var string $website
@@ -157,29 +144,7 @@ class Vendor
         return $this->description;
     }
 
-    /**
-     * Set path
-     *
-     * @param string $path
-     * @return Vendor
-     */
-    public function setPath($path)
-    {
-        $this->path = $path;
-
-        return $this;
-    }
-
-    /**
-     * Get path
-     *
-     * @return string
-     */
-    public function getPath()
-    {
-        return $this->path;
-    }
-
+    
     /**
      * Set website
      *
@@ -305,7 +270,7 @@ class Vendor
 
     public function getSlug()
     {
-        $path = $this->getPath();
+        $path = $this->getRoutePath();
         if('' !== $path)
         {
             return $path;

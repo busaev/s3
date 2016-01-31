@@ -28,9 +28,10 @@ class VendorType extends AbstractType
                     'class'=>'wysiwyg'
                 ]
             ])
-            ->add('path', null, [
-                'label'=>'Path',
-                'translation_domain' => 'backend'
+            ->add('routePath', null, [
+                'label'=>'Route path',
+                'translation_domain' => 'backend',
+                'attr' => []
             ])
             ->add('website', null, [
                 'label'=>'Website',

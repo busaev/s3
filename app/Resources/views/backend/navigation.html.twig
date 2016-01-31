@@ -241,6 +241,14 @@
                 <li>
                     <a href="#"><i class="fa fa-cubes fa-fw"></i> {{ 'Modules'|trans({}, "backend") }}<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
+                        
+                        <li>
+                            <a href="{{ path('backend_entity_list', {'entityCode': 'module'}) }}">{{ 'Modules'|trans({}, "global") }}</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('backend_entity_list', {'entityCode': 'module_pages'}) }}">{{ 'Module Pages'|trans({}, "global") }}</a>
+                        </li>
+                        
                         <li>
                             <a href="{{ path('backend_entity_list', {'entityCode': 'news'}) }}">{{ 'News'|trans({}, "global") }}</a>
                         </li>

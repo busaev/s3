@@ -6,6 +6,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use AppBundle\Model\RouteSubjectInterface;
+
+use AppBundle\Entity\ContentBaseEntity;
+use AppBundle\Entity\Route;
+
 use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
 
@@ -18,7 +23,7 @@ use AppBundle\Annotations\DescriptionObject;
  * @ORM\Table(name="news")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\NewsRepository")
  */
-class News
+class News extends ContentBaseEntity implements RouteSubjectInterface
 {
     /**
      * @var integer $id
@@ -69,20 +74,9 @@ class News
     private $entryStatus;
     
     /**
-     * @Description("seo", title="Seo", dataType="string",  property="seo.title")
-     * 
-     * @ORM\ManyToOne(targetEntity="\AppBundle\Model\SeoSubjectInterface")
-     */
-    private $seo;
-    
-    /**
-     * @Description("route", title="Route", dataType="string",  property="route.route")
-     * 
-     * @ORM\ManyToOne(targetEntity="\AppBundle\Model\RouteSubjectInterface")
+     * @ORM\OneToOne(targetEntity="AppBundle\Model\RouteSubjectInterface")
      */
     private $route;
-    
-
     /**
      * 
      */
@@ -201,26 +195,26 @@ class News
     }
 
     /**
-     * Set seo
+     * Set route
      *
-     * @param \AppBundle\Entity\Seo $seo
+     * @param \AppBundle\Entity\Route $route
      *
      * @return News
      */
-    public function setSeo(\AppBundle\Entity\Seo $seo = null)
+    public function setRoute(\AppBundle\Entity\Route $route = null)
     {
-        $this->seo = $seo;
-
+        $this->route = $route;
+        
         return $this;
     }
 
     /**
-     * Get seo
+     * Get route
      *
-     * @return \AppBundle\Entity\Seo
+     * @return \AppBundle\Entity\Route
      */
-    public function getSeo()
+    public function getRoute()
     {
-        return $this->seo;
+        return $this->route;
     }
 }

@@ -5,12 +5,8 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Doctrine\ORM\EntityRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use AppBundle\Form\SeoType;
-use AppBundle\Form\RouteType;
 
-class NewsType extends AbstractType
+class ModulePagesType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -19,6 +15,7 @@ class NewsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('module')
             ->add('metaTitle', null, [
                 'label'=>'Meta Title',
                 'translation_domain' => 'backend'
@@ -35,28 +32,9 @@ class NewsType extends AbstractType
                 'label'=>'Title',
                 'translation_domain' => 'backend'
             ])
-            ->add('shortContent', null, [
-                'label'=>'Short content',
-                'translation_domain' => 'backend',
-                'attr' => [
-                    'class'=>'wysiwyg'
-                ]
-            ])
-            ->add('content', null, [
-                'label'=>'Content',
-                'translation_domain' => 'backend',
-                'attr' => [
-                    'class'=>'wysiwyg'
-                ]
-            ])
-            ->add('entryStatus', EntityType::class, [
-               'class' => 'AppBundle:ScrollItem',
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('i')
-                        ->join('i.scroll', 's')
-                        ->where('s.code=\'entry_status\'')
-                        ->orderBy('i.position', 'ASC');
-                },
+            ->add('action', null, [
+                'label'=>'Action',
+                'translation_domain' => 'backend'
             ])
             ->add('routePath', null, [
                 'label'=>'Route path',
@@ -72,7 +50,7 @@ class NewsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\News'
+            'data_class' => 'AppBundle\Entity\ModulePages'
         ));
     }
 }

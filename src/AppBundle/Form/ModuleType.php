@@ -6,7 +6,10 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SeoType extends AbstractType
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\ORM\EntityRepository;
+
+class ModuleType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -19,13 +22,19 @@ class SeoType extends AbstractType
                 'label'=>'Title',
                 'translation_domain' => 'backend'
             ])
-            ->add('description', null, [
-                'label'=>'Description',
-                'translation_domain' => 'backend'
+            ->add('entity', null, [
+                'label'=>'Entity',
+                'translation_domain' => 'backend',
+                'attr' => []
             ])
-            ->add('keywords', null, [
-                'label'=>'Keywords',
-                'translation_domain' => 'backend'
+            ->add('entryStatus', EntityType::class, [
+               'class' => 'AppBundle:ScrollItem',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('i')
+                        ->join('i.scroll', 's')
+                        ->where('s.code=\'entry_status\'')
+                        ->orderBy('i.position', 'ASC');
+                },
             ])
         ;
     }
@@ -36,7 +45,7 @@ class SeoType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Seo'
+            'data_class' => 'AppBundle\Entity\Module'
         ));
     }
 }

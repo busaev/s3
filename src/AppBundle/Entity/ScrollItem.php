@@ -20,6 +20,12 @@ use AppBundle\Model\ScrollItemSubjectInterface;
 class ScrollItem implements ScrollItemSubjectInterface
 {
     /**
+     * #################################################
+     * ###################  Колонки  ###################
+     * #################################################
+     */
+    
+    /**
      * @var int
      *
      * @Description("id", title="Id", dataType="integer")
@@ -63,6 +69,12 @@ class ScrollItem implements ScrollItemSubjectInterface
      * @ORM\Column(name="position", type="integer")
      */
     private $position;
+    
+    /**
+     * #################################################
+     * ####################  Связи  ####################
+     * #################################################
+     */
 
     /**
      * @Description("scroll", title="Scroll", dataType="string")
@@ -71,6 +83,12 @@ class ScrollItem implements ScrollItemSubjectInterface
      * @ORM\JoinColumn(name="id_scroll", referencedColumnName="id")
      */
     private $scroll;
+    
+     /**
+     * #################################################
+     * #############  Gettrs and Setters  ##############
+     * #################################################
+     */
 
     public function __toString() {
         return $this->getTitle();

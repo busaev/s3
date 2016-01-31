@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use AppBundle\Entity\ContentBaseEntity;
+
 use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
 
@@ -18,7 +20,7 @@ use AppBundle\Annotations\DescriptionObject;
  * @ORM\Table(name="news")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\NewsRepository")
  */
-class News
+class News extends ContentBaseEntity
 {
     /**
      * @var integer $id
@@ -61,28 +63,7 @@ class News
      */
     private $content;
     
-    /**
-     * @Description("entryStatus", title="Entry status", dataType="string",  property="entryStatus.title")
-     * 
-     * @ORM\ManyToOne(targetEntity="\AppBundle\Model\ScrollItemSubjectInterface")
-     */
-    private $entryStatus;
     
-    /**
-     * @Description("seo", title="Seo", dataType="string",  property="seo.title")
-     * 
-     * @ORM\ManyToOne(targetEntity="\AppBundle\Model\SeoSubjectInterface")
-     */
-    private $seo;
-    
-    /**
-     * @Description("route", title="Route", dataType="string", property="route.route")
-     * 
-     * @ORM\ManyToOne(targetEntity="\AppBundle\Model\RouteSubjectInterface")
-     */
-    private $route;
-    
-
     /**
      * 
      */
@@ -174,77 +155,5 @@ class News
     public function getContent()
     {
         return $this->content;
-    }
-
-    /**
-     * Set entryStatus
-     *
-     * @param \AppBundle\Entity\ScrollItem $entryStatus
-     *
-     * @return News
-     */
-    public function setEntryStatus(\AppBundle\Entity\ScrollItem $entryStatus = null)
-    {
-        $this->entryStatus = $entryStatus;
-
-        return $this;
-    }
-
-    /**
-     * Get entryStatus
-     *
-     * @return \AppBundle\Entity\ScrollItem
-     */
-    public function getEntryStatus()
-    {
-        return $this->entryStatus;
-    }
-
-    /**
-     * Set seo
-     *
-     * @param \AppBundle\Entity\Seo $seo
-     *
-     * @return News
-     */
-    public function setSeo(\AppBundle\Entity\Seo $seo = null)
-    {
-        $this->seo = $seo;
-
-        return $this;
-    }
-
-    /**
-     * Get seo
-     *
-     * @return \AppBundle\Entity\Seo
-     */
-    public function getSeo()
-    {
-        return $this->seo;
-    }
-
-    /**
-     * Set route
-     *
-     * @param \AppBundle\Entity\Route $route
-     *
-     * @return News
-     */
-    public function setRoute(\AppBundle\Entity\Route $route = null)
-    {
-        $this->route = $route;
-        
-        return $this;
-    }
-
-    /**
-     * Get route
-     *
-     * @return \AppBundle\Entity\Route
-     */
-    public function getRoute()
-    {
-        return $this->route;
     }
 }

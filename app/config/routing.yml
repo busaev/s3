@@ -1,3 +1,7 @@
+app_extra:
+    resource: .
+    type: extra
+    
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
