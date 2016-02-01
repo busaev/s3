@@ -37,7 +37,7 @@ class BackendEntityController extends Controller
                          ->select('e')
                          ->getQuery()
                          ->getResult();
-
+        
         return $this->render('backend/entity/list.html.twig', array(
             'entityCode' => $entityCode,
             'entities' => $this->get('annotations')->fillProperties($entityCode, $entities),

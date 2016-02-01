@@ -5,6 +5,8 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\ORM\EntityRepository;
 
 class ModulePagesType extends AbstractType
 {
@@ -40,6 +42,15 @@ class ModulePagesType extends AbstractType
                 'label'=>'Route path',
                 'translation_domain' => 'backend',
                 'attr' => []
+            ])
+            ->add('entryStatus', EntityType::class, [
+               'class' => 'AppBundle:ScrollItem',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('i')
+                        ->join('i.scroll', 's')
+                        ->where('s.code=\'entry_status\'')
+                        ->orderBy('i.position', 'ASC');
+                },
             ])
         ;
     }
