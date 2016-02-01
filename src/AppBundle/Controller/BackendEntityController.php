@@ -38,6 +38,9 @@ class BackendEntityController extends Controller
                          ->getQuery()
                          ->getResult();
         
+                 \Symfony\Component\VarDumper\VarDumper::dump($this->get('annotations')->fillProperties($entityCode, $entities));
+                 die();
+        
         return $this->render('backend/entity/list.html.twig', array(
             'entityCode' => $entityCode,
             'entities' => $this->get('annotations')->fillProperties($entityCode, $entities),

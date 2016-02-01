@@ -10,6 +10,7 @@ final class DescriptionObject
     private $name;
     private $title;
     private $description;
+    private $actions;
 
     public function __construct($options)
     {
@@ -36,10 +37,14 @@ final class DescriptionObject
     {
         return $this->title;
     }
-
     
     public function getDescription()
     {
         return $this->description;
+    }
+    
+    function getActions()
+    {
+        return $this->actions;
     }
 }
