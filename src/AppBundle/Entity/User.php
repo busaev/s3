@@ -4,6 +4,9 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+
+use Symfony\Component\Validator\Constraints as Assert;
+
 use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
 
@@ -27,6 +30,8 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @Description("username", title="Username", dataType="string")
      * 
+     * @Assert\NotBlank()
+     * 
      * @ORM\Column(type="string", length=25, unique=true)
      */
     private $username;
@@ -38,6 +43,12 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * @Description("email", title="Email", dataType="string")
+     * 
+     * @Assert\NotBlank()
+     * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email.",
+     *     checkMX = true
+     * )
      * 
      * @ORM\Column(type="string", length=60, unique=true)
      */

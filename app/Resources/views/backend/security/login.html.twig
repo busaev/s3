@@ -20,8 +20,11 @@
 
                             <label for="password">{{ 'Password'|trans({}, "backend") }}:</label>
                             <input type="password"  class="form-control" id="password" name="_password" />
+                            
+                            <input type="checkbox" id="remember_me" name="_remember_me" checked />
+                            <label for="remember_me">{{ 'Keep me logged in'|trans({}, "backend") }}</label>
 
-                            {#
+                            {#  
                                 If you want to control the URL the user
                                 is redirected to on success (more details below)
                                 <input type="hidden" name="_target_path" value="/account" />

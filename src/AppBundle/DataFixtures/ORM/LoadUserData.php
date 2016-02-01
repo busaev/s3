@@ -73,6 +73,12 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
          *  Роли пользователя
          */
         
+        // super admin
+        $roleSuperAdmin = new Role;
+        $roleSuperAdmin->setName('ROLE_SUPER_ADMIN'); 
+        
+        $manager->persist($roleSuperAdmin);
+        
         // admin
         $roleAdmin = new Role;
         $roleAdmin->setName('ROLE_ADMIN'); 
