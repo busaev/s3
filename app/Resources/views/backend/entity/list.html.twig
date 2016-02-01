@@ -55,18 +55,40 @@
                                 <td>{{ entity[field] }}</td>
                             {% endif %}
                         {% endfor %}
-                        <td>    
+                        <td>
                             <div class="btn-group" role="group" aria-label="...">
-                               <a class="btn btn-default btn-sm" href="{{ path('backend_entity_show', { 'entityCode': entityCode, 'id': entity.id }) }}"  title="" data-placement="bottom" data-toggle="tooltip" type="button" data-original-title="{{ 'Show'|trans({}, "backend") }}">
-                                   <i class="fa fa-search"></i>
-                               </a>
-                               <a class="btn btn-default btn-sm" href="{{ path('backend_entity_edit', { 'entityCode': entityCode, 'id': entity.id }) }}"  title="" data-placement="bottom" data-toggle="tooltip" type="button" data-original-title="{{ 'Edit'|trans({}, "backend") }}">
-                                   <i class="fa fa-pencil"></i>
-                               </a>
-                               <a class="btn btn-default btn-sm" href="{{ path('backend_entity_history', { 'entityCode': entityCode, 'id': entity.id }) }}"  title="" data-placement="bottom" data-toggle="tooltip" type="button" data-original-title="{{ 'History'|trans({}, "backend") }}">
-                                   <i class="fa fa-history"></i>
-                               </a>
-                            </div>
+                                {# Кнопки пришедшие из аннотаций #}
+                                {% if  entities.object.data.actions.backend is defined and entities.object.data.actions.backend|length > 0%}
+                                    {% for actionCode, action in entities.object.data.actions.backend %}
+                                        {% set params = [] %}
+                                        {% if action.params is defined and action.params|length > 0 %}
+                                            {% for key, param in action.params %}
+                                                {# если свойство param у сущности есть - получаем его #}
+                                                {% if entity[param] is defined %}
+                                                    {% set params = params|merge({(key): attribute(entity, param)}) %}
+                                                {# если нет - подстовляем его значение как есть #}
+                                                {% else %}
+                                                    {% set params = params|merge({(key): (param)}) %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                        <a class="btn btn-default btn-sm" href="{{ path(action.route_name, params) }}"  title="" data-placement="bottom" data-toggle="tooltip" type="button" {% if action.title is defined %}data-original-title="{{ action.title|trans({}, "backend") }}"{% endif %}>
+                                            {% if action.icon is defined %}<i class="fa {{action.icon}}"></i>{% endif %}
+                                        </a>
+                                    {% endfor %}
+                                {# Кнопки стандартные #}
+                                {% else %}
+                                    <a class="btn btn-default btn-sm" href="{{ path('backend_entity_show', { 'entityCode': entityCode, 'id': entity.id }) }}"  title="" data-placement="bottom" data-toggle="tooltip" type="button" data-original-title="{{ 'Show'|trans({}, "backend") }}">
+                                        <i class="fa fa-search"></i>
+                                    </a>
+                                    <a class="btn btn-default btn-sm" href="{{ path('backend_entity_edit', { 'entityCode': entityCode, 'id': entity.id }) }}"  title="" data-placement="bottom" data-toggle="tooltip" type="button" data-original-title="{{ 'Edit'|trans({}, "backend") }}">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <a class="btn btn-default btn-sm" href="{{ path('backend_entity_history', { 'entityCode': entityCode, 'id': entity.id }) }}"  title="" data-placement="bottom" data-toggle="tooltip" type="button" data-original-title="{{ 'History'|trans({}, "backend") }}">
+                                        <i class="fa fa-history"></i>
+                                    </a>
+                                {% endif %}    
+                            </div>                        
                         </td>
                     </tr>
                 {% endfor %}

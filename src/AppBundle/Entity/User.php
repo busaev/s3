@@ -11,7 +11,35 @@ use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
 
 /**
- * @DescriptionObject("users")
+ * @DescriptionObject("users", title="Users", description="Mega news", actions={
+ *   "backend": {
+ *     "show": {
+ *         "title": "Show",
+ *         "icon": "fa-search",
+ *         "route_name": "backend_entity_show",
+ *         "params": {
+ *             "id": "id",
+ *             "entityCode": "user"
+ *         }
+ *     },
+ *     "edit": {
+ *         "title": "Edit",
+ *         "icon": "fa-pencil",
+ *         "route_name": "backend_user_edit",
+ *         "params": {
+ *             "id": "id"
+ *         }
+ *     }
+ *   },
+ *   "frontend": {
+ *     "add": {
+ *         "route_name": "news_show",
+ *         "params": {
+ *             "id": "id"
+ *         }
+ *     }
+ *   }
+ * })
  * 
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="AppBundle\Entity\UserRepository")

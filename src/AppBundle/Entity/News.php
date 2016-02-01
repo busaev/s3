@@ -15,25 +15,6 @@ use AppBundle\Annotations\DescriptionObject;
 /**
  * AppBundle\Entity\News
  * 
- * @DescriptionObject("news", title="News", description="Mega news", actions={
- *   "backend": {
- *     "add": {
- *         "route_name": "backend_news_show",
- *         "params": {
- *             "id": "id"
- *         }
- *     }
- *   },
- *   "frontend": {
- *     "add": {
- *         "route_name": "news_show",
- *         "params": {
- *             "id": "id"
- *         }
- *     }
- *   }
- * })
- * 
  * @ORM\Table(name="news")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\NewsRepository")
  */
