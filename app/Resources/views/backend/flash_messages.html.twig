@@ -1,0 +1,12 @@
+{# empty Twig template #}
+{% for flash_message in app.session.flashbag.get('alert-success') %}
+    <div class="row margin-top-20">
+        <div class="col-lg-12">
+            <div class="alert alert-success alert-dismissable">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                {{ flash_message }}
+            </div>
+
+        </div>
+    </div>
+{% endfor %}

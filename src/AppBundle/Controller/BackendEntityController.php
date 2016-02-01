@@ -63,18 +63,12 @@ class BackendEntityController extends Controller
           'entryId'=> $id
         ]);
 
-        // VarDumper::dump($histories);
-        // die();
-
         //крошки
         $breadcrumbs->addItem(
                 $translator->trans($this->getEntityTitle($entityCode), [], 'global'),
                 $this->get("router")->generate("backend_entity_list", ['entityCode' => $entityCode]));
         $breadcrumbs->addItem($entity,$this->get("router")->generate("backend_entity_show", ['id' => $id ]));
         $breadcrumbs->addItem($translator->trans('History', [], 'backend'));
-
-        // VarDumper::dump($this->get('annotations')->fillProperties('History', $histories));
-        // die();
 
         //рендер
         return $this->render('backend/entity/history.html.twig', array(
@@ -106,6 +100,8 @@ class BackendEntityController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+            
+            $this->addFlash('alert-success', $translator->trans('A new entry is added!', [], 'messages'));
 
             return $this->redirectToRoute('backend_entity_show', [
                 'entityCode' => $entityCode,
@@ -119,9 +115,6 @@ class BackendEntityController extends Controller
                 $this->get("router")->generate("backend_entity_list", ['entityCode' => $entityCode]));
         $breadcrumbs->addItem($translator->trans('Creating', [], 'backend'));
         
-//        $a = $this->get('annotations')->fillOneProperties($entityCode, $entity);
-//        VarDumper::dump($a);die();
-
         return $this->render('backend/entity/new.html.twig', array(
             'entityCode' => $entityCode,
             'entity'     => $entity,
@@ -194,6 +187,8 @@ class BackendEntityController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+            
+            $this->addFlash('alert-success', $translator->trans('Record updated!', [], 'messages'));
 
             return $this->redirectToRoute('backend_entity_edit', array('entityCode'=>$entityCode, 'id' => $entity->getId()));
         }
