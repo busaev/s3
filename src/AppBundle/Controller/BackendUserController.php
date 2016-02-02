@@ -6,8 +6,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
+
 
 /**
  * User controller.
@@ -25,7 +28,8 @@ class BackendUserController extends Controller
     public function newAction(Request $request)
     {
         $user = new User();
-        $form = $this->createForm('AppBundle\Form\UserType', $user);
+        $form = $this->createForm('AppBundle\Form\UserNewType', $user);
+        
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -42,10 +46,11 @@ class BackendUserController extends Controller
             $em->persist($user);
             $em->flush();
 
-            return $this->redirectToRoute('user_show', array('id' => $user->getId()));
+            return $this->redirectToRoute('backend_user_new', array('id' => $user->getId()));
         }
 
-        return $this->render('user/new.html.twig', array(
+        return $this->render('backend/entity/new.html.twig', array(
+            'entityCode' => 'user',
             'user' => $user,
             'form' => $form->createView(),
         ));
@@ -59,6 +64,8 @@ class BackendUserController extends Controller
      */
     public function editAction(Request $request, User $user)
     {
+        $translator  = $this->get('translator');
+        
         $em = $this->getDoctrine()->getManager();
         $userBeforUpdate = $em->getRepository('AppBundle:User')->find($user->getId());
         
@@ -77,6 +84,49 @@ class BackendUserController extends Controller
             }
             
             $this->addFlash('alert-success', $translator->trans('Record updated!', [], 'messages'));
+
+            $em->persist($user);
+            $em->flush();
+
+            return $this->redirectToRoute('backend_user_edit', array('id' => $user->getId()));
+        }
+
+        return $this->render('backend/entity/edit.html.twig', array(
+            'entityCode'=>'user',
+            'user' => $user,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Displays a form to edit an existing User entity.
+     *
+     * @Route("/{id}/password", name="backend_user_password_edit")
+     * @Method({"GET", "POST"})
+     */
+    public function passwordAction(Request $request, User $user)
+    {
+        $translator  = $this->get('translator');
+        
+        $em = $this->getDoctrine()->getManager();
+        $userBeforUpdate = $em->getRepository('AppBundle:User')->find($user->getId());
+        
+        $deleteForm = $this->createDeleteForm($user);
+        $editForm = $this->createForm('AppBundle\Form\UserPasswordType', $user);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            
+            if('' != trim($user->getPassword()))
+            {
+                $encoder = $this->container->get('security.password_encoder');
+                $encoded = $encoder->encodePassword($user, $user->getPassword());
+
+                $user->setPassword($encoded);
+            }
+            
+            $this->addFlash('alert-success', $translator->trans('Password updated!', [], 'messages'));
 
             $em->persist($user);
             $em->flush();

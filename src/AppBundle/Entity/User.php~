@@ -4,11 +4,59 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+
+use Symfony\Component\Validator\Constraints as Assert;
+
 use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
 
 /**
- * @DescriptionObject("users")
+ * @DescriptionObject("users", title="Users", description="Mega user", actions={
+ *   "backend": {
+ *     "show": {
+ *         "title": "Show",
+ *         "icon": "fa-search",
+ *         "route_name": "backend_entity_show",
+ *         "params": {
+ *             "id": "id",
+ *             "entityCode": "user"
+ *         }
+ *     },
+ *     "edit": {
+ *         "title": "Edit",
+ *         "icon": "fa-pencil",
+ *         "route_name": "backend_user_edit",
+ *         "params": {
+ *             "id": "id"
+ *         }
+ *     },
+ *     "password": {
+ *         "title": "Edit password",
+ *         "icon": "fa-asterisk",
+ *         "route_name": "backend_user_password_edit",
+ *         "params": {
+ *             "id": "id"
+ *         }
+ *     },
+ *     "history": {
+ *         "title": "History",
+ *         "icon": "fa-history",
+ *         "route_name": "backend_entity_history",
+ *         "params": {
+ *             "id": "id",
+ *             "entityCode": "user"
+ *         }
+ *     }
+ *   },
+ *   "frontend": {
+ *     "add": {
+ *         "route_name": "news_show",
+ *         "params": {
+ *             "id": "id"
+ *         }
+ *     }
+ *   }
+ * })
  * 
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="AppBundle\Entity\UserRepository")
@@ -16,6 +64,14 @@ use AppBundle\Annotations\DescriptionObject;
 class User implements AdvancedUserInterface, \Serializable
 {
     /**
+     * #################################################
+     * ###################  Колонки  ###################
+     * #################################################
+     */
+    
+    /**
+     * @Description("id", title="Id", dataType="integer")
+     * 
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -25,11 +81,15 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @Description("username", title="Username", dataType="string")
      * 
+     * @Assert\NotBlank()
+     * 
      * @ORM\Column(type="string", length=25, unique=true)
      */
     private $username;
 
     /**
+     * @Assert\NotBlank()
+     * 
      * @ORM\Column(type="string", length=64)
      */
     private $password;
@@ -37,19 +97,33 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @Description("email", title="Email", dataType="string")
      * 
+     * @Assert\NotBlank()
+     * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email.",
+     *     checkMX = true
+     * )
+     * 
      * @ORM\Column(type="string", length=60, unique=true)
      */
     private $email;
-
-    /**
-     * @ORM\Column(name="is_active", type="boolean")
-     */
-    private $isActive;
     
     /**
      * @ORM\Column(name="api_key", type="string", nullable=true)
      */
     private $apiKey;
+    
+    /**
+     * #################################################
+     * ####################  Связи  ####################
+     * #################################################
+     */
+    
+    /**
+     * @Description("entryStatus", title="Entry status", dataType="string",  property="entryStatus.title")
+     * 
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Model\ScrollItemSubjectInterface")
+     */
+    private $entryStatus;
     
     
     /**
@@ -79,6 +153,11 @@ class User implements AdvancedUserInterface, \Serializable
         $this->userRoles = new ArrayCollection();
         $this->history = new ArrayCollection();
     }
+    
+    public function __toString()
+    {
+        return $this->username;
+    }
 
     public function getId()
     {
@@ -99,19 +178,9 @@ class User implements AdvancedUserInterface, \Serializable
         return $this->email;
     }
 
-    function getIsActive() 
-    {
-        return $this->isActive;
-    }
-
     function setEmail($email) 
     {
         $this->email = $email;
-    }
-
-    function setIsActive($isActive) 
-    {
-        $this->isActive = $isActive;
     }
     
     function getApiKey() 
@@ -130,6 +199,43 @@ class User implements AdvancedUserInterface, \Serializable
      * ############# Assotiations ################ 
      * ########################################### 
      */
+    
+
+    /**
+     * Add history
+     *
+     * @param \AppBundle\Entity\History $history
+     *
+     * @return User
+     */
+    public function addHistory(\AppBundle\Entity\History $history)
+    {
+        $this->history[] = $history;
+
+        return $this;
+    }
+
+    /**
+     * Remove history
+     *
+     * @param \AppBundle\Entity\History $history
+     */
+    public function removeHistory(\AppBundle\Entity\History $history)
+    {
+        $this->history->removeElement($history);
+    }
+
+    /**
+     * Get history
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getHistory()
+    {
+        return $this->history;
+    }
+    
+    
     
     
     

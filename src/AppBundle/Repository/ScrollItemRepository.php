@@ -10,4 +10,31 @@ namespace AppBundle\Repository;
  */
 class ScrollItemRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * Ищем элемент списка по его коду и коду списка
+     * 
+     * @param string $scrollItemCode
+     * @param string $scrollCode
+     * 
+     * @return \AppBundle\Entity\ScrollItem|false
+     */
+    public function findByScrollItemCodeAndScrollCode($scrollItemCode, $scrollCode)
+    {
+        if(false == $scrollItemCode || false == $scrollCode)
+            return false;
+        
+        $items =  $this->createQueryBuilder('item')
+                        ->select('item')
+                        ->join('item.scroll', 'scroll')
+                        ->where("item.code=:item_code AND scroll.code=:scroll_code")
+                        ->setParameter('item_code', $scrollItemCode)
+                        ->setParameter('scroll_code', $scrollCode)
+                        ->getQuery()
+                        ->getResult();
+        
+        if(is_array($items)) {
+            return reset ($items); }
+        
+        return $items;
+    }
 }

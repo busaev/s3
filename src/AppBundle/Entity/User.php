@@ -29,6 +29,23 @@ use AppBundle\Annotations\DescriptionObject;
  *         "params": {
  *             "id": "id"
  *         }
+ *     },
+ *     "password": {
+ *         "title": "Edit password",
+ *         "icon": "fa-asterisk",
+ *         "route_name": "backend_user_password_edit",
+ *         "params": {
+ *             "id": "id"
+ *         }
+ *     },
+ *     "history": {
+ *         "title": "History",
+ *         "icon": "fa-history",
+ *         "route_name": "backend_entity_history",
+ *         "params": {
+ *             "id": "id",
+ *             "entityCode": "user"
+ *         }
  *     }
  *   },
  *   "frontend": {
@@ -46,6 +63,12 @@ use AppBundle\Annotations\DescriptionObject;
  */
 class User implements AdvancedUserInterface, \Serializable
 {
+    /**
+     * #################################################
+     * ###################  Колонки  ###################
+     * #################################################
+     */
+    
     /**
      * @Description("id", title="Id", dataType="integer")
      * 
@@ -65,6 +88,8 @@ class User implements AdvancedUserInterface, \Serializable
     private $username;
 
     /**
+     * @Assert\NotBlank()
+     * 
      * @ORM\Column(type="string", length=64)
      */
     private $password;
@@ -81,11 +106,6 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(type="string", length=60, unique=true)
      */
     private $email;
-
-    /**
-     * @ORM\Column(name="is_active", type="boolean")
-     */
-    private $isActive;
     
     /**
      * @ORM\Column(name="api_key", type="string", nullable=true)
@@ -94,12 +114,18 @@ class User implements AdvancedUserInterface, \Serializable
     
     
     /**
-     * @ORM\OneToMany(targetEntity="History", mappedBy="user", cascade={"persist", "remove"})
-     * @ORM\OrderBy({"createdAt" = "ASC"})
+     * #################################################
+     * ####################  Связи  ####################
+     * #################################################
      */
-    private $history;
-
-
+    
+    /**
+     * @Description("entryStatus", title="Entry status", dataType="string",  property="entryStatus.title")
+     * 
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Model\ScrollItemSubjectInterface")
+     */
+    private $entryStatus;
+    
     /**
      * 
      * @Description("Roles", title="User roles", dataType="array")
@@ -113,12 +139,18 @@ class User implements AdvancedUserInterface, \Serializable
      * @var ArrayCollection $userRoles
      */
     protected $userRoles;
+    
 
+    /**
+     * #################################################
+     * #############  Gettrs and Setters  ##############
+     * #################################################
+     */
+    
     public function __construct()
     {
         $this->isActive  = true;
         $this->userRoles = new ArrayCollection();
-        $this->history = new ArrayCollection();
     }
     
     public function __toString()
@@ -136,86 +168,53 @@ class User implements AdvancedUserInterface, \Serializable
         return $this->username;
     }
     
-    function setUsername($username) {
+    public function setUsername($username) {
         $this->username = $username;
     }
         
-    function getEmail() 
+    public function getEmail() 
     {
         return $this->email;
     }
 
-    function getIsActive() 
-    {
-        return $this->isActive;
-    }
-
-    function setEmail($email) 
+    public function setEmail($email) 
     {
         $this->email = $email;
     }
-
-    function setIsActive($isActive) 
-    {
-        $this->isActive = $isActive;
-    }
     
-    function getApiKey() 
+    public function getApiKey() 
     {
         return $this->apiKey;
     }
 
-    function setApiKey($apiKey) 
+    public function setApiKey($apiKey) 
     {
         $this->apiKey = $apiKey;
     }
-    
-    
-    /**
-     * ###########################################
-     * ############# Assotiations ################ 
-     * ########################################### 
-     */
-    
 
     /**
-     * Add history
+     * Set entryStatus
      *
-     * @param \AppBundle\Entity\History $history
+     * @param \AppBundle\Entity\ScrollItem $entryStatus
      *
      * @return User
      */
-    public function addHistory(\AppBundle\Entity\History $history)
+    public function setEntryStatus(\AppBundle\Entity\ScrollItem $entryStatus = null)
     {
-        $this->history[] = $history;
+        $this->entryStatus = $entryStatus;
 
         return $this;
     }
 
     /**
-     * Remove history
+     * Get entryStatus
      *
-     * @param \AppBundle\Entity\History $history
+     * @return \AppBundle\Entity\ScrollItem
      */
-    public function removeHistory(\AppBundle\Entity\History $history)
+    public function getEntryStatus()
     {
-        $this->history->removeElement($history);
+        return $this->entryStatus;
     }
-
-    /**
-     * Get history
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getHistory()
-    {
-        return $this->history;
-    }
-    
-    
-    
-    
-    
     
     /**
      * Не используется, но нужня для AdvancedUserInterface
@@ -258,7 +257,10 @@ class User implements AdvancedUserInterface, \Serializable
 
     public function isEnabled()
     {
-        return $this->isActive;
+        return true;
+//        \Symfony\Component\VarDumper\VarDumper::dump($this->getEntryStatus());
+//        die();
+        return $this->getEntryStatus()->getCode() != 'delete';
     }
     
     /**
@@ -315,7 +317,7 @@ class User implements AdvancedUserInterface, \Serializable
             $this->id,
             $this->username,
             $this->password,
-            $this->isActive,
+            $this->entryStatus,
             // see section on salt below
             // $this->salt,
         ));

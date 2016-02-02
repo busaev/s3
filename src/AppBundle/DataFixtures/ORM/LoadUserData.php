@@ -50,7 +50,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $scrollItemEnable = new ScrollItem;
         $scrollItemEnable->setScroll($scroll);
         $scrollItemEnable->setCode('enable');
-        $scrollItemEnable->setTitle('Enable');
+        $scrollItemEnable->setTitle('Enabled');
         $scrollItemEnable->setPosition(1);
         
         $manager->persist($scrollItemEnable);
@@ -60,10 +60,20 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $scrollItemDisable = new ScrollItem;
         $scrollItemDisable->setScroll($scroll);
         $scrollItemDisable->setCode('disable');
-        $scrollItemDisable->setTitle('Disable');
+        $scrollItemDisable->setTitle('Disabled');
         $scrollItemDisable->setPosition(2);
         
         $manager->persist($scrollItemDisable);
+        
+        
+        // delete
+        $scrollItemDeleted = new ScrollItem;
+        $scrollItemDeleted->setScroll($scroll);
+        $scrollItemDeleted->setCode('delete');
+        $scrollItemDeleted->setTitle('Deleted');
+        $scrollItemDeleted->setPosition(3);
+        
+        $manager->persist($scrollItemDeleted);
         
         
         $manager->flush();
@@ -125,7 +135,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $userWY = new User;
         $userWY->setPassword($encoder->encodePassword($userWY, 'q1w2e3'));
         $userWY->setUsername('wy');
-        $userWY->setIsActive(true);
+        $userWY->setEntryStatus($scrollItemEnable);
         $userWY->setEmail('wy@wy.ru');
         $userWY->addUserRole($roleAdmin);
         

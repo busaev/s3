@@ -16,12 +16,10 @@
                         <a href="{{ path('backend_entity_list', {'entityCode': entityCode}) }}" class="btn btn-default">{{ 'Back to the list'|trans({}, "backend") }}</a>
                     </li>
                     <li>
-                        <a href="{{ path('backend_entity_edit', { 'entityCode': entityCode, 'id': entity.entity.id }) }}" class="btn btn-info">{{ 'Edit'|trans({}, "backend") }}</a>
+                        <a href="{{ path('backend_entity_edit', { 'entityCode': entityCode, 'id': entity.entity.id }) }}" class="btn btn-info edit">{{ 'Edit'|trans({}, "backend") }}</a>
                     </li>
                     <li>
-                        {{ form_start(delete_form) }}
-                            <input type="submit" value="{{ 'Delete'|trans({}, "backend") }}" class="btn btn-danger delete-form">
-                        {{ form_end(delete_form) }}
+                        <a href="{{ path('backend_entity_delete_soft', { 'entityCode': entityCode, 'id': entity.entity.id }) }}" class="btn btn-danger delete">{{ 'Delete'|trans({}, "backend") }}</a>
                     </li>
                 </ul>
             </div>                    
@@ -85,7 +83,7 @@
         $(document).ready(function() {
             $(".wysiwyg").summernote();
         });
-        $(".delete-form").click(function() {
+        $(".delete").click(function() {
             if(confirm("{{ 'Are you sure?'|trans({}, "backend") }}")) {
                 return true;
             }

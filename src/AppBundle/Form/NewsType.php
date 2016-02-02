@@ -53,6 +53,7 @@ class NewsType extends AbstractType
                     return $er->createQueryBuilder('i')
                         ->join('i.scroll', 's')
                         ->where('s.code=\'entry_status\'')
+                        ->andWhere('i.code !=\'delete\'')
                         ->orderBy('i.position', 'ASC');
                 },
             ])

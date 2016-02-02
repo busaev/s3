@@ -8,6 +8,8 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class UserType extends AbstractType
 {
@@ -27,6 +29,16 @@ class UserType extends AbstractType
                 'multiple' => true,
                 'attr' => array('style' => 'height:120px')
             ))
+            ->add('entryStatus', EntityType::class, [
+               'class' => 'AppBundle:ScrollItem',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('i')
+                        ->join('i.scroll', 's')
+                        ->where('s.code=\'entry_status\'')
+                        ->andWhere('i.code !=\'delete\'')
+                        ->orderBy('i.position', 'ASC');
+                },
+            ])
         ;
     }
 

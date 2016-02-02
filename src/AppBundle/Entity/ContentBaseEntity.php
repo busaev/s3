@@ -191,7 +191,7 @@ class ContentBaseEntity implements RouteSubjectInterface
      *
      * @param \AppBundle\Entity\ScrollItem $entryStatus
      *
-     * @return News
+     * @return ContentBaseEntity
      */
     public function setEntryStatus(\AppBundle\Entity\ScrollItem $entryStatus = null)
     {

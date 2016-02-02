@@ -24,4 +24,9 @@ class Utils
         }
         return ucfirst(strtolower($entityCode));
     }
+    
+    public function getRepositoryLogicalName($entityCode, $bundle = "AppBundle")
+    {
+        return $bundle . ":" . $this->getCamelCase($entityCode);
+    }
 }

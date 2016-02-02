@@ -168,16 +168,6 @@ class Vendor extends ContentBaseEntity
         return $this->website;
     }
 
-    function getDisabled()
-    {
-        return $this->disabled;
-    }
-
-    function setDisabled($disabled)
-    {
-        $this->disabled = $disabled;
-    }
-
     /**
      * Add images
      *

@@ -30,11 +30,19 @@ class BackendEntityController extends Controller
     public function listAction(Request $request, $entityCode)
     {
         $em = $this->getDoctrine()->getManager();
+        
+        $utils    = $this->get('utils');
+        
+        $status = $this->getDoctrine()
+                       ->getRepository("AppBundle:ScrollItem")
+                       ->findByScrollItemCodeAndScrollCode('delete', 'entry_status');
 
         $entities = $this->getDoctrine()
-                         ->getRepository($this->getRepositoryLogicalName($entityCode))
+                         ->getRepository($utils->getRepositoryLogicalName($entityCode))
                          ->createQueryBuilder('e')
                          ->select('e')
+                         ->where('e.entryStatus != :status')
+                         ->setParameter('status', $status->getId())
                          ->getQuery()
                          ->getResult();
         
@@ -52,13 +60,14 @@ class BackendEntityController extends Controller
     {
         $translator  = $this->get('translator');
         $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $utils       = $this->get('utils');
 
         $em = $this->getDoctrine()->getManager();
 
         // запись
-        $entity = $em->getRepository($this->getRepositoryLogicalName($entityCode))->find($id);
+        $entity = $em->getRepository($utils->getRepositoryLogicalName($entityCode))->find($id);
         // история записи
-        $histories = $em->getRepository($this->getRepositoryLogicalName('History'))->findBy([
+        $histories = $em->getRepository($utils->getRepositoryLogicalName('History'))->findBy([
           'entity' => $entityCode,
           'entryId'=> $id
         ]);
@@ -134,9 +143,10 @@ class BackendEntityController extends Controller
     {
         $translator  = $this->get('translator');
         $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $utils       = $this->get('utils');
 
         $entity = $this->getDoctrine()
-                       ->getRepository($this->getRepositoryLogicalName($entityCode))
+                       ->getRepository($utils->getRepositoryLogicalName($entityCode))
                        ->find($id);
 
         // крошки
@@ -164,10 +174,11 @@ class BackendEntityController extends Controller
     {
         $translator  = $this->get('translator');
         $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $utils       = $this->get('utils');
 
         //запись
         $entity = $this->getDoctrine()
-                       ->getRepository($this->getRepositoryLogicalName($entityCode))
+                       ->getRepository($utils->getRepositoryLogicalName($entityCode))
                        ->find($id);
 
         //крошки
@@ -200,6 +211,36 @@ class BackendEntityController extends Controller
             'delete_form' => $deleteForm->createView(),
         ));
     }
+    
+    /**
+     * Deletes a News entity.
+     *
+     * @Route("/{entityCode}/{id}/delete/soft", name="backend_entity_delete_soft")
+     * @Method("GET")
+     */
+    public function deleteSoftAction(Request $request, $entityCode, $id)
+    {
+        $translator = $this->get('translator');
+        $utils      = $this->get('utils');
+        
+        $status = $this->getDoctrine()
+                       ->getRepository("AppBundle:ScrollItem")
+                       ->findByScrollItemCodeAndScrollCode('delete', 'entry_status');
+
+        //запись
+        $entity = $this->getDoctrine()
+                       ->getRepository($utils->getRepositoryLogicalName($entityCode))
+                       ->find($id);
+        
+        $em = $this->getDoctrine()->getManager();
+        $entity->setEntryStatus($status);
+        $em->persist($entity);
+        $em->flush();
+        
+        $this->addFlash('alert-success', $translator->trans('Record deleted!', [], 'messages'));               
+
+        return $this->redirectToRoute('backend_entity_list', ['entityCode'=>$entityCode]);
+    }
 
     /**
      * Deletes a News entity.
@@ -209,8 +250,10 @@ class BackendEntityController extends Controller
      */
     public function deleteAction(Request $request, $entityCode, $id)
     {
+        $utils  = $this->get('utils');
+        
         $entity = $this->getDoctrine()
-                       ->getRepository($this->getRepositoryLogicalName($entityCode))
+                       ->getRepository($utils->getRepositoryLogicalName($entityCode))
                        ->find($id);
 
         $form = $this->createDeleteForm($entity, $entityCode);
@@ -250,13 +293,6 @@ class BackendEntityController extends Controller
      * ########################################
      *
      */
-    private function getRepositoryLogicalName($entityCode)
-    {
-        $utils = $this->container->get('utils');
-        $entityCode = $utils->getCamelCase($entityCode);
-
-        return "AppBundle:" . $entityCode;
-    }
 
     private function getEntityTypeNamspace($entityCode)
     {
