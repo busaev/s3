@@ -11,7 +11,7 @@ use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
 
 /**
- * @DescriptionObject("users", title="Users", description="Mega news", actions={
+ * @DescriptionObject("users", title="Users", description="Mega user", actions={
  *   "backend": {
  *     "show": {
  *         "title": "Show",
