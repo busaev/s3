@@ -9,7 +9,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use AppBundle\Entity\User;
-use AppBundle\Form\UserType;
+use AppBundle\Form\UserEditType;
+use AppBundle\Form\UserNewType;
+use AppBundle\Form\UserPasswordType;
 
 
 /**
@@ -27,6 +29,12 @@ class BackendUserController extends Controller
      */
     public function newAction(Request $request)
     {
+        $translator  = $this->get('translator');
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $utils       = $this->get('utils');
+        
+        $entityCode = 'user';
+        
         $user = new User();
         $form = $this->createForm('AppBundle\Form\UserNewType', $user);
         
@@ -43,11 +51,19 @@ class BackendUserController extends Controller
                 $user->setPassword($encoded);
             }
             
+            $this->addFlash('alert-success', $translator->trans('A new user is added!', [], 'messages'));
+            
             $em->persist($user);
             $em->flush();
 
-            return $this->redirectToRoute('backend_user_new', array('id' => $user->getId()));
+            return $this->redirectToRoute('backend_entity_list', array('entityCode' => $entityCode));
         }
+        
+        //крошки
+        $breadcrumbs->addItem(
+                $translator->trans($utils->getEntityTitle($entityCode), [], 'global'),
+                $this->get("router")->generate("backend_entity_list", ['entityCode' => $entityCode]));
+        $breadcrumbs->addItem($translator->trans('Creating', [], 'backend'));
 
         return $this->render('backend/entity/new.html.twig', array(
             'entityCode' => 'user',
@@ -65,12 +81,15 @@ class BackendUserController extends Controller
     public function editAction(Request $request, User $user)
     {
         $translator  = $this->get('translator');
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $utils       = $this->get('utils');
+        
+        $entityCode = 'user';
         
         $em = $this->getDoctrine()->getManager();
-        $userBeforUpdate = $em->getRepository('AppBundle:User')->find($user->getId());
         
         $deleteForm = $this->createDeleteForm($user);
-        $editForm = $this->createForm('AppBundle\Form\UserType', $user);
+        $editForm = $this->createForm('AppBundle\Form\UserEditType', $user);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -90,10 +109,17 @@ class BackendUserController extends Controller
 
             return $this->redirectToRoute('backend_user_edit', array('id' => $user->getId()));
         }
+        
+        //крошки
+        $breadcrumbs->addItem(
+                $translator->trans($utils->getEntityTitle($entityCode), [], 'global'),
+                $this->get("router")->generate("backend_entity_list", [ 'entityCode' => $entityCode ]));
+        $breadcrumbs->addItem($user,  $this->get("router")->generate("backend_entity_show", [ 'id' => $user->getId() ]));
+        $breadcrumbs->addItem($translator->trans('Editing', [], 'backend'));
 
         return $this->render('backend/entity/edit.html.twig', array(
             'entityCode'=>'user',
-            'user' => $user,
+            'entity' => $user,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
@@ -136,7 +162,7 @@ class BackendUserController extends Controller
 
         return $this->render('backend/entity/edit.html.twig', array(
             'entityCode'=>'user',
-            'user' => $user,
+            'entity' => $user,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));

@@ -19,9 +19,7 @@
                         <a href="#"  class="btn btn-success save-form">{{ 'Save'|trans({}, "backend") }}</a>
                     </li>
                     <li>
-                        {{ form_start(delete_form) }}
-                            <input type="submit" value="{{ 'Delete'|trans({}, "backend") }}" class="btn btn-danger delete-form">
-                        {{ form_end(delete_form) }}
+                        <a href="{{ path('backend_entity_delete_soft', { 'entityCode': entityCode, 'id': entity.id }) }}" class="btn btn-danger delete">{{ 'Delete'|trans({}, "backend") }}</a>
                     </li>
                 </ul>
             </div>
@@ -53,7 +51,7 @@
         $(document).ready(function() {
             $(".wysiwyg").summernote();
         });
-        $(".delete-form").click(function() {
+        $(".delete").click(function() {
             if(confirm("{{ 'Are you sure?'|trans({}, "backend") }}")) {
                 return true;
             }

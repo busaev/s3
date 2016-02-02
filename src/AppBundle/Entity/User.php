@@ -149,7 +149,6 @@ class User implements AdvancedUserInterface, \Serializable
     
     public function __construct()
     {
-        $this->isActive  = true;
         $this->userRoles = new ArrayCollection();
     }
     
@@ -317,9 +316,7 @@ class User implements AdvancedUserInterface, \Serializable
             $this->id,
             $this->username,
             $this->password,
-            $this->entryStatus,
-            // see section on salt below
-            // $this->salt,
+            $this->entryStatus
         ));
     }
 
@@ -330,9 +327,7 @@ class User implements AdvancedUserInterface, \Serializable
             $this->id,
             $this->username,
             $this->password,
-            $this->isActive,
-            // see section on salt below
-            // $this->salt
+            $this->entryStatus
         ) = unserialize($serialized);
     }
 }

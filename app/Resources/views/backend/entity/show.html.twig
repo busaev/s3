@@ -16,10 +16,10 @@
                         <a href="{{ path('backend_entity_list', {'entityCode': entityCode}) }}" class="btn btn-default">{{ 'Back to the list'|trans({}, "backend") }}</a>
                     </li>
                     <li>
-                        <a href="{{ path('backend_entity_edit', { 'entityCode': entityCode, 'id': entity.entity.id }) }}" class="btn btn-info edit">{{ 'Edit'|trans({}, "backend") }}</a>
+                        <a href="{{ path('backend_entity_edit', { 'entityCode': entityCode, 'id': entity.id }) }}" class="btn btn-info edit">{{ 'Edit'|trans({}, "backend") }}</a>
                     </li>
                     <li>
-                        <a href="{{ path('backend_entity_delete_soft', { 'entityCode': entityCode, 'id': entity.entity.id }) }}" class="btn btn-danger delete">{{ 'Delete'|trans({}, "backend") }}</a>
+                        <a href="{{ path('backend_entity_delete_soft', { 'entityCode': entityCode, 'id': entity.id }) }}" class="btn btn-danger delete">{{ 'Delete'|trans({}, "backend") }}</a>
                     </li>
                 </ul>
             </div>                    
@@ -35,28 +35,28 @@
 
         <table class="table table-hover table-striped">
             <tbody>
-                {% for field in entity.fields %}
+                {% for field in annotations.fields %}
                     <tr>
-                        <th>{{entity.titles[field]|trans({}, "backend")}}</th>
+                        <th>{{annotations.titles[field]|trans({}, "backend")}}</th>
                         <td>
-                            {% if entity.dataTypes[field] == 'string' %}
-                                <td>{{entity.entity[field]|raw }}</td>
-                            {% elseif entity.dataTypes[field] == 'array' %}
+                            {% if annotations.dataTypes[field] == 'string' %}
+                                <td>{{annotations.entity[field]|raw }}</td>
+                            {% elseif annotations.dataTypes[field] == 'array' %}
                                 <td>
-                                    {% if entity.entity[field] is iterable %}
-                                        {{ entity.entity[field]|join(', ') }}
+                                    {% if annotations.entity[field] is iterable %}
+                                        {{ annotations.entity[field]|join(', ') }}
                                     {% endif %}    
                                 </td>
-                            {% elseif entity.dataTypes[field] == 'boolean' %}
+                            {% elseif annotations.dataTypes[field] == 'boolean' %}
                                 <td>
-                                    {% if entity.entity[field] == 1 %}
+                                    {% if annotations.entity[field] == 1 %}
                                         <i class="fa fa-check-square-o"></i>
                                     {% else %}
                                         <i class="fa fa-square-o"></i>
                                     {% endif %}
                                 </td>
                             {% else %}
-                                <td>{{ entity.entity[field] }}</td>
+                                <td>{{ annotations.entity[field] }}</td>
                             {% endif %}
                         </td>
                     </tr>

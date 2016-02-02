@@ -11,20 +11,13 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class UserType extends AbstractType
+class UserEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('username')
             ->add('email', EmailType::class)
-//            ->add('isBlocked', null, array(
-//                   'required'=>false
-//            ))
-//            ->add('first_name')
-//            ->add('last_name')
-//            ->add('city')
-//            ->add('address')
             ->add('userRoles', null, array(
                 'multiple' => true,
                 'attr' => array('style' => 'height:120px')

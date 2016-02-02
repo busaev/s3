@@ -18,13 +18,6 @@ class UserNewType extends AbstractType
         $builder
             ->add('username')
             ->add('email', EmailType::class)
-//            ->add('isBlocked', null, array(
-//                   'required'=>false
-//            ))
-//            ->add('first_name')
-//            ->add('last_name')
-//            ->add('city')
-//            ->add('address')
             ->add('userRoles', null, array(
                 'multiple' => true,
                 'attr' => array('style' => 'height:120px')

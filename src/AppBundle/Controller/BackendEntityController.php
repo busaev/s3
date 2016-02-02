@@ -74,7 +74,7 @@ class BackendEntityController extends Controller
 
         //крошки
         $breadcrumbs->addItem(
-                $translator->trans($this->getEntityTitle($entityCode), [], 'global'),
+                $translator->trans($utils->getEntityTitle($entityCode), [], 'global'),
                 $this->get("router")->generate("backend_entity_list", ['entityCode' => $entityCode]));
         $breadcrumbs->addItem($entity,$this->get("router")->generate("backend_entity_show", ['id' => $id ]));
         $breadcrumbs->addItem($translator->trans('History', [], 'backend'));
@@ -98,9 +98,10 @@ class BackendEntityController extends Controller
     {
         $translator  = $this->get('translator');
         $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $utils       = $this->get("utils");
 
-        $entity     = $this->createNewEntity($entityCode);
-        $entityType = $this->getEntityTypeNamspace($entityCode);
+        $entity      = $this->createNewEntity($entityCode);
+        $entityType  = $this->getEntityTypeNamspace($entityCode);
         
         $form = $this->createForm($entityType, $entity);
         $form->handleRequest($request);
@@ -120,7 +121,7 @@ class BackendEntityController extends Controller
 
         //крошки
         $breadcrumbs->addItem(
-                $translator->trans($this->getEntityTitle($entityCode), [], 'global'),
+                $translator->trans($utils->getEntityTitle($entityCode), [], 'global'),
                 $this->get("router")->generate("backend_entity_list", ['entityCode' => $entityCode]));
         $breadcrumbs->addItem($translator->trans('Creating', [], 'backend'));
         
@@ -151,7 +152,7 @@ class BackendEntityController extends Controller
 
         // крошки
         $breadcrumbs->addItem(
-                $translator->trans($this->getEntityTitle($entityCode), [], 'global'),
+                $translator->trans($utils->getEntityTitle($entityCode), [], 'global'),
                 $this->get("router")->generate("backend_entity_list", ['entityCode' => $entityCode]));
         $breadcrumbs->addItem($entity);
         $breadcrumbs->addItem($translator->trans('Viewing', [], 'backend'));
@@ -159,7 +160,8 @@ class BackendEntityController extends Controller
         // рендер
         return $this->render('backend/entity/show.html.twig', array(
             'entityCode' => $entityCode,
-            'entity' => $this->get('annotations')->fillOneProperties($entityCode, $entity),
+            'entity' => $entity,
+            'annotations' => $this->get('annotations')->fillOneProperties($entityCode, $entity),
             'delete_form' => $this->createDeleteForm($entity, $entityCode)->createView(),
         ));
     }
@@ -183,7 +185,7 @@ class BackendEntityController extends Controller
 
         //крошки
         $breadcrumbs->addItem(
-                $translator->trans($this->getEntityTitle($entityCode), [], 'global'),
+                $translator->trans($utils->getEntityTitle($entityCode), [], 'global'),
                 $this->get("router")->generate("backend_entity_list", [ 'entityCode' => $entityCode ]));
         $breadcrumbs->addItem($entity,  $this->get("router")->generate("backend_entity_show", [ 'id' => $id ]));
         $breadcrumbs->addItem($translator->trans('Editing', [], 'backend'));
@@ -329,24 +331,5 @@ class BackendEntityController extends Controller
         $class = 'AppBundle\\Entity\\' . $entityCode;
 
         return new $class;
-    }
-
-    private function getEntityTitle($entityCode)
-    {
-        $utils = $this->container->get('utils');
-        $entityCode = $utils->getCamelCase($entityCode);
-
-        $title = $entityCode;
-
-        //аннотации
-        $annotations = $this->get('annotations')->getAll($entityCode);
-
-        if(isset($annotations['object']['data']) && is_object($annotations['object']['data']))
-        {
-            $title = $annotations['object']['data']->getTitle();
-        }
-
-        return $title;
-
     }
 }

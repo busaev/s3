@@ -29,4 +29,24 @@ class Utils
     {
         return $bundle . ":" . $this->getCamelCase($entityCode);
     }
+    
+    
+
+    public function getEntityTitle($entityCode)
+    {
+        $entityCode = $this->getCamelCase($entityCode);
+
+        $title = $entityCode;
+
+        //аннотации
+        $annotations = $this->container->get('annotations')->getAll($entityCode);
+
+        if(isset($annotations['object']['data']) && is_object($annotations['object']['data']))
+        {
+            $title = $annotations['object']['data']->getTitle();
+        }
+
+        return $title;
+
+    }
 }
