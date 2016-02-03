@@ -8,20 +8,7 @@
         </div>
     </div>
         
-    <div class="row">
-        <div class="col-lg-12">            
-            <div id="entities-actions" style="z-index: 10; margin-top: 20px;">                
-                <ul>
-                    <li>
-                        <a href="{{ path('backend_entity_list', {'entityCode': entityCode}) }}" class="btn btn-default">{{ 'Back to the list'|trans({}, "backend") }}</a>
-                    </li>
-                    <li>
-                        <a href="#"  class="btn btn-success save-form">{{ 'Save'|trans({}, "backend") }}</a>
-                    </li>
-                </ul>
-            </div>                    
-        </div>
-    </div>
+    {{ actions(entityCode, 'new') }}
                     
     <div class="row">
         <div class="col-lg-12">

@@ -41,6 +41,7 @@ twig:
         - bootstrap_3_horizontal_layout.html.twig
     globals:
         format_datetime: "d.m.Y H:i"
+        kernel_root_dir: %kernel.root_dir%
 
 # Doctrine Configuration
 doctrine:

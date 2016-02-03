@@ -8,23 +8,7 @@
         </div>
     </div>
         
-    <div class="row">
-        <div class="col-lg-12">            
-            <div id="entities-actions" style="z-index: 10;">                
-                <ul>
-                    <li>
-                        <a href="{{ path('backend_entity_list', {'entityCode': entityCode}) }}" class="btn btn-default">{{ 'Back to the list'|trans({}, "backend") }}</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('backend_entity_edit', { 'entityCode': entityCode, 'id': entity.id }) }}" class="btn btn-info edit">{{ 'Edit'|trans({}, "backend") }}</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('backend_entity_delete_soft', { 'entityCode': entityCode, 'id': entity.id }) }}" class="btn btn-danger delete">{{ 'Delete'|trans({}, "backend") }}</a>
-                    </li>
-                </ul>
-            </div>                    
-        </div>
-    </div>
+    {{ actions(entityCode, 'show', entity) }}
     
     {% include 'backend/flash_messages.html.twig' %}
             
