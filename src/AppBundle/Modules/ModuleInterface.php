@@ -10,5 +10,5 @@ use AppBundle\Entity\ContentBaseEntity;
  */
 interface ModuleInterface {
     
-    public function getModulePath(ContentBaseEntity $entity);
+    public function getModuleRoutePath(ContentBaseEntity $entity);
 }

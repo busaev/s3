@@ -15,7 +15,7 @@ class Modules {
             }
             return $this->modules[$name];
         }
-        throw new \Exception('Модуль не найден');
+        return $this->modules['dummy'];
     }
 
     public function __construct()

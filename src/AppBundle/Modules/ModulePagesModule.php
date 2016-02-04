@@ -6,7 +6,7 @@ use AppBundle\Modules\ModuleInterface;
 
 use AppBundle\Entity\ContentBaseEntity;
 
-class NewsModule implements ModuleInterface 
+class ModulePagesModule implements ModuleInterface 
 {
     private $conteiner = null;
     
@@ -25,6 +25,6 @@ class NewsModule implements ModuleInterface
     
     public function getModuleRoutePath(ContentBaseEntity $entity)
     {
-        return $entity->setRoutePath('/news/');
+        return $entity->setRoutePath('/module/');
     }
 }

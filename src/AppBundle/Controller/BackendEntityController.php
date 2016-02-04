@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\VarDumper\VarDumper;
 
+use AppBundle\Entity\ContentBaseEntity;
+
 /**
  * @Route("/backend/entity")
  */
@@ -103,13 +105,11 @@ class BackendEntityController extends Controller
         
         $entity      = $this->createNewEntity($entityCode);
         $entityType  = $this->getEntityTypeNamspace($entityCode);
-        
-        try {
+
+        if($entity instanceof ContentBaseEntity)
+        {
             $module = $modules->$entityCode;
-            $entity = $module->getModulePath($entity);
-            
-        } catch (Exception $ex) {
-            
+            $entity = $module->getModuleRoutePath($entity);
         }
         
         $form = $this->createForm($entityType, $entity);
