@@ -75,6 +75,12 @@ class News extends ContentBaseEntity
             return $title;
         return '';
     }
+    
+    /**
+     * #################################################
+     * #############  Gettrs and Setters  ##############
+     * #################################################
+     */
 
     /**
      * Get id
