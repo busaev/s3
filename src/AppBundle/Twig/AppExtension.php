@@ -19,17 +19,21 @@ class AppExtension extends \Twig_Extension
         
         $tplPath = false;
         
-        $defaultTemplatePath = $globals['kernel_root_dir'] . '/Resources/views/backend/entity/actions/default/'.$action.'.html.twig';
-        $entityTemplatePath  = $globals['kernel_root_dir'] . '/Resources/views/backend/entity/actions/'.$entityCode.'/'.$action.'.html.twig';
+        $globalTemplatesPath = $globals['kernel_root_dir'] . '/Resources/views/';
         
-        if(file_exists($defaultTemplatePath))
-            $tplPath = $defaultTemplatePath;
+        $templates = [
+            'backend/entity/actions/'.$entityCode.'/'.$action.'.html.twig',
+            'backend/entity/actions/default/'.$action.'.html.twig'
+        ];
         
-        if(file_exists($entityTemplatePath))
-            $tplPath = $entityTemplatePath;
-        
-        if( ! $tplPath)
-            return '';
+        foreach($templates as $template)
+        {
+            if(!file_exists($globalTemplatesPath . $template))
+                continue;
+            
+            $tplPath = $template;
+            break;
+        }
         
         return $twig->render($tplPath, [
             'entityCode' => $entityCode,

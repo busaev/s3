@@ -15,7 +15,7 @@ use AppBundle\Annotations\DescriptionObject;
  * @DescriptionObject("brends")
  *
  * @ORM\Table(name="vendors")
- * @ORM\Entity(repositoryClass="AppBundle\Entity\VendorRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\VendorRepository")
  */
 class Vendor extends ContentBaseEntity
 {

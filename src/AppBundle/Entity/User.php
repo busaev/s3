@@ -59,7 +59,7 @@ use AppBundle\Annotations\DescriptionObject;
  * })
  * 
  * @ORM\Table(name="users")
- * @ORM\Entity(repositoryClass="AppBundle\Entity\UserRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
 class User implements AdvancedUserInterface, \Serializable
 {

@@ -142,8 +142,8 @@ class Module
     {
         return $this->title;
     }
-    
-    
+
+
     /**
      * Set entryStatus
      *

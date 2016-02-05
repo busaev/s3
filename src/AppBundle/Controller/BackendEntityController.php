@@ -99,9 +99,18 @@ class BackendEntityController extends Controller
         $translator  = $this->get('translator');
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $utils       = $this->get("utils");
-
+        $modules     = $this->get("app.modules");
+        
         $entity      = $this->createNewEntity($entityCode);
         $entityType  = $this->getEntityTypeNamspace($entityCode);
+        
+        try {
+            $module = $modules->$entityCode;
+            $entity = $module->getModulePath($entity);
+            
+        } catch (Exception $ex) {
+            
+        }
         
         $form = $this->createForm($entityType, $entity);
         $form->handleRequest($request);
