@@ -65,12 +65,21 @@ services:
         arguments: [ "@service_container" ]
         tags:
             -  { name: app.module }
+            
+    # новости. служба модуля, будет добавлена в коллекцию службы app.modules
+    page.module:
+        class: AppBundle\Modules\PageModule
+        arguments: [ "@service_container" ]
+        tags:
+            -  { name: app.module }
+            
     # новости. служба модуля, будет добавлена в коллекцию службы app.modules
     news.module:
         class: AppBundle\Modules\NewsModule
         arguments: [ "@service_container" ]
         tags:
             -  { name: app.module }
+            
     # страницы модуля. служба модуля, будет добавлена в коллекцию службы app.modules
     module_pages.module:
         class: AppBundle\Modules\ModulePagesModule

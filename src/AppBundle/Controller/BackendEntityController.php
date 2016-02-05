@@ -106,7 +106,7 @@ class BackendEntityController extends Controller
         
         $entity      = $this->createNewEntity($entityCode);
         $entityType  = $this->getEntityTypeNamspace($entityCode);
-
+        
         //если это базовый контент - пропускаем объект через модуль
         if($entity instanceof ContentBaseEntity)
         {
