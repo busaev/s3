@@ -27,6 +27,11 @@ class ModuleType extends AbstractType
                 'translation_domain' => 'backend',
                 'attr' => []
             ])
+            ->add('routePath', null, [
+                'label'=>'Route path',
+                'translation_domain' => 'backend',
+                'attr' => []
+            ])
             ->add('entryStatus', EntityType::class, [
                'class' => 'AppBundle:ScrollItem',
                 'query_builder' => function (EntityRepository $er) {

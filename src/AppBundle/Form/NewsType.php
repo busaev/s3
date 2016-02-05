@@ -31,7 +31,10 @@ class NewsType extends AbstractType
             ])
             ->add('title', null, [
                 'label'=>'Title',
-                'translation_domain' => 'backend'
+                'translation_domain' => 'backend',
+                'attr' => [
+                    'class'=>'property-title'
+                ]
             ])
             ->add('shortContent', null, [
                 'label'=>'Short content',
@@ -60,7 +63,9 @@ class NewsType extends AbstractType
             ->add('routePath', null, [
                 'label'=>'Route path',
                 'translation_domain' => 'backend',
-                'attr' => []
+                'attr' => [
+                    'class'=>'property-routePath'
+                ]
             ])
         ;
     }

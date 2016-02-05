@@ -23,7 +23,7 @@ class DummyModule implements ModuleInterface
         return $this->conteiner;
     }
     
-    public function getModuleRoutePath(ContentBaseEntity $entity)
+    public function init(ContentBaseEntity $entity)
     {
         return $entity;
     }

@@ -33,6 +33,10 @@
 
 
 {% block javascripts %}
+    {% javascripts '../app/Resources/public/backend/js/entities.js' 
+      filter='cssrewrite' output="css/compiled/backend.js" %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
     <script>
         $(document).ready(function() {
             $(".wysiwyg").summernote();

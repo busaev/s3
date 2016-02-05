@@ -23,8 +23,14 @@ class NewsModule implements ModuleInterface
         return $this->conteiner;
     }
     
-    public function getModuleRoutePath(ContentBaseEntity $entity)
+    public function init(ContentBaseEntity $entity)
     {
-        return $entity->setRoutePath('/news/');
+        $em = $this->getContainer()->get('doctrine')->getManager();
+        
+        $module = $em->getRepository('AppBundle:Module')->findOneBy([
+            'entity'=>'news'
+        ]);
+        
+        return $entity->setRoutePath($module->getRoutePath());
     }
 }

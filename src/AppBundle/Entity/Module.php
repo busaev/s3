@@ -34,15 +34,6 @@ class Module
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
-    /**
-     * @var string
-     * 
-     * @Description("entity", title="Entity", dataType="string")
-     *
-     * @ORM\Column(name="entity", type="string", length=255, unique=true)
-     */
-    private $entity;
 
     /**
      * @var string
@@ -52,6 +43,24 @@ class Module
      * @ORM\Column(name="title", type="string", length=255, nullable=true)
      */
     private $title;
+    
+    /**
+     * @var string
+     * 
+     * @Description("entity", title="Entity", dataType="string")
+     *
+     * @ORM\Column(name="entity", type="string", length=255, unique=true, nullable=false)
+     */
+    private $entity;
+    
+    /**
+     * @var string
+     * 
+     * @Description("routePath", title="Route path", dataType="string",  property="routePath")
+     *
+     * @ORM\Column(name="route_path", type="string", length=255, unique=false)
+     */
+    private $routePath;
     
     /**
      * #################################################
@@ -70,13 +79,15 @@ class Module
      * @ORM\OneToMany(targetEntity="ModulePages", mappedBy="module")
      */
     private $modulePages;
-
+    
     
     /**
-     * #################################################
-     * #############  Gettrs and Setters  ##############
-     * #################################################
+     * Constructor
      */
+    public function __construct()
+    {
+        $this->modulePages = new \Doctrine\Common\Collections\ArrayCollection();
+    }
     
     public function __toString() {
         $title = $this->getTitle();
@@ -84,6 +95,13 @@ class Module
             return $title;
         return '';
     }
+
+    
+    /**
+     * #################################################
+     * #############  Gettrs and Setters  ##############
+     * #################################################
+     */
     
     /**
      * Get id
@@ -94,7 +112,7 @@ class Module
     {
         return $this->id;
     }
-
+    
     /**
      * Set entity
      *
@@ -117,6 +135,30 @@ class Module
     public function getEntity()
     {
         return $this->entity;
+    }
+    
+    /**
+     * Set route
+     *
+     * @param string $route
+     *
+     * @return Route
+     */
+    public function setRoutePath($routePath)
+    {
+        $this->routePath = $routePath;
+
+        return $this;
+    }
+
+    /**
+     * Get route
+     *
+     * @return string
+     */
+    public function getRoutePath()
+    {
+        return $this->routePath;
     }
 
     /**
@@ -166,13 +208,6 @@ class Module
     public function getEntryStatus()
     {
         return $this->entryStatus;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->modulePages = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

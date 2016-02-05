@@ -98,6 +98,7 @@ class BackendEntityController extends Controller
      */
     public function newAction(Request $request, $entityCode)
     {
+        //службы
         $translator  = $this->get('translator');
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $utils       = $this->get("utils");
@@ -106,10 +107,11 @@ class BackendEntityController extends Controller
         $entity      = $this->createNewEntity($entityCode);
         $entityType  = $this->getEntityTypeNamspace($entityCode);
 
+        //если это базовый контент - пропускаем объект через модуль
         if($entity instanceof ContentBaseEntity)
         {
             $module = $modules->$entityCode;
-            $entity = $module->getModuleRoutePath($entity);
+            $entity = $module->init($entity);
         }
         
         $form = $this->createForm($entityType, $entity);
