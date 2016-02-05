@@ -8,6 +8,7 @@ use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
 
 use AppBundle\Entity\ContentBaseEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
@@ -73,6 +74,11 @@ class ModulePages extends ContentBaseEntity
     private $module;
     
     /**
+     * @ORM\OneToMany(targetEntity="NavigationItem", mappedBy="module")
+     */
+    private $navigationItems;
+    
+    /**
      * #################################################
      * #################  Не колонки  ##################
      * #################################################
@@ -87,6 +93,12 @@ class ModulePages extends ContentBaseEntity
      * #################################################
      */
     
+    public function __construct()
+    {
+        $this->navigationItems = new ArrayCollection();
+    }
+
+
     public function __toString() {
         $title = $this->getTitle();
         if(is_string($title))
@@ -243,4 +255,38 @@ class ModulePages extends ContentBaseEntity
        
        $this->setRoute($route);
    }
+
+    /**
+     * Add navigationItem
+     *
+     * @param \AppBundle\Entity\NavigationItem $navigationItem
+     *
+     * @return ModulePages
+     */
+    public function addNavigationItem(\AppBundle\Entity\NavigationItem $navigationItem)
+    {
+        $this->navigationItems[] = $navigationItem;
+
+        return $this;
+    }
+
+    /**
+     * Remove navigationItem
+     *
+     * @param \AppBundle\Entity\NavigationItem $navigationItem
+     */
+    public function removeNavigationItem(\AppBundle\Entity\NavigationItem $navigationItem)
+    {
+        $this->navigationItems->removeElement($navigationItem);
+    }
+
+    /**
+     * Get navigationItems
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getNavigationItems()
+    {
+        return $this->navigationItems;
+    }
 }

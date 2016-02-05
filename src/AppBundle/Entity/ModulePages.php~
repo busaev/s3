@@ -8,24 +8,24 @@ use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
 
 use AppBundle\Entity\ContentBaseEntity;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
  * ModulePages
  *
  * @ORM\Table(name="module_pages")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ModulePagesRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class ModulePages extends ContentBaseEntity
 {
     
-    /**
-     * #################################################
-     * ###################  Колонки  ###################
-     * #################################################
-     */
     
     /**
      * @var int
+     * 
+     * @Description("id", title="Id", dataType="integer")
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -59,7 +59,7 @@ class ModulePages extends ContentBaseEntity
     private $action;
     
     
-    /**
+   /**
      * #################################################
      * ####################  Связи  ####################
      * #################################################
@@ -74,11 +74,31 @@ class ModulePages extends ContentBaseEntity
     private $module;
     
     /**
+     * @ORM\OneToMany(targetEntity="NavigationItem", mappedBy="module")
+     */
+    private $navigationItems;
+    
+    /**
+     * #################################################
+     * #################  Не колонки  ##################
+     * #################################################
+     */
+    
+    private $contentType = 'module';
+    
+    
+    /**
      * #################################################
      * #############  Gettrs and Setters  ##############
      * #################################################
      */
     
+    public function __construct()
+    {
+        $this->navigationItems = ArrayCollection();
+    }
+
+
     public function __toString() {
         $title = $this->getTitle();
         if(is_string($title))
@@ -95,7 +115,7 @@ class ModulePages extends ContentBaseEntity
     {
         return $this->id;
     }
-
+    
     /**
      * Set idModule
      *
@@ -168,4 +188,71 @@ class ModulePages extends ContentBaseEntity
     {
         return $this->action;
     }
+
+    /**
+     * Set module
+     *
+     * @param \AppBundle\Entity\Module $module
+     *
+     * @return ModulePages
+     */
+    public function setModule(\AppBundle\Entity\Module $module = null)
+    {
+        $this->module = $module;
+
+        return $this;
+    }
+
+    /**
+     * Get module
+     *
+     * @return \AppBundle\Entity\Module
+     */
+    public function getModule()
+    {
+        return $this->module;
+    }
+    
+    
+
+    /**
+     * @return string
+     */
+    public function getContentType()
+    {
+        return $this->contentType;
+    }
+    
+    /**
+     * #################################################
+     * #################### Events #####################
+     * #################################################
+     */
+    
+    /**
+     * @ORM\PostPersist
+     */
+   public function initRoute()
+   {
+       $route = new Route;
+       $route->setEntryId($this->getId());
+       $route->setContentType($this->getContentType());
+       $route->setController($this->getAction($this));
+       $route->setRoutePath($this->getRoutePath());
+       
+       $this->setRoute($route);
+   }
+   
+   /**
+     * @ORM\PreUpdate
+     */
+   public function updateRoute()
+   {
+       $route = $this->getRoute();
+       $route->setContentType($this->getContentType());
+       $route->setController($this->getAction($this));
+       $route->setRoutePath($this->getRoutePath());
+       
+       $this->setRoute($route);
+   }
 }

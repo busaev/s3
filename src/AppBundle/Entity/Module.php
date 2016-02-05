@@ -80,13 +80,19 @@ class Module
      */
     private $modulePages;
     
+    /**
+     * @ORM\OneToMany(targetEntity="NavigationItem", mappedBy="module")
+     */
+    private $navigationItems;
+    
     
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->modulePages = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->modulePages     = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->navigationItems = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     public function __toString() {
@@ -242,5 +248,39 @@ class Module
     public function getModulePages()
     {
         return $this->modulePages;
+    }
+
+    /**
+     * Add navigationItem
+     *
+     * @param \AppBundle\Entity\NavigationItem $navigationItem
+     *
+     * @return Module
+     */
+    public function addNavigationItem(\AppBundle\Entity\NavigationItem $navigationItem)
+    {
+        $this->navigationItems[] = $navigationItem;
+
+        return $this;
+    }
+
+    /**
+     * Remove navigationItem
+     *
+     * @param \AppBundle\Entity\NavigationItem $navigationItem
+     */
+    public function removeNavigationItem(\AppBundle\Entity\NavigationItem $navigationItem)
+    {
+        $this->navigationItems->removeElement($navigationItem);
+    }
+
+    /**
+     * Get navigationItems
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getNavigationItems()
+    {
+        return $this->navigationItems;
     }
 }

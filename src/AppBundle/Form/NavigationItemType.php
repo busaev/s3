@@ -7,6 +7,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class NavigationItemType extends AbstractType
 {
@@ -20,6 +22,8 @@ class NavigationItemType extends AbstractType
             ->add('navigation')
             ->add('parentNavigationItem')
             //->add('childrenNavigationItems')
+            ->add('module')
+            //->add('modulePage')
             ->add('title')
             ->add('target')
             ->add('navigation')
@@ -34,6 +38,25 @@ class NavigationItemType extends AbstractType
                 },
             ])
         ;
+                
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) {
+                $form = $event->getForm();
+
+                // this would be your entity, i.e. SportMeetup
+                $data = $event->getData();
+
+                $module = $data->getModule();
+                $pages = null === $module ? array() : $module->getModulePages();
+
+                $form->add('modulePage', EntityType::class, array(
+                    'class'       => 'AppBundle:ModulePages',
+                    'placeholder' => '',
+                    'choices'     => $pages,
+                ));
+            }
+        );
     }
     
     /**
@@ -42,7 +65,8 @@ class NavigationItemType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\NavigationItem'
+            'data_class' => 'AppBundle\Entity\NavigationItem',
+            'csrf_protection' => false,
         ));
     }
 }

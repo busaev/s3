@@ -35,7 +35,7 @@ class NavigationItem
      * @var int
      * Ссылка на навигацию
      *
-     * @ORM\Column(name="idNavigation", type="integer")
+     * @ORM\Column(name="idNavigation", type="integer", nullable=true)
      */
     private $idNavigation;
 
@@ -45,7 +45,21 @@ class NavigationItem
      *
      * @ORM\Column(name="idNavigationItem", type="integer", nullable=true)
      */
-    private $idNavigationItem;
+    private $idNavigationItem;    
+    
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="idModule", type="integer", nullable=true)
+     */
+    private $idModule;
+        
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="idModulePage", type="integer", nullable=true)
+     */
+    private $idModulePage;
 
     /**
      * @var int
@@ -59,7 +73,7 @@ class NavigationItem
      * 
      * @Description("title", title="Title", dataType="string")
      *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
      */
     private $title;
 
@@ -108,6 +122,17 @@ class NavigationItem
      */
     private $childrenNavigationItems;
     
+    /**
+     * @ORM\ManyToOne(targetEntity="Module", inversedBy="navigationItems")
+     * @ORM\JoinColumn(name="idModule", referencedColumnName="id")
+     */
+    private $module;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="ModulePages", inversedBy="navigationItems")
+     * @ORM\JoinColumn(name="idModulePage", referencedColumnName="id")
+     */
+    private $modulePage;
     
     /**
      * 
@@ -119,14 +144,31 @@ class NavigationItem
 
     public function __toString()
     {
+        $prefix = '';
+        
+        
+        
         $title = $this->getTitle();
         if(is_string($title))
-            return $title;
+            return $this->getTitlePrefix() . $title;
         return '';
     }
     
-    
-     /**
+    public function getTitlePrefix()
+    {
+        $prefix = '';
+        
+        if(NULL !== $this->getParentNavigationItem())
+        {
+            $prefix = '-' . $this->getParentNavigationItem()->getTitlePrefix();
+        }
+        return $prefix;
+    }
+
+
+
+
+    /**
      * #################################################
      * #############  Gettrs and Setters  ##############
      * #################################################
@@ -391,5 +433,101 @@ class NavigationItem
     public function getEntryStatus()
     {
         return $this->entryStatus;
+    }
+
+    /**
+     * Set idModule
+     *
+     * @param integer $idModule
+     *
+     * @return NavigationItem
+     */
+    public function setIdModule($idModule)
+    {
+        $this->idModule = $idModule;
+
+        return $this;
+    }
+
+    /**
+     * Get idModule
+     *
+     * @return integer
+     */
+    public function getIdModule()
+    {
+        return $this->idModule;
+    }
+
+    /**
+     * Set module
+     *
+     * @param \AppBundle\Entity\Module $module
+     *
+     * @return NavigationItem
+     */
+    public function setModule(\AppBundle\Entity\Module $module = null)
+    {
+        $this->module = $module;
+
+        return $this;
+    }
+
+    /**
+     * Get module
+     *
+     * @return \AppBundle\Entity\Module
+     */
+    public function getModule()
+    {
+        return $this->module;
+    }
+
+    /**
+     * Set idModulePage
+     *
+     * @param integer $idModulePage
+     *
+     * @return NavigationItem
+     */
+    public function setIdModulePage($idModulePage)
+    {
+        $this->idModulePage = $idModulePage;
+
+        return $this;
+    }
+
+    /**
+     * Get idModulePage
+     *
+     * @return integer
+     */
+    public function getIdModulePage()
+    {
+        return $this->idModulePage;
+    }
+
+    /**
+     * Set modulePage
+     *
+     * @param \AppBundle\Entity\ModulePages $modulePage
+     *
+     * @return NavigationItem
+     */
+    public function setModulePage(\AppBundle\Entity\ModulePages $modulePage = null)
+    {
+        $this->modulePage = $modulePage;
+
+        return $this;
+    }
+
+    /**
+     * Get modulePage
+     *
+     * @return \AppBundle\Entity\ModulePages
+     */
+    public function getModulePage()
+    {
+        return $this->modulePage;
     }
 }
