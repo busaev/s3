@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Route
@@ -52,11 +53,34 @@ class Route
     private $entryId;
     
     /**
+     * #################################################
+     * ####################  Связи  ####################
+     * #################################################
+     */
+    
+    /**
+     * @ORM\OneToMany(targetEntity="NavigationItem", mappedBy="route")
+     */
+    private $navigationItems;
+    
+    
+    public function __construct()
+    {
+        $this->navigationItems = new ArrayCollection;
+    }
+
+    /**
      * @return string
      */
     public function __toString() {
         return $this->getRoutePath();
     }
+    
+    /**
+     * #################################################
+     * #############  Gettrs and Setters  ##############
+     * #################################################
+     */
 
     
     /**
@@ -163,5 +187,39 @@ class Route
     public function getContentType()
     {
         return $this->contentType;
+    }
+
+    /**
+     * Add navigationItem
+     *
+     * @param \AppBundle\Entity\NavigationItem $navigationItem
+     *
+     * @return Route
+     */
+    public function addNavigationItem(\AppBundle\Entity\NavigationItem $navigationItem)
+    {
+        $this->navigationItems[] = $navigationItem;
+
+        return $this;
+    }
+
+    /**
+     * Remove navigationItem
+     *
+     * @param \AppBundle\Entity\NavigationItem $navigationItem
+     */
+    public function removeNavigationItem(\AppBundle\Entity\NavigationItem $navigationItem)
+    {
+        $this->navigationItems->removeElement($navigationItem);
+    }
+
+    /**
+     * Get navigationItems
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getNavigationItems()
+    {
+        return $this->navigationItems;
     }
 }

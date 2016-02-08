@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Route
@@ -32,9 +33,9 @@ class Route
     /**
      * @var string
      *
-     * @ORM\Column(name="controller", type="string", length=255, nullable=true)
+     * @ORM\Column(name="action", type="string", length=255, nullable=true)
      */
-    private $controller;
+    private $action;
     
     
     /**
@@ -51,12 +52,37 @@ class Route
      */
     private $entryId;
     
+    /**
+     * #################################################
+     * ####################  Связи  ####################
+     * #################################################
+     */
+    
+    /**
+     * @ORM\OneToMany(targetEntity="NavigationItem", mappedBy="route")
+     */
+    private $navigationItems;
+    
+    
+    public function __construct()
+    {
+        $this->navigationItems = new ArrayCollection;
+    }
+
+    /**
+     * @return string
+     */
     public function __toString() {
         return $this->getRoutePath();
     }
+    
+    /**
+     * #################################################
+     * #############  Gettrs and Setters  ##############
+     * #################################################
+     */
 
     
-
     /**
      * Get id
      *
@@ -94,25 +120,25 @@ class Route
     /**
      * Set controller
      *
-     * @param string $controller
+     * @param string $action
      *
      * @return Route
      */
-    public function setController($controller)
+    public function setAction($action)
     {
-        $this->controller = $controller;
+        $this->action = $action;
 
         return $this;
     }
 
     /**
-     * Get controller
+     * Get action
      *
      * @return string
      */
-    public function getController()
+    public function getAction()
     {
-        return $this->controller;
+        return $this->action;
     }
 
     /**
@@ -137,5 +163,29 @@ class Route
     public function getEntryId()
     {
         return $this->entryId;
+    }
+
+    /**
+     * Set contentType
+     *
+     * @param string $contentType
+     *
+     * @return Route
+     */
+    public function setContentType($contentType)
+    {
+        $this->contentType = $contentType;
+
+        return $this;
+    }
+
+    /**
+     * Get contentType
+     *
+     * @return string
+     */
+    public function getContentType()
+    {
+        return $this->contentType;
     }
 }

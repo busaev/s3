@@ -38,7 +38,7 @@ class ExtraLoader extends Loader
             // prepare a new route
             $path = $routeItem->getRoutePath();
             $defaults = array(
-                '_controller' => $routeItem->getController(),
+                '_controller' => $routeItem->getAction(),
             );
             $requirements = array();
             $route = new Route($path, $defaults, $requirements, [], null, null, array('GET'));

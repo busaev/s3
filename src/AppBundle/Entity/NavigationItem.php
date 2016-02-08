@@ -60,6 +60,13 @@ class NavigationItem
      * @ORM\Column(name="idModulePage", type="integer", nullable=true)
      */
     private $idModulePage;
+        
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="idRoute", type="integer", nullable=true)
+     */
+    private $idRoute;
 
     /**
      * @var int
@@ -80,18 +87,11 @@ class NavigationItem
     /**
      * @var string
      *
-     * @ORM\Column(name="routePath", type="string", length=255, nullable=true)
-     */
-    private $routePath;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="target", type="string", length=255, nullable=true)
      */
     private $target;
     
-     /**
+    /**
      * #################################################
      * ####################  Связи  ####################
      * #################################################
@@ -133,6 +133,16 @@ class NavigationItem
      * @ORM\JoinColumn(name="idModulePage", referencedColumnName="id")
      */
     private $modulePage;
+    
+    /**
+     * @var string
+     * 
+     * @Description("route", title="Route", dataType="string",  property="route.route_path")
+     *
+     * @ORM\ManyToOne(targetEntity="Route", inversedBy="navigationItems")
+     * @ORM\JoinColumn(name="idRoute", referencedColumnName="id")
+     */
+    private $route;
     
     /**
      * 
@@ -279,30 +289,6 @@ class NavigationItem
     public function getTitle()
     {
         return $this->title;
-    }
-
-    /**
-     * Set routePath
-     *
-     * @param string $routePath
-     *
-     * @return NavigationItem
-     */
-    public function setRoutePath($routePath)
-    {
-        $this->routePath = $routePath;
-
-        return $this;
-    }
-
-    /**
-     * Get routePath
-     *
-     * @return string
-     */
-    public function getRoutePath()
-    {
-        return $this->routePath;
     }
 
     /**
@@ -529,5 +515,53 @@ class NavigationItem
     public function getModulePage()
     {
         return $this->modulePage;
+    }
+
+    /**
+     * Set idRoute
+     *
+     * @param integer $idRoute
+     *
+     * @return NavigationItem
+     */
+    public function setIdRoute($idRoute)
+    {
+        $this->idRoute = $idRoute;
+
+        return $this;
+    }
+
+    /**
+     * Get idRoute
+     *
+     * @return integer
+     */
+    public function getIdRoute()
+    {
+        return $this->idRoute;
+    }
+
+    /**
+     * Set route
+     *
+     * @param \AppBundle\Entity\Route $route
+     *
+     * @return NavigationItem
+     */
+    public function setRoute(\AppBundle\Entity\Route $route = null)
+    {
+        $this->route = $route;
+
+        return $this;
+    }
+
+    /**
+     * Get route
+     *
+     * @return \AppBundle\Entity\Route
+     */
+    public function getRoute()
+    {
+        return $this->route;
     }
 }

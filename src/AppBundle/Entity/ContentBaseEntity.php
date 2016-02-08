@@ -76,7 +76,6 @@ class ContentBaseEntity implements RouteSubjectInterface
      * #################################################
      */
     
-    
     /**
      * @var string
      */
@@ -242,7 +241,7 @@ class ContentBaseEntity implements RouteSubjectInterface
      */
     
     /**
-     *  Получить контроллек по имени сущности
+     *  Получить экшн по имени сущности
      * 
      * @param entity $entity
      * @return string

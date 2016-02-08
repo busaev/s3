@@ -35,7 +35,7 @@ class NavigationItem
      * @var int
      * Ссылка на навигацию
      *
-     * @ORM\Column(name="idNavigation", type="integer")
+     * @ORM\Column(name="idNavigation", type="integer", nullable=true)
      */
     private $idNavigation;
 
@@ -60,6 +60,13 @@ class NavigationItem
      * @ORM\Column(name="idModulePage", type="integer", nullable=true)
      */
     private $idModulePage;
+        
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="idRoute", type="integer", nullable=true)
+     */
+    private $idRoute;
 
     /**
      * @var int
@@ -73,16 +80,9 @@ class NavigationItem
      * 
      * @Description("title", title="Title", dataType="string")
      *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
      */
     private $title;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="routePath", type="string", length=255, nullable=true)
-     */
-    private $routePath;
 
     /**
      * @var string
@@ -91,7 +91,7 @@ class NavigationItem
      */
     private $target;
     
-     /**
+    /**
      * #################################################
      * ####################  Связи  ####################
      * #################################################
@@ -133,6 +133,16 @@ class NavigationItem
      * @ORM\JoinColumn(name="idModulePage", referencedColumnName="id")
      */
     private $modulePage;
+    
+    /**
+     * @var string
+     * 
+     * @Description("route", title="Route", dataType="string",  property="route.route_path")
+     *
+     * @ORM\ManyToOne(targetEntity="Route", inversedBy="navigationItems")
+     * @ORM\JoinColumn(name="idRoute", referencedColumnName="id")
+     */
+    private $route;
     
     /**
      * 
@@ -279,30 +289,6 @@ class NavigationItem
     public function getTitle()
     {
         return $this->title;
-    }
-
-    /**
-     * Set routePath
-     *
-     * @param string $routePath
-     *
-     * @return NavigationItem
-     */
-    public function setRoutePath($routePath)
-    {
-        $this->routePath = $routePath;
-
-        return $this;
-    }
-
-    /**
-     * Get routePath
-     *
-     * @return string
-     */
-    public function getRoutePath()
-    {
-        return $this->routePath;
     }
 
     /**
@@ -481,5 +467,53 @@ class NavigationItem
     public function getModule()
     {
         return $this->module;
+    }
+
+    /**
+     * Set idModulePage
+     *
+     * @param integer $idModulePage
+     *
+     * @return NavigationItem
+     */
+    public function setIdModulePage($idModulePage)
+    {
+        $this->idModulePage = $idModulePage;
+
+        return $this;
+    }
+
+    /**
+     * Get idModulePage
+     *
+     * @return integer
+     */
+    public function getIdModulePage()
+    {
+        return $this->idModulePage;
+    }
+
+    /**
+     * Set modulePage
+     *
+     * @param \AppBundle\Entity\ModulePages $modulePage
+     *
+     * @return NavigationItem
+     */
+    public function setModulePage(\AppBundle\Entity\ModulePages $modulePage = null)
+    {
+        $this->modulePage = $modulePage;
+
+        return $this;
+    }
+
+    /**
+     * Get modulePage
+     *
+     * @return \AppBundle\Entity\ModulePages
+     */
+    public function getModulePage()
+    {
+        return $this->modulePage;
     }
 }

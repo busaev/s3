@@ -9,6 +9,10 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
+
+use AppBundle\Entity\Module;
+use AppBundle\Entity\ModulePages;
 
 class NavigationItemType extends AbstractType
 {
@@ -19,14 +23,37 @@ class NavigationItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('navigation')
-            ->add('parentNavigationItem')
+            ->add('navigation', null, [
+                'label'=>'Navigation',
+                'translation_domain' => 'backend'
+            ])
+            ->add('parentNavigationItem', null, [
+                'label'=>'Parent navigation item',
+                'translation_domain' => 'backend'
+            ])
             //->add('childrenNavigationItems')
             ->add('module')
-            //->add('modulePage')
-            ->add('title')
-            ->add('target')
-            ->add('navigation')
+            ->add('modulePage')
+            ->add('route', null, [
+                'label'=>'Title',
+                'translation_domain' => 'backend'
+            ])
+            ->add('module', null, [
+                'label'=>'Title',
+                'translation_domain' => 'backend'
+            ])
+            ->add('title', null, [
+                'label'=>'Title',
+                'translation_domain' => 'backend'
+            ])
+            ->add('target', null, [
+                'label'=>'Target',
+                'translation_domain' => 'backend'
+            ])
+            ->add('position', null, [
+                'label'=>'Position',
+                'translation_domain' => 'backend'
+            ])
             ->add('entryStatus', EntityType::class, [
                'class' => 'AppBundle:ScrollItem',
                 'query_builder' => function (EntityRepository $er) {
@@ -38,25 +65,7 @@ class NavigationItemType extends AbstractType
                 },
             ])
         ;
-                
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) {
-                $form = $event->getForm();
-
-                // this would be your entity, i.e. SportMeetup
-                $data = $event->getData();
-
-                $module = $data->getModule();
-                $pages = null === $module ? array() : $module->getModulePages();
-
-                $form->add('modulePage', EntityType::class, array(
-                    'class'       => 'AppBundle:ModulePages',
-                    'placeholder' => '',
-                    'choices'     => $pages,
-                ));
-            }
-        );
+        
     }
     
     /**
@@ -66,7 +75,6 @@ class NavigationItemType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\NavigationItem',
-            'csrf_protection' => false,
         ));
     }
 }
