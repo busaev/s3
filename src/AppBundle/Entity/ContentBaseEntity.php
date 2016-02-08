@@ -290,7 +290,7 @@ class ContentBaseEntity implements RouteSubjectInterface
        $route = new Route;
        $route->setEntryId($this->getId());
        $route->setContentType($this->getContentType());
-       $route->setController($this->getAction($this));
+       $route->setAction($this->getAction($this));
        $route->setRoutePath($this->getRoutePath());
        
        $this->setRoute($route);
@@ -302,7 +302,7 @@ class ContentBaseEntity implements RouteSubjectInterface
    public function updateRoute()
    {
        $route = $this->getRoute();
-       $route->setController($this->getAction($this));
+       $route->setAction($this->getAction($this));
        $route->setRoutePath($this->getRoutePath());
        
        $this->setRoute($route);

@@ -74,7 +74,7 @@ class ModulePages extends ContentBaseEntity
     private $module;
     
     /**
-     * @ORM\OneToMany(targetEntity="NavigationItem", mappedBy="module")
+     * @ORM\OneToMany(targetEntity="NavigationItem", mappedBy="modulePage")
      */
     private $navigationItems;
     
@@ -237,7 +237,7 @@ class ModulePages extends ContentBaseEntity
        $route = new Route;
        $route->setEntryId($this->getId());
        $route->setContentType($this->getContentType());
-       $route->setController($this->getAction($this));
+       $route->setAction($this->getAction($this));
        $route->setRoutePath($this->getRoutePath());
        
        $this->setRoute($route);
@@ -250,7 +250,7 @@ class ModulePages extends ContentBaseEntity
    {
        $route = $this->getRoute();
        $route->setContentType($this->getContentType());
-       $route->setController($this->getAction($this));
+       $route->setAction($this->getAction($this));
        $route->setRoutePath($this->getRoutePath());
        
        $this->setRoute($route);

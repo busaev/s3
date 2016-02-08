@@ -11,6 +11,12 @@ use AppBundle\Entity\Scroll;
 use AppBundle\Entity\ScrollItem;
 use AppBundle\Entity\Role;
 use AppBundle\Entity\User;
+use AppBundle\Entity\Module;
+use AppBundle\Entity\ModulePages;
+use AppBundle\Entity\Route;
+use AppBundle\Entity\Navigation;
+use AppBundle\Entity\NavigationItem;
+
 
 class LoadUserData implements FixtureInterface, ContainerAwareInterface
 {
@@ -143,6 +149,100 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         
         
         $manager->flush();
+        
+        
+        /**
+         *  Модуль
+         */
+        
+        // News
+        $moduleNews = new Module;
+        $moduleNews->setEntity('news');
+        $moduleNews->setEntryStatus($scrollItemEnable);
+        $moduleNews->setRoutePath('/news/');
+        $moduleNews->setTitle('News');
+        
+        $manager->persist($moduleNews);
+        
+        
+        
+        // Page
+        $modulePage = new Module;
+        $modulePage->setEntity('page');
+        $modulePage->setEntryStatus($scrollItemEnable);
+        $modulePage->setRoutePath('/page/');
+        $modulePage->setTitle('Page');
+        
+        $manager->persist($modulePage);
+        
+        
+        $manager->flush();
+                
+        
+        /**
+         *  Страницы модуля
+         */
+        
+        
+        $moduleNewsListRoutePath = '/news/list/';
+        $moduleNewsListAction    = 'AppBundle:News:list';
+        
+        
+        // News - list - route
+        $moduleNewsListRoute = new Route;
+        $moduleNewsListRoute->setContentType('module');
+        $moduleNewsListRoute->setRoutePath($moduleNewsListRoutePath);
+        $moduleNewsListRoute->setAction($moduleNewsListAction);
+        
+        $manager->persist($moduleNewsListRoute);
+        
+        
+        // News - list
+        
+        $moduleNewsList = new ModulePages;
+        $moduleNewsList->setEntryStatus($scrollItemEnable);
+        $moduleNewsList->setModule($moduleNews);
+        $moduleNewsList->setTitle('News list');
+        $moduleNewsList->setMetaDescription('All our news');
+        $moduleNewsList->setMetaKeywords('news, all news');
+        $moduleNewsList->setRoutePath($moduleNewsListRoutePath);
+        $moduleNewsList->setAction($moduleNewsListAction);
+        $moduleNewsList->setRoute($moduleNewsListRoute);
+                
+        $manager->persist($moduleNewsList);
+        
+        
+        $manager->flush();
+                
+        
+        /**
+         *  Навигация
+         */
+        
+        // Top menu
+        
+        $topNavigation = new Navigation;
+        $topNavigation->setEntryStatus($scrollItemEnable);
+        $topNavigation->setTitle('Top menu');
+        
+        $manager->persist($topNavigation);
+        
+        
+        // Top menu items
+        $topNavigationItemNews = new NavigationItem;
+        $topNavigationItemNews->setEntryStatus($scrollItemEnable);
+        $topNavigationItemNews->setModule($moduleNews);
+        $topNavigationItemNews->setNavigation($topNavigation);
+        $topNavigationItemNews->setRoutePath($moduleNews->getRoutePath());
+        $topNavigationItemNews->setPosition(1);
+        $topNavigationItemNews->setTitle('News');
+        $topNavigationItemNews->setModulePage($moduleNewsList);
+        
+        $manager->persist($topNavigationItemNews);
+        
+        
+        $manager->flush();
+        
     }
 }
 

@@ -32,9 +32,9 @@ class Route
     /**
      * @var string
      *
-     * @ORM\Column(name="controller", type="string", length=255, nullable=true)
+     * @ORM\Column(name="action", type="string", length=255, nullable=true)
      */
-    private $controller;
+    private $action;
     
     
     /**
@@ -96,25 +96,25 @@ class Route
     /**
      * Set controller
      *
-     * @param string $controller
+     * @param string $action
      *
      * @return Route
      */
-    public function setController($controller)
+    public function setAction($action)
     {
-        $this->controller = $controller;
+        $this->action = $action;
 
         return $this;
     }
 
     /**
-     * Get controller
+     * Get action
      *
      * @return string
      */
-    public function getController()
+    public function getAction()
     {
-        return $this->controller;
+        return $this->action;
     }
 
     /**
