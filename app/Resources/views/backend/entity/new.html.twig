@@ -47,10 +47,22 @@
         
         
         
-        var $module = $('#navigation_item_module');
-        $module.change(function() {
+        $('#navigation_item_module').change(function() {
             $.ajax({
-                url : '/app_dev.php/backend/api/entity/module_pages?param[idModule]=' + $('#navigation_item_module :selected').val(),
+                url : Routing.generate('backend_entity', { entityCode: 'module_page', format: 'json' }) + '?param[idModule]=' + $('#navigation_item_module :selected').val(),
+                type: 'json',
+                success: function(json) {
+                    $('#navigation_item_modulePage').empty();
+                    $.each(json, function(i, value) {
+                        $('#navigation_item_modulePage').append($('<option>').text(value.title).attr('value', value.routePath));
+                    });
+                }
+            });
+        });
+        
+        $('#navigation_item_modulePage').change(function() {
+            $.ajax({
+                url : Routing.generate('backend_entity', { entityCode: 'route', format: 'json' }) + '?param[entityCode]=news',
                 type: 'json',
                 success: function(json) {
                     $('#navigation_item_modulePage').empty();

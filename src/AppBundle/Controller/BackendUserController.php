@@ -56,13 +56,13 @@ class BackendUserController extends Controller
             $em->persist($user);
             $em->flush();
 
-            return $this->redirectToRoute('backend_entity_list', array('entityCode' => $entityCode));
+            return $this->redirectToRoute('backend_entity', array('entityCode' => $entityCode));
         }
         
         //крошки
         $breadcrumbs->addItem(
                 $translator->trans($utils->getEntityTitle($entityCode), [], 'global'),
-                $this->get("router")->generate("backend_entity_list", ['entityCode' => $entityCode]));
+                $this->get("router")->generate("backend_entity", ['entityCode' => $entityCode]));
         $breadcrumbs->addItem($translator->trans('Creating', [], 'backend'));
 
         return $this->render('backend/entity/new.html.twig', array(
@@ -113,7 +113,7 @@ class BackendUserController extends Controller
         //крошки
         $breadcrumbs->addItem(
                 $translator->trans($utils->getEntityTitle($entityCode), [], 'global'),
-                $this->get("router")->generate("backend_entity_list", [ 'entityCode' => $entityCode ]));
+                $this->get("router")->generate("backend_entity", [ 'entityCode' => $entityCode ]));
         $breadcrumbs->addItem($user,  $this->get("router")->generate("backend_entity_show", [ 'id' => $user->getId() ]));
         $breadcrumbs->addItem($translator->trans('Editing', [], 'backend'));
 

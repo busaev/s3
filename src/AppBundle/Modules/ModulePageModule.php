@@ -6,7 +6,7 @@ use AppBundle\Modules\ModuleInterface;
 
 use AppBundle\Entity\ContentBaseEntity;
 
-class ModulePagesModule implements ModuleInterface 
+class ModulePageModule implements ModuleInterface 
 {
     private $conteiner = null;
     

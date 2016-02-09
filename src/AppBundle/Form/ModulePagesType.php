@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\ORM\EntityRepository;
 
-class ModulePagesType extends AbstractType
+class ModulePageType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -61,7 +61,7 @@ class ModulePagesType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\ModulePages'
+            'data_class' => 'AppBundle\Entity\Modules\ModulePage'
         ));
     }
 }

@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping\MappedSuperclass;
  * @MappedSuperclass
  * @ORM\HasLifecycleCallbacks()
  */
-class ContentBaseEntity implements RouteSubjectInterface
+class ModuleBaseEntity implements RouteSubjectInterface
 {
     
     /**
@@ -273,6 +273,14 @@ class ContentBaseEntity implements RouteSubjectInterface
     {
         return $this->contentType;
     }
+    
+    /**
+     * @return string
+     */
+    public function getEntityCode()
+    {
+        return 'page';
+    }
 
 
     /**
@@ -291,6 +299,7 @@ class ContentBaseEntity implements RouteSubjectInterface
        $route->setContentType($this->getContentType());
        $route->setAction($this->getAction($this));
        $route->setRoutePath($this->getRoutePath());
+       $route->setEntityCode($this->getEntityCode());
        
        $this->setRoute($route);
    }

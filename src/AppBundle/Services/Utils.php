@@ -27,7 +27,7 @@ class Utils
     
     public function getRepositoryLogicalName($entityCode, $bundle = "AppBundle")
     {
-        return $bundle . ":" . $this->getCamelCase($entityCode);
+        return $bundle . ":Modules\\" . $this->getCamelCase($entityCode);
     }
     
     

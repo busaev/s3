@@ -1,24 +1,24 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace AppBundle\Entity\Modules;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
-use AppBundle\Entity\ContentBaseEntity;
+use AppBundle\Entity\ModuleBaseEntity;
 
 use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
 
 
 /**
- * AppBundle\Entity\Page
+ * AppBundle\Entity\News
  * 
- * @ORM\Table(name="pages")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\PageRepository")
+ * @ORM\Table(name="news")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\NewsRepository")
  */
-class Page extends ContentBaseEntity
+class NewsTest extends ModuleBaseEntity
 {
     /**
      * @var integer $id
@@ -41,7 +41,18 @@ class Page extends ContentBaseEntity
      * 
      */
     private $title;
-        
+    
+    /**
+     *
+     * @var string $short_content
+     * 
+     * @Description("shortContent", title="Short content", dataType="string")
+     * 
+     * @ORM\Column(name="short_content", type="text", unique=false, nullable=true)
+     * 
+     */
+    private $shortContent;
+    
     /**
      * @var string $content
      * 
@@ -49,6 +60,14 @@ class Page extends ContentBaseEntity
      * 
      */
     private $content;
+    
+    /**
+     * @var string $content
+     * 
+     * @ORM\Column(name="content_test", type="text", unique=false, nullable=true)
+     * 
+     */
+    private $contentTest;
     
     
     /**
@@ -64,6 +83,21 @@ class Page extends ContentBaseEntity
             return $title;
         return '';
     }
+    
+    /**
+     * @return string
+     */    
+    public function getEntityCode()
+    {
+        return 'news';
+    }
+
+
+    /**
+     * #################################################
+     * #############  Gettrs and Setters  ##############
+     * #################################################
+     */
 
     /**
      * Get id
@@ -96,6 +130,29 @@ class Page extends ContentBaseEntity
     public function getTitle()
     {
         return $this->title;
+    }
+    
+    /**
+     * Set short_content
+     *
+     * @param string $short_content
+     * @return News
+     */
+    public function setShortContent($shortContent)
+    {
+        $this->shortContent = $shortContent;
+    
+        return $this;
+    }
+
+    /**
+     * Get short_content
+     *
+     * @return string 
+     */
+    public function getShortContent()
+    {
+        return $this->shortContent;
     }
 
     /**

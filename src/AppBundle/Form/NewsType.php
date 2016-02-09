@@ -76,7 +76,7 @@ class NewsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\News'
+            'data_class' => 'AppBundle\Entity\Modules\News'
         ));
     }
 }

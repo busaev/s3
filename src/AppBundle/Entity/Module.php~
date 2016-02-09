@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
@@ -76,7 +77,7 @@ class Module
     private $entryStatus;
     
     /**
-     * @ORM\OneToMany(targetEntity="ModulePages", mappedBy="module")
+     * @ORM\OneToMany(targetEntity="ModulePage", mappedBy="module")
      */
     private $modulePages;
     
@@ -91,8 +92,8 @@ class Module
      */
     public function __construct()
     {
-        $this->modulePages     = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->navigationItems = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->modulePages     = new ArrayCollection();
+        $this->navigationItems = new ArrayCollection();
     }
     
     public function __toString() {
@@ -219,11 +220,11 @@ class Module
     /**
      * Add modulePage
      *
-     * @param \AppBundle\Entity\ModulePages $modulePage
+     * @param \AppBundle\Entity\ModulePage $modulePage
      *
      * @return Module
      */
-    public function addModulePage(\AppBundle\Entity\ModulePages $modulePage)
+    public function addModulePage(\AppBundle\Entity\ModulePage $modulePage)
     {
         $this->modulePages[] = $modulePage;
 
@@ -233,9 +234,9 @@ class Module
     /**
      * Remove modulePage
      *
-     * @param \AppBundle\Entity\ModulePages $modulePage
+     * @param \AppBundle\Entity\ModulePage $modulePage
      */
-    public function removeModulePage(\AppBundle\Entity\ModulePages $modulePage)
+    public function removeModulePage(\AppBundle\Entity\ModulePage $modulePage)
     {
         $this->modulePages->removeElement($modulePage);
     }
@@ -248,5 +249,39 @@ class Module
     public function getModulePages()
     {
         return $this->modulePages;
+    }
+
+    /**
+     * Add navigationItem
+     *
+     * @param \AppBundle\Entity\NavigationItem $navigationItem
+     *
+     * @return Module
+     */
+    public function addNavigationItem(\AppBundle\Entity\NavigationItem $navigationItem)
+    {
+        $this->navigationItems[] = $navigationItem;
+
+        return $this;
+    }
+
+    /**
+     * Remove navigationItem
+     *
+     * @param \AppBundle\Entity\NavigationItem $navigationItem
+     */
+    public function removeNavigationItem(\AppBundle\Entity\NavigationItem $navigationItem)
+    {
+        $this->navigationItems->removeElement($navigationItem);
+    }
+
+    /**
+     * Get navigationItems
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getNavigationItems()
+    {
+        return $this->navigationItems;
     }
 }

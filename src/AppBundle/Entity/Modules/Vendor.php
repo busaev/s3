@@ -1,12 +1,12 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace AppBundle\Entity\Modules;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
-use AppBundle\Entity\ContentBaseEntity;
+use AppBundle\Entity\ModuleBaseEntity;
 
 use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
@@ -17,7 +17,7 @@ use AppBundle\Annotations\DescriptionObject;
  * @ORM\Table(name="vendors")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\VendorRepository")
  */
-class Vendor extends ContentBaseEntity
+class Vendor extends ModuleBaseEntity
 {
     /**
      * @var integer $id
@@ -86,6 +86,14 @@ class Vendor extends ContentBaseEntity
     public function __toString()
     {
         return $this ->getTitle();
+    }
+    
+    /**
+     * @return string
+     */
+    public function getEntityCode()
+    {
+        return 'vendor';
     }
 
     /**

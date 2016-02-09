@@ -21,7 +21,14 @@ class Route
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $id;   
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="entityCode", type="string", length=255, nullable=true)
+     */
+    private $entityCode;
 
     /**
      * @var string
@@ -221,5 +228,29 @@ class Route
     public function getNavigationItems()
     {
         return $this->navigationItems;
+    }
+
+    /**
+     * Set entityCode
+     *
+     * @param string $entityCode
+     *
+     * @return Route
+     */
+    public function setEntityCode($entityCode)
+    {
+        $this->entityCode = $entityCode;
+
+        return $this;
+    }
+
+    /**
+     * Get entityCode
+     *
+     * @return string
+     */
+    public function getEntityCode()
+    {
+        return $this->entityCode;
     }
 }

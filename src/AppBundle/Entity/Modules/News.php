@@ -1,12 +1,12 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace AppBundle\Entity\Modules;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
-use AppBundle\Entity\ContentBaseEntity;
+use AppBundle\Entity\ModuleBaseEntity;
 
 use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
@@ -18,7 +18,7 @@ use AppBundle\Annotations\DescriptionObject;
  * @ORM\Table(name="news")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\NewsRepository")
  */
-class News extends ContentBaseEntity
+class News extends ModuleBaseEntity
 {
     /**
      * @var integer $id
@@ -76,6 +76,15 @@ class News extends ContentBaseEntity
         return '';
     }
     
+    /**
+     * @return string
+     */    
+    public function getEntityCode()
+    {
+        return 'news';
+    }
+
+
     /**
      * #################################################
      * #############  Gettrs and Setters  ##############

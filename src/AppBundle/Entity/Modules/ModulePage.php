@@ -1,24 +1,24 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace AppBundle\Entity\Modules;
 
 use Doctrine\ORM\Mapping as ORM;
 
 use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
 
-use AppBundle\Entity\ContentBaseEntity;
+use AppBundle\Entity\ModuleBaseEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * ModulePages
+ * ModulePage
  *
  * @ORM\Table(name="module_pages")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ModulePagesRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ModulePageRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class ModulePages extends ContentBaseEntity
+class ModulePage extends ModuleBaseEntity
 {
     
     
@@ -66,15 +66,15 @@ class ModulePages extends ContentBaseEntity
      */
     
     /**
-     * @Description("module", title="Module", dataType="string",  property="module.title")
+     * @Description("module", title="\AppBundle\Entity\Module", dataType="string",  property="module.title")
      * 
-     * @ORM\ManyToOne(targetEntity="Module", inversedBy="modulePages")
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Module", inversedBy="modulePages")
      * @ORM\JoinColumn(name="idModule", referencedColumnName="id")
      */
     private $module;
     
     /**
-     * @ORM\OneToMany(targetEntity="NavigationItem", mappedBy="modulePage")
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\NavigationItem", mappedBy="modulePage")
      */
     private $navigationItems;
     
@@ -121,7 +121,7 @@ class ModulePages extends ContentBaseEntity
      *
      * @param integer $idModule
      *
-     * @return ModulePages
+     * @return ModulePage
      */
     public function setIdModule($idModule)
     {
@@ -145,7 +145,7 @@ class ModulePages extends ContentBaseEntity
      *
      * @param string $title
      *
-     * @return ModulePages
+     * @return ModulePage
      */
     public function setTitle($title)
     {
@@ -170,7 +170,7 @@ class ModulePages extends ContentBaseEntity
      *
      * @param string $action
      *
-     * @return ModulePages
+     * @return ModulePage
      */
     public function setAction($action)
     {
@@ -194,7 +194,7 @@ class ModulePages extends ContentBaseEntity
      *
      * @param \AppBundle\Entity\Module $module
      *
-     * @return ModulePages
+     * @return ModulePage
      */
     public function setModule(\AppBundle\Entity\Module $module = null)
     {
@@ -261,7 +261,7 @@ class ModulePages extends ContentBaseEntity
      *
      * @param \AppBundle\Entity\NavigationItem $navigationItem
      *
-     * @return ModulePages
+     * @return ModulePage
      */
     public function addNavigationItem(\AppBundle\Entity\NavigationItem $navigationItem)
     {

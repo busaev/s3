@@ -6,51 +6,61 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Doctrine\ORM\Query;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\VarDumper\VarDumper;
 
 use AppBundle\Entity\ContentBaseEntity;
 
 /**
- * @Route("/backend/entity")
+ * @Route("/backend/module")
  */
-class BackendEntityController extends Controller
+class BackendModuleController extends Controller
 {
     /**
-     * @Route("", name="backend_entity_index")
+     * @Route("/{entityCode}/{format}", 
+     *        name="backend_entity", 
+     *        requirements={"format" = "html|json"}, 
+     *        defaults={"entityCode" = "news", "format" = "html"}, 
+     *        options={"expose"=true})
      */
-    public function indexAction(Request $request)
-    {
-        return $this->render('backend/index.html.twig', [
-            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-        ]);
-    }
-
-    /**
-     * @Route("/{entityCode}/list", name="backend_entity_list", defaults={"entityCode" = "news"})
-     */
-    public function listAction(Request $request, $entityCode)
-    {
-        $em = $this->getDoctrine()->getManager();
-        
-        $utils    = $this->get('utils');
+    public function indexAction(Request $request, $entityCode, $format)
+    {   
+        $utils  = $this->get('utils');
         
         $status = $this->getDoctrine()
                        ->getRepository("AppBundle:ScrollItem")
                        ->findByScrollItemCodeAndScrollCode('delete', 'entry_status');
 
-        $entities = $this->getDoctrine()
-                         ->getRepository($utils->getRepositoryLogicalName($entityCode))
-                         ->createQueryBuilder('e')
-                         ->select('e')
-                         ->where('e.entryStatus != :status')
-                         ->setParameter('status', $status->getId())
-                         ->getQuery()
-                         ->getResult();
+        // Основной запрос
+        $query = $this->getDoctrine()
+                ->getRepository($utils->getRepositoryLogicalName($entityCode))
+                ->createQueryBuilder('e')
+                ->select('e')
+                ->where('e.entryStatus != :status')
+                ->setParameter('status', $status->getId());
+        
+        // Если есть фильтр
+        $param = $request->query->get('param');        
+        if(null !== $param)
+        {
+            foreach($param as $key => $value)
+            {
+                $query->andWhere("e.{$key} = :{$key}");
+                $query->setParameter($key, $value);
+            }
+        }    
+        
+        // Если нужен json
+        if('json' == $format)
+        {
+            return new JsonResponse($query->getQuery()->getResult(Query::HYDRATE_ARRAY));
+        }
         
         return $this->render('backend/entity/list.html.twig', array(
             'entityCode' => $entityCode,
-            'entities' => $this->get('annotations')->fillProperties($entityCode, $entities),
+            'entities'   => $this->get('annotations')->fillProperties($entityCode, $query->getQuery()->getResult()),
         ));
     }
     
@@ -77,7 +87,7 @@ class BackendEntityController extends Controller
         //крошки
         $breadcrumbs->addItem(
                 $translator->trans($utils->getEntityTitle($entityCode), [], 'global'),
-                $this->get("router")->generate("backend_entity_list", ['entityCode' => $entityCode]));
+                $this->get("router")->generate("backend_entity", ['entityCode' => $entityCode]));
         $breadcrumbs->addItem($entity,$this->get("router")->generate("backend_entity_show", ['id' => $id ]));
         $breadcrumbs->addItem($translator->trans('History', [], 'backend'));
 
@@ -133,7 +143,7 @@ class BackendEntityController extends Controller
         //крошки
         $breadcrumbs->addItem(
                 $translator->trans($utils->getEntityTitle($entityCode), [], 'global'),
-                $this->get("router")->generate("backend_entity_list", ['entityCode' => $entityCode]));
+                $this->get("router")->generate("backend_entity", ['entityCode' => $entityCode]));
         $breadcrumbs->addItem($translator->trans('Creating', [], 'backend'));
         
         return $this->render('backend/entity/new.html.twig', array(
@@ -164,7 +174,7 @@ class BackendEntityController extends Controller
         // крошки
         $breadcrumbs->addItem(
                 $translator->trans($utils->getEntityTitle($entityCode), [], 'global'),
-                $this->get("router")->generate("backend_entity_list", ['entityCode' => $entityCode]));
+                $this->get("router")->generate("backend_entity", ['entityCode' => $entityCode]));
         $breadcrumbs->addItem($entity);
         $breadcrumbs->addItem($translator->trans('Viewing', [], 'backend'));
         
@@ -197,7 +207,7 @@ class BackendEntityController extends Controller
         //крошки
         $breadcrumbs->addItem(
                 $translator->trans($utils->getEntityTitle($entityCode), [], 'global'),
-                $this->get("router")->generate("backend_entity_list", [ 'entityCode' => $entityCode ]));
+                $this->get("router")->generate("backend_entity", [ 'entityCode' => $entityCode ]));
         $breadcrumbs->addItem($entity,  $this->get("router")->generate("backend_entity_show", [ 'id' => $id ]));
         $breadcrumbs->addItem($translator->trans('Editing', [], 'backend'));
 
@@ -252,7 +262,7 @@ class BackendEntityController extends Controller
         
         $this->addFlash('alert-success', $translator->trans('Record deleted!', [], 'messages'));               
 
-        return $this->redirectToRoute('backend_entity_list', ['entityCode'=>$entityCode]);
+        return $this->redirectToRoute('backend_entity', ['entityCode'=>$entityCode]);
     }
 
     /**
@@ -278,7 +288,7 @@ class BackendEntityController extends Controller
             $em->flush();
         }
 
-        return $this->redirectToRoute('backend_entity_list', ['entityCode'=>$entityCode]);
+        return $this->redirectToRoute('backend_entity', ['entityCode'=>$entityCode]);
     }
 
     /**
@@ -339,7 +349,7 @@ class BackendEntityController extends Controller
         $utils = $this->container->get('utils');
         $entityCode = $utils->getCamelCase($entityCode);
 
-        $class = 'AppBundle\\Entity\\' . $entityCode;
+        $class = 'AppBundle\\Entity\\Modules\\' . $entityCode;
 
         return new $class;
     }

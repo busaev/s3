@@ -89,6 +89,10 @@
         
         <!-- translit -->
         <script src="/assets/translit/translit.js"></script>
+        
+        <!-- fos js routing -->
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
 
         <!-- Page-Level Demo Scripts - Notifications - Use for reference -->
         <script>

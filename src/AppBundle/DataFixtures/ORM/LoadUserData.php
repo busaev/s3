@@ -12,7 +12,7 @@ use AppBundle\Entity\ScrollItem;
 use AppBundle\Entity\Role;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Module;
-use AppBundle\Entity\ModulePages;
+use AppBundle\Entity\ModulePage;
 use AppBundle\Entity\Route;
 use AppBundle\Entity\Navigation;
 use AppBundle\Entity\NavigationItem;
@@ -176,6 +176,17 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $manager->persist($modulePage);
         
         
+        
+        // Vendor
+        $moduleVendor = new Module;
+        $moduleVendor->setEntity('vendor');
+        $moduleVendor->setEntryStatus($scrollItemEnable);
+        $moduleVendor->setRoutePath('/vendor/');
+        $moduleVendor->setTitle('Vendor');
+        
+        $manager->persist($moduleVendor);
+        
+        
         $manager->flush();
                 
         
@@ -199,7 +210,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         
         // News - list
         
-        $moduleNewsList = new ModulePages;
+        $moduleNewsList = new ModulePage;
         $moduleNewsList->setEntryStatus($scrollItemEnable);
         $moduleNewsList->setModule($moduleNews);
         $moduleNewsList->setTitle('News list');

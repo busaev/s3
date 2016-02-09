@@ -33,7 +33,7 @@ class Annotations
     {
         $converter = new DescriptionObjectConverter(new AnnotationReader());
 
-        $entityNameSpace = 'AppBundle\\Entity\\' . $entityCode;
+        $entityNameSpace = 'AppBundle\\Entity\\Modules\\' . $entityCode;
 
         $annotations = get_object_vars($converter->object(new $entityNameSpace()));
 
@@ -44,7 +44,7 @@ class Annotations
     {
         $converter = new DescriptionConverter(new AnnotationReader());
 
-        $entityNameSpace = 'AppBundle\\Entity\\' . $entityCode;
+        $entityNameSpace = 'AppBundle\\Entity\\Modules\\' . $entityCode;
 
         return get_object_vars($converter->props(new $entityNameSpace()));
     }

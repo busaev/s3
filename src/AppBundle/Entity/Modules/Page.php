@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace AppBundle\Entity\Modules;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -13,12 +13,12 @@ use AppBundle\Annotations\DescriptionObject;
 
 
 /**
- * AppBundle\Entity\News
+ * AppBundle\Entity\Page
  * 
- * @ORM\Table(name="news")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\NewsRepository")
+ * @ORM\Table(name="pages")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PageRepository")
  */
-class News extends ModuleBaseEntity
+class Page extends ModuleBaseEntity
 {
     /**
      * @var integer $id
@@ -41,18 +41,7 @@ class News extends ModuleBaseEntity
      * 
      */
     private $title;
-    
-    /**
-     *
-     * @var string $short_content
-     * 
-     * @Description("shortContent", title="Short content", dataType="string")
-     * 
-     * @ORM\Column(name="short_content", type="text", unique=false, nullable=true)
-     * 
-     */
-    private $shortContent;
-    
+        
     /**
      * @var string $content
      * 
@@ -78,18 +67,11 @@ class News extends ModuleBaseEntity
     
     /**
      * @return string
-     */    
+     */
     public function getEntityCode()
     {
-        return 'news';
+        return 'page';
     }
-
-
-    /**
-     * #################################################
-     * #############  Gettrs and Setters  ##############
-     * #################################################
-     */
 
     /**
      * Get id
@@ -122,29 +104,6 @@ class News extends ModuleBaseEntity
     public function getTitle()
     {
         return $this->title;
-    }
-    
-    /**
-     * Set short_content
-     *
-     * @param string $short_content
-     * @return News
-     */
-    public function setShortContent($shortContent)
-    {
-        $this->shortContent = $shortContent;
-    
-        return $this;
-    }
-
-    /**
-     * Get short_content
-     *
-     * @return string 
-     */
-    public function getShortContent()
-    {
-        return $this->shortContent;
     }
 
     /**
