@@ -5,26 +5,26 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 
-class ModuleCompilerPass implements CompilerPassInterface
+class EntityCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        if (!$container->has('app.modules')) {
+        if (!$container->has('app.entities')) {
             return;
         }
 
         $definition = $container->findDefinition(
-            'app.modules'
+            'app.entities'
         );
 
         $taggedServices = $container->findTaggedServiceIds(
-            'app.module'
+            'app.entity'
         );
         
         foreach ($taggedServices as $id => $tags) {
             $parts = 
             $definition->addMethodCall(
-                'addModule',
+                'addEntity',
                 array($this->extractKey($id), new Reference($id))
             );
         }

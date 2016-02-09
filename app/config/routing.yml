@@ -5,6 +5,14 @@ app_extra:
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+    
+# Backend
+app_backend:
+    resource: "@AppBundle/Controller/Backend"
+    type:     annotation
 
+
+# js routing
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+    

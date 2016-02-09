@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Backend;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -8,24 +8,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\Query;
-use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\VarDumper\VarDumper;
 
 use AppBundle\Entity\ContentBaseEntity;
 
 /**
- * @Route("/backend/module")
+ * @Route("/backend/module/entry")
  */
-class BackendModuleController extends Controller
+class ModuleEntryController extends Controller
 {
     /**
-     * @Route("/{entityCode}/{format}", 
-     *        name="backend_entity", 
-     *        requirements={"format" = "html|json"}, 
-     *        defaults={"entityCode" = "news", "format" = "html"}, 
+     * @Route("/{entityCode}", 
+     *        name="backend_module_entry", 
+     *        defaults={"entityCode" = "news"}, 
      *        options={"expose"=true})
      */
-    public function indexAction(Request $request, $entityCode, $format)
+    public function indexAction(Request $request, $entityCode)
     {   
         $utils  = $this->get('utils');
         
@@ -66,7 +64,7 @@ class BackendModuleController extends Controller
     
 
     /**
-     * @Route("/{entityCode}/{id}/history", name="backend_entity_history", defaults={"entityCode" = "news"})
+     * @Route("/{entityCode}/{id}/history", name="backend_module_entry_history", defaults={"entityCode" = "news"})
      */
     public function historyAction(Request $request, $entityCode, $id)
     {
@@ -87,8 +85,8 @@ class BackendModuleController extends Controller
         //крошки
         $breadcrumbs->addItem(
                 $translator->trans($utils->getEntityTitle($entityCode), [], 'global'),
-                $this->get("router")->generate("backend_entity", ['entityCode' => $entityCode]));
-        $breadcrumbs->addItem($entity,$this->get("router")->generate("backend_entity_show", ['id' => $id ]));
+                $this->get("router")->generate("backend_module_entry", ['entityCode' => $entityCode]));
+        $breadcrumbs->addItem($entity,$this->get("router")->generate("backend_module_entry_show", ['id' => $id ]));
         $breadcrumbs->addItem($translator->trans('History', [], 'backend'));
 
         //рендер
@@ -103,7 +101,7 @@ class BackendModuleController extends Controller
     /**
      * Creates a new News entity.
      *
-     * @Route("/{entityCode}/new", name="backend_entity_new", defaults={"entityCode" = "news"})
+     * @Route("/{entityCode}/new", name="backend_module_entry_new", defaults={"entityCode" = "news"})
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request, $entityCode)
@@ -112,10 +110,10 @@ class BackendModuleController extends Controller
         $translator  = $this->get('translator');
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $utils       = $this->get("utils");
-        $modules     = $this->get("app.modules");
+        $modules     = $this->get("app.entities");
         
-        $entity      = $this->createNewEntity($entityCode);
-        $entityType  = $this->getEntityTypeNamspace($entityCode);
+        $entity      = $utils->createNewEntity($entityCode);
+        $entityType  = $utils->getEntityTypeNamspace($entityCode);
         
         //если это базовый контент - пропускаем объект через модуль
         if($entity instanceof ContentBaseEntity)
@@ -134,7 +132,7 @@ class BackendModuleController extends Controller
             
             $this->addFlash('alert-success', $translator->trans('A new entry is added!', [], 'messages'));
 
-            return $this->redirectToRoute('backend_entity_show', [
+            return $this->redirectToRoute('backend_module_entry_show', [
                 'entityCode' => $entityCode,
                 'id' => $entity->getId()
             ]);
@@ -143,7 +141,7 @@ class BackendModuleController extends Controller
         //крошки
         $breadcrumbs->addItem(
                 $translator->trans($utils->getEntityTitle($entityCode), [], 'global'),
-                $this->get("router")->generate("backend_entity", ['entityCode' => $entityCode]));
+                $this->get("router")->generate("backend_module_entry", ['entityCode' => $entityCode]));
         $breadcrumbs->addItem($translator->trans('Creating', [], 'backend'));
         
         return $this->render('backend/entity/new.html.twig', array(
@@ -158,7 +156,7 @@ class BackendModuleController extends Controller
     /**
      * Finds and displays a News entity.
      *
-     * @Route("/{entityCode}/{id}/show", name="backend_entity_show", defaults={"entityCode" = "news"})
+     * @Route("/{entityCode}/{id}/show", name="backend_module_entry_show", defaults={"entityCode" = "news"})
      * @Method("GET")
      */
     public function showAction(Request $request, $entityCode, $id)
@@ -174,7 +172,7 @@ class BackendModuleController extends Controller
         // крошки
         $breadcrumbs->addItem(
                 $translator->trans($utils->getEntityTitle($entityCode), [], 'global'),
-                $this->get("router")->generate("backend_entity", ['entityCode' => $entityCode]));
+                $this->get("router")->generate("backend_module_entry", ['entityCode' => $entityCode]));
         $breadcrumbs->addItem($entity);
         $breadcrumbs->addItem($translator->trans('Viewing', [], 'backend'));
         
@@ -190,7 +188,7 @@ class BackendModuleController extends Controller
     /**
      * Displays a form to edit an existing News entity.
      *
-     * @Route("/{entityCode}/{id}/edit", name="backend_entity_edit", defaults={"entityCode" = "news"})
+     * @Route("/{entityCode}/{id}/edit", name="backend_module_entry_edit", defaults={"entityCode" = "news"})
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, $entityCode, $id)
@@ -207,14 +205,14 @@ class BackendModuleController extends Controller
         //крошки
         $breadcrumbs->addItem(
                 $translator->trans($utils->getEntityTitle($entityCode), [], 'global'),
-                $this->get("router")->generate("backend_entity", [ 'entityCode' => $entityCode ]));
-        $breadcrumbs->addItem($entity,  $this->get("router")->generate("backend_entity_show", [ 'id' => $id ]));
+                $this->get("router")->generate("backend_module_entry", [ 'entityCode' => $entityCode ]));
+        $breadcrumbs->addItem($entity,  $this->get("router")->generate("backend_module_entry_show", [ 'id' => $id ]));
         $breadcrumbs->addItem($translator->trans('Editing', [], 'backend'));
 
         //
         $deleteForm = $this->createDeleteForm($entity, $entityCode);
         //
-        $editForm = $this->createForm($this->getEntityTypeNamspace($entityCode), $entity);
+        $editForm = $this->createForm($utils->getEntityTypeNamspace($entityCode), $entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -224,7 +222,7 @@ class BackendModuleController extends Controller
             
             $this->addFlash('alert-success', $translator->trans('Record updated!', [], 'messages'));
 
-            return $this->redirectToRoute('backend_entity_edit', array('entityCode'=>$entityCode, 'id' => $entity->getId()));
+            return $this->redirectToRoute('backend_module_entry_edit', array('entityCode'=>$entityCode, 'id' => $entity->getId()));
         }
 
         return $this->render('backend/entity/edit.html.twig', array(
@@ -238,7 +236,7 @@ class BackendModuleController extends Controller
     /**
      * Deletes a News entity.
      *
-     * @Route("/{entityCode}/{id}/delete/soft", name="backend_entity_delete_soft")
+     * @Route("/{entityCode}/{id}/delete/soft", name="backend_module_entry_delete_soft")
      * @Method("GET")
      */
     public function deleteSoftAction(Request $request, $entityCode, $id)
@@ -262,13 +260,13 @@ class BackendModuleController extends Controller
         
         $this->addFlash('alert-success', $translator->trans('Record deleted!', [], 'messages'));               
 
-        return $this->redirectToRoute('backend_entity', ['entityCode'=>$entityCode]);
+        return $this->redirectToRoute('backend_module_entry', ['entityCode'=>$entityCode]);
     }
 
     /**
      * Deletes a News entity.
      *
-     * @Route("/{entityCode}/{id}", name="backend_entity_delete", defaults={"entityCode" = "news"})
+     * @Route("/{entityCode}/{id}", name="backend_module_entry_delete", defaults={"entityCode" = "news"})
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $entityCode, $id)
@@ -288,7 +286,7 @@ class BackendModuleController extends Controller
             $em->flush();
         }
 
-        return $this->redirectToRoute('backend_entity', ['entityCode'=>$entityCode]);
+        return $this->redirectToRoute('backend_module_entry', ['entityCode'=>$entityCode]);
     }
 
     /**
@@ -301,56 +299,12 @@ class BackendModuleController extends Controller
     private function createDeleteForm($entity, $entityCode)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('backend_entity_delete', [
+            ->setAction($this->generateUrl('backend_module_entry_delete', [
                 'entityCode'=>$entityCode,
                 'id' => $entity->getId()
             ]))
             ->setMethod('DELETE')
             ->getForm()
         ;
-    }
-
-    /**
-     * ########################################
-     * ############    STAFF   ################
-     * ########################################
-     *
-     */
-
-    private function getEntityTypeNamspace($entityCode)
-    {
-        $utils = $this->container->get('utils');
-        $entityCode = $utils->getCamelCase($entityCode);
-
-        return 'AppBundle\\Form\\' . $entityCode . 'Type';
-    }
-
-    private function createNewEntityType($entityCode)
-    {
-        $utils = $this->container->get('utils');
-        $entityCode = $utils->getCamelCase($entityCode);
-
-        $class = 'AppBundle\\Form\\' . $entityCode . 'Type';
-
-        return new $class;
-    }
-
-    private function getEntityNamspace($entityCode)
-    {
-        $utils = $this->container->get('utils');
-        $entityCode = $utils->getCamelCase($entityCode);
-
-        return 'AppBundle\\Entity\\' . $entityCode;
-    }
-
-
-    private function createNewEntity($entityCode)
-    {
-        $utils = $this->container->get('utils');
-        $entityCode = $utils->getCamelCase($entityCode);
-
-        $class = 'AppBundle\\Entity\\Modules\\' . $entityCode;
-
-        return new $class;
     }
 }

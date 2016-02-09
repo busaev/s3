@@ -1,12 +1,12 @@
 <?php
 
-namespace AppBundle\Modules;
+namespace AppBundle\Services\Entities;
 
-use AppBundle\Modules\ModuleInterface;
+use AppBundle\Services\Entities\EntityInterface;
 
 use AppBundle\Entity\ContentBaseEntity;
 
-class DummyModule implements ModuleInterface 
+class Dummy implements EntityInterface 
 {
     private $conteiner = null;
     

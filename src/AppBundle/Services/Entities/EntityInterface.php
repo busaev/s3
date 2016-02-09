@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Modules;
+namespace AppBundle\Services\Entities;
 
 use AppBundle\Entity\ContentBaseEntity;
 
@@ -8,7 +8,7 @@ use AppBundle\Entity\ContentBaseEntity;
  *
  * @author busaev
  */
-interface ModuleInterface {
+interface EntityInterface {
     
     public function init(ContentBaseEntity $entity);
 }

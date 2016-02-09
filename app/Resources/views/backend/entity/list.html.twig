@@ -70,13 +70,13 @@
                                     {% endfor %}
                                 {# Кнопки стандартные #}
                                 {% else %}
-                                    <a class="btn btn-default btn-sm" href="{{ path('backend_entity_show', { 'entityCode': entityCode, 'id': entity.id }) }}"  title="" data-placement="bottom" data-toggle="tooltip" type="button" data-original-title="{{ 'Show'|trans({}, "backend") }}">
+                                    <a class="btn btn-default btn-sm" href="{{ path('backend_module_entry_show', { 'entityCode': entityCode, 'id': entity.id }) }}"  title="" data-placement="bottom" data-toggle="tooltip" type="button" data-original-title="{{ 'Show'|trans({}, "backend") }}">
                                         <i class="fa fa-search"></i>
                                     </a>
-                                    <a class="btn btn-default btn-sm" href="{{ path('backend_entity_edit', { 'entityCode': entityCode, 'id': entity.id }) }}"  title="" data-placement="bottom" data-toggle="tooltip" type="button" data-original-title="{{ 'Edit'|trans({}, "backend") }}">
+                                    <a class="btn btn-default btn-sm" href="{{ path('backend_module_entry_edit', { 'entityCode': entityCode, 'id': entity.id }) }}"  title="" data-placement="bottom" data-toggle="tooltip" type="button" data-original-title="{{ 'Edit'|trans({}, "backend") }}">
                                         <i class="fa fa-pencil"></i>
                                     </a>
-                                    <a class="btn btn-default btn-sm" href="{{ path('backend_entity_history', { 'entityCode': entityCode, 'id': entity.id }) }}"  title="" data-placement="bottom" data-toggle="tooltip" type="button" data-original-title="{{ 'History'|trans({}, "backend") }}">
+                                    <a class="btn btn-default btn-sm" href="{{ path('backend_module_entry_history', { 'entityCode': entityCode, 'id': entity.id }) }}"  title="" data-placement="bottom" data-toggle="tooltip" type="button" data-original-title="{{ 'History'|trans({}, "backend") }}">
                                         <i class="fa fa-history"></i>
                                     </a>
                                 {% endif %}    

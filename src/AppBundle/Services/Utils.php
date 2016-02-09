@@ -47,6 +47,36 @@ class Utils
         }
 
         return $title;
+    }
+    
+    
+    
 
+    public function getEntityTypeNamspace($entityCode)
+    {
+        return 'AppBundle\\Form\\' . $this->getCamelCase($entityCode) . 'Type';
+    }
+
+
+    public function createNewEntity($entityCode)
+    {
+        $entity = 'AppBundle\\Entity\\Modules\\' . $this->getCamelCase($entityCode);
+        return new $entity;
+    }
+
+    /**
+     * @depricated
+     */
+    public function createNewEntityType($entityCode)
+    {
+        return 'AppBundle\\Form\\' . $this->getCamelCase($entityCode) . 'Type';
+    }
+
+    /**
+     * @depricated
+     */
+    public function getEntityNamspace($entityCode)
+    {
+        return 'AppBundle\\Entity\\' . $this->getCamelCase($entityCode);
     }
 }

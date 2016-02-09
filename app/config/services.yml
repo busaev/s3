@@ -55,34 +55,34 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
     
     # коллекция служб отмеченных тегом - app.module
-    app.modules:
-        class: AppBundle\Services\Modules
+    app.entities:
+        class: AppBundle\Services\Entities
         
 
-    # заглушка. служба модуля, будет добавлена в коллекцию службы app.modules
+    # заглушка. служба модуля, будет добавлена в коллекцию службы app.entities
     dummy.module:
-        class: AppBundle\Modules\DummyModule
+        class: AppBundle\Services\Entities\Dummy
         arguments: [ "@service_container" ]
         tags:
-            -  { name: app.module }
+            -  { name: app.entity }
             
-    # новости. служба модуля, будет добавлена в коллекцию службы app.modules
+    # новости. служба модуля, будет добавлена в коллекцию службы app.entities
     page.module:
-        class: AppBundle\Modules\PageModule
+        class: AppBundle\Services\Entities\Page
         arguments: [ "@service_container" ]
         tags:
-            -  { name: app.module }
+            -  { name: app.entity }
             
-    # новости. служба модуля, будет добавлена в коллекцию службы app.modules
+    # новости. служба модуля, будет добавлена в коллекцию службы app.entities
     news.module:
-        class: AppBundle\Modules\NewsModule
+        class: AppBundle\Services\Entities\News
         arguments: [ "@service_container" ]
         tags:
-            -  { name: app.module }
+            -  { name: app.entity }
             
-    # страницы модуля. служба модуля, будет добавлена в коллекцию службы app.modules
+    # страницы модуля. служба модуля, будет добавлена в коллекцию службы app.entities
     module_page.module:
-        class: AppBundle\Modules\ModulePageModule
+        class: AppBundle\Services\Entities\ModulePage
         arguments: [ "@service_container" ]
         tags:
-            -  { name: app.module }
+            -  { name: app.entity }
