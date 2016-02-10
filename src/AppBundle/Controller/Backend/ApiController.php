@@ -14,7 +14,8 @@ use Symfony\Component\VarDumper\VarDumper;
 /**
  * @Route("/backend/api")
  */
-class ApiController {
+class ApiController extends Controller
+{
     
     /**
      * @Route("/{entityCode}/{format}", 
@@ -25,12 +26,13 @@ class ApiController {
      */
     public function listAction(Request $request, $entityCode, $format)
     {   
-        $utils = $this->get('utils');
+        $entities = $this->get("app.entities");        
+        $currentEntity = $entities->$entityCode;
 
         // Основной запрос
         $query = $this->getDoctrine()
-                ->getRepository($utils->getRepositoryLogicalName($entityCode))
-                ->createQueryBuilder('e')->select('e');
+                ->getRepository($currentEntity->getLogicalName())
+                ->createQueryBuilder('e')->select('e.id, e.title');
         
         // Если есть фильтр
         $param = $request->query->get('param');        

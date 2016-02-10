@@ -129,7 +129,7 @@ class NavigationItem
     private $module;
     
     /**
-     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Modules\ModulePage", inversedBy="navigationItems")
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Content\ModulePage", inversedBy="navigationItems")
      * @ORM\JoinColumn(name="idModulePage", referencedColumnName="id")
      */
     private $modulePage;
@@ -500,7 +500,7 @@ class NavigationItem
      *
      * @return NavigationItem
      */
-    public function setModulePage(\AppBundle\Entity\Modules\ModulePage $modulePage = null)
+    public function setModulePage(\AppBundle\Entity\Content\ModulePage $modulePage = null)
     {
         $this->modulePage = $modulePage;
 

@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\Entity;
+namespace AppBundle\Entity\Content;
 
 use AppBundle\Model\RouteSubjectInterface;
 use AppBundle\Annotations\Description;
@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping\MappedSuperclass;
  * @MappedSuperclass
  * @ORM\HasLifecycleCallbacks()
  */
-class ModuleBaseEntity implements RouteSubjectInterface
+class ContentBaseEntity implements RouteSubjectInterface
 {
     
     /**

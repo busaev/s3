@@ -11,7 +11,7 @@ class Page extends BaseEntity implements EntityInterface
     /**
      * @var boolean 
      */
-    private $isContent = true;
+    protected $isContent = true;
     
     public function __construct($container) {
         $this->container=$container;

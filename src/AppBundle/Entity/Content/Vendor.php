@@ -1,12 +1,10 @@
 <?php
 
-namespace AppBundle\Entity\Modules;
+namespace AppBundle\Entity\Content;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
-
-use AppBundle\Entity\ModuleBaseEntity;
 
 use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
@@ -17,7 +15,7 @@ use AppBundle\Annotations\DescriptionObject;
  * @ORM\Table(name="vendors")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\VendorRepository")
  */
-class Vendor extends ModuleBaseEntity
+class Vendor extends ContentBaseEntity
 {
     /**
      * @var integer $id

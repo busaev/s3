@@ -77,7 +77,7 @@ class Module
     private $entryStatus;
     
     /**
-     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\Modules\ModulePage", mappedBy="module")
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\Content\ModulePage", mappedBy="module")
      */
     private $modulePages;
     
@@ -224,7 +224,7 @@ class Module
      *
      * @return Module
      */
-    public function addModulePage(\AppBundle\Entity\Modules\ModulePage $modulePage)
+    public function addModulePage(\AppBundle\Entity\Content\ModulePage $modulePage)
     {
         $this->modulePages[] = $modulePage;
 
@@ -236,7 +236,7 @@ class Module
      *
      * @param \AppBundle\Entity\Modules\ModulePage $modulePage
      */
-    public function removeModulePage(\AppBundle\Entity\Modules\ModulePage $modulePage)
+    public function removeModulePage(\AppBundle\Entity\Content\ModulePage $modulePage)
     {
         $this->modulePages->removeElement($modulePage);
     }

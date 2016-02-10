@@ -1,15 +1,13 @@
 <?php
 
-namespace AppBundle\Entity\Modules;
+namespace AppBundle\Entity\Content;
 
 use Doctrine\ORM\Mapping as ORM;
 
 use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
 
-use AppBundle\Entity\ModuleBaseEntity;
 use Doctrine\Common\Collections\ArrayCollection;
-
 
 /**
  * ModulePage
@@ -18,7 +16,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ModulePageRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class ModulePage extends ModuleBaseEntity
+class ModulePage extends ContentBaseEntity
 {
     
     

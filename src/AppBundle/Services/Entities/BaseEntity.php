@@ -10,10 +10,10 @@ namespace AppBundle\Services\Entities;
 class BaseEntity {
     
     // является ли сущность контентной
-    private $isContent = false;
+    protected $isContent = false;
     
     // название сущности
-    private $entityCode = false;
+    protected $entityCode = false;
 
 
 
@@ -95,7 +95,7 @@ class BaseEntity {
     {
         if($this->getIsContent())
         {
-            return 'AppBundle\\Entity\\Modules\\' . $this->getName();
+            return 'AppBundle\\Entity\\Content\\' . $this->getName();
         }
         return 'AppBundle\\Entity\\' . $this->getName();
     }
@@ -110,6 +110,27 @@ class BaseEntity {
         return 'AppBundle\\Form\\' . $this->getName() . 'Type';
     }
     
+    /**
+     * 
+     * @param type $entityCode
+     * @param type $bundle
+     * @return type
+     */
+    public function getLogicalName()
+    {
+        if($this->getIsContent())
+        {
+            return "AppBundle:Content\\" . $this->getName();
+        }
+        
+        return "AppBundle:" . $this->getName();
+    }
+    
+    /**
+     * Получить новый объект сущности
+     * 
+     * @return entity
+     */
     public function getNew()
     {   
         $entity = $this->getNamespace();

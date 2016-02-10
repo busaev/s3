@@ -50,9 +50,4 @@ class Utils
         
         return implode('_', $ret);
     }
-    
-    public function getRepositoryLogicalName($entityCode, $bundle = "AppBundle")
-    {
-        return $bundle . ":Modules\\" . $this->getCamelCase($entityCode);
-    }
 }
