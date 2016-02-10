@@ -29,8 +29,16 @@ class Annotations
         return $fields;
     }
 
+    /**
+     * @param string $entityCode
+     * @return array
+     */
     public function getObject($entityCode)
     {
+        // @todo разобраться, почему сюда приходит entityName, а не entityCode 
+        $utils = $this->container->get('utils');
+        $entityCode = $utils->getUnderscore($entityCode);
+        
         $converter = new DescriptionObjectConverter(new AnnotationReader());
 
         $entities = $this->container->get('app.entities');        
@@ -43,6 +51,10 @@ class Annotations
 
     public function getProperties($entityCode)
     {
+        // @todo разобраться, почему сюда приходит entityName, а не entityCode 
+        $utils = $this->container->get('utils');
+        $entityCode = $utils->getUnderscore($entityCode);
+        
         $converter = new DescriptionConverter(new AnnotationReader());
 
         $entities = $this->container->get('app.entities');        

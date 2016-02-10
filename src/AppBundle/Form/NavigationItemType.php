@@ -25,22 +25,26 @@ class NavigationItemType extends AbstractType
         $builder
             ->add('navigation', null, [
                 'label'=>'Navigation',
-                'translation_domain' => 'backend'
+                'translation_domain' => 'backend',
+                'required' => true
             ])
             ->add('parentNavigationItem', null, [
                 'label'=>'Parent navigation item',
                 'translation_domain' => 'backend'
             ])
             //->add('childrenNavigationItems')
-            ->add('module')
-            ->add('modulePage')
-            ->add('route', null, [
-                'label'=>'Title',
-                'translation_domain' => 'backend'
-            ])
             ->add('module', null, [
-                'label'=>'Title',
-                'translation_domain' => 'backend'
+                'label'=>'Content',
+                'choice_translation_domain' => 'global',
+                'required' => true
+            ])
+            ->add('modulePage', null, [
+                'choice_translation_domain' => 'global'
+            ])
+            ->add('route', null, [
+                'label'=>'Route path',
+                'translation_domain' => 'backend',
+                'required' => true
             ])
             ->add('title', null, [
                 'label'=>'Title',

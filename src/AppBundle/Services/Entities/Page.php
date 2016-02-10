@@ -29,6 +29,10 @@ class Page extends BaseEntity implements EntityInterface
     public function init($entity=false)
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
+        if(!$entity)
+        {
+            $entity = $this->getNew();
+        }
         
         $module = $em->getRepository('AppBundle:Module')->findOneBy([
             'entity'=>'page'
@@ -46,7 +50,7 @@ class Page extends BaseEntity implements EntityInterface
                            ->findByScrollItemCodeAndScrollCode('delete', 'entry_status');
 
         // Основной запрос
-        return $doctrine->getRepository('AppBundle:Modules\\Page')
+        return $doctrine->getRepository($this->getLogicalName())
                         ->createQueryBuilder('e')
                         ->select('e')
                         ->where('e.entryStatus != :status')

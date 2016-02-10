@@ -3,10 +3,10 @@
         <div id="entities-actions" style="z-index: 10;">
             <ul>
                 <li>
-                    <a href="{{ path('backend_module_entry', {'entityCode': entityCode}) }}" class="btn btn-default">{{ 'Back to the list'|trans({}, "backend") }}</a>
+                    <a href="{{ path('backend_content_entry', {'entityCode': entityCode}) }}" class="btn btn-default">{{ 'Back to the list'|trans({}, "backend") }}</a>
                 </li>
                 <li>
-                    <a href="{{ path('backend_module_entry_edit', {'entityCode': entityCode, 'id': entity.entity.id}) }}" class="btn btn-info">{{ 'Edit'|trans({}, "backend") }}</a>
+                    <a href="{{ path('backend_content_entry_edit', {'entityCode': entityCode, 'id': entity.entity.id}) }}" class="btn btn-info">{{ 'Edit'|trans({}, "backend") }}</a>
                 </li>
             </ul>
         </div>

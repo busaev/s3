@@ -4,6 +4,8 @@ namespace AppBundle\Entity\Content;
 use AppBundle\Model\RouteSubjectInterface;
 use AppBundle\Annotations\Description;
 
+use AppBundle\Entity\Route;
+
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\MappedSuperclass;
 

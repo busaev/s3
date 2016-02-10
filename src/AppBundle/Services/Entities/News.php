@@ -31,6 +31,11 @@ class News extends BaseEntity implements EntityInterface
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
         
+        if(!$entity)
+        {
+            $entity = $this->getNew();
+        }
+        
         $module = $em->getRepository('AppBundle:Module')->findOneBy([
             'entity'=>'news'
         ]);
@@ -47,7 +52,7 @@ class News extends BaseEntity implements EntityInterface
                            ->findByScrollItemCodeAndScrollCode('delete', 'entry_status');
 
         // Основной запрос
-        return $doctrine->getRepository('AppBundle:Modules\\News')
+        return $doctrine->getRepository($this->getLogicalName())
                         ->createQueryBuilder('e')
                         ->select('e')
                         ->where('e.entryStatus != :status')

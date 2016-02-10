@@ -66,6 +66,13 @@ services:
         tags:
             -  { name: app.entity }
             
+    # заглушка. служба модуля, будет добавлена в коллекцию службы app.entities
+    history.entity:
+        class: AppBundle\Services\Entities\History
+        arguments: [ "@service_container" ]
+        tags:
+            -  { name: app.entity }
+            
     # новости. служба модуля, будет добавлена в коллекцию службы app.entities
     page.entity:
         class: AppBundle\Services\Entities\Page
