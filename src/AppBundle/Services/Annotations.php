@@ -33,8 +33,9 @@ class Annotations
     {
         $converter = new DescriptionObjectConverter(new AnnotationReader());
 
-        $entityNameSpace = 'AppBundle\\Entity\\Modules\\' . $entityCode;
-
+        $entities = $this->container->get('app.entities');        
+        $entityNameSpace = $entities->$entityCode->getNamespace();
+        
         $annotations = get_object_vars($converter->object(new $entityNameSpace()));
 
         return $annotations;
@@ -44,7 +45,8 @@ class Annotations
     {
         $converter = new DescriptionConverter(new AnnotationReader());
 
-        $entityNameSpace = 'AppBundle\\Entity\\Modules\\' . $entityCode;
+        $entities = $this->container->get('app.entities');        
+        $entityNameSpace = $entities->$entityCode->getNamespace();
 
         return get_object_vars($converter->props(new $entityNameSpace()));
     }
@@ -52,8 +54,6 @@ class Annotations
     public function fillProperties($entityCode, $entities)
     {
         $utils = $this->container->get('utils');
-
-        $entityCode = $utils->getCamelCase($entityCode);
 
         $return = [
             'object'     => [],

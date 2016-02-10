@@ -2,16 +2,14 @@
 
 namespace AppBundle\Services;
 
-use AppBundle\Modules\EntityInterface;
-
 class Entities {
     
     private $entities;
     
     public function __get($name) {
         if(isset($this->entities[$name])) {
-            if(!($this->entities[$name] instanceof EntityInterface)) {
-                throw new \Exception('Модуль должен быть отимплементирован от ModuleInterface');
+            if(!($this->entities[$name] instanceof Entities\EntityInterface)) {
+                throw new \Exception('Модуль должен быть отимплементирован от EntityInterface');
             }
             return $this->entities[$name];
         }

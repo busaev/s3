@@ -220,11 +220,11 @@ class Module
     /**
      * Add modulePage
      *
-     * @param \AppBundle\Entity\ModulePage $modulePage
+     * @param \AppBundle\Entity\Modules\ModulePage $modulePage
      *
      * @return Module
      */
-    public function addModulePage(\AppBundle\Entity\ModulePage $modulePage)
+    public function addModulePage(\AppBundle\Entity\Modules\ModulePage $modulePage)
     {
         $this->modulePages[] = $modulePage;
 
@@ -234,9 +234,9 @@ class Module
     /**
      * Remove modulePage
      *
-     * @param \AppBundle\Entity\ModulePage $modulePage
+     * @param \AppBundle\Entity\Modules\ModulePage $modulePage
      */
-    public function removeModulePage(\AppBundle\Entity\ModulePage $modulePage)
+    public function removeModulePage(\AppBundle\Entity\Modules\ModulePage $modulePage)
     {
         $this->modulePages->removeElement($modulePage);
     }

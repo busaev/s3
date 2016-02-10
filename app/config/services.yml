@@ -60,29 +60,36 @@ services:
         
 
     # заглушка. служба модуля, будет добавлена в коллекцию службы app.entities
-    dummy.module:
+    dummy.entity:
         class: AppBundle\Services\Entities\Dummy
         arguments: [ "@service_container" ]
         tags:
             -  { name: app.entity }
             
     # новости. служба модуля, будет добавлена в коллекцию службы app.entities
-    page.module:
+    page.entity:
         class: AppBundle\Services\Entities\Page
         arguments: [ "@service_container" ]
         tags:
             -  { name: app.entity }
             
     # новости. служба модуля, будет добавлена в коллекцию службы app.entities
-    news.module:
+    news.entity:
         class: AppBundle\Services\Entities\News
         arguments: [ "@service_container" ]
         tags:
             -  { name: app.entity }
             
     # страницы модуля. служба модуля, будет добавлена в коллекцию службы app.entities
-    module_page.module:
+    module_page.entity:
         class: AppBundle\Services\Entities\ModulePage
+        arguments: [ "@service_container" ]
+        tags:
+            -  { name: app.entity }
+    
+    # элемент навигации. служба модуля, будет добавлена в коллекцию службы app.entities
+    navigation_item.entity:
+        class: AppBundle\Services\Entities\NavigationItem
         arguments: [ "@service_container" ]
         tags:
             -  { name: app.entity }

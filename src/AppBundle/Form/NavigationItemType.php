@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 
-use AppBundle\Entity\Module;
+use AppBundle\Entity\Modules\Module;
 use AppBundle\Entity\ModulePage;
 
 class NavigationItemType extends AbstractType

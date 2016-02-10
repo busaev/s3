@@ -13,9 +13,9 @@ use Symfony\Component\VarDumper\VarDumper;
 use AppBundle\Entity\ContentBaseEntity;
 
 /**
- * @Route("/backend/module/entry")
+ * @Route("/backend/content")
  */
-class ModuleEntryController extends Controller
+class ContentController extends Controller
 {
     /**
      * @Route("/{entityCode}", 
@@ -25,19 +25,9 @@ class ModuleEntryController extends Controller
      */
     public function indexAction(Request $request, $entityCode)
     {   
-        $utils  = $this->get('utils');
+        $entities = $this->get('app.entities');
         
-        $status = $this->getDoctrine()
-                       ->getRepository("AppBundle:ScrollItem")
-                       ->findByScrollItemCodeAndScrollCode('delete', 'entry_status');
-
-        // Основной запрос
-        $query = $this->getDoctrine()
-                ->getRepository($utils->getRepositoryLogicalName($entityCode))
-                ->createQueryBuilder('e')
-                ->select('e')
-                ->where('e.entryStatus != :status')
-                ->setParameter('status', $status->getId());
+        $query = $entities->$entityCode->baseQuery();
         
         // Если есть фильтр
         $param = $request->query->get('param');        
@@ -48,52 +38,11 @@ class ModuleEntryController extends Controller
                 $query->andWhere("e.{$key} = :{$key}");
                 $query->setParameter($key, $value);
             }
-        }    
-        
-        // Если нужен json
-        if('json' == $format)
-        {
-            return new JsonResponse($query->getQuery()->getResult(Query::HYDRATE_ARRAY));
         }
-        
+         
         return $this->render('backend/entity/list.html.twig', array(
             'entityCode' => $entityCode,
             'entities'   => $this->get('annotations')->fillProperties($entityCode, $query->getQuery()->getResult()),
-        ));
-    }
-    
-
-    /**
-     * @Route("/{entityCode}/{id}/history", name="backend_module_entry_history", defaults={"entityCode" = "news"})
-     */
-    public function historyAction(Request $request, $entityCode, $id)
-    {
-        $translator  = $this->get('translator');
-        $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $utils       = $this->get('utils');
-
-        $em = $this->getDoctrine()->getManager();
-
-        // запись
-        $entity = $em->getRepository($utils->getRepositoryLogicalName($entityCode))->find($id);
-        // история записи
-        $histories = $em->getRepository($utils->getRepositoryLogicalName('History'))->findBy([
-          'entity' => $entityCode,
-          'entryId'=> $id
-        ]);
-
-        //крошки
-        $breadcrumbs->addItem(
-                $translator->trans($utils->getEntityTitle($entityCode), [], 'global'),
-                $this->get("router")->generate("backend_module_entry", ['entityCode' => $entityCode]));
-        $breadcrumbs->addItem($entity,$this->get("router")->generate("backend_module_entry_show", ['id' => $id ]));
-        $breadcrumbs->addItem($translator->trans('History', [], 'backend'));
-
-        //рендер
-        return $this->render('backend/entity/history.html.twig', array(
-            'entityCode' => $entityCode,
-            'entity'     => $this->get('annotations')->fillOneProperties($entityCode, $entity),
-            'histories'  => $this->get('annotations')->fillProperties('History', $histories),
         ));
     }
 
@@ -109,39 +58,28 @@ class ModuleEntryController extends Controller
         //службы
         $translator  = $this->get('translator');
         $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $utils       = $this->get("utils");
-        $modules     = $this->get("app.entities");
+        $entities    = $this->get("app.entities");
         
-        $entity      = $utils->createNewEntity($entityCode);
-        $entityType  = $utils->getEntityTypeNamspace($entityCode);
+        $currentEntity = $entities->$entityCode;
         
-        //если это базовый контент - пропускаем объект через модуль
-        if($entity instanceof ContentBaseEntity)
-        {
-            $module = $modules->$entityCode;
-            $entity = $module->init($entity);
-        }
+        $entity = $currentEntity->init();
         
-        $form = $this->createForm($entityType, $entity);
+        $form = $this->createForm($currentEntity->getTypeNamspace(), $entity);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
             
             $this->addFlash('alert-success', $translator->trans('A new entry is added!', [], 'messages'));
 
-            return $this->redirectToRoute('backend_module_entry_show', [
-                'entityCode' => $entityCode,
-                'id' => $entity->getId()
-            ]);
+            return $this->redirectToRoute('backend_module_entry_show', ['entityCode' => $entityCode, 'id' => $entity->getId()]);
         }
-
+        
         //крошки
-        $breadcrumbs->addItem(
-                $translator->trans($utils->getEntityTitle($entityCode), [], 'global'),
-                $this->get("router")->generate("backend_module_entry", ['entityCode' => $entityCode]));
+        $breadcrumbs->addItem($translator->trans($currentEntity->getTitle(), [], 'global'), $this->get("router")->generate("backend_module_entry", ['entityCode' => $entityCode]));
         $breadcrumbs->addItem($translator->trans('Creating', [], 'backend'));
         
         return $this->render('backend/entity/new.html.twig', array(
@@ -149,6 +87,44 @@ class ModuleEntryController extends Controller
             'entity'     => $entity,
             'annotations'=> $this->get('annotations')->fillOneProperties($entityCode, $entity),
             'form'       => $form->createView(),
+        ));
+    }
+    
+
+    /**
+     * @Route("/{entityCode}/{id}/history", name="backend_module_entry_history", defaults={"entityCode" = "news"})
+     */
+    public function historyAction(Request $request, $entityCode, $id)
+    {
+        $translator  = $this->get('translator');
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $utils       = $this->get('utils');
+        $entities    = $this->get("app.entities");
+        
+        $currentEntity = $entities->$entityCode;
+        
+        $em = $this->getDoctrine()->getManager();
+
+        // запись
+        $entity = $em->getRepository($utils->getRepositoryLogicalName($entityCode))->find($id);
+        // история записи
+        $histories = $em->getRepository($utils->getRepositoryLogicalName('History'))->findBy([
+          'entity' => $entityCode,
+          'entryId'=> $id
+        ]);
+
+        //крошки
+        $breadcrumbs->addItem(
+                $translator->trans($currentEntity->getTitle(), [], 'global'),
+                $this->get("router")->generate("backend_module_entry", ['entityCode' => $entityCode]));
+        $breadcrumbs->addItem($entity,$this->get("router")->generate("backend_module_entry_show", ['id' => $id ]));
+        $breadcrumbs->addItem($translator->trans('History', [], 'backend'));
+
+        //рендер
+        return $this->render('backend/entity/history.html.twig', array(
+            'entityCode' => $entityCode,
+            'entity'     => $this->get('annotations')->fillOneProperties($entityCode, $entity),
+            'histories'  => $this->get('annotations')->fillProperties('History', $histories),
         ));
     }
 
@@ -164,6 +140,9 @@ class ModuleEntryController extends Controller
         $translator  = $this->get('translator');
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $utils       = $this->get('utils');
+        $entities    = $this->get("app.entities");
+        
+        $currentEntity = $entities->$entityCode;
 
         $entity = $this->getDoctrine()
                        ->getRepository($utils->getRepositoryLogicalName($entityCode))
@@ -171,7 +150,7 @@ class ModuleEntryController extends Controller
 
         // крошки
         $breadcrumbs->addItem(
-                $translator->trans($utils->getEntityTitle($entityCode), [], 'global'),
+                $translator->trans($currentEntity->getTitle(), [], 'global'),
                 $this->get("router")->generate("backend_module_entry", ['entityCode' => $entityCode]));
         $breadcrumbs->addItem($entity);
         $breadcrumbs->addItem($translator->trans('Viewing', [], 'backend'));
@@ -196,15 +175,18 @@ class ModuleEntryController extends Controller
         $translator  = $this->get('translator');
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $utils       = $this->get('utils');
+        $entities    = $this->get("app.entities");
+        
+        $currentEntity = $entities->$entityCode;
 
         //запись
         $entity = $this->getDoctrine()
                        ->getRepository($utils->getRepositoryLogicalName($entityCode))
                        ->find($id);
-
+        
         //крошки
         $breadcrumbs->addItem(
-                $translator->trans($utils->getEntityTitle($entityCode), [], 'global'),
+                $translator->trans($currentEntity->getTitle(), [], 'global'),
                 $this->get("router")->generate("backend_module_entry", [ 'entityCode' => $entityCode ]));
         $breadcrumbs->addItem($entity,  $this->get("router")->generate("backend_module_entry_show", [ 'id' => $id ]));
         $breadcrumbs->addItem($translator->trans('Editing', [], 'backend'));

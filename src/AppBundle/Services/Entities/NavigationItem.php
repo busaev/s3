@@ -4,7 +4,7 @@ namespace AppBundle\Services\Entities;
 
 use AppBundle\Services\Entities\EntityInterface;
 
-class Dummy extends BaseEntity implements EntityInterface 
+class NavigationItem extends BaseEntity implements EntityInterface 
 {
     protected $container = null;
     
@@ -23,6 +23,10 @@ class Dummy extends BaseEntity implements EntityInterface
     
     public function baseQuery()
     {
-        return false;
+        $doctrine = $this->container->get('doctrine');
+        
+        // Основной запрос
+        return $doctrine->getRepository('AppBundle:NavigationItem')
+                        ->createQueryBuilder('e')->select('e');
     }
 }

@@ -12,7 +12,7 @@ use AppBundle\Entity\ScrollItem;
 use AppBundle\Entity\Role;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Module;
-use AppBundle\Entity\ModulePage;
+use AppBundle\Entity\Modules\ModulePage;
 use AppBundle\Entity\Route;
 use AppBundle\Entity\Navigation;
 use AppBundle\Entity\NavigationItem;

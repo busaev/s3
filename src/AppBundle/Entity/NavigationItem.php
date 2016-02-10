@@ -500,7 +500,7 @@ class NavigationItem
      *
      * @return NavigationItem
      */
-    public function setModulePage(\AppBundle\Entity\ModulePage $modulePage = null)
+    public function setModulePage(\AppBundle\Entity\Modules\ModulePage $modulePage = null)
     {
         $this->modulePage = $modulePage;
 
