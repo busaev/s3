@@ -4,9 +4,14 @@ namespace AppBundle\Services\Entities;
 
 use AppBundle\Services\Entities\EntityInterface;
 
-class Dummy extends BaseEntity implements EntityInterface 
+class Vendor extends BaseEntity implements EntityInterface 
 {
     protected $container = null;
+    
+    /**
+     * @var boolean 
+     */
+    protected $isContent = true;
     
     public function __construct($container) {
         $this->container=$container;

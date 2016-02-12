@@ -13,7 +13,11 @@ class Entities {
             }
             return $this->entities[$name];
         }
-        return $this->entities['dummy'];
+        
+        $entity = $this->entities['dummy'];
+        $entity->entityCode = $name;
+        
+        return $entity;
     }
 
     public function __construct()

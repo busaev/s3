@@ -100,3 +100,10 @@ services:
         arguments: [ "@service_container" ]
         tags:
             -  { name: app.entity }
+    
+    # элемент навигации. служба модуля, будет добавлена в коллекцию службы app.entities
+    vendor.entity:
+        class: AppBundle\Services\Entities\Vendor
+        arguments: [ "@service_container" ]
+        tags:
+            -  { name: app.entity }

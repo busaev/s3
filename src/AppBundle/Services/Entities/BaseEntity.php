@@ -13,9 +13,7 @@ class BaseEntity {
     protected $isContent = false;
     
     // название сущности
-    protected $entityCode = false;
-
-
+    public $entityCode = false;
 
     /**
      * Является ли сущность BaseContent?
@@ -36,6 +34,11 @@ class BaseEntity {
      */
     public function getName()
     {
+        if($this->entityCode)
+        {
+            return $this->container->get('utils')->getCamelCase($this->entityCode);
+        }
+        
         $class = get_class($this);
         
         if(!strpos($class, '\\'))
@@ -152,6 +155,26 @@ class BaseEntity {
         }
         
         return $entity;
+    }
+        
+    /**
+     * 
+     * @return type
+     */
+    public function baseQuery()
+    {
+        $doctrine = $this->container->get('doctrine');
+        
+        // Основной запрос
+        $status = $doctrine->getRepository("AppBundle:ScrollItem")
+                           ->findByScrollItemCodeAndScrollCode('delete', 'entry_status');
+
+        // Основной запрос
+        return $doctrine->getRepository($this->getLogicalName())
+                        ->createQueryBuilder('e')
+                        ->select('e')
+                        ->where('e.entryStatus != :status')
+                        ->setParameter('status', $status->getId());
     }
 
 
