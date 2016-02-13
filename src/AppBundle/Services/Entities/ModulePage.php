@@ -4,43 +4,48 @@ namespace AppBundle\Services\Entities;
 
 use AppBundle\Services\Entities\EntityInterface;
 
-class ModulePage extends BaseEntity implements EntityInterface 
+class ModulePage extends BaseEntity implements EntityInterface
 {
-    private $container = null;
-    
+    protected $container = null;
+
     /**
-     * @var boolean 
+     * @var boolean
      */
-    protected $isContent = true;
-    
+    public $isContent = true;
+
     public function __construct($container) {
         $this->container=$container;
     }
 
     public function getRequest() {
-        return $this->getContainer()->get('request');        
+        return $this->getContainer()->get('request');
     }
-    
-    public function getContainer() 
+
+    public function getContainer()
     {
         return $this->container;
     }
-    
+
     public function init($entity=false)
     {
+        if(!$entity)
+        {
+            $entity = $this->getNew();
+        }
+        
         return $entity->setRoutePath('/module/');
     }
-    
+
     public function baseQuery()
     {
         $doctrine = $this->container->get('doctrine');
-        
+
         // Основной запрос
         $status = $doctrine->getRepository("AppBundle:ScrollItem")
                            ->findByScrollItemCodeAndScrollCode('delete', 'entry_status');
 
         // Основной запрос
-        return $doctrine->getRepository('AppBundle:Modules\\ModulePage')
+        return $doctrine->getRepository($this->getLogicalName())
                         ->createQueryBuilder('e')
                         ->select('e')
                         ->where('e.entryStatus != :status')

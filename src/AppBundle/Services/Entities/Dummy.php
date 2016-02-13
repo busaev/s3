@@ -20,4 +20,17 @@ class Dummy extends BaseEntity implements EntityInterface
     {
         return $this->container;
     }
+    
+    /**
+     * @return type
+     */
+    public function baseQuery()
+    {
+        $doctrine = $this->container->get('doctrine');
+        
+        // Основной запрос
+        return $doctrine->getRepository($this->getLogicalName())
+                        ->createQueryBuilder('e')
+                        ->select('e');
+    }
 }

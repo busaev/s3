@@ -64,7 +64,7 @@ class ModulePage extends ContentBaseEntity
      */
     
     /**
-     * @Description("module", title="\AppBundle\Entity\Module", dataType="string",  property="module.title")
+     * @Description("module", title="Module", dataType="string",  property="module.title")
      * 
      * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Module", inversedBy="modulePages")
      * @ORM\JoinColumn(name="idModule", referencedColumnName="id")
@@ -211,49 +211,6 @@ class ModulePage extends ContentBaseEntity
         return $this->module;
     }
     
-    
-
-    /**
-     * @return string
-     */
-    public function getContentType()
-    {
-        return $this->contentType;
-    }
-    
-    /**
-     * #################################################
-     * #################### Events #####################
-     * #################################################
-     */
-    
-    /**
-     * @ORM\PostPersist
-     */
-   public function initRoute()
-   {
-       $route = new Route;
-       $route->setEntryId($this->getId());
-       $route->setContentType($this->getContentType());
-       $route->setAction($this->getAction($this));
-       $route->setRoutePath($this->getRoutePath());
-       
-       $this->setRoute($route);
-   }
-   
-   /**
-     * @ORM\PreUpdate
-     */
-   public function updateRoute()
-   {
-       $route = $this->getRoute();
-       $route->setContentType($this->getContentType());
-       $route->setAction($this->getAction($this));
-       $route->setRoutePath($this->getRoutePath());
-       
-       $this->setRoute($route);
-   }
-
     /**
      * Add navigationItem
      *
@@ -287,4 +244,21 @@ class ModulePage extends ContentBaseEntity
     {
         return $this->navigationItems;
     }
+    
+
+    /**
+     * @return string
+     */
+    public function getContentType()
+    {
+        return $this->contentType;
+    }
+    
+    
+    /**
+     * #################################################
+     * #################### Events #####################
+     * #################################################
+     */
+
 }

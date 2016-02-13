@@ -4,14 +4,14 @@ namespace AppBundle\Services\Entities;
 
 use AppBundle\Services\Entities\EntityInterface;
 
-class News extends BaseEntity implements EntityInterface 
+class News extends BaseEntity implements EntityInterface
 {
     protected $container = null;
-    
+
     /**
-     * @var boolean 
+     * @var boolean
      */
-    protected $isContent = true;
+    public $isContent = true;
 
 
     public function __construct($container) {
@@ -19,34 +19,34 @@ class News extends BaseEntity implements EntityInterface
     }
 
     public function getRequest() {
-        return $this->getContainer()->get('request');        
+        return $this->getContainer()->get('request');
     }
-    
-    public function getContainer() 
+
+    public function getContainer()
     {
         return $this->container;
     }
-    
+
     public function init($entity=false)
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
-        
+
         if(!$entity)
         {
             $entity = $this->getNew();
         }
-        
+
         $module = $em->getRepository('AppBundle:Module')->findOneBy([
             'entity'=>'news'
         ]);
-        
+
         return $entity->setRoutePath($module->getRoutePath());
     }
-    
+
     public function baseQuery()
     {
         $doctrine = $this->container->get('doctrine');
-        
+
         // Основной запрос
         $status = $doctrine->getRepository("AppBundle:ScrollItem")
                            ->findByScrollItemCodeAndScrollCode('delete', 'entry_status');

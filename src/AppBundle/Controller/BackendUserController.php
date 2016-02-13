@@ -31,18 +31,20 @@ class BackendUserController extends Controller
     {
         $translator  = $this->get('translator');
         $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $utils       = $this->get('utils');
-        
+        $entities    = $this->get("app.entities");
+
         $entityCode = 'user';
-        
+
+        $entity = $entities->$entityCode;
+
         $user = new User();
         $form = $this->createForm('AppBundle\Form\UserNewType', $user);
-        
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            
+
             if('' != trim($user->getPassword()))
             {
                 $encoder = $this->container->get('security.password_encoder');
@@ -50,18 +52,18 @@ class BackendUserController extends Controller
 
                 $user->setPassword($encoded);
             }
-            
+
             $this->addFlash('alert-success', $translator->trans('A new user is added!', [], 'messages'));
-            
+
             $em->persist($user);
             $em->flush();
 
             return $this->redirectToRoute('backend_content_entry', array('entityCode' => $entityCode));
         }
-        
+
         //крошки
         $breadcrumbs->addItem(
-                $translator->trans($utils->getEntityTitle($entityCode), [], 'global'),
+                $translator->trans($entity->getTitle(), [], 'global'),
                 $this->get("router")->generate("backend_content_entry", ['entityCode' => $entityCode]));
         $breadcrumbs->addItem($translator->trans('Creating', [], 'backend'));
 
@@ -83,17 +85,17 @@ class BackendUserController extends Controller
         $translator  = $this->get('translator');
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $utils       = $this->get('utils');
-        
+
         $entityCode = 'user';
-        
+
         $em = $this->getDoctrine()->getManager();
-        
+
         $deleteForm = $this->createDeleteForm($user);
         $editForm = $this->createForm('AppBundle\Form\UserEditType', $user);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            
+
             if('' != trim($user->getPassword()))
             {
                 $encoder = $this->container->get('security.password_encoder');
@@ -101,7 +103,7 @@ class BackendUserController extends Controller
 
                 $user->setPassword($encoded);
             }
-            
+
             $this->addFlash('alert-success', $translator->trans('Record updated!', [], 'messages'));
 
             $em->persist($user);
@@ -109,7 +111,7 @@ class BackendUserController extends Controller
 
             return $this->redirectToRoute('backend_user_edit', array('id' => $user->getId()));
         }
-        
+
         //крошки
         $breadcrumbs->addItem(
                 $translator->trans($utils->getEntityTitle($entityCode), [], 'global'),
@@ -134,16 +136,16 @@ class BackendUserController extends Controller
     public function passwordAction(Request $request, User $user)
     {
         $translator  = $this->get('translator');
-        
+
         $em = $this->getDoctrine()->getManager();
         $userBeforUpdate = $em->getRepository('AppBundle:User')->find($user->getId());
-        
+
         $deleteForm = $this->createDeleteForm($user);
         $editForm = $this->createForm('AppBundle\Form\UserPasswordType', $user);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            
+
             if('' != trim($user->getPassword()))
             {
                 $encoder = $this->container->get('security.password_encoder');
@@ -151,7 +153,7 @@ class BackendUserController extends Controller
 
                 $user->setPassword($encoded);
             }
-            
+
             $this->addFlash('alert-success', $translator->trans('Password updated!', [], 'messages'));
 
             $em->persist($user);

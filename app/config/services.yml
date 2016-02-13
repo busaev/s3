@@ -8,13 +8,14 @@ services:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
 
+    #############################################
+    ########## Службы ядра ######################
+    #############################################
     logger.entity:
         class: AppBundle\EventListener\EntityLogger
         arguments: ["@service_container"]
         tags:
             - { name: doctrine.event_subscriber, connection: default }
-#            - { name: doctrine.event_listener, event: preUpdate }
-#            - { name: doctrine.event_listener, event: postFlush }
     
     # Custom route loader
     app.routing_loader:
@@ -42,6 +43,11 @@ services:
         class: AppBundle\Services\Utils
         arguments: ['@service_container']
 
+    
+    #############################################
+    ######## Службы авторизации #################
+    #############################################
+    
     form_authenticator:
         class: AppBundle\Security\FormAuthenticator
         arguments: ["@router", "@doctrine.orm.entity_manager", "@security.password_encoder", "@translator"]
@@ -53,6 +59,10 @@ services:
     token_authenticator:
         class: AppBundle\Security\TokenAuthenticator
         arguments: ["@doctrine.orm.entity_manager"]
+        
+    #############################################
+    ######## Службы сущностей ###################
+    #############################################
     
     # коллекция служб отмеченных тегом - app.module
     app.entities:

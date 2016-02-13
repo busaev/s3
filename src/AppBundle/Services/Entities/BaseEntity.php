@@ -8,19 +8,19 @@ namespace AppBundle\Services\Entities;
  * @author busaev
  */
 class BaseEntity {
-    
+
     // является ли сущность контентной
-    protected $isContent = false;
-    
+    public $isContent = false;
+
     // название сущности
     public $entityCode = false;
 
     /**
      * Является ли сущность BaseContent?
-     * 
+     *
      * @return boolean
      */
-    public function getIsContent() 
+    public function getIsContent()
     {
         if(isset($this->isContent))
         {
@@ -28,7 +28,7 @@ class BaseEntity {
         }
         return false;
     }
-    
+
     /**
      * Получинь название класса сущности
      */
@@ -38,9 +38,9 @@ class BaseEntity {
         {
             return $this->container->get('utils')->getCamelCase($this->entityCode);
         }
-        
+
         $class = get_class($this);
-        
+
         if(!strpos($class, '\\'))
         {
             $entityName = $class;
@@ -50,13 +50,13 @@ class BaseEntity {
             $tmp = explode('\\', $class);
             $entityName = end($tmp);
         }
-        
+
         return $entityName;
     }
 
     /**
      * Получить код сущности
-     * 
+     *
      * @return string
      */
     public function getCode()
@@ -65,19 +65,19 @@ class BaseEntity {
         {
             return $this->entityCode;
         }
-        
+
         return $this->container->get('utils')->getUnderscore($this->getName());
     }
-    
+
     /**
      * Получить название сущности из аннотаций
-     * 
+     *
      * @return type
      */
     public function getTitle()
     {
         $title = $this->getName();
-        
+
         //аннотации
         $annotations = $this->container->get('annotations')->getAll($this->getCode());
 
@@ -91,7 +91,7 @@ class BaseEntity {
 
     /**
      * Получить namespace для сущности
-     * 
+     *
      * @return string
      */
     public function getNamespace()
@@ -102,19 +102,19 @@ class BaseEntity {
         }
         return 'AppBundle\\Entity\\' . $this->getName();
     }
-    
+
     /**
      * Получить namespace для формы сущности
-     * 
+     *
      * @return string
      */
     public function getTypeNamspace()
     {
         return 'AppBundle\\Form\\' . $this->getName() . 'Type';
     }
-    
+
     /**
-     * 
+     *
      * @param type $entityCode
      * @param type $bundle
      * @return type
@@ -125,25 +125,25 @@ class BaseEntity {
         {
             return "AppBundle:Content\\" . $this->getName();
         }
-        
+
         return "AppBundle:" . $this->getName();
     }
-    
+
     /**
      * Получить новый объект сущности
-     * 
+     *
      * @return entity
      */
     public function getNew()
-    {   
+    {
         $entity = $this->getNamespace();
-        
+
         return new $entity;
     }
-    
+
     /**
      * Дефолтная инициализация новой сущности
-     * 
+     *
      * @param entity $entity
      * @return entity
      */
@@ -153,19 +153,18 @@ class BaseEntity {
         {
             $entity = $this->getNew();
         }
-        
+
         return $entity;
     }
-        
+
     /**
-     * 
      * @return type
      */
     public function baseQuery()
     {
         $doctrine = $this->container->get('doctrine');
-        
-        // Основной запрос
+
+        // Статус
         $status = $doctrine->getRepository("AppBundle:ScrollItem")
                            ->findByScrollItemCodeAndScrollCode('delete', 'entry_status');
 

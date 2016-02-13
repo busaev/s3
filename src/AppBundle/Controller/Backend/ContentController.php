@@ -8,7 +8,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\Query;
-use Symfony\Component\VarDumper\VarDumper;
 
 use AppBundle\Entity\ContentBaseEntity;
 
