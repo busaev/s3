@@ -19,33 +19,33 @@ class NewsType extends AbstractType
         $builder
             ->add('metaTitle', null, [
                 'label'=>'Meta Title',
-                'translation_domain' => 'backend'
+                'translation_domain' => 'global'
             ])
             ->add('metaDescription', null, [
                 'label'=>'Meta Description',
-                'translation_domain' => 'backend'
+                'translation_domain' => 'global'
             ])
             ->add('metaKeywords', null, [
                 'label'=>'Meta Keywords',
-                'translation_domain' => 'backend'
+                'translation_domain' => 'global'
             ])
             ->add('title', null, [
                 'label'=>'Title',
-                'translation_domain' => 'backend',
+                'translation_domain' => 'global',
                 'attr' => [
                     'class'=>'property-title'
                 ]
             ])
             ->add('shortContent', null, [
                 'label'=>'Short content',
-                'translation_domain' => 'backend',
+                'translation_domain' => 'global',
                 'attr' => [
                     'class'=>'wysiwyg'
                 ]
             ])
             ->add('content', null, [
                 'label'=>'Content',
-                'translation_domain' => 'backend',
+                'translation_domain' => 'global',
                 'attr' => [
                     'class'=>'wysiwyg'
                 ]
@@ -62,7 +62,7 @@ class NewsType extends AbstractType
             ])
             ->add('routePath', null, [
                 'label'=>'Route path',
-                'translation_domain' => 'backend',
+                'translation_domain' => 'global',
                 'attr' => [
                     'class'=>'property-routePath'
                 ]

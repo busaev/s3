@@ -20,14 +20,14 @@ class PageType extends AbstractType
         $builder
             ->add('title', null, [
                 'label'=>'Title',
-                'translation_domain' => 'backend',
+                'translation_domain' => 'global',
                 'attr' => [
                     'class'=>'property-title'
                 ]
             ])
             ->add('content', null, [
                 'label'=>'Content',
-                'translation_domain' => 'backend',
+                'translation_domain' => 'global',
                 'attr' => [
                     'class'=>'wysiwyg'
                 ]
@@ -44,7 +44,7 @@ class PageType extends AbstractType
             ])
             ->add('routePath', null, [
                 'label'=>'Route path',
-                'translation_domain' => 'backend',
+                'translation_domain' => 'global',
                 'attr' => [
                     'class'=>'property-routePath'
                 ]

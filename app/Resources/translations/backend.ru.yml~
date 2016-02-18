@@ -1,10 +1,39 @@
 Dashboard: Сводка
 Modules: Модули
+Shop: Магазин
 Title: Название
+Description: Описание
 'Short content': 'Краткое содержание'
+'Short description': 'Краткое описание'
 Content: Содержание
 Hidden: Скрыто
 Disabled: Отключено
+Path: Путь
+Username: 'Имя пользователя'
+Password: Пароль
+Login: Войти
+User: 'Пользователь'
+'User roles': 'Пользовательские роли'
+'Entry status': 'Статус записи'
+Email: Email
+Website: Вэб-сайт
+'Created at': 'Дата и время создания'
+Log: Лог
+Code: Код
+Position: Позиция
+Scroll: Список
 'Back to the list': 'Назад, к списку'
+'Are you sure?': 'Вы уверены?'
+Editing: Редактирование
+Deliting: Удаление
+Viewing: Просмотр
+Creating: Создание
 Edit: Редактировать
+Actions: Действия
+Show: Просмотр
 Delete: Удалить
+Save: Сохранить
+History: История
+'It was': Было
+'It became': Стало
+

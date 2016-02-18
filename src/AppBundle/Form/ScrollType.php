@@ -17,15 +17,15 @@ class ScrollType extends AbstractType
         $builder
             ->add('code', null, [
                 'label'=>'Code',
-                'translation_domain' => 'backend'
+                'translation_domain' => 'global'
             ])
             ->add('title', null, [
                 'label'=>'Title',
-                'translation_domain' => 'backend'
+                'translation_domain' => 'global'
             ])
             ->add('position', null, [
                 'label'=>'Position',
-                'translation_domain' => 'backend'
+                'translation_domain' => 'global'
             ])
         ;
     }

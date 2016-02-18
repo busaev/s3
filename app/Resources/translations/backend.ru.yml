@@ -12,7 +12,7 @@ Path: Путь
 Username: 'Имя пользователя'
 Password: Пароль
 Login: Войти
-User: 'Пользователь'
+User: Пользователь
 'User roles': 'Пользовательские роли'
 'Entry status': 'Статус записи'
 Email: Email
@@ -36,4 +36,5 @@ Save: Сохранить
 History: История
 'It was': Было
 'It became': Стало
-
+Administration: Администрирование
+'Keep me logged in': 'Запомнить меня'

@@ -65,7 +65,7 @@ class BackendUserController extends Controller
         $breadcrumbs->addItem(
                 $translator->trans($entity->getTitle(), [], 'global'),
                 $this->get("router")->generate("backend_content_entry", ['entityCode' => $entityCode]));
-        $breadcrumbs->addItem($translator->trans('Creating', [], 'backend'));
+        $breadcrumbs->addItem($translator->trans('Creating', [], 'global'));
 
         return $this->render('backend/entity/new.html.twig', array(
             'entityCode' => 'user',
@@ -117,7 +117,7 @@ class BackendUserController extends Controller
                 $translator->trans($utils->getEntityTitle($entityCode), [], 'global'),
                 $this->get("router")->generate("backend_content_entry", [ 'entityCode' => $entityCode ]));
         $breadcrumbs->addItem($user,  $this->get("router")->generate("backend_content_entry_show", [ 'id' => $user->getId() ]));
-        $breadcrumbs->addItem($translator->trans('Editing', [], 'backend'));
+        $breadcrumbs->addItem($translator->trans('Editing', [], 'global'));
 
         return $this->render('backend/entity/edit.html.twig', array(
             'entityCode'=>'user',

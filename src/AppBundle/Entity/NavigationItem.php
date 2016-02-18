@@ -50,9 +50,9 @@ class NavigationItem
     /**
      * @var int
      *
-     * @ORM\Column(name="idModule", type="integer", nullable=true)
+     * @ORM\Column(name="moduleEntity", type="string", length=255, nullable=false)
      */
-    private $idModule;
+    private $moduleEntity;
         
     /**
      * @var int
@@ -124,7 +124,7 @@ class NavigationItem
     
     /**
      * @ORM\ManyToOne(targetEntity="Module", inversedBy="navigationItems")
-     * @ORM\JoinColumn(name="idModule", referencedColumnName="id")
+     * @ORM\JoinColumn(name="moduleEntity", referencedColumnName="entity")
      */
     private $module;
     
@@ -153,14 +153,14 @@ class NavigationItem
     }
 
     public function __toString()
-    {
-        $prefix = '';
-        
-        
-        
+    {   
         $title = $this->getTitle();
+        
         if(is_string($title))
+        {
             return $this->getTitlePrefix() . $title;
+        }
+        
         return '';
     }
     
@@ -421,30 +421,17 @@ class NavigationItem
         return $this->entryStatus;
     }
 
-    /**
-     * Set idModule
-     *
-     * @param integer $idModule
-     *
-     * @return NavigationItem
-     */
-    public function setIdModule($idModule)
+    function getModuleEntity()
     {
-        $this->idModule = $idModule;
-
-        return $this;
+        return $this->moduleEntity;
     }
 
-    /**
-     * Get idModule
-     *
-     * @return integer
-     */
-    public function getIdModule()
+    function setModuleEntity($moduleEntity)
     {
-        return $this->idModule;
+        $this->moduleEntity = $moduleEntity;
     }
 
+    
     /**
      * Set module
      *

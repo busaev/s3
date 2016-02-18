@@ -100,7 +100,9 @@ class ModulePage extends ContentBaseEntity
     public function __toString() {
         $title = $this->getTitle();
         if(is_string($title))
+        {
             return $title;
+        }
         return '';
     }
 
@@ -182,8 +184,9 @@ class ModulePage extends ContentBaseEntity
      *
      * @return string
      */
-    public function getAction($entity=false)
+    public function getAction()
     {
+        
         return $this->action;
     }
 

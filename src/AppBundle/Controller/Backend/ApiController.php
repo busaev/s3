@@ -19,12 +19,12 @@ class ApiController extends Controller
     
     /**
      * @Route("/{entityCode}/{format}", 
-     *        name="backend_api_list", 
+     *        name="backend_api", 
      *        requirements={"format" = "json"}, 
      *        defaults={"entityCode" = "news", "format" = "json"}, 
      *        options={"expose"=true})
      */
-    public function listAction(Request $request, $entityCode, $format)
+    public function indexAction(Request $request, $entityCode, $format)
     {   
         $entities = $this->get("app.entities");        
         $currentEntity = $entities->$entityCode;
@@ -32,7 +32,7 @@ class ApiController extends Controller
         // Основной запрос
         $query = $this->getDoctrine()
                 ->getRepository($currentEntity->getLogicalName())
-                ->createQueryBuilder('e')->select('e.id, e.title');
+                ->createQueryBuilder('e')->select('e');
         
         // Если есть фильтр
         $param = $request->query->get('param');        

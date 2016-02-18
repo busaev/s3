@@ -12,7 +12,7 @@ use AppBundle\Entity\ScrollItem;
 use AppBundle\Entity\Role;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Module;
-use AppBundle\Entity\Modules\ModulePage;
+use AppBundle\Entity\Content\ModulePage;
 use AppBundle\Entity\Route;
 use AppBundle\Entity\Navigation;
 use AppBundle\Entity\NavigationItem;
@@ -188,39 +188,106 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         
         
         $manager->flush();
-                
         
         /**
-         *  Страницы модуля
+         *  Страницы модуля PAGE
          */
         
         
-        $moduleNewsListRoutePath = '/news/list/';
-        $moduleNewsListAction    = 'AppBundle:News:list';
+        $modulePageIndexRoutePath = '/page/index/';
+        $modulePageIndexAction    = 'AppBundle:Page:index';
         
         
-        // News - list - route
-        $moduleNewsListRoute = new Route;
-        $moduleNewsListRoute->setContentType('module');
-        $moduleNewsListRoute->setRoutePath($moduleNewsListRoutePath);
-        $moduleNewsListRoute->setAction($moduleNewsListAction);
+        // Route - page - index
+        $modulePageIndexRoute = new Route;
+        $modulePageIndexRoute->setContentType('module');        
+        $modulePageIndexRoute->setEntityCode('page');
+        $modulePageIndexRoute->setRoutePath($modulePageIndexRoutePath);
+        $modulePageIndexRoute->setAction($modulePageIndexAction);
         
-        $manager->persist($moduleNewsListRoute);
+        $manager->persist($modulePageIndexRoute);
         
         
-        // News - list
+        // Page - index
         
-        $moduleNewsList = new ModulePage;
-        $moduleNewsList->setEntryStatus($scrollItemEnable);
-        $moduleNewsList->setModule($moduleNews);
-        $moduleNewsList->setTitle('News list');
-        $moduleNewsList->setMetaDescription('All our news');
-        $moduleNewsList->setMetaKeywords('news, all news');
-        $moduleNewsList->setRoutePath($moduleNewsListRoutePath);
-        $moduleNewsList->setAction($moduleNewsListAction);
-        $moduleNewsList->setRoute($moduleNewsListRoute);
+        $modulePageIndex = new ModulePage;
+        $modulePageIndex->setEntryStatus($scrollItemEnable);
+        $modulePageIndex->setModule($modulePage);
+        $modulePageIndex->setTitle('Page index');
+        $modulePageIndex->setMetaDescription('All our page');
+        $modulePageIndex->setMetaKeywords('page, all page');
+        $modulePageIndex->setAction($modulePageIndexAction);
+        $modulePageIndex->setRoutePath($modulePageIndexRoutePath);
+        $modulePageIndex->setRoute($modulePageIndexRoute);
                 
-        $manager->persist($moduleNewsList);
+        $manager->persist($modulePageIndex);
+        
+        // Page - route
+        
+        $modulePageRoute = new ModulePage;
+        $modulePageRoute->setEntryStatus($scrollItemEnable);
+        $modulePageRoute->setModule($modulePage);
+        $modulePageRoute->setTitle('Page route');
+        $modulePageRoute->setMetaDescription('Page viewing');
+        $modulePageRoute->setMetaKeywords('page, viewing');
+        $modulePageRoute->setAction('AppBundle:Page:route');
+        $modulePageRoute->setRoutePath('__content__');
+        //$modulePageRoute->setRoute($modulePageIndexRoute);
+                
+        $manager->persist($modulePageRoute);
+        
+        
+        $manager->flush();
+        
+        
+                
+        
+        /**
+         *  Страницы модуля NEWS
+         */
+        
+        
+        $moduleNewsIndexRoutePath = '/news/index/';
+        $moduleNewsIndexAction    = 'AppBundle:News:index';
+        
+        
+        // Route - news - index
+        $moduleNewsIndexRoute = new Route;
+        $moduleNewsIndexRoute->setContentType('module');
+        $moduleNewsIndexRoute->setEntityCode('news');
+        $moduleNewsIndexRoute->setRoutePath($moduleNewsIndexRoutePath);
+        $moduleNewsIndexRoute->setAction($moduleNewsIndexAction);
+        
+        $manager->persist($moduleNewsIndexRoute);
+        
+        
+        // News - index
+        
+        $moduleNewsIndex = new ModulePage;
+        $moduleNewsIndex->setEntryStatus($scrollItemEnable);
+        $moduleNewsIndex->setModule($moduleNews);
+        $moduleNewsIndex->setTitle('News index');
+        $moduleNewsIndex->setMetaDescription('All our news');
+        $moduleNewsIndex->setMetaKeywords('news, all news');
+        $moduleNewsIndex->setAction($moduleNewsIndexAction);
+        $moduleNewsIndex->setRoutePath($moduleNewsIndexRoutePath);
+        $moduleNewsIndex->setRoute($moduleNewsIndexRoute);
+                
+        $manager->persist($moduleNewsIndex);
+        
+        // News - route
+        
+        $moduleNewsRoute = new ModulePage;
+        $moduleNewsRoute->setEntryStatus($scrollItemEnable);
+        $moduleNewsRoute->setModule($moduleNews);
+        $moduleNewsRoute->setTitle('News route');
+        $moduleNewsRoute->setMetaDescription('News viewing');
+        $moduleNewsRoute->setMetaKeywords('news, viewing');
+        $moduleNewsRoute->setAction('AppBundle:News:route');
+        $moduleNewsRoute->setRoutePath('__content__');
+        //$moduleNewsRoute->setRoute($moduleNewsIndexRoute);
+                
+        $manager->persist($moduleNewsRoute);
         
         
         $manager->flush();
@@ -238,18 +305,23 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         
         $manager->persist($topNavigation);
         
+//        \Symfony\Component\VarDumper\VarDumper::dump($moduleNews);
+//        \Symfony\Component\VarDumper\VarDumper::dump($moduleNewsIndexRoute);
+//        \Symfony\Component\VarDumper\VarDumper::dump($moduleNewsIndex);
+//        die();
+        
         
         // Top menu items
         $topNavigationItemNews = new NavigationItem;
         $topNavigationItemNews->setEntryStatus($scrollItemEnable);
         $topNavigationItemNews->setModule($moduleNews);
         $topNavigationItemNews->setNavigation($topNavigation);
-        $topNavigationItemNews->setRoutePath($moduleNews->getRoutePath());
+        $topNavigationItemNews->setRoute($moduleNewsIndexRoute);
         $topNavigationItemNews->setPosition(1);
         $topNavigationItemNews->setTitle('News');
-        $topNavigationItemNews->setModulePage($moduleNewsList);
+        $topNavigationItemNews->setModulePage($moduleNewsIndex);
         
-        $manager->persist($topNavigationItemNews);
+        //$manager->persist($topNavigationItemNews);
         
         
         $manager->flush();

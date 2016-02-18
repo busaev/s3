@@ -25,41 +25,43 @@ class NavigationItemType extends AbstractType
         $builder
             ->add('navigation', null, [
                 'label'=>'Navigation',
-                'translation_domain' => 'backend',
+                'translation_domain' => 'global',
                 'required' => true
             ])
             ->add('parentNavigationItem', null, [
-                'label'=>'Parent navigation item',
-                'translation_domain' => 'backend'
+                'label'=>'Parent item',
+                'translation_domain' => 'global'
             ])
-            //->add('childrenNavigationItems')
             ->add('module', null, [
-                'label'=>'Content',
+                'label'=>'Module',
+                'translation_domain' => 'global',
                 'choice_translation_domain' => 'global',
                 'required' => true
             ])
             ->add('modulePage', null, [
+                'label'=>'Module page',
+                'translation_domain' => 'global',
                 'choice_translation_domain' => 'global'
             ])
             ->add('route', null, [
                 'label'=>'Route path',
-                'translation_domain' => 'backend',
+                'translation_domain' => 'global',
                 'required' => true
             ])
             ->add('title', null, [
                 'label'=>'Title',
-                'translation_domain' => 'backend'
+                'translation_domain' => 'global'
             ])
             ->add('target', null, [
                 'label'=>'Target',
-                'translation_domain' => 'backend'
+                'translation_domain' => 'global'
             ])
             ->add('position', null, [
                 'label'=>'Position',
-                'translation_domain' => 'backend'
+                'translation_domain' => 'global'
             ])
             ->add('entryStatus', EntityType::class, [
-               'class' => 'AppBundle:ScrollItem',
+                'class' => 'AppBundle:ScrollItem',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('i')
                         ->join('i.scroll', 's')
@@ -67,6 +69,8 @@ class NavigationItemType extends AbstractType
                         ->andWhere('i.code !=\'delete\'')
                         ->orderBy('i.position', 'ASC');
                 },
+                'translation_domain' => 'global',
+                'choice_translation_domain' => 'global'
             ])
         ;
         

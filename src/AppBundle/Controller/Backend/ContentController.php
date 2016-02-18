@@ -79,7 +79,7 @@ class ContentController extends Controller
         
         //крошки
         $breadcrumbs->addItem($translator->trans($currentEntity->getTitle(), [], 'global'), $this->get("router")->generate("backend_content_entry", ['entityCode' => $entityCode]));
-        $breadcrumbs->addItem($translator->trans('Creating', [], 'backend'));
+        $breadcrumbs->addItem($translator->trans('Creating', [], 'global'));
         
         return $this->render('backend/entity/new.html.twig', array(
             'entityCode' => $entityCode,
@@ -118,7 +118,7 @@ class ContentController extends Controller
                 $translator->trans($currentEntity->getTitle(), [], 'global'),
                 $this->get("router")->generate("backend_content_entry", ['entityCode' => $entityCode]));
         $breadcrumbs->addItem($entity,$this->get("router")->generate("backend_content_entry_show", ['id' => $id ]));
-        $breadcrumbs->addItem($translator->trans('History', [], 'backend'));
+        $breadcrumbs->addItem($translator->trans('History', [], 'global'));
 
         //рендер
         return $this->render('backend/entity/history.html.twig', array(
@@ -152,7 +152,7 @@ class ContentController extends Controller
                 $translator->trans($currentEntity->getTitle(), [], 'global'),
                 $this->get("router")->generate("backend_content_entry", ['entityCode' => $entityCode]));
         $breadcrumbs->addItem($entity);
-        $breadcrumbs->addItem($translator->trans('Viewing', [], 'backend'));
+        $breadcrumbs->addItem($translator->trans('Viewing', [], 'global'));
         
         // рендер
         return $this->render('backend/entity/show.html.twig', array(
@@ -183,7 +183,7 @@ class ContentController extends Controller
         //крошки
         $breadcrumbs->addItem($translator->trans($currentEntity->getTitle(), [], 'global'),$this->get("router")->generate("backend_content_entry", [ 'entityCode' => $entityCode ]));
         $breadcrumbs->addItem($entity,  $this->get("router")->generate("backend_content_entry_show", [ 'id' => $id ]));
-        $breadcrumbs->addItem($translator->trans('Editing', [], 'backend'));
+        $breadcrumbs->addItem($translator->trans('Editing', [], 'global'));
 
         //
         $deleteForm = $this->createDeleteForm($entity, $entityCode);

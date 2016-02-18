@@ -46,6 +46,9 @@ class Route
     
     
     /**
+     * Говорит нам о том, к какому типу принадлежит путь - просмотр контента или 
+     * какой-то экшн контроллера
+     * 
      * @var string
      *
      * @ORM\Column(name="content_type", type="string", length=255, nullable=false)

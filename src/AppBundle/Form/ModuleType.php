@@ -20,16 +20,16 @@ class ModuleType extends AbstractType
         $builder
             ->add('title', null, [
                 'label'=>'Title',
-                'translation_domain' => 'backend'
+                'translation_domain' => 'global'
             ])
             ->add('entity', null, [
                 'label'=>'Entity',
-                'translation_domain' => 'backend',
+                'translation_domain' => 'global',
                 'attr' => []
             ])
             ->add('routePath', null, [
                 'label'=>'Route path',
-                'translation_domain' => 'backend',
+                'translation_domain' => 'global',
                 'attr' => []
             ])
             ->add('entryStatus', EntityType::class, [

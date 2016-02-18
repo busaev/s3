@@ -20,27 +20,27 @@ class ModulePageType extends AbstractType
             ->add('module')
             ->add('metaTitle', null, [
                 'label'=>'Meta Title',
-                'translation_domain' => 'backend'
+                'translation_domain' => 'global'
             ])
             ->add('metaDescription', null, [
                 'label'=>'Meta Description',
-                'translation_domain' => 'backend'
+                'translation_domain' => 'global'
             ])
             ->add('metaKeywords', null, [
                 'label'=>'Meta Keywords',
-                'translation_domain' => 'backend'
+                'translation_domain' => 'global'
             ])
             ->add('title', null, [
                 'label'=>'Title',
-                'translation_domain' => 'backend'
+                'translation_domain' => 'global'
             ])
             ->add('action', null, [
                 'label'=>'Action',
-                'translation_domain' => 'backend'
+                'translation_domain' => 'global'
             ])
             ->add('routePath', null, [
                 'label'=>'Route path',
-                'translation_domain' => 'backend',
+                'translation_domain' => 'global',
                 'attr' => []
             ])
             ->add('entryStatus', EntityType::class, [

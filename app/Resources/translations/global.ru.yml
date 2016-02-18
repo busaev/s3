@@ -6,4 +6,52 @@ Users: Пользователи
 History: История
 Scrolls: Списки
 Page: Страница
+Module: Модуль
+Modules: Модули
+Navigation: Навигация
+'Parent item': 'Родительский элемент'
 'Scroll items': 'Элементы списка'
+'Module Pages': 'Cраницы модуля'
+'Module page': 'Страница модуля'
+'Navigation items': 'Navigation items'
+Dashboard: Сводка
+Shop: Магазин
+Title: Название
+Description: Описание
+'Short content': 'Краткое содержание'
+'Short description': 'Краткое описание'
+Content: Содержание
+Hidden: Скрыто
+Disabled: Отключено
+Enabled: Включено
+Path: Путь
+Username: 'Имя пользователя'
+Password: Пароль
+Login: Войти
+User: Пользователь
+'User roles': 'Пользовательские роли'
+'Entry status': 'Статус записи'
+Email: Email
+Website: Вэб-сайт
+'Created at': 'Дата и время создания'
+Log: Лог
+Code: Код
+Position: Позиция
+Scroll: Список
+'Back to the list': 'Назад, к списку'
+'Are you sure?': 'Вы уверены?'
+Editing: Редактирование
+Deliting: Удаление
+Viewing: Просмотр
+Creating: Создание
+Edit: Редактировать
+Actions: Действия
+Show: Просмотр
+Delete: Удалить
+Save: Сохранить
+History: История
+'It was': Было
+'It became': Стало
+Administration: Администрирование
+'Keep me logged in': 'Запомнить меня'
+'Route path': 'Путь'

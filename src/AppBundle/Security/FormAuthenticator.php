@@ -49,7 +49,7 @@ class FormAuthenticator extends AbstractGuardAuthenticator {
             'homepage' => 'index_index',
             'login'    => 'security_login',
         ],
-        'backend' => [
+        'global' => [
             'homepage' => 'backend_index_index',
             'login'    => 'backend_security_login',
         ],
@@ -160,7 +160,7 @@ class FormAuthenticator extends AbstractGuardAuthenticator {
     private function defineFirewall(Request $request)
     {
         if(preg_match('/^\/backend/i', $request->getPathInfo())) {
-            $this->firewall = 'backend';
+            $this->firewall = 'global';
         }
     }
 

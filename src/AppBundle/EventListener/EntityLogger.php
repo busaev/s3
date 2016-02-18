@@ -93,9 +93,9 @@ class EntityLogger implements EventSubscriber
                 $fieldName =  $meta['properties']['data'][$field]->getTitle();
             }
         
-            $log .= "<strong>" . $translator->trans($fieldName, [], 'backend') . "</strong><br />";
-            $log .= " - " . $translator->trans('It was', [], 'backend') . ": " . $change[0] . "<br />";
-            $log .= " - " . $translator->trans('It became', [], 'backend') . ": " . $change[1] . "<br />";
+            $log .= "<strong>" . $translator->trans($fieldName, [], 'global') . "</strong><br />";
+            $log .= " - " . $translator->trans('It was', [], 'global') . ": " . $change[0] . "<br />";
+            $log .= " - " . $translator->trans('It became', [], 'global') . ": " . $change[1] . "<br />";
             
             if($idx < count($changes)) {
                 $log .= "<br />";

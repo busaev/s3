@@ -19,7 +19,7 @@ class NavigationType extends AbstractType
         $builder
             ->add('title', null, [
                 'label'=>'Title',
-                'translation_domain' => 'backend',
+                'translation_domain' => 'global',
                 'attr' => [
                     'class'=>'property-title'
                 ]

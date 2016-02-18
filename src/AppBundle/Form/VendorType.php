@@ -13,16 +13,16 @@ class VendorType extends AbstractType
         $builder
             ->add('title', null, [
                 'label'=>'Title',
-                'translation_domain' => 'backend'
+                'translation_domain' => 'global'
             ])
             ->add('short_description', null, [
                 'label'=>'Short description',
-                'translation_domain' => 'backend',
+                'translation_domain' => 'global',
                 'required' => false
             ])
             ->add('description', null, [
                 'label'=>'Description',
-                'translation_domain' => 'backend',
+                'translation_domain' => 'global',
                 'required' => false,
                 'attr' => [
                     'class'=>'wysiwyg'
@@ -30,12 +30,12 @@ class VendorType extends AbstractType
             ])
             ->add('routePath', null, [
                 'label'=>'Route path',
-                'translation_domain' => 'backend',
+                'translation_domain' => 'global',
                 'attr' => []
             ])
             ->add('website', null, [
                 'label'=>'Website',
-                'translation_domain' => 'backend'
+                'translation_domain' => 'global'
             ])
         ;
     }

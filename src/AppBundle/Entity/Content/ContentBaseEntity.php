@@ -93,7 +93,7 @@ class ContentBaseEntity implements RouteSubjectInterface
     /**
      * Set title
      *
-     * @param string $title
+     * @param string $metaTitle
      *
      * @return Seo
      */
@@ -117,7 +117,7 @@ class ContentBaseEntity implements RouteSubjectInterface
     /**
      * Set description
      *
-     * @param string $description
+     * @param string $metaDescription
      *
      * @return Seo
      */
@@ -141,7 +141,7 @@ class ContentBaseEntity implements RouteSubjectInterface
     /**
      * Set keywords
      *
-     * @param string $keywords
+     * @param string $metaKeywords
      *
      * @return Seo
      */
@@ -248,10 +248,12 @@ class ContentBaseEntity implements RouteSubjectInterface
      * @param entity $entity
      * @return string
      */
-    private function getAction($entity=false)
+    private function getDefineAction($entity=false)
     {
-        if(is_object($entity) && isset($entity->action))
-            return $entity->action;
+        if(is_object($entity) && is_callable([$entity, 'getAction']))
+        {
+            return $entity->getAction();
+        }
         
         $class = get_class($entity);
         
@@ -299,7 +301,7 @@ class ContentBaseEntity implements RouteSubjectInterface
        $route = new Route;
        $route->setEntryId($this->getId());
        $route->setContentType($this->getContentType());
-       $route->setAction($this->getAction($this));
+       $route->setAction($this->getDefineAction($this));
        $route->setRoutePath($this->getRoutePath());
        $route->setEntityCode($this->getEntityCode());
        
