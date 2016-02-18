@@ -49,12 +49,12 @@
         // получаем страницы модуля
         $('#navigation_item_module').change(function() {
             $.ajax({
-                url : Routing.generate('backend_api', { entityCode: 'module_page', format: 'json' }) + '?param[idModule]=' + $('#navigation_item_module :selected').val(),
+                url : Routing.generate('backend_api', { entityCode: 'module_page', format: 'json' }) + '?param[moduleEntity]=' + $('#navigation_item_module :selected').val(),
                 type: 'json',
                 success: function(json) {
                     $('#navigation_item_modulePage').empty();
                     $.each(json, function(i, value) {
-                        $('#navigation_item_modulePage').append($('<option>').text(value.title).attr('value', value.routePath));
+                        $('#navigation_item_modulePage').append($('<option>').text(value.title).attr('value', value.id).attr('data-code', value.routePath));
                     });
                     // получаем дефолтные маршруты
                     $('#navigation_item_modulePage').change();
@@ -66,8 +66,7 @@
 
         // получаем маршруты, если выбран просмотр
         $('#navigation_item_modulePage').change(function() {
-            
-            if('__content__' !== $('#navigation_item_modulePage :selected').val())
+            if('__content__' !== $('#navigation_item_modulePage :selected').attr('data-code'))
             {
                 $('#navigation_item_route').empty();
                 $('#navigation_item_route').attr('disabled', true);
@@ -77,12 +76,12 @@
             $('#navigation_item_route').attr('disabled', false);
             
             $.ajax({
-                url : Routing.generate('backend_api', { entityCode: 'route', format: 'json' }) + '?param[idModule]=' + $('#navigation_item_module :selected').val(),
+                url : Routing.generate('backend_api', { entityCode: 'route', format: 'json' }) + '?param[entityCode]=' + $('#navigation_item_module :selected').val(),
                 type: 'json',
                 success: function(json) {
                     $('#navigation_item_route').empty();
                     $.each(json, function(i, value) {
-                        $('#navigation_item_route').append($('<option>').text(value.title).attr('value', value.routePath));
+                        $('#navigation_item_route').append($('<option>').text(value.routePath).attr('value', value.id));
                     });
                 }
             });

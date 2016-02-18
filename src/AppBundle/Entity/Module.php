@@ -24,17 +24,6 @@ class Module
      * ###################  Колонки  ###################
      * #################################################
      */
-    
-    /**
-     * @var int
-     * 
-     * @Description("id", title="Id", dataType="integer")
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
 
     /**
      * @var string
@@ -49,7 +38,7 @@ class Module
      * @var string
      * 
      * @Description("entity", title="Entity", dataType="string")
-     *
+     * @ORM\Id
      * @ORM\Column(name="entity", type="string", length=255, unique=true, nullable=false)
      */
     private $entity;
@@ -109,16 +98,6 @@ class Module
      * #############  Gettrs and Setters  ##############
      * #################################################
      */
-    
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
     
     /**
      * Set entity

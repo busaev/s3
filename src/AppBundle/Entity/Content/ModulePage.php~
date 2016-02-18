@@ -240,28 +240,4 @@ class ModulePage extends ContentBaseEntity
      * #################################################
      */
 
-
-    /**
-     * Set moduleEntity
-     *
-     * @param string $moduleEntity
-     *
-     * @return ModulePage
-     */
-    public function setModuleEntity($moduleEntity)
-    {
-        $this->moduleEntity = $moduleEntity;
-
-        return $this;
-    }
-
-    /**
-     * Get moduleEntity
-     *
-     * @return string
-     */
-    public function getModuleEntity()
-    {
-        return $this->moduleEntity;
-    }
 }
