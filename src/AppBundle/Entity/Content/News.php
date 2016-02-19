@@ -76,12 +76,12 @@ class News extends ContentBaseEntity
     
     /**
      * @return string
-     */    
+     */
     public function getEntityCode()
     {
         return 'news';
     }
-
+    
 
     /**
      * #################################################

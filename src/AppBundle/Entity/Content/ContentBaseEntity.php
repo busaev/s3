@@ -285,7 +285,7 @@ class ContentBaseEntity implements RouteSubjectInterface
     {
         return 'page';
     }
-
+        
 
     /**
      * #################################################
