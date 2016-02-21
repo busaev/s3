@@ -76,7 +76,7 @@
             $('#navigation_item_route').attr('disabled', false);
             
             $.ajax({
-                url : Routing.generate('backend_api', { entityCode: 'route', format: 'json' }) + '?param[entityCode]=' + $('#navigation_item_module :selected').val(),
+                url : Routing.generate('backend_api', { entityCode: 'route', format: 'json' }) + '?param[contentType]=content&param[entityCode]=' + $('#navigation_item_module :selected').val(),
                 type: 'json',
                 success: function(json) {
                     $('#navigation_item_route').empty();

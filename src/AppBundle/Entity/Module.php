@@ -11,7 +11,45 @@ use AppBundle\Annotations\DescriptionObject;
 /**
  * Module
  *
- * @DescriptionObject("modules", title="Modules")
+ * @DescriptionObject("modules", title="Modules", description="Mega modules", actions={
+ *   "backend": {
+ *     "show": {
+ *         "title": "Show",
+ *         "icon": "fa-search",
+ *         "route_name": "backend_content_entry_show",
+ *         "params": {
+ *             "id": "entity",
+ *             "entityCode": "module"
+ *         }
+ *     },
+ *     "edit": {
+ *         "title": "Edit",
+ *         "icon": "fa-pencil",
+ *         "route_name": "backend_content_entry_edit",
+ *         "params": {
+ *             "id": "entity",
+ *             "entityCode": "module"
+ *         }
+ *     },
+ *     "history": {
+ *         "title": "History",
+ *         "icon": "fa-history",
+ *         "route_name": "backend_content_entry_history",
+ *         "params": {
+ *             "id": "entity",
+ *             "entityCode": "module"
+ *         }
+ *     }
+ *   },
+ *   "frontend": {
+ *     "add": {
+ *         "route_name": "news_show",
+ *         "params": {
+ *             "id": "id"
+ *         }
+ *     }
+ *   }
+ * })
  * 
  * @ORM\Table(name="modules")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ModuleRepository")
@@ -91,8 +129,14 @@ class Module
             return $title;
         return '';
     }
-
     
+    public function getId()
+    {
+        return $this->getEntity();
+    }
+
+
+
     /**
      * #################################################
      * #############  Gettrs and Setters  ##############

@@ -106,6 +106,16 @@ class ModulePage extends ContentBaseEntity
         return '';
     }
     
+    
+    /**
+     * @return string
+     */
+    public function getContentType()
+    {
+        return $this->contentType;
+    }
+    
+    
     /**
      * @return string
      */

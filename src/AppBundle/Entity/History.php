@@ -58,7 +58,7 @@ class History
     /**
      * @var int
      *
-     * @ORM\Column(name="entryId", type="integer", nullable=true)
+     * @ORM\Column(name="entryId", type="string", nullable=true)
      */
     private $entryId;
 

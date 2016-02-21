@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div id="entities-actions" style="z-index: 10;">
+            <ul>
+                <li>
+                    <a href="{{ path('backend_content_entry', {'entityCode': entityCode}) }}" class="btn btn-default">{{ 'Back to the list'|trans({}, "backend") }}</a>
+                </li>
+                <li>
+                    <a href="{{ path('backend_content_entry_edit', {'entityCode': entityCode, 'id': entity.entity.entity}) }}" class="btn btn-info">{{ 'Edit'|trans({}, "backend") }}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
