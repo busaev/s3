@@ -11,8 +11,8 @@ use AppBundle\Entity\Scroll;
 use AppBundle\Entity\ScrollItem;
 use AppBundle\Entity\Role;
 use AppBundle\Entity\User;
-use AppBundle\Entity\Module;
-use AppBundle\Entity\Content\ModulePage;
+use AppBundle\Entity\Content;
+use AppBundle\Entity\Content\ContentPage;
 use AppBundle\Entity\Route;
 use AppBundle\Entity\Navigation;
 use AppBundle\Entity\NavigationItem;
@@ -156,35 +156,35 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
          */
         
         // News
-        $moduleNews = new Module;
-        $moduleNews->setEntity('news');
-        $moduleNews->setEntryStatus($scrollItemEnable);
-        $moduleNews->setRoutePath('/news/');
-        $moduleNews->setTitle('News');
+        $contentNews = new Content;
+        $contentNews->setEntityCode('news');
+        $contentNews->setEntryStatus($scrollItemEnable);
+        $contentNews->setRoutePath('/news/');
+        $contentNews->setTitle('News');
         
-        $manager->persist($moduleNews);
+        $manager->persist($contentNews);
         
         
         
         // Page
-        $modulePage = new Module;
-        $modulePage->setEntity('page');
-        $modulePage->setEntryStatus($scrollItemEnable);
-        $modulePage->setRoutePath('/page/');
-        $modulePage->setTitle('Page');
+        $contentPage = new Content;
+        $contentPage->setEntityCode('page');
+        $contentPage->setEntryStatus($scrollItemEnable);
+        $contentPage->setRoutePath('/page/');
+        $contentPage->setTitle('Page');
         
-        $manager->persist($modulePage);
+        $manager->persist($contentPage);
         
         
         
         // Vendor
-        $moduleVendor = new Module;
-        $moduleVendor->setEntity('vendor');
-        $moduleVendor->setEntryStatus($scrollItemEnable);
-        $moduleVendor->setRoutePath('/vendor/');
-        $moduleVendor->setTitle('Vendor');
+        $contentVendor = new Content;
+        $contentVendor->setEntityCode('vendor');
+        $contentVendor->setEntryStatus($scrollItemEnable);
+        $contentVendor->setRoutePath('/vendor/');
+        $contentVendor->setTitle('Vendor');
         
-        $manager->persist($moduleVendor);
+        $manager->persist($contentVendor);
         
         
         $manager->flush();
@@ -194,35 +194,35 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
          */
         
         
-        $modulePageIndexRoutePath = '/page/index/';
-        $modulePageIndexAction    = 'AppBundle:Page:index';
+        $contentPageIndexRoutePath = '/page/index/';
+        $contentPageIndexAction    = 'AppBundle:Page:index';
         
         
         // Page - index
         
-        $modulePageIndex = new ModulePage;
-        $modulePageIndex->setEntryStatus($scrollItemEnable);
-        $modulePageIndex->setModule($modulePage);
-        $modulePageIndex->setTitle('Page index');
-        $modulePageIndex->setMetaDescription('All our page');
-        $modulePageIndex->setMetaKeywords('page, all page');
-        $modulePageIndex->setAction($modulePageIndexAction);
-        $modulePageIndex->setRoutePath($modulePageIndexRoutePath);
+        $contentPageIndex = new ContentPage;
+        $contentPageIndex->setEntryStatus($scrollItemEnable);
+        $contentPageIndex->setContent($contentPage);
+        $contentPageIndex->setTitle('Page index');
+        $contentPageIndex->setMetaDescription('All our page');
+        $contentPageIndex->setMetaKeywords('page, all page');
+        $contentPageIndex->setAction($contentPageIndexAction);
+        $contentPageIndex->setRoutePath($contentPageIndexRoutePath);
                 
-        $manager->persist($modulePageIndex);
+        $manager->persist($contentPageIndex);
         
         // Page - route
         
-        $modulePageRoute = new ModulePage;
-        $modulePageRoute->setEntryStatus($scrollItemEnable);
-        $modulePageRoute->setModule($modulePage);
-        $modulePageRoute->setTitle('Page route');
-        $modulePageRoute->setMetaDescription('Page viewing');
-        $modulePageRoute->setMetaKeywords('page, viewing');
-        $modulePageRoute->setAction('AppBundle:Page:route');
-        $modulePageRoute->setRoutePath('__content__');
+        $contentPageRoute = new ContentPage;
+        $contentPageRoute->setEntryStatus($scrollItemEnable);
+        $contentPageRoute->setContent($contentPage);
+        $contentPageRoute->setTitle('Page route');
+        $contentPageRoute->setMetaDescription('Page viewing');
+        $contentPageRoute->setMetaKeywords('page, viewing');
+        $contentPageRoute->setAction('AppBundle:Page:route');
+        $contentPageRoute->setRoutePath('__content__');
                 
-        $manager->persist($modulePageRoute);
+        $manager->persist($contentPageRoute);
         
         
         $manager->flush();
@@ -235,35 +235,35 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
          */
         
         
-        $moduleNewsIndexRoutePath = '/news/index/';
-        $moduleNewsIndexAction    = 'AppBundle:News:index';        
+        $contentNewsIndexRoutePath = '/news/index/';
+        $contentNewsIndexAction    = 'AppBundle:News:index';        
         
         // News - index
         
-        $moduleNewsIndex = new ModulePage;
-        $moduleNewsIndex->setEntryStatus($scrollItemEnable);
-        $moduleNewsIndex->setModule($moduleNews);
-        $moduleNewsIndex->setTitle('News index');
-        $moduleNewsIndex->setMetaDescription('All our news');
-        $moduleNewsIndex->setMetaKeywords('news, all news');
-        $moduleNewsIndex->setAction($moduleNewsIndexAction);
-        $moduleNewsIndex->setRoutePath($moduleNewsIndexRoutePath);
+        $contentNewsIndex = new ContentPage;
+        $contentNewsIndex->setEntryStatus($scrollItemEnable);
+        $contentNewsIndex->setContent($contentNews);
+        $contentNewsIndex->setTitle('News index');
+        $contentNewsIndex->setMetaDescription('All our news');
+        $contentNewsIndex->setMetaKeywords('news, all news');
+        $contentNewsIndex->setAction($contentNewsIndexAction);
+        $contentNewsIndex->setRoutePath($contentNewsIndexRoutePath);
                 
-        $manager->persist($moduleNewsIndex);
+        $manager->persist($contentNewsIndex);
         
         // News - route
         
-        $moduleNewsRoute = new ModulePage;
-        $moduleNewsRoute->setEntryStatus($scrollItemEnable);
-        $moduleNewsRoute->setModule($moduleNews);
-        $moduleNewsRoute->setTitle('News route');
-        $moduleNewsRoute->setMetaDescription('News viewing');
-        $moduleNewsRoute->setMetaKeywords('news, viewing');
-        $moduleNewsRoute->setAction('AppBundle:News:route');
-        $moduleNewsRoute->setRoutePath('__content__');
-        //$moduleNewsRoute->setRoute($moduleNewsIndexRoute);
+        $contentNewsRoute = new ContentPage;
+        $contentNewsRoute->setEntryStatus($scrollItemEnable);
+        $contentNewsRoute->setContent($contentNews);
+        $contentNewsRoute->setTitle('News route');
+        $contentNewsRoute->setMetaDescription('News viewing');
+        $contentNewsRoute->setMetaKeywords('news, viewing');
+        $contentNewsRoute->setAction('AppBundle:News:route');
+        $contentNewsRoute->setRoutePath('__content__');
+        //$contentNewsRoute->setRoute($contentNewsIndexRoute);
                 
-        $manager->persist($moduleNewsRoute);
+        $manager->persist($contentNewsRoute);
         
         $manager->flush();
                 
@@ -280,21 +280,21 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         
         $manager->persist($topNavigation);
         
-//        \Symfony\Component\VarDumper\VarDumper::dump($moduleNews);
-//        \Symfony\Component\VarDumper\VarDumper::dump($moduleNewsIndexRoute);
-//        \Symfony\Component\VarDumper\VarDumper::dump($moduleNewsIndex);
+//        \Symfony\Component\VarDumper\VarDumper::dump($contentNews);
+//        \Symfony\Component\VarDumper\VarDumper::dump($contentNewsIndexRoute);
+//        \Symfony\Component\VarDumper\VarDumper::dump($contentNewsIndex);
 //        die();
         
         
         // Top menu items
         $topNavigationItemNews = new NavigationItem;
         $topNavigationItemNews->setEntryStatus($scrollItemEnable);
-        $topNavigationItemNews->setModule($moduleNews);
+        $topNavigationItemNews->setContent($contentNews);
         $topNavigationItemNews->setNavigation($topNavigation);
-        $topNavigationItemNews->setRoute($moduleNewsIndex->getRoute());
+        $topNavigationItemNews->setRoute($contentNewsIndex->getRoute());
         $topNavigationItemNews->setPosition(1);
         $topNavigationItemNews->setTitle('News');
-        $topNavigationItemNews->setModulePage($moduleNewsIndex);
+        $topNavigationItemNews->setContentPage($contentNewsIndex);
         
         //$manager->persist($topNavigationItemNews);
         

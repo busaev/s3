@@ -36,11 +36,11 @@ class News extends BaseEntity implements EntityInterface
             $entity = $this->getNew();
         }
 
-        $module = $em->getRepository('AppBundle:Module')->findOneBy([
+        $content = $em->getRepository('AppBundle:Content')->findOneBy([
             'entity'=>'news'
         ]);
 
-        return $entity->setRoutePath($module->getRoutePath());
+        return $entity->setRoutePath($content->getRoutePath());
     }
 
     public function baseQuery()

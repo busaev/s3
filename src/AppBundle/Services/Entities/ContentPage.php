@@ -4,7 +4,7 @@ namespace AppBundle\Services\Entities;
 
 use AppBundle\Services\Entities\EntityInterface;
 
-class ModulePage extends BaseEntity implements EntityInterface
+class ContentPage extends BaseEntity implements EntityInterface
 {
     protected $container = null;
 
@@ -33,7 +33,7 @@ class ModulePage extends BaseEntity implements EntityInterface
             $entity = $this->getNew();
         }
         
-        return $entity->setRoutePath('/module/');
+        return $entity->setRoutePath('/content/');
     }
 
     public function baseQuery()

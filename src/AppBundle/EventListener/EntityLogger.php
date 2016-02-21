@@ -52,22 +52,22 @@ class EntityLogger implements EventSubscriber
                 
         if ( $this->skipCondition($entity)) {
             
-            $className = strtolower($this->extractClass($entity));
+            $utils = $this->container->get('utils');
             
-        
-            if ($this->skipCondition($entity)) {            
-                $history = new History();
+            $class = $utils->getObjectClass($entity);
+                   
+            $history = new History();
 
-                $history->setCreatedAt(new \DateTime);
-                $history->setUser($this->container->get('security.token_storage')->getToken()->getUser());
+            $history->setCreatedAt(new \DateTime);
+            $history->setUser($this->container->get('security.token_storage')->getToken()->getUser());
 
-                $history->setEntity($className);
-                $history->setType('add');
-                $history->setEntryId($entity->getId());
-                $history->setLog('Entity created');
+            $history->setEntityCode($utils->getUnderscore($class));
+            $history->setType('add');
+            $history->setEntryId($entity->getId());
+            $history->setLog('Entity created');
 
-                $this->history[] = $history;
-            }
+            $this->history[] = $history;
+            
         }
     }
 
@@ -77,8 +77,9 @@ class EntityLogger implements EventSubscriber
 
         $translator = $this->container->get('translator');
         $annotations = $this->container->get('annotations');
+        $utils = $this->container->get('utils');
         
-        $className = $this->extractClass($entity);
+        $className =  $utils->getObjectClass($entity);
 
         $changes = $args->getEntityChangeSet();
         
@@ -110,7 +111,7 @@ class EntityLogger implements EventSubscriber
             $history->setCreatedAt(new \DateTime);
             $history->setUser($this->container->get('security.token_storage')->getToken()->getUser());
 
-            $history->setEntity(strtolower($className));
+            $history->setEntityCode($utils->getUnderscore($className));
             $history->setType('update');
             $history->setEntryId($entity->getId());
             $history->setLog($log);
@@ -133,7 +134,7 @@ class EntityLogger implements EventSubscriber
                 $history->setCreatedAt(new \DateTime);
                 $history->setUser($this->container->get('security.token_storage')->getToken()->getUser());
 
-                $history->setEntity($className);
+                $history->setEntityCode($className);
                 $history->setType('deleted');
                 $history->setEntryId($entity->getId());
                 $history->setLog('Entity deleted');

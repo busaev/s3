@@ -239,7 +239,7 @@
                     <a href="{{ path('backend_index_index') }}"><i class="fa fa-dashboard fa-fw"></i> {{ 'Dashboard'|trans({}, "backend") }}</a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-cubes fa-fw"></i> {{ 'Modules'|trans({}, "backend") }}<span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-cubes fa-fw"></i> {{ 'Contents'|trans({}, "backend") }}<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
                             <a href="{{ path('backend_content_entry', {'entityCode': 'news'}) }}">{{ 'News'|trans({}, "global") }}</a>
@@ -279,10 +279,10 @@
                     <a href="#"><i class="fa fa-suitcase fa-fw"></i> {{ 'Administration'|trans({}, "backend") }}<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="{{ path('backend_content_entry', {'entityCode': 'module'}) }}">{{ 'Modules'|trans({}, "global") }}</a>
+                            <a href="{{ path('backend_content_entry', {'entityCode': 'content'}) }}">{{ 'Contents'|trans({}, "global") }}</a>
                         </li>
                         <li>
-                            <a href="{{ path('backend_content_entry', {'entityCode': 'module_page'}) }}">{{ 'Module Pages'|trans({}, "global") }}</a>
+                            <a href="{{ path('backend_content_entry', {'entityCode': 'content_page'}) }}">{{ 'Content Pages'|trans({}, "global") }}</a>
                         </li>
                         <li>
                             <a href="{{ path('backend_content_entry', {'entityCode': 'navigation'}) }}">{{ 'Navigation'|trans({}, "global") }}</a>

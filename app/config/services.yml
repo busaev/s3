@@ -64,7 +64,7 @@ services:
     ######## Службы сущностей ###################
     #############################################
     
-    # коллекция служб отмеченных тегом - app.module
+    # коллекция служб отмеченных тегом - app.content
     app.entities:
         class: AppBundle\Services\Entities
         
@@ -98,8 +98,8 @@ services:
             -  { name: app.entity }
             
     # страницы модуля. служба модуля, будет добавлена в коллекцию службы app.entities
-    module_page.entity:
-        class: AppBundle\Services\Entities\ModulePage
+    content_page.entity:
+        class: AppBundle\Services\Entities\ContentPage
         arguments: [ "@service_container" ]
         tags:
             -  { name: app.entity }

@@ -39,7 +39,7 @@ class ContentController extends Controller
             }
         }
          
-        return $this->render('backend/entity/list.html.twig', array(
+        return $this->render('backend/entity/index.html.twig', array(
             'entityCode' => $entityCode,
             'entities'   => $this->get('annotations')->fillProperties($entityCode, $query->getQuery()->getResult()),
         ));
@@ -109,7 +109,7 @@ class ContentController extends Controller
         $entity = $em->getRepository($currentEntity->getLogicalName())->find($id);
         // история записи
         $histories = $em->getRepository($historyEntity->getLogicalName())->findBy([
-          'entity' => $entityCode,
+          'entityCode' => $entityCode,
           'entryId'=> $id
         ]);
 
@@ -221,6 +221,9 @@ class ContentController extends Controller
     {
         $translator = $this->get('translator');
         $utils      = $this->get('utils');
+        $entities    = $this->get("app.entities");
+        
+        $currentEntity = $entities->$entityCode;
         
         $status = $this->getDoctrine()
                        ->getRepository("AppBundle:ScrollItem")
@@ -228,7 +231,7 @@ class ContentController extends Controller
 
         //запись
         $entity = $this->getDoctrine()
-                       ->getRepository($utils->getRepositoryLogicalName($entityCode))
+                       ->getRepository($currentEntity->getLogicalName())
                        ->find($id);
         
         $em = $this->getDoctrine()->getManager();
@@ -250,9 +253,12 @@ class ContentController extends Controller
     public function deleteAction(Request $request, $entityCode, $id)
     {
         $utils  = $this->get('utils');
+        $entities    = $this->get("app.entities");
+        
+        $currentEntity = $entities->$entityCode;
         
         $entity = $this->getDoctrine()
-                       ->getRepository($utils->getRepositoryLogicalName($entityCode))
+                       ->getRepository($currentEntity->getLogicalName())
                        ->find($id);
 
         $form = $this->createDeleteForm($entity, $entityCode);

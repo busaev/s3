@@ -44,9 +44,9 @@ class History
     /**
      * @var string
      *
-     * @ORM\Column(name="entity", type="string", length=255)
+     * @ORM\Column(name="entity_code", type="string", length=255)
      */
-    private $entity;
+    private $entityCode;
 
     /**
      * @var string
@@ -142,25 +142,25 @@ class History
     /**
      * Set entity
      *
-     * @param string $entity
+     * @param string $entityCode
      *
      * @return History
      */
-    public function setEntity($entity)
+    public function setEntityCode($entityCode)
     {
-        $this->entity = $entity;
+        $this->entityCode = $entityCode;
 
         return $this;
     }
 
     /**
-     * Get entity
+     * Get entityCode
      *
      * @return string
      */
-    public function getEntity()
+    public function getEntityCode()
     {
-        return $this->entity;
+        return $this->entityCode;
     }
 
     /**

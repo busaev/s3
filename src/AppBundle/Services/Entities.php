@@ -30,8 +30,8 @@ class Entities {
         $this->entities = array();
     }
 
-    public function addEntity($key, $module)
+    public function addEntity($key, $content)
     {
-        $this->entities[$key] = $module;
+        $this->entities[$key] = $content;
     }
 }

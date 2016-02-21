@@ -20,13 +20,4 @@ class NavigationItem extends BaseEntity implements EntityInterface
     {
         return $this->container;
     }
-    
-    public function baseQuery()
-    {
-        $doctrine = $this->container->get('doctrine');
-        
-        // Основной запрос
-        return $doctrine->getRepository('AppBundle:NavigationItem')
-                        ->createQueryBuilder('e')->select('e');
-    }
 }

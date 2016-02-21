@@ -50,4 +50,26 @@ class Utils
         
         return implode('_', $ret);
     }
+    
+    function getObjectClass($object)
+    {
+        if(!is_object($object))
+        {
+            return false;
+        }
+        
+        $class = get_class($object);
+        
+        if(!strpos($class, '\\'))
+        {
+            $return = $class;
+        }
+        else
+        {
+            $tmp = explode('\\', $class);
+            $return = end($tmp);
+        }
+        
+        return $return;
+    }
 }

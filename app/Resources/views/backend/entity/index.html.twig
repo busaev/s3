@@ -1,47 +1,126 @@
 {% extends 'backend/base.html.twig' %}
 
 {% block body %}
-    <h1>News list</h1>
+    
+    {{ actions(entityCode, 'list') }}
+                    
+    {% include 'backend/flash_messages.html.twig' %}
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Shortcontent</th>
-                <th>Content</th>
-                <th>Hidden</th>
-                <th>Disabled</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for news in news %}
-            <tr>
-                <td><a href="{{ path('backend_content_entry_show', { 'id': news.id }) }}">{{ news.id }}</a></td>
-                <td>{{ news.title }}</td>
-                <td>{{ news.shortContent }}</td>
-                <td>{{ news.content }}</td>
-                <td>{% if news.hidden %}Yes{% else %}No{% endif %}</td>
-                <td>{% if news.disabled %}Yes{% else %}No{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('backend_content_entry_show', { 'id': news.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('backend_content_entry_edit', { 'id': news.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('backend_content_entry_new') }}">Create a new entry</a>
-        </li>
-    </ul>
+    <div class="row">
+        <div class="col-lg-12">
+        
+            {% if entities.object.name is defined %}
+                <h1>{{ entities.object.name|lower|capitalize|trans({}, "global") }}</h1>
+            {% else %}
+                <h1></h1>
+            {% endif %}
+            <table class="table table-hover table-striped" id="entities-list">
+                <thead>
+                    <tr>
+                        {% for field in entities.fields %}
+                            <th>{{ entities.titles[field]|trans({}, "backend") }}</th>
+                        {% endfor %}
+                        <th>{{ 'Actions'|trans({}, "backend") }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for idx, entity in entities.entities %}
+                    <tr>
+                        {% for field in entities.fields %}
+                            {% if entities.dataTypes[field] == 'string' %}
+                                <td>{{ entity[field]|raw }}</td>
+                            {% elseif entities.dataTypes[field] == 'array' %}
+                                <td>
+                                    {% if attribute(entity, field) is iterable %}
+                                        {{ entity[field]|join(', ') }}
+                                    {% endif %}    
+                                </td>
+                            {% elseif entities.dataTypes[field] == 'boolean' %}
+                                <td class="text-center">
+                                    {% if entity[field] == 1 %}
+                                        <i class="fa fa-check-square-o"></i>
+                                    {% else %}
+                                        <i class="fa fa-square-o"></i>
+                                    {% endif %}
+                                </td>
+                            {% else %}
+                                <td>{{ entity[field] }}</td>
+                            {% endif %}
+                        {% endfor %}
+                        <td>
+                            <div class="btn-group" role="group" aria-label="...">
+                                {# Кнопки пришедшие из аннотаций #}
+                                {% if  entities.object.data.actions.backend is defined and entities.object.data.actions.backend|length > 0%}
+                                    {% for actionCode, action in entities.object.data.actions.backend %}
+                                        {% set params = [] %}
+                                        {% if action.params is defined and action.params|length > 0 %}
+                                            {% for key, param in action.params %}
+                                                {# если свойство param у сущности есть - получаем его #}
+                                                {% if entity[param] is defined %}
+                                                    {% set params = params|merge({(key): attribute(entity, param)}) %}
+                                                {# если нет - подстовляем его значение как есть #}
+                                                {% else %}
+                                                    {% set params = params|merge({(key): (param)}) %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                        <a class="btn btn-default btn-sm" href="{{ path(action.route_name, params) }}"  title="" data-placement="bottom" data-toggle="tooltip" type="button" {% if action.title is defined %}data-original-title="{{ action.title|trans({}, "backend") }}"{% endif %}>
+                                            {% if action.icon is defined %}<i class="fa {{action.icon}}"></i>{% endif %}
+                                        </a>
+                                    {% endfor %}
+                                {# Кнопки стандартные #}
+                                {% else %}
+                                    <a class="btn btn-default btn-sm" href="{{ path('backend_content_entry_show', { 'entityCode': entityCode, 'id': entity.id }) }}"  title="" data-placement="bottom" data-toggle="tooltip" type="button" data-original-title="{{ 'Show'|trans({}, "backend") }}">
+                                        <i class="fa fa-search"></i>
+                                    </a>
+                                    <a class="btn btn-default btn-sm" href="{{ path('backend_content_entry_edit', { 'entityCode': entityCode, 'id': entity.id }) }}"  title="" data-placement="bottom" data-toggle="tooltip" type="button" data-original-title="{{ 'Edit'|trans({}, "backend") }}">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <a class="btn btn-default btn-sm" href="{{ path('backend_content_entry_history', { 'entityCode': entityCode, 'id': entity.id }) }}"  title="" data-placement="bottom" data-toggle="tooltip" type="button" data-original-title="{{ 'History'|trans({}, "backend") }}">
+                                        <i class="fa fa-history"></i>
+                                    </a>
+                                {% endif %}    
+                            </div>                        
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+                
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->       
+ 
 {% endblock %}
+
+{% block stylesheets %}
+    {% stylesheets '../app/Resources/public/backend/css/login.css'
+                   '../app/Resources/public/backend/css/common.css' 
+                   '../app/Resources/public/backend/css/entities.css' 
+      filter='cssrewrite' output="css/compiled/login.css" %}
+        <link href="{{ asset_url }}" rel="stylesheet" />
+    {% endstylesheets %}
+{% endblock stylesheets %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function() {
+            $('#entities-list').DataTable({
+                responsive: true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Russian.json"
+                }
+            });
+            $('.btn-group').tooltip({
+                selector: "[data-toggle=tooltip]",
+                container: "body"
+            })
+            {#$('#entities-actions').affix({
+                offset: {
+                  top: 0
+                }
+            })#}
+        } );
+    </script>
+{% endblock javascripts %}

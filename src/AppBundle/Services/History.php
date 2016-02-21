@@ -24,7 +24,7 @@ class History
         $history->setCreatedAt(new \DateTime);
         $history->setCreatedBy($this->tokenStorage->getToken()->getUser()->getId());
         
-        $history->setEntity($entityCode);
+        $history->setEntityCode($entityCode);
         $history->setType($entityType);
         $history->setEntityId($entityId);
         $history->setLog($log);

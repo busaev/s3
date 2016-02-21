@@ -5,7 +5,7 @@ namespace AppBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-use AppBundle\ModuleCompilerPass;
+use AppBundle\ContentCompilerPass;
 
 class AppBundle extends Bundle
 {

@@ -10,13 +10,13 @@ use AppBundle\Annotations\DescriptionObject;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * ModulePage
+ * ContentPage
  *
- * @ORM\Table(name="module_pages")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ModulePageRepository")
+ * @ORM\Table(name="content_pages")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ContentPageRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class ModulePage extends ContentBaseEntity
+class ContentPage extends ContentBaseEntity
 {
     
     
@@ -34,9 +34,9 @@ class ModulePage extends ContentBaseEntity
     /**
      * @var int
      *
-     * @ORM\Column(name="moduleEntity", type="string", length=255, nullable=false)
+     * @ORM\Column(name="entityCode", type="string", length=255, nullable=false)
      */
-    private $moduleEntity;
+    private $entityCode;
     
     /**
      * @var string
@@ -64,15 +64,15 @@ class ModulePage extends ContentBaseEntity
      */
     
     /**
-     * @Description("module", title="Module", dataType="string",  property="module.title")
+     * @Description("content", title="Content", dataType="string",  property="content.title")
      * 
-     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Module", inversedBy="modulePages")
-     * @ORM\JoinColumn(name="moduleEntity", referencedColumnName="entity")
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Content", inversedBy="contentPages")
+     * @ORM\JoinColumn(name="entityCode", referencedColumnName="entityCode")
      */
-    private $module;
+    private $content;
     
     /**
-     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\NavigationItem", mappedBy="modulePage")
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\NavigationItem", mappedBy="contentPage")
      */
     private $navigationItems;
     
@@ -82,7 +82,7 @@ class ModulePage extends ContentBaseEntity
      * #################################################
      */
     
-    private $contentType = 'module';
+    private $contentType = 'action';
     
     
     /**
@@ -97,15 +97,17 @@ class ModulePage extends ContentBaseEntity
     }
 
 
-    public function __toString() {
+    public function __toString()
+    {
         $title = $this->getTitle();
+        
         if(is_string($title))
         {
             return $title;
         }
+        
         return '';
-    }
-    
+    }    
     
     /**
      * @return string
@@ -121,7 +123,7 @@ class ModulePage extends ContentBaseEntity
      */
     public function getEntityCode()
     {
-        return $this->getModule()->getEntity();
+        return $this->getContent()->getEntityCode();
     }
     
 
@@ -140,7 +142,7 @@ class ModulePage extends ContentBaseEntity
      *
      * @param string $title
      *
-     * @return ModulePage
+     * @return ContentPage
      */
     public function setTitle($title)
     {
@@ -165,7 +167,7 @@ class ModulePage extends ContentBaseEntity
      *
      * @param string $action
      *
-     * @return ModulePage
+     * @return ContentPage
      */
     public function setAction($action)
     {
@@ -186,27 +188,27 @@ class ModulePage extends ContentBaseEntity
     }
 
     /**
-     * Set module
+     * Set content
      *
-     * @param \AppBundle\Entity\Module $module
+     * @param \AppBundle\Entity\Content $content
      *
-     * @return ModulePage
+     * @return ContentPage
      */
-    public function setModule(\AppBundle\Entity\Module $module = null)
+    public function setContent(\AppBundle\Entity\Content $content = null)
     {
-        $this->module = $module;
+        $this->content = $content;
 
         return $this;
     }
 
     /**
-     * Get module
+     * Get content
      *
-     * @return \AppBundle\Entity\Module
+     * @return \AppBundle\Entity\Content
      */
-    public function getModule()
+    public function getContent()
     {
-        return $this->module;
+        return $this->content;
     }
     
     /**
@@ -214,7 +216,7 @@ class ModulePage extends ContentBaseEntity
      *
      * @param \AppBundle\Entity\NavigationItem $navigationItem
      *
-     * @return ModulePage
+     * @return ContentPage
      */
     public function addNavigationItem(\AppBundle\Entity\NavigationItem $navigationItem)
     {
@@ -241,37 +243,5 @@ class ModulePage extends ContentBaseEntity
     public function getNavigationItems()
     {
         return $this->navigationItems;
-    }
-        
-    
-    /**
-     * #################################################
-     * #################### Events #####################
-     * #################################################
-     */
-
-
-    /**
-     * Set moduleEntity
-     *
-     * @param string $moduleEntity
-     *
-     * @return ModulePage
-     */
-    public function setModuleEntity($moduleEntity)
-    {
-        $this->moduleEntity = $moduleEntity;
-
-        return $this;
-    }
-
-    /**
-     * Get moduleEntity
-     *
-     * @return string
-     */
-    public function getModuleEntity()
-    {
-        return $this->moduleEntity;
     }
 }

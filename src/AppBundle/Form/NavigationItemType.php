@@ -11,8 +11,8 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 
-use AppBundle\Entity\Modules\Module;
-use AppBundle\Entity\ModulePage;
+use AppBundle\Entity\Contents\Content;
+use AppBundle\Entity\ContentPage;
 
 class NavigationItemType extends AbstractType
 {
@@ -32,14 +32,14 @@ class NavigationItemType extends AbstractType
                 'label'=>'Parent item',
                 'translation_domain' => 'global'
             ])
-            ->add('module', null, [
-                'label'=>'Module',
+            ->add('content', null, [
+                'label'=>'Content',
                 'translation_domain' => 'global',
                 'choice_translation_domain' => 'global',
                 'required' => true
             ])
-            ->add('modulePage', null, [
-                'label'=>'Module page',
+            ->add('contentPage', null, [
+                'label'=>'Content page',
                 'translation_domain' => 'global',
                 'choice_translation_domain' => 'global'
             ])

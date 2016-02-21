@@ -53,7 +53,7 @@ class Route
      *
      * @ORM\Column(name="content_type", type="string", length=255, nullable=false)
      */
-    private $contentType="content"; // content|module
+    private $contentType="content"; // content|content
     
     /**
      * @var int

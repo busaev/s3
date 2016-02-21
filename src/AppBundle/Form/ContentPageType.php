@@ -5,11 +5,10 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\ORM\EntityRepository;
 
-class ModuleType extends AbstractType
+class ContentPageType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -18,14 +17,26 @@ class ModuleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('content')
+            ->add('metaTitle', null, [
+                'label'=>'Meta Title',
+                'translation_domain' => 'global'
+            ])
+            ->add('metaDescription', null, [
+                'label'=>'Meta Description',
+                'translation_domain' => 'global'
+            ])
+            ->add('metaKeywords', null, [
+                'label'=>'Meta Keywords',
+                'translation_domain' => 'global'
+            ])
             ->add('title', null, [
                 'label'=>'Title',
                 'translation_domain' => 'global'
             ])
-            ->add('entity', null, [
-                'label'=>'Entity',
-                'translation_domain' => 'global',
-                'attr' => []
+            ->add('action', null, [
+                'label'=>'Action',
+                'translation_domain' => 'global'
             ])
             ->add('routePath', null, [
                 'label'=>'Route path',
@@ -50,7 +61,7 @@ class ModuleType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Module'
+            'data_class' => 'AppBundle\Entity\Content\ContentPage'
         ));
     }
 }

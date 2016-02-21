@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * NavigationItem
  *
- * @ORM\Table(name="navigation_item")
+ * @ORM\Table(name="navigation_items")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\NavigationItemRepository")
  */
 class NavigationItem
@@ -50,16 +50,16 @@ class NavigationItem
     /**
      * @var int
      *
-     * @ORM\Column(name="moduleEntity", type="string", length=255, nullable=false)
+     * @ORM\Column(name="entityCode", type="string", length=255, nullable=false)
      */
-    private $moduleEntity;
+    private $entityCode;
         
     /**
      * @var int
      *
-     * @ORM\Column(name="idModulePage", type="integer", nullable=true)
+     * @ORM\Column(name="idContentPage", type="integer", nullable=true)
      */
-    private $idModulePage;
+    private $idContentPage;
         
     /**
      * @var int
@@ -123,16 +123,16 @@ class NavigationItem
     private $childrenNavigationItems;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Module", inversedBy="navigationItems")
-     * @ORM\JoinColumn(name="moduleEntity", referencedColumnName="entity")
+     * @ORM\ManyToOne(targetEntity="Content", inversedBy="navigationItems")
+     * @ORM\JoinColumn(name="entityCode", referencedColumnName="entityCode")
      */
-    private $module;
+    private $content;
     
     /**
-     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Content\ModulePage", inversedBy="navigationItems")
-     * @ORM\JoinColumn(name="idModulePage", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Content\ContentPage", inversedBy="navigationItems")
+     * @ORM\JoinColumn(name="idContentPage", referencedColumnName="id")
      */
-    private $modulePage;
+    private $contentPage;
     
     /**
      * @var string
@@ -421,87 +421,87 @@ class NavigationItem
         return $this->entryStatus;
     }
 
-    function getModuleEntity()
+    function getEntityCode()
     {
-        return $this->moduleEntity;
+        return $this->entityCode;
     }
 
-    function setModuleEntity($moduleEntity)
+    function setEntityCode($entityCode)
     {
-        $this->moduleEntity = $moduleEntity;
+        $this->entityCode = $entityCode;
     }
 
     
     /**
-     * Set module
+     * Set content
      *
-     * @param \AppBundle\Entity\Module $module
+     * @param \AppBundle\Entity\Content $content
      *
      * @return NavigationItem
      */
-    public function setModule(\AppBundle\Entity\Module $module = null)
+    public function setContent(\AppBundle\Entity\Content $content = null)
     {
-        $this->module = $module;
+        $this->content = $content;
 
         return $this;
     }
 
     /**
-     * Get module
+     * Get content
      *
-     * @return \AppBundle\Entity\Module
+     * @return \AppBundle\Entity\Content
      */
-    public function getModule()
+    public function getContent()
     {
-        return $this->module;
+        return $this->content;
     }
 
     /**
-     * Set idModulePage
+     * Set idContentPage
      *
-     * @param integer $idModulePage
+     * @param integer $idContentPage
      *
      * @return NavigationItem
      */
-    public function setIdModulePage($idModulePage)
+    public function setIdContentPage($idContentPage)
     {
-        $this->idModulePage = $idModulePage;
+        $this->idContentPage = $idContentPage;
 
         return $this;
     }
 
     /**
-     * Get idModulePage
+     * Get idContentPage
      *
      * @return integer
      */
-    public function getIdModulePage()
+    public function getIdContentPage()
     {
-        return $this->idModulePage;
+        return $this->idContentPage;
     }
 
     /**
-     * Set modulePage
+     * Set contentPage
      *
-     * @param \AppBundle\Entity\ModulePage $modulePage
+     * @param \AppBundle\Entity\ContentPage $contentPage
      *
      * @return NavigationItem
      */
-    public function setModulePage(\AppBundle\Entity\Content\ModulePage $modulePage = null)
+    public function setContentPage(\AppBundle\Entity\Content\ContentPage $contentPage = null)
     {
-        $this->modulePage = $modulePage;
+        $this->contentPage = $contentPage;
 
         return $this;
     }
 
     /**
-     * Get modulePage
+     * Get contentPage
      *
-     * @return \AppBundle\Entity\ModulePage
+     * @return \AppBundle\Entity\ContentPage
      */
-    public function getModulePage()
+    public function getContentPage()
     {
-        return $this->modulePage;
+        return $this->contentPage;
     }
 
     /**

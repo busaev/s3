@@ -81,7 +81,7 @@ class ContentBaseEntity implements RouteSubjectInterface
     /**
      * @var string
      */
-    private $contentType="content"; // content|module
+    private $contentType="content"; // content|action
     
     /**
      * Сущность по-умолчанию
