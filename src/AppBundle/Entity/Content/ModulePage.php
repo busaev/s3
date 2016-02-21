@@ -105,6 +105,15 @@ class ModulePage extends ContentBaseEntity
         }
         return '';
     }
+    
+    /**
+     * @return string
+     */
+    public function getEntityCode()
+    {
+        return $this->getModule()->getEntity();
+    }
+    
 
     /**
      * Get id
@@ -223,16 +232,7 @@ class ModulePage extends ContentBaseEntity
     {
         return $this->navigationItems;
     }
-    
-
-    /**
-     * @return string
-     */
-    public function getContentType()
-    {
-        return $this->contentType;
-    }
-    
+        
     
     /**
      * #################################################

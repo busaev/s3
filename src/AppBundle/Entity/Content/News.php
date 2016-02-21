@@ -59,6 +59,19 @@ class News extends ContentBaseEntity
      */
     private $content;
     
+    /**
+     * #################################################
+     * #################  Не колонки  ##################
+     * #################################################
+     */
+    
+    /**
+     * Сущность по-умолчанию
+     * 
+     * @var string
+     */
+    private $entityCode ="news";
+    
     
     /**
      * 
@@ -79,7 +92,7 @@ class News extends ContentBaseEntity
      */
     public function getEntityCode()
     {
-        return 'news';
+        return $this->entityCode;
     }
     
 

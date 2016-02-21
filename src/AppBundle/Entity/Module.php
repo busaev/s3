@@ -24,15 +24,6 @@ class Module
      * ###################  Колонки  ###################
      * #################################################
      */
-
-    /**
-     * @var string
-     * 
-     * @Description("title", title="Title", dataType="string")
-     *
-     * @ORM\Column(name="title", type="string", length=255, nullable=true)
-     */
-    private $title;
     
     /**
      * @var string
@@ -42,6 +33,15 @@ class Module
      * @ORM\Column(name="entity", type="string", length=255, unique=true, nullable=false)
      */
     private $entity;
+
+    /**
+     * @var string
+     * 
+     * @Description("title", title="Title", dataType="string")
+     *
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
+     */
+    private $title;
     
     /**
      * @var string

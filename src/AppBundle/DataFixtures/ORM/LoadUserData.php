@@ -198,16 +198,6 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $modulePageIndexAction    = 'AppBundle:Page:index';
         
         
-        // Route - page - index
-        $modulePageIndexRoute = new Route;
-        $modulePageIndexRoute->setContentType('module');        
-        $modulePageIndexRoute->setEntityCode('page');
-        $modulePageIndexRoute->setRoutePath($modulePageIndexRoutePath);
-        $modulePageIndexRoute->setAction($modulePageIndexAction);
-        
-        $manager->persist($modulePageIndexRoute);
-        
-        
         // Page - index
         
         $modulePageIndex = new ModulePage;
@@ -218,7 +208,6 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $modulePageIndex->setMetaKeywords('page, all page');
         $modulePageIndex->setAction($modulePageIndexAction);
         $modulePageIndex->setRoutePath($modulePageIndexRoutePath);
-        $modulePageIndex->setRoute($modulePageIndexRoute);
                 
         $manager->persist($modulePageIndex);
         
@@ -232,7 +221,6 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $modulePageRoute->setMetaKeywords('page, viewing');
         $modulePageRoute->setAction('AppBundle:Page:route');
         $modulePageRoute->setRoutePath('__content__');
-        //$modulePageRoute->setRoute($modulePageIndexRoute);
                 
         $manager->persist($modulePageRoute);
         
@@ -248,18 +236,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         
         
         $moduleNewsIndexRoutePath = '/news/index/';
-        $moduleNewsIndexAction    = 'AppBundle:News:index';
-        
-        
-        // Route - news - index
-        $moduleNewsIndexRoute = new Route;
-        $moduleNewsIndexRoute->setContentType('module');
-        $moduleNewsIndexRoute->setEntityCode('news');
-        $moduleNewsIndexRoute->setRoutePath($moduleNewsIndexRoutePath);
-        $moduleNewsIndexRoute->setAction($moduleNewsIndexAction);
-        
-        $manager->persist($moduleNewsIndexRoute);
-        
+        $moduleNewsIndexAction    = 'AppBundle:News:index';        
         
         // News - index
         
@@ -271,7 +248,6 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleNewsIndex->setMetaKeywords('news, all news');
         $moduleNewsIndex->setAction($moduleNewsIndexAction);
         $moduleNewsIndex->setRoutePath($moduleNewsIndexRoutePath);
-        $moduleNewsIndex->setRoute($moduleNewsIndexRoute);
                 
         $manager->persist($moduleNewsIndex);
         
@@ -288,7 +264,6 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         //$moduleNewsRoute->setRoute($moduleNewsIndexRoute);
                 
         $manager->persist($moduleNewsRoute);
-        
         
         $manager->flush();
                 
@@ -316,7 +291,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $topNavigationItemNews->setEntryStatus($scrollItemEnable);
         $topNavigationItemNews->setModule($moduleNews);
         $topNavigationItemNews->setNavigation($topNavigation);
-        $topNavigationItemNews->setRoute($moduleNewsIndexRoute);
+        $topNavigationItemNews->setRoute($moduleNewsIndex->getRoute());
         $topNavigationItemNews->setPosition(1);
         $topNavigationItemNews->setTitle('News');
         $topNavigationItemNews->setModulePage($moduleNewsIndex);

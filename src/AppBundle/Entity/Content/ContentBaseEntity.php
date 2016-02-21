@@ -83,6 +83,13 @@ class ContentBaseEntity implements RouteSubjectInterface
      */
     private $contentType="content"; // content|module
     
+    /**
+     * Сущность по-умолчанию
+     * 
+     * @var string
+     */
+    private $entityCode ="page";
+    
     
     /**
      * #################################################
@@ -283,7 +290,7 @@ class ContentBaseEntity implements RouteSubjectInterface
      */
     public function getEntityCode()
     {
-        return 'page';
+        return $this->entityCode;
     }
         
 
