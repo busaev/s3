@@ -1,5 +1,6 @@
 Search: Поиск
 News: Новости
+Pages: Страницы
 Vendors: Производители
 Brends: Бренды
 Users: Пользователи
@@ -9,6 +10,9 @@ Page: Страница
 Module: Модуль
 Modules: Модули
 Navigation: Навигация
+'Navigation items': 'Элементы навигации'
+Contents: Контент
+'Content pages': 'Страницы контента'
 'Parent item': 'Родительский элемент'
 'Scroll items': 'Элементы списка'
 'Module Pages': 'Cраницы модуля'

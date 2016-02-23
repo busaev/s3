@@ -22,7 +22,7 @@ class ContentType extends AbstractType
                 'label'=>'Title',
                 'translation_domain' => 'global'
             ])
-            ->add('entity', null, [
+            ->add('entityCode', null, [
                 'label'=>'Entity',
                 'translation_domain' => 'global',
                 'attr' => []

@@ -13,6 +13,8 @@ use AppBundle\Annotations\DescriptionObject;
 /**
  * AppBundle\Entity\News
  * 
+ * @DescriptionObject("news", title="News")
+ * 
  * @ORM\Table(name="news")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\NewsRepository")
  */

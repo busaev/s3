@@ -16,14 +16,17 @@
     <!-- Bootstrap Core CSS -->
     <link href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- MetisMenu CSS -->
-    <link href="/assets/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="/assets/sb-admin-2.1/dist/css/sb-admin-2.css" rel="stylesheet">
-
     <!-- Custom Fonts -->
     <link href="/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    
+    <!-- Font Roboto -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    
+    {% stylesheets '../app/Resources/public/frontend/css/fonts.css' 
+                   '../app/Resources/public/frontend/css/demo.css' 
+      filter='cssrewrite' output="css/compiled/frontend.css" %}
+        <link href="{{ asset_url }}" rel="stylesheet" />
+    {% endstylesheets %}
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -41,25 +44,6 @@
 
         <!-- Bootstrap Core JavaScript -->
         <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
-
-        <!-- Metis Menu Plugin JavaScript -->
-        <script src="/assets/metisMenu/dist/metisMenu.min.js"></script>
-
-        <!-- Custom Theme JavaScript -->
-        <script src="/assets/sb-admin-2.1/dist/js/sb-admin-2.js"></script>
-
-        <!-- Page-Level Demo Scripts - Notifications - Use for reference -->
-        <script>
-        // tooltip demo
-        $('.tooltip-demo').tooltip({
-            selector: "[data-toggle=tooltip]",
-            container: "body"
-        })
-
-        // popover demo
-        $("[data-toggle=popover]")
-            .popover()
-        </script>
 
         {% block javascripts %}{% endblock %}
     </body>

@@ -35,7 +35,7 @@ class Page extends BaseEntity implements EntityInterface
         }
 
         $content = $em->getRepository('AppBundle:Content')->findOneBy([
-            'entity'=>'page'
+            'entityCode'=>'page'
         ]);
 
         return $entity->setRoutePath($content->getRoutePath());

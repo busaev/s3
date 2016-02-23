@@ -37,7 +37,7 @@ class News extends BaseEntity implements EntityInterface
         }
 
         $content = $em->getRepository('AppBundle:Content')->findOneBy([
-            'entity'=>'news'
+            'entityCode'=>'news'
         ]);
 
         return $entity->setRoutePath($content->getRoutePath());

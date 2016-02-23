@@ -10,7 +10,7 @@ use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
 
 /**
- * @DescriptionObject("brends")
+ * @DescriptionObject("vendors", title="Brends")
  *
  * @ORM\Table(name="vendors")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\VendorRepository")

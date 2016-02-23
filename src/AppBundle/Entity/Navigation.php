@@ -6,9 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use AppBundle\Annotations\Description;
+use AppBundle\Annotations\DescriptionObject;
 
 /**
  * Navigation
+ * 
+ * @DescriptionObject("navigation", title="Navigation")
  *
  * @ORM\Table(name="navigations")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\NavigationRepository")

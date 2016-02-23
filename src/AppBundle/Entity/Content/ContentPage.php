@@ -11,6 +11,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * ContentPage
+ * 
+ * @DescriptionObject("content_page", title="Content pages")
  *
  * @ORM\Table(name="content_pages")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ContentPageRepository")

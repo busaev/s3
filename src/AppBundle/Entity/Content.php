@@ -18,7 +18,7 @@ use AppBundle\Annotations\DescriptionObject;
  *         "icon": "fa-search",
  *         "route_name": "backend_content_entry_show",
  *         "params": {
- *             "id": "entity",
+ *             "id": "entityCode",
  *             "entityCode": "content"
  *         }
  *     },
@@ -27,7 +27,7 @@ use AppBundle\Annotations\DescriptionObject;
  *         "icon": "fa-pencil",
  *         "route_name": "backend_content_entry_edit",
  *         "params": {
- *             "id": "entity",
+ *             "id": "entityCode",
  *             "entityCode": "content"
  *         }
  *     },
@@ -36,7 +36,7 @@ use AppBundle\Annotations\DescriptionObject;
  *         "icon": "fa-history",
  *         "route_name": "backend_content_entry_history",
  *         "params": {
- *             "id": "entity",
+ *             "id": "entityCode",
  *             "entityCode": "content"
  *         }
  *     }

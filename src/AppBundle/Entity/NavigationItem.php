@@ -3,11 +3,15 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use AppBundle\Annotations\Description;
 use Doctrine\Common\Collections\ArrayCollection;
+
+use AppBundle\Annotations\Description;
+use AppBundle\Annotations\DescriptionObject;
 
 /**
  * NavigationItem
+ * 
+ * @DescriptionObject("navigation_items", title="Navigation items")
  *
  * @ORM\Table(name="navigation_items")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\NavigationItemRepository")

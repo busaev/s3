@@ -14,6 +14,10 @@ class Utils
     /**
      * underscore to CamelCase
      * 
+     * Это не совсем камел кейс
+     * Первая буква тоже большая
+     * возвращает entity name
+     * 
      * @param string $input
      * @return string
      */
