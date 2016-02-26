@@ -1,2 +1,4 @@
 {# empty Twig template #}
-frontend - entity - index
+{% for entity in entities.entities %}
+    <a href="{{entity.route}}">{{entity.title}}</a>
+{% endfor %}

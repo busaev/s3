@@ -23,6 +23,11 @@ services:
         arguments: ["@service_container"]
         tags:
             - { name: routing.loader }
+
+    # Помошник для шаблонов
+    app.tpl:
+        class: AppBundle\Services\Tpl
+        arguments: ["@service_container"]
          
     # Twig extensions
     app.twig_extension:

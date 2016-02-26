@@ -141,7 +141,7 @@ class NavigationItem
     /**
      * @var string
      * 
-     * @Description("route", title="Route", dataType="string",  property="route.route_path")
+     * @Description("route", title="Route", dataType="string",  property="route.routePath")
      *
      * @ORM\ManyToOne(targetEntity="Route", inversedBy="navigationItems")
      * @ORM\JoinColumn(name="idRoute", referencedColumnName="id")

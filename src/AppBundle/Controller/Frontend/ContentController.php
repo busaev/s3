@@ -25,6 +25,7 @@ class ContentController extends Controller
     public function indexAction(Request $request, $entityCode, $params=null)
     {   
         $entities = $this->get('app.entities');
+        $tpl      = $this->get('app.tpl');
         
         $entity = $entities->$entityCode;
         
@@ -39,8 +40,8 @@ class ContentController extends Controller
                 $query->setParameter($key, $value);
             }
         }
-         
-        return $this->render($entity->getTpl('frontend/entity/index.html.twig') , array(
+        
+        return $this->render($tpl->getTpl($entityCode) , array(
             'entityCode' => $entityCode,
             'entities'   => $this->get('annotations')->fillProperties($entityCode, $query->getQuery()->getResult()),
         ));

@@ -31,12 +31,12 @@ class DescriptionConverter
             $properties = array_merge($parentObject->getProperties(), $properties);
         }
         
-        foreach ($properties as $item) {
-            // fetch the @StandardObject annotation from the annotation reader
+        foreach ($properties as $item) 
+        {
             $annotation = $this->reader->getPropertyAnnotation($item, $this->annotationClass);
-
-            if (null !== $annotation) {
             
+            if (null !== $annotation) 
+            {
                 $propertyName = $annotation->getPropertyName();
                 
                 $convertedObject->$propertyName = $annotation;
