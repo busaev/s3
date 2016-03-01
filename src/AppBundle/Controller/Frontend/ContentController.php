@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\Query;
 
@@ -19,14 +20,27 @@ class ContentController extends Controller
     /**
      * @Route("/{entityCode}", 
      *        name="frontend_content_entry", 
-     *        defaults={"entityCode" = "news", "params" = "false"}, 
+     *        defaults={"params" = "false"}, 
      *        options={"expose"=true})
      */
-    public function indexAction(Request $request, $entityCode, $params=null)
+    public function indexAction(Request $request, $params=null)
     {   
+        $em = $this->getDoctrine()->getManager();
+        
         $entities = $this->get('app.entities');
         $tpl      = $this->get('app.tpl');
         
+        $route = $em->getRepository('AppBundle:Route')->findOneBy([
+            'routePath' => $request->getPathInfo()
+        ]);
+        
+        if( NULL === $route )
+        {
+            throw new NotFoundHttpException('Page not found');
+        }
+        
+        
+        $entityCode = $route->getEntityCode();
         $entity = $entities->$entityCode;
         
         $query = $entity->baseQuery();
@@ -41,10 +55,39 @@ class ContentController extends Controller
             }
         }
         
+        
         return $this->render($tpl->getTpl($entityCode) , array(
             'entityCode' => $entityCode,
             'entities'   => $this->get('annotations')->fillProperties($entityCode, $query->getQuery()->getResult()),
         ));
+    }
+    
+    /**
+     * @Method("GET")
+     */
+    public function routeAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $route = $em->getRepository('AppBundle:Route')->findOneBy([
+            'routePath' => $request->getPathInfo()
+        ]);
+        
+        if( NULL === $route )
+        {
+            throw new NotFoundHttpException('Page not found');
+        }
+        
+        $entities = $this->get('app.entities');
+        
+        $entityCode = $route->getEntityCode();
+        $entity = $entities->$entityCode;
+        
+        $entry = $em->getRepository($entity->getLogicalName())->findOneBy([
+            'routePath' => $request->getPathInfo()
+        ]);
+        
+        return $this->showAction($request, $entityCode, $entry->getId());
     }
 
     
@@ -57,28 +100,18 @@ class ContentController extends Controller
     public function showAction(Request $request, $entityCode, $id)
     {
         $translator  = $this->get('translator');
-        $breadcrumbs = $this->get("white_october_breadcrumbs");
         $entities    = $this->get("app.entities");
+        $tpl         = $this->get('app.tpl');
         
         $currentEntity = $entities->$entityCode;
 
         $entity = $this->getDoctrine()
                        ->getRepository($currentEntity->getLogicalName())
                        ->find($id);
-
-        // крошки
-        $breadcrumbs->addItem(
-                $translator->trans($currentEntity->getTitle(), [], 'global'),
-                $this->get("router")->generate("backend_content_entry", ['entityCode' => $entityCode]));
-        $breadcrumbs->addItem($entity);
-        $breadcrumbs->addItem($translator->trans('Viewing', [], 'global'));
         
         // рендер
-        return $this->render('backend/entity/show.html.twig', array(
-            'entityCode' => $entityCode,
+        return $this->render($tpl->getTpl($entityCode, 'show.html.twig'), array(
             'entity' => $entity,
-            'annotations' => $this->get('annotations')->fillOneProperties($entityCode, $entity),
-            'delete_form' => $this->createDeleteForm($entity, $entityCode)->createView(),
         ));
     }
 }

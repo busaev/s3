@@ -1,0 +1,10 @@
+<div class="masthead">
+        <h3 class="text-muted">Project name</h3>
+        <nav>
+    <ul class="nav nav-justified">
+        {% for entity in entities.entities %}
+            <li><a href="{{entity.route}}">{{entity.title}}</a></li>
+        {% endfor %}
+    </ul>
+</nav>
+</div>

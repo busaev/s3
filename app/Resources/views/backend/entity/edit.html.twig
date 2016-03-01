@@ -35,14 +35,63 @@
         $(document).ready(function() {
             $(".wysiwyg").summernote();
         });
-        $(".delete").click(function() {
-            if(confirm("{{ 'Are you sure?'|trans({}, "backend") }}")) {
-                return true;
-            }
-            return false;
-        });
         $(".save-form").click(function() {
             $('.entity-form').submit();
         });
+        
+        
+        // получаем страницы модуля
+        $('#navigation_item_content').change(function() {
+            $.ajax({
+                url : Routing.generate('backend_api', { entityCode: 'content_page', format: 'json' }) + '?param[entityCode]=' + $('#navigation_item_content :selected').val(),
+                type: 'json',
+                success: function(json) {
+                    $('#navigation_item_contentPage').empty();
+                    $.each(json, function(i, value) {
+                        $('#navigation_item_contentPage').append($('<option>').text(value.title).attr('value', value.id).attr('data-routePath', value.routePath));
+                    });
+                    // получаем дефолтные маршруты
+                    $('#navigation_item_contentPage').change();
+                }
+            });
+        });
+        // получаем дефолтные страницы модуля
+        $('#navigation_item_content').change();
+
+        // получаем маршруты, если выбран просмотр
+        $('#navigation_item_contentPage').change(function() {
+            if('__content__' !== $('#navigation_item_contentPage :selected').attr('data-routePath'))
+            {
+                //$('#navigation_item_route').empty();
+                //$('#navigation_item_route').attr('disabled', true);
+                $.ajax({
+                    url : Routing.generate('backend_api', { entityCode: 'route', format: 'json' }) + '?param[contentType]=action&param[routePath]='+$('#navigation_item_contentPage :selected').attr('data-routePath')+'&param[entityCode]=' + $('#navigation_item_content :selected').val(),
+                    type: 'json',
+                    success: function(json) {
+                        $('#navigation_item_route').empty();
+                        $.each(json, function(i, value) {
+                            $('#navigation_item_route').append($('<option>').text(value.routePath).attr('value', value.id));
+                        });
+                    }
+                });
+                
+                return;
+            }
+            
+            $('#navigation_item_route').attr('disabled', false);
+            
+            $.ajax({
+                url : Routing.generate('backend_api', { entityCode: 'route', format: 'json' }) + '?param[contentType]=content&param[entityCode]=' + $('#navigation_item_content :selected').val(),
+                type: 'json',
+                success: function(json) {
+                    $('#navigation_item_route').empty();
+                    $.each(json, function(i, value) {
+                        $('#navigation_item_route').append($('<option>').text(value.routePath).attr('value', value.id));
+                    });
+                }
+            });
+        });
+        
+        
     </script>
 {% endblock javascripts %}

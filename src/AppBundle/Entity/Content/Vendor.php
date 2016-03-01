@@ -180,66 +180,66 @@ class Vendor extends ContentBaseEntity
      * @param Shop\CatalogBundle\Entity\Image $images
      * @return Vendor
      */
-    public function addImage(\Shop\CatalogBundle\Entity\Image $images)
-    {
-        $images->setVendor($this);
-        $this->images[] = $images;
-
-        return $this;
-    }
+//    public function addImage(\Shop\CatalogBundle\Entity\Image $images)
+//    {
+//        $images->setVendor($this);
+//        $this->images[] = $images;
+//
+//        return $this;
+//    }
 
     /**
      * Remove images
      *
      * @param Shop\CatalogBundle\Entity\Image $images
      */
-    public function removeImage(\Shop\CatalogBundle\Entity\Image $images)
-    {
-        $this->images->removeElement($images);
-    }
+//    public function removeImage(\Shop\CatalogBundle\Entity\Image $images)
+//    {
+//        $this->images->removeElement($images);
+//    }
 
     /**
      * Get images
      *
      * @return Doctrine\Common\Collections\Collection
      */
-    public function getImages()
-    {
-        return $this->images;
-    }
+//    public function getImages()
+//    {
+//        return $this->images;
+//    }
 
-    /**
-     * Add products
-     *
-     * @param Shop\CatalogBundle\Entity\Product $products
-     * @return Vendor
-     */
-    public function addProduct(\Shop\CatalogBundle\Entity\Product $products)
-    {
-        $this->products[] = $products;
-
-        return $this;
-    }
-
-    /**
-     * Remove products
-     *
-     * @param Shop\CatalogBundle\Entity\Product $products
-     */
-    public function removeProduct(\Shop\CatalogBundle\Entity\Product $products)
-    {
-        $this->products->removeElement($products);
-    }
-
-    /**
-     * Get products
-     *
-     * @return Doctrine\Common\Collections\Collection
-     */
-    public function getProducts()
-    {
-        return $this->products;
-    }
+//    /**
+//     * Add products
+//     *
+//     * @param Shop\CatalogBundle\Entity\Product $products
+//     * @return Vendor
+//     */
+//    public function addProduct(\Shop\CatalogBundle\Entity\Product $products)
+//    {
+//        $this->products[] = $products;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Remove products
+//     *
+//     * @param Shop\CatalogBundle\Entity\Product $products
+//     */
+//    public function removeProduct(\Shop\CatalogBundle\Entity\Product $products)
+//    {
+//        $this->products->removeElement($products);
+//    }
+//
+//    /**
+//     * Get products
+//     *
+//     * @return Doctrine\Common\Collections\Collection
+//     */
+//    public function getProducts()
+//    {
+//        return $this->products;
+//    }
 
     /**
      * Set short_description

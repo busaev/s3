@@ -1,11 +1,12 @@
 {% extends 'frontend/base.html.twig' %}
 
 {% block body %}
-
+    
+    
     <div class="container">
         
     
-     {{ render_esi(controller('AppBundle:Frontend/Content:index', { 'entityCode': 'navigation_item', 'params': {'idNavigation': '1'} })) }}
+     {{ render_esi(controller('AppBundle:Frontend/NavigationItem:index', { 'params': {'idNavigation': '1'} })) }}
 
       <!-- Jumbotron -->
       <div class="jumbotron">
@@ -15,14 +16,10 @@
       </div>
       
       
-      {% if entity is defined %}
-      <div class="row">
-        <div class="col-lg-12">
-          <h2>{{entity.title}}</h2>
-          {{entity.content|raw}}
-        </div>
-      </div>
-      {% endif %}
+        <h1>{{entity.entityCode}}</h1>
+        <article>
+            {{ entity.content|raw }}
+        </article>
       
 
       <!-- Example row of columns -->
@@ -51,10 +48,5 @@
       </footer>
 
     </div> <!-- /container -->
-    
-    
-{% endblock %}
-
-{% block stylesheets %}
 
 {% endblock %}
