@@ -97,6 +97,16 @@ class News extends ContentBaseEntity
         return $this->entityCode;
     }
     
+    /**
+     * Получить Экшн для просмотра на фронтенде
+     * @return string
+     */
+    public function getAction()
+    {
+        return 'AppBundle:Frontend/Content:route';
+    }
+
+
 
     /**
      * #################################################

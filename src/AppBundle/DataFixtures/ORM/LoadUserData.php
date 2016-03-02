@@ -159,7 +159,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $contentNews = new Content;
         $contentNews->setEntityCode('news');
         $contentNews->setEntryStatus($scrollItemEnable);
-        $contentNews->setRoutePath('/news/');
+        $contentNews->setRoutePath('/news');
         $contentNews->setTitle('News');
         
         $manager->persist($contentNews);
@@ -170,7 +170,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $contentPage = new Content;
         $contentPage->setEntityCode('page');
         $contentPage->setEntryStatus($scrollItemEnable);
-        $contentPage->setRoutePath('/page/');
+        $contentPage->setRoutePath('/page');
         $contentPage->setTitle('Page');
         
         $manager->persist($contentPage);
@@ -181,7 +181,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $contentVendor = new Content;
         $contentVendor->setEntityCode('vendor');
         $contentVendor->setEntryStatus($scrollItemEnable);
-        $contentVendor->setRoutePath('/vendor/');
+        $contentVendor->setRoutePath('/vendor');
         $contentVendor->setTitle('Vendor');
         
         $manager->persist($contentVendor);
@@ -194,8 +194,8 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
          */
         
         
-        $contentPageIndexRoutePath = '/page/index/';
-        $contentPageIndexAction    = 'AppBundle:Page:index';
+        $contentPageIndexRoutePath = '/page';
+        $contentPageIndexAction    = 'AppBundle:Frontend/Content:index';
         
         
         // Page - index
@@ -219,7 +219,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $contentPageRoute->setTitle('Page route');
         $contentPageRoute->setMetaDescription('Page viewing');
         $contentPageRoute->setMetaKeywords('page, viewing');
-        $contentPageRoute->setAction('AppBundle:Page:route');
+        $contentPageRoute->setAction('AppBundle:Frontend/Content:route');
         $contentPageRoute->setRoutePath('__content__');
                 
         $manager->persist($contentPageRoute);
@@ -235,8 +235,8 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
          */
         
         
-        $contentNewsIndexRoutePath = '/news/index/';
-        $contentNewsIndexAction    = 'AppBundle:News:index';        
+        $contentNewsIndexRoutePath = '/news';
+        $contentNewsIndexAction    = 'AppBundle:Frontend/Content:index';        
         
         // News - index
         
@@ -259,7 +259,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $contentNewsRoute->setTitle('News route');
         $contentNewsRoute->setMetaDescription('News viewing');
         $contentNewsRoute->setMetaKeywords('news, viewing');
-        $contentNewsRoute->setAction('AppBundle:News:route');
+        $contentNewsRoute->setAction('AppBundle:Frontend/Content:route');
         $contentNewsRoute->setRoutePath('__content__');
         //$contentNewsRoute->setRoute($contentNewsIndexRoute);
                 
@@ -277,14 +277,9 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $topNavigation = new Navigation;
         $topNavigation->setEntryStatus($scrollItemEnable);
         $topNavigation->setTitle('Top menu');
+        $topNavigation->setCode('top_menu');
         
         $manager->persist($topNavigation);
-        
-//        \Symfony\Component\VarDumper\VarDumper::dump($contentNews);
-//        \Symfony\Component\VarDumper\VarDumper::dump($contentNewsIndexRoute);
-//        \Symfony\Component\VarDumper\VarDumper::dump($contentNewsIndex);
-//        die();
-        
         
         // Top menu items
         $topNavigationItemNews = new NavigationItem;

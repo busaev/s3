@@ -22,6 +22,8 @@ class ContentController extends Controller
      *        name="frontend_content_entry", 
      *        defaults={"params" = "false"}, 
      *        options={"expose"=true})
+     * 
+     * @Method("GET")
      */
     public function indexAction(Request $request, $params=null)
     {   

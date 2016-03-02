@@ -45,6 +45,15 @@ class Navigation
     private $title;
     
     /**
+     * @var string
+     * 
+     * @Description("Code", title="Code", dataType="string")
+     *
+     * @ORM\Column(name="code", type="string", length=255, nullable=true)
+     */
+    private $code;
+    
+    /**
      * #################################################
      * ####################  Связи  ####################
      * #################################################
@@ -175,5 +184,29 @@ class Navigation
     public function getNavigationItems()
     {
         return $this->navigationItems;
+    }
+
+    /**
+     * Set code
+     *
+     * @param string $code
+     *
+     * @return Navigation
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * Get code
+     *
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
     }
 }

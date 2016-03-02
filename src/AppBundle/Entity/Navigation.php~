@@ -3,10 +3,15 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
 use AppBundle\Annotations\Description;
+use AppBundle\Annotations\DescriptionObject;
 
 /**
  * Navigation
+ * 
+ * @DescriptionObject("navigation", title="Navigation")
  *
  * @ORM\Table(name="navigations")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\NavigationRepository")
@@ -38,6 +43,15 @@ class Navigation
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
+    
+    /**
+     * @var string
+     * 
+     * @Description("Code", title="Code", dataType="string")
+     *
+     * @ORM\Column(name="code", type="string", length=255)
+     */
+    private $code;
     
     /**
      * #################################################
@@ -137,5 +151,38 @@ class Navigation
     {
         return $this->entryStatus;
     }
-}
 
+    /**
+     * Add navigationItem
+     *
+     * @param \AppBundle\Entity\NavigationItem $navigationItem
+     *
+     * @return Navigation
+     */
+    public function addNavigationItem(\AppBundle\Entity\NavigationItem $navigationItem)
+    {
+        $this->navigationItems[] = $navigationItem;
+
+        return $this;
+    }
+
+    /**
+     * Remove navigationItem
+     *
+     * @param \AppBundle\Entity\NavigationItem $navigationItem
+     */
+    public function removeNavigationItem(\AppBundle\Entity\NavigationItem $navigationItem)
+    {
+        $this->navigationItems->removeElement($navigationItem);
+    }
+
+    /**
+     * Get navigationItems
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getNavigationItems()
+    {
+        return $this->navigationItems;
+    }
+}

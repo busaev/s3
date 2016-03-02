@@ -24,6 +24,13 @@ class NavigationType extends AbstractType
                     'class'=>'property-title'
                 ]
             ])
+            ->add('code', null, [
+                'label'=>'Code',
+                'translation_domain' => 'global',
+                'attr' => [
+                    'class'=>'property-code'
+                ]
+            ])
             ->add('entryStatus', EntityType::class, [
                'class' => 'AppBundle:ScrollItem',
                 'query_builder' => function (EntityRepository $er) {

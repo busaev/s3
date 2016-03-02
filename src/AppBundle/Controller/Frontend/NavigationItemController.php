@@ -38,7 +38,6 @@ class NavigationItemController extends Controller
             }
         }
         
-        
         return $this->render($tpl->getTpl($entityCode) , array(
             'entityCode' => $entityCode,
             'entities'   => $this->get('annotations')->fillProperties($entityCode, $query->getQuery()->getResult()),
