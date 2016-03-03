@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 class NavigationItemController extends Controller
 {
     /**
-     * @Route("", name="index_index")
+     * @Route("", name="navigationitem_index")
      */
     public function indexAction(Request $request, $params=null)
     {

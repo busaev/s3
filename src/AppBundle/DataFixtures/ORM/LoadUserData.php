@@ -187,7 +187,20 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $manager->persist($contentVendor);
         
         
+                
+        // Index
+        $contentIndex = new Content;
+        $contentIndex->setEntityCode('index');
+        $contentIndex->setEntryStatus($scrollItemEnable);
+        $contentIndex->setRoutePath('/');
+        $contentIndex->setTitle('Index');
+        
+        $manager->persist($contentIndex);
+        
+        
         $manager->flush();
+        
+        
         
         /**
          *  Страницы модуля PAGE
@@ -264,6 +277,33 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         //$contentNewsRoute->setRoute($contentNewsIndexRoute);
                 
         $manager->persist($contentNewsRoute);
+        
+        $manager->flush();
+        
+        
+                
+        
+        /**
+         *  Страницы модуля Index
+         */
+        
+        
+        $contentIndexIndexRoutePath = '/';
+        $contentIndexIndexAction    = 'AppBundle:Frontend/Index:index';        
+        
+        // Index - index
+        
+        $contentIndexIndex = new ContentPage;
+        $contentIndexIndex->setEntryStatus($scrollItemEnable);
+        $contentIndexIndex->setContent($contentIndex);
+        $contentIndexIndex->setTitle('Index index');
+        $contentIndexIndex->setMetaDescription('Index page');
+        $contentIndexIndex->setMetaKeywords('Index page');
+        $contentIndexIndex->setRoutePath($contentIndexIndexRoutePath);
+        $contentIndexIndex->setAction($contentIndexIndexAction);
+                
+        $manager->persist($contentIndexIndex);
+        
         
         $manager->flush();
                 

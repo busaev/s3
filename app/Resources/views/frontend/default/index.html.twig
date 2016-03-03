@@ -5,7 +5,9 @@
     <div class="container">
         
     
-     {{ render_esi(controller('AppBundle:Frontend/Content:index', { 'entityCode': 'navigation_item', 'params': {'idNavigation': '1'} })) }}
+     {{ render_esi(controller('AppBundle:Frontend/NavigationItem:index', { 'params': {'idNavigation': '5'} })) }}
+     
+     {{ render_esi(controller('AppBundle:Frontend/Navigation:show', { 'params': {'code': 'top_menu'} })) }}
 
       <!-- Jumbotron -->
       <div class="jumbotron">

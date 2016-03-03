@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 class IndexController extends Controller
 {
     /**
-     * @Route("", name="index_index")
+     * @Route("", name="frontend_index_index")
      */
     public function indexAction(Request $request)
     {
