@@ -66,7 +66,7 @@ class Content
     /**
      * @var string
      * 
-     * @Description("entity", title="Content", dataType="string")
+     * @Description("entityCode", title="Content", dataType="string")
      * @ORM\Id
      * @ORM\Column(name="entityCode", type="string", length=255, unique=true, nullable=false)
      */

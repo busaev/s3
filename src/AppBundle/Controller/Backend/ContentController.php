@@ -176,7 +176,7 @@ class ContentController extends Controller
         $entities    = $this->get("app.entities");
         
         $currentEntity = $entities->$entityCode;
-
+        
         //запись
         $entity = $this->getDoctrine()->getRepository($currentEntity->getLogicalName())->find($id);
         

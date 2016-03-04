@@ -39,11 +39,13 @@ class NewsController extends Controller
      * @Route("/{id}", name="news_show")
      * @Method("GET")
      */
-    public function showAction(News $news)
+    public function showAction($news)
     {
+        
+        $tpl      = $this->get('app.tpl');
 
-        return $this->render('frontend/news/show.html.twig', array(
-            'news' => $news,
+        return $this->render($tpl->getTpl('news', 'show.html.twig') , array(
+            'entity' => $news,
         ));
     }
     
@@ -52,9 +54,11 @@ class NewsController extends Controller
      */
     public function routeAction(Request $request)
     {
+        $entities = $this->get('app.entities');
+        
         $em = $this->getDoctrine()->getManager();
 
-        $news = $em->getRepository('AppBundle:News')->findOneBy([
+        $news = $em->getRepository($entities->news->getLogicalName())->findOneBy([
             'routePath' => $request->getPathInfo()
         ]);
         
