@@ -101,8 +101,13 @@ class ContentControllerTest extends WebTestCase
         
         $repositoryNews = $this->em->getRepository($entity->getLogicalName());
         
-        $news = $repositoryNews->find(1);
+        $allNews = $repositoryNews->findAll();
         
-        $this->assertEquals(1, $news->getId());
+        $news = reset($allNews);
+        
+        if(!$news)
+            $this->assertEquals(false, $news);
+        
+        $this->greaterThan(0, $news->getId());
     }
 }
