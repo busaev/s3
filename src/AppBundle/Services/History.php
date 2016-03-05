@@ -2,7 +2,7 @@
 
 namespace AppBundle\Services;
 
-use AppBundle\Entity\History;
+use AppBundle\Entity\Core\History;
 
 
 class History 

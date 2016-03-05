@@ -25,4 +25,20 @@ class Vendor extends BaseEntity implements EntityInterface
     {
         return $this->container;
     }
+    
+    public function baseQuery()
+    {
+        $doctrine = $this->container->get('doctrine');
+
+        // Основной запрос
+        $status = $doctrine->getRepository("AppBundle:ScrollItem")
+                           ->findByScrollItemCodeAndScrollCode('delete', 'entry_status');
+
+        // Основной запрос
+        return $doctrine->getRepository($this->getLogicalName())
+                        ->createQueryBuilder('e')
+                        ->select('e')
+                        ->where('e.entryStatus != :status')
+                        ->setParameter('status', $status->getId());
+    }
 }

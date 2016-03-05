@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 // for Doctrine 2.4: Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 //use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 
-use AppBundle\Entity\History;
+use AppBundle\Entity\Core\History;
 
 
 class EntityLogger implements EventSubscriber

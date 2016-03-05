@@ -104,7 +104,7 @@ class ContentController extends Controller
         $historyEntity = $entities->history;
         
         $em = $this->getDoctrine()->getManager();
-
+        
         // запись
         $entity = $em->getRepository($currentEntity->getLogicalName())->find($id);
         // история записи
@@ -112,14 +112,14 @@ class ContentController extends Controller
           'entityCode' => $entityCode,
           'entryId'=> $id
         ]);
-
+        
         //крошки
         $breadcrumbs->addItem(
                 $translator->trans($currentEntity->getTitle(), [], 'global'),
                 $this->get("router")->generate("backend_content_entry", ['entityCode' => $entityCode]));
         $breadcrumbs->addItem($entity,$this->get("router")->generate("backend_content_entry_show", ['id' => $id ]));
         $breadcrumbs->addItem($translator->trans('History', [], 'global'));
-
+        
         //рендер
         return $this->render('backend/entity/history.html.twig', array(
             'entityCode' => $entityCode,

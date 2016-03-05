@@ -1,10 +1,11 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace AppBundle\Entity\Core;
 
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
+
 
 /**
  * @DescriptionObject("history")
@@ -75,7 +76,7 @@ class History
     /**
      * @Description("user", title="User", dataType="string")
      *
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="history")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="history")
      * @ORM\JoinColumn(name="createdBy", referencedColumnName="id")
      */
     private $user;

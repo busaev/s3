@@ -5,6 +5,8 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class VendorType extends AbstractType
 {
@@ -27,6 +29,16 @@ class VendorType extends AbstractType
                 'attr' => [
                     'class'=>'wysiwyg'
                 ]
+            ])
+            ->add('entryStatus', EntityType::class, [
+               'class' => 'AppBundle:ScrollItem',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('i')
+                        ->join('i.scroll', 's')
+                        ->where('s.code=\'entry_status\'')
+                        ->andWhere('i.code !=\'delete\'')
+                        ->orderBy('i.position', 'ASC');
+                },
             ])
             ->add('routePath', null, [
                 'label'=>'Route path',

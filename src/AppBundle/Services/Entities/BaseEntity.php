@@ -12,8 +12,14 @@ class BaseEntity {
     // является ли сущность контентной
     public $isContent = false;
 
-    // название сущности
+    // код сущности
     public $entityCode = false;
+    
+    public function getEntityLocationInEntitiesDirectory()
+    {
+        \Symfony\Component\VarDumper\VarDumper::dump($this);
+        die();
+    }
 
     /**
      * Является ли сущность BaseContent?
@@ -90,6 +96,22 @@ class BaseEntity {
     }
 
     /**
+     *
+     * @param type $entityCode
+     * @param type $bundle
+     * @return type
+     */
+    public function getLogicalName()
+    {
+        if($this->getIsContent())
+        {
+            return "AppBundle:Content\\" . $this->getName();
+        }
+
+        return "AppBundle:" . $this->getName();
+    }
+
+    /**
      * Получить namespace для сущности
      *
      * @return string
@@ -111,22 +133,6 @@ class BaseEntity {
     public function getTypeNamspace()
     {
         return 'AppBundle\\Form\\' . $this->getName() . 'Type';
-    }
-
-    /**
-     *
-     * @param type $entityCode
-     * @param type $bundle
-     * @return type
-     */
-    public function getLogicalName()
-    {
-        if($this->getIsContent())
-        {
-            return "AppBundle:Content\\" . $this->getName();
-        }
-
-        return "AppBundle:" . $this->getName();
     }
 
     /**

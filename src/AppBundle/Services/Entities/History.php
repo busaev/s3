@@ -20,6 +20,27 @@ class History extends BaseEntity implements EntityInterface
     {
         return $this->container;
     }
+
+    /**
+     * Получить namespace для сущности
+     *
+     * @return string
+     */
+    public function getNamespace()
+    {
+        return 'AppBundle\\Entity\\Core\\' . $this->getName();
+    }
+    
+    /**
+     *
+     * @param type $entityCode
+     * @param type $bundle
+     * @return type
+     */
+    public function getLogicalName()
+    {
+        return "AppBundle:Core\\" . $this->getName();
+    }
     
     public function baseQuery()
     {
