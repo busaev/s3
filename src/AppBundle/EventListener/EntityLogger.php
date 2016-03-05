@@ -161,7 +161,7 @@ class EntityLogger implements EventSubscriber
 
     protected function skipCondition($entity)
     {
-        if( get_class($entity) != 'AppBundle\\Entity\\History' ) {
+        if( get_class($entity) != 'AppBundle\\Entity\\Core\\History' ) {
             return true;
         }
         return false;

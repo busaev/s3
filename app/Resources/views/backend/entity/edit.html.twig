@@ -62,8 +62,6 @@
         $('#navigation_item_contentPage').change(function() {
             if('__content__' !== $('#navigation_item_contentPage :selected').attr('data-routePath'))
             {
-                //$('#navigation_item_route').empty();
-                //$('#navigation_item_route').attr('disabled', true);
                 $.ajax({
                     url : Routing.generate('backend_api', { entityCode: 'route', format: 'json' }) + '?param[contentType]=action&param[routePath]='+$('#navigation_item_contentPage :selected').attr('data-routePath')+'&param[entityCode]=' + $('#navigation_item_content :selected').val(),
                     type: 'json',
@@ -81,12 +79,12 @@
             $('#navigation_item_route').attr('disabled', false);
             
             $.ajax({
-                url : Routing.generate('backend_api', { entityCode: 'route', format: 'json' }) + '?param[contentType]=content&param[entityCode]=' + $('#navigation_item_content :selected').val(),
+                url : Routing.generate('backend_api_routes', { entityCode: 'route', format: 'json' }) + '?param[contentType]=content&param[entityCode]=' + $('#navigation_item_content :selected').val(),
                 type: 'json',
                 success: function(json) {
                     $('#navigation_item_route').empty();
                     $.each(json, function(i, value) {
-                        $('#navigation_item_route').append($('<option>').text(value.routePath).attr('value', value.id));
+                        $('#navigation_item_route').append($('<option>').text(value.title).attr('value', value.id));
                     });
                 }
             });

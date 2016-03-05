@@ -61,6 +61,7 @@ body {
     white-space: normal;
 }
 
+.navbar-top-links .dropdown-new-actions,
 .navbar-top-links .dropdown-messages,
 .navbar-top-links .dropdown-tasks,
 .navbar-top-links .dropdown-alerts {
@@ -68,16 +69,20 @@ body {
     min-width: 0;
 }
 
-.navbar-top-links .dropdown-messages {
+.navbar-top-links .dropdown-new-actions {
     margin-left: 5px;
 }
 
-.navbar-top-links .dropdown-tasks {
+.navbar-top-links .dropdown-messages {
     margin-left: -59px;
 }
 
-.navbar-top-links .dropdown-alerts {
+.navbar-top-links .dropdown-tasks {
     margin-left: -123px;
+}
+
+.navbar-top-links .dropdown-alerts {
+    margin-left: -187px;
 }
 
 .navbar-top-links .dropdown-user {
@@ -135,6 +140,7 @@ body {
         margin-top: 51px;
     }
 
+    .navbar-top-links .dropdown-new-actions,
     .navbar-top-links .dropdown-messages,
     .navbar-top-links .dropdown-tasks,
     .navbar-top-links .dropdown-alerts {

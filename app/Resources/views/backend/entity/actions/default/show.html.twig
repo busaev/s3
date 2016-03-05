@@ -6,6 +6,9 @@
                     <a href="{{ path('backend_content_entry', {'entityCode': entityCode}) }}" class="btn btn-default">{{ 'Back to the list'|trans({}, "backend") }}</a>
                 </li>
                 <li>
+                    <a href="{{ path('backend_content_entry_new', { 'entityCode': entityCode }) }}" class="btn btn-success edit">{{ 'Add more'|trans({}, "backend") }}</a>
+                </li>
+                <li>
                     <a href="{{ path('backend_content_entry_edit', { 'entityCode': entityCode, 'id': entity.id }) }}" class="btn btn-info edit">{{ 'Edit'|trans({}, "backend") }}</a>
                 </li>
                 <li>

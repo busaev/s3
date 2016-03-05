@@ -7,6 +7,7 @@ use AppBundle\Annotations\Description;
 use AppBundle\Entity\Route;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping\MappedSuperclass;
 
 /**
@@ -47,6 +48,8 @@ class ContentBaseEntity implements RouteSubjectInterface
      * @var string
      * 
      * @Description("routePath", title="Route path", dataType="string",  property="routePath")
+     * 
+     * @Assert\NotBlank()
      *
      * @ORM\Column(name="route_path", type="string", length=255, unique=false)
      */

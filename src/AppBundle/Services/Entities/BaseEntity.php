@@ -17,8 +17,8 @@ class BaseEntity {
     
     public function getEntityLocationInEntitiesDirectory()
     {
-        \Symfony\Component\VarDumper\VarDumper::dump($this);
-        die();
+//        \Symfony\Component\VarDumper\VarDumper::dump($this);
+//        die();
     }
 
     /**

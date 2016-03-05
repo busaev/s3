@@ -32,6 +32,7 @@ class Vendor extends ContentBaseEntity
      * @var string $title
      *
      * @Description("title", title="Title", dataType="string")
+     * @Assert\NotBlank()
      *
      * @ORM\Column(name="title", type="string", length=255)
      */
@@ -57,6 +58,11 @@ class Vendor extends ContentBaseEntity
      * @var string $website
      *
      * @Description("website", title="Website", dataType="string")
+     * 
+     * @Assert\Url(
+     *  checkDNS = true,
+     *  protocols = {"http", "https"}
+     * )
      *
      * @ORM\Column(name="website", type="string", length=255, nullable=true)
      */
