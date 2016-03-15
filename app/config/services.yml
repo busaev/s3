@@ -74,47 +74,59 @@ services:
         class: AppBundle\Services\Entities
         
 
+    ###
+    ###  [[ Core ]]
+    ###
+    
     # заглушка. служба модуля, будет добавлена в коллекцию службы app.entities
     dummy.entity:
-        class: AppBundle\Services\Entities\Dummy
+        class: AppBundle\Services\Entities\Core\Dummy
         arguments: [ "@service_container" ]
         tags:
             -  { name: app.entity }
             
     # заглушка. служба модуля, будет добавлена в коллекцию службы app.entities
     history.entity:
-        class: AppBundle\Services\Entities\History
-        arguments: [ "@service_container" ]
-        tags:
-            -  { name: app.entity }
-            
-    # новости. служба модуля, будет добавлена в коллекцию службы app.entities
-    page.entity:
-        class: AppBundle\Services\Entities\Page
-        arguments: [ "@service_container" ]
-        tags:
-            -  { name: app.entity }
-            
-    # новости. служба модуля, будет добавлена в коллекцию службы app.entities
-    news.entity:
-        class: AppBundle\Services\Entities\News
-        arguments: [ "@service_container" ]
-        tags:
-            -  { name: app.entity }
-            
-    # страницы модуля. служба модуля, будет добавлена в коллекцию службы app.entities
-    content_page.entity:
-        class: AppBundle\Services\Entities\ContentPage
+        class: AppBundle\Services\Entities\Core\History
         arguments: [ "@service_container" ]
         tags:
             -  { name: app.entity }
     
     # элемент навигации. служба модуля, будет добавлена в коллекцию службы app.entities
     navigation_item.entity:
-        class: AppBundle\Services\Entities\NavigationItem
+        class: AppBundle\Services\Entities\Core\NavigationItem
         arguments: [ "@service_container" ]
         tags:
             -  { name: app.entity }
+            
+    # страницы модуля. служба модуля, будет добавлена в коллекцию службы app.entities
+    content_page.entity:
+        class: AppBundle\Services\Entities\Content\ContentPage
+        arguments: [ "@service_container" ]
+        tags:
+            -  { name: app.entity }
+    
+    ###
+    ###  [[ Content ]]
+    ###
+    
+    # новости. служба модуля, будет добавлена в коллекцию службы app.entities
+    page.entity:
+        class: AppBundle\Services\Entities\Content\Page
+        arguments: [ "@service_container" ]
+        tags:
+            -  { name: app.entity }
+            
+    # новости. служба модуля, будет добавлена в коллекцию службы app.entities
+    news.entity:
+        class: AppBundle\Services\Entities\Content\News
+        arguments: [ "@service_container" ]
+        tags:
+            -  { name: app.entity }
+    
+    ###
+    ###  [[ Shop ]]
+    ###
     
     # элемент навигации. служба модуля, будет добавлена в коллекцию службы app.entities
     vendor.entity:

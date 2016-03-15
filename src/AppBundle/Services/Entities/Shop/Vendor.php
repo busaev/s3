@@ -1,19 +1,16 @@
 <?php
 
-namespace AppBundle\Services\Entities;
+namespace AppBundle\Services\Entities\Shop;
 
 use AppBundle\Services\Entities\EntityInterface;
+use AppBundle\Services\Entities\BaseEntity;
 
-class ContentPage extends BaseEntity implements EntityInterface
+class Vendor extends BaseEntity implements EntityInterface
 {
     protected $container = null;
 
-    /**
-     * @var boolean
-     */
-    public $isContent = true;
-
-    public function __construct($container) {
+    public function __construct($container)
+    {
         $this->container=$container;
     }
 
@@ -25,17 +22,7 @@ class ContentPage extends BaseEntity implements EntityInterface
     {
         return $this->container;
     }
-
-    public function init($entity=false)
-    {
-        if(!$entity)
-        {
-            $entity = $this->getNew();
-        }
-        
-        return $entity->setRoutePath('/content/');
-    }
-
+    
     public function baseQuery()
     {
         $doctrine = $this->container->get('doctrine');

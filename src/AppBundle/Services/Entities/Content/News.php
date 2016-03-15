@@ -1,19 +1,16 @@
 <?php
 
-namespace AppBundle\Services\Entities;
+namespace AppBundle\Services\Entities\Content;
 
 use AppBundle\Services\Entities\EntityInterface;
+use AppBundle\Services\Entities\BaseEntity;
 
-class Vendor extends BaseEntity implements EntityInterface
+class News extends BaseEntity implements EntityInterface
 {
     protected $container = null;
 
-    /**
-     * @var boolean
-     */
-    public $isContent = true;
-
-    public function __construct($container) {
+    public function __construct($container)
+    {
         $this->container=$container;
     }
 
@@ -25,7 +22,23 @@ class Vendor extends BaseEntity implements EntityInterface
     {
         return $this->container;
     }
-    
+
+    public function init($entity=false)
+    {
+        $em = $this->getContainer()->get('doctrine')->getManager();
+
+        if(!$entity)
+        {
+            $entity = $this->getNew();
+        }
+
+        $content = $em->getRepository('AppBundle:Content')->findOneBy([
+            'entityCode'=>'news'
+        ]);
+
+        return $entity->setRoutePath($content->getRoutePath());
+    }
+
     public function baseQuery()
     {
         $doctrine = $this->container->get('doctrine');

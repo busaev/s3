@@ -1,8 +1,9 @@
 <?php
 
-namespace AppBundle\Services\Entities;
+namespace AppBundle\Services\Entities\Core;
 
 use AppBundle\Services\Entities\EntityInterface;
+use AppBundle\Services\Entities\BaseEntity;
 
 class History extends BaseEntity implements EntityInterface 
 {

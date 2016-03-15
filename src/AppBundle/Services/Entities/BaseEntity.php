@@ -7,32 +7,16 @@ namespace AppBundle\Services\Entities;
  *
  * @author busaev
  */
-class BaseEntity {
-
-    // является ли сущность контентной
-    public $isContent = false;
+class BaseEntity 
+{
 
     // код сущности
     public $entityCode = false;
     
-    public function getEntityLocationInEntitiesDirectory()
+    public function getEntityLocationInEntityDirectory()
     {
 //        \Symfony\Component\VarDumper\VarDumper::dump($this);
 //        die();
-    }
-
-    /**
-     * Является ли сущность BaseContent?
-     *
-     * @return boolean
-     */
-    public function getIsContent()
-    {
-        if(isset($this->isContent))
-        {
-            return $this->isContent;
-        }
-        return false;
     }
 
     /**

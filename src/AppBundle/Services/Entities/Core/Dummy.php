@@ -3,6 +3,7 @@
 namespace AppBundle\Services\Entities;
 
 use AppBundle\Services\Entities\EntityInterface;
+use AppBundle\Services\Entities\BaseEntity;
 
 class Dummy extends BaseEntity implements EntityInterface 
 {
