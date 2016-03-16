@@ -82,10 +82,16 @@ class News extends ContentBaseEntity
     {
     }
     
-    public function __toString() {
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
         $title = $this->getTitle();
+        
         if(is_string($title))
             return $title;
+        
         return '';
     }
     
@@ -105,7 +111,6 @@ class News extends ContentBaseEntity
     {
         return 'AppBundle:Frontend/Content:route';
     }
-
 
 
     /**

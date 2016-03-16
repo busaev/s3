@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity\Content;
+namespace AppBundle\Entity\Shop;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -8,6 +8,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
+
+//@todo м.б. перенести
+use AppBundle\Entity\Content\ContentBaseEntity;
 
 /**
  * @DescriptionObject("vendors", title="Brends")

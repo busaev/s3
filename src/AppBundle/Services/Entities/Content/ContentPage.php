@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Services\Entities\Core;
+namespace AppBundle\Services\Entities\Content;
 
 use AppBundle\Services\Entities\EntityInterface;
 use AppBundle\Services\Entities\BaseEntity;

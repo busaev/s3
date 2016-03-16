@@ -123,18 +123,24 @@ class Content
         $this->navigationItems  = new ArrayCollection();
     }
     
-    public function __toString() {
+    /**
+     * @return string
+     */
+    public function __toString() 
+    {
         $title = $this->getTitle();
         if(is_string($title))
             return $title;
         return '';
     }
     
+    /**
+     * @return string
+     */
     public function getId()
     {
         return $this->getEntityCode();
     }
-
 
 
     /**

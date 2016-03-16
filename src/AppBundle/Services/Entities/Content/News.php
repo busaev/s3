@@ -14,13 +14,20 @@ class News extends BaseEntity implements EntityInterface
         $this->container=$container;
     }
 
-    public function getRequest() {
-        return $this->getContainer()->get('request');
-    }
-
+    /**
+     * Получить контейнер с сервисами
+     */
     public function getContainer()
     {
         return $this->container;
+    }
+
+    /**
+     * Получить службу Request
+     */
+    public function getRequest() 
+    {
+        return $this->getContainer()->get('request');
     }
 
     public function init($entity=false)

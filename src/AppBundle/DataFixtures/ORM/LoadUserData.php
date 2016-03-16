@@ -13,7 +13,7 @@ use AppBundle\Entity\Role;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Content;
 use AppBundle\Entity\Content\ContentPage;
-use AppBundle\Entity\Route;
+use AppBundle\Entity\Core\Route;
 use AppBundle\Entity\Navigation;
 use AppBundle\Entity\NavigationItem;
 

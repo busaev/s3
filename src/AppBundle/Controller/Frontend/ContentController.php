@@ -32,7 +32,7 @@ class ContentController extends Controller
         $entities = $this->get('app.entities');
         $tpl      = $this->get('app.tpl');
         
-        $route = $em->getRepository('AppBundle:Route')->findOneBy([
+        $route = $em->getRepository('AppBundle:Core\\Route')->findOneBy([
             'routePath' => $request->getPathInfo()
         ]);
         
@@ -71,7 +71,7 @@ class ContentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         
-        $route = $em->getRepository('AppBundle:Route')->findOneBy([
+        $route = $em->getRepository('AppBundle:Core\\Route')->findOneBy([
             'routePath' => $request->getPathInfo()
         ]);
         

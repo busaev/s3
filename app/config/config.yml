@@ -64,8 +64,7 @@ doctrine:
         
         resolve_target_entities:
             AppBundle\Model\ScrollItemSubjectInterface: AppBundle\Entity\ScrollItem
-            AppBundle\Model\RouteSubjectInterface:      AppBundle\Entity\Route
-            AppBundle\Model\SeoSubjectInterface:        AppBundle\Entity\Seo
+            AppBundle\Model\RouteSubjectInterface:      AppBundle\Entity\Core\Route
 
 # Swiftmailer Configuration
 swiftmailer:

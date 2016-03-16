@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace AppBundle\Entity\Core;
 
 
 use Doctrine\ORM\Mapping as ORM;
@@ -69,7 +69,7 @@ class Route
      */
     
     /**
-     * @ORM\OneToMany(targetEntity="NavigationItem", mappedBy="route")
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\NavigationItem", mappedBy="route")
      */
     private $navigationItems;
     

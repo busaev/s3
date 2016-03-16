@@ -2,6 +2,8 @@
 
 namespace AppBundle\Services\Entities;
 
+use Symfony\Component\Finder\Finder;
+
 /**
  * Description of BaseEntity
  *
@@ -13,10 +15,28 @@ class BaseEntity
     // код сущности
     public $entityCode = false;
     
+    /**
+     * Получить относительный путь до Сущности из директории Entity
+     * Возвращает последнюю найденную по названию сущность
+     * 
+     * @return string
+     */
     public function getEntityLocationInEntityDirectory()
     {
-//        \Symfony\Component\VarDumper\VarDumper::dump($this);
-//        die();
+        $root = $this->getContainer()->get('kernel')->getRootDir();
+        
+        $finder = new Finder();
+        $finder->name($this->getName() . '.php');
+        
+        $finder->files()->in($root . '/../src/AppBundle/Entity');
+        
+        foreach ($finder as $file) {
+            
+            // Удалим из пути все, до директории Entity
+            $path = str_replace('/', '\\', str_replace('.php', '', preg_replace('/^.*AppBundle\/Entity\//i', '', $file->getRealpath())));
+        }
+        
+        return $path;
     }
 
     /**
@@ -24,24 +44,7 @@ class BaseEntity
      */
     public function getName()
     {
-        if($this->entityCode)
-        {
-            return $this->container->get('utils')->getCamelCase($this->entityCode);
-        }
-
-        $class = get_class($this);
-
-        if(!strpos($class, '\\'))
-        {
-            $entityName = $class;
-        }
-        else
-        {
-            $tmp = explode('\\', $class);
-            $entityName = end($tmp);
-        }
-
-        return $entityName;
+        return $this->container->get('utils')->getCamelCase($this->entityCode);
     }
 
     /**
@@ -51,12 +54,7 @@ class BaseEntity
      */
     public function getCode()
     {
-        if($this->entityCode)
-        {
-            return $this->entityCode;
-        }
-
-        return $this->container->get('utils')->getUnderscore($this->getName());
+        return $this->entityCode;
     }
 
     /**
@@ -80,19 +78,11 @@ class BaseEntity
     }
 
     /**
-     *
-     * @param type $entityCode
-     * @param type $bundle
-     * @return type
+     * @return string
      */
     public function getLogicalName()
     {
-        if($this->getIsContent())
-        {
-            return "AppBundle:Content\\" . $this->getName();
-        }
-
-        return "AppBundle:" . $this->getName();
+        return "AppBundle:" . $this->getEntityLocationInEntityDirectory();
     }
 
     /**
@@ -102,11 +92,7 @@ class BaseEntity
      */
     public function getNamespace()
     {
-        if($this->getIsContent())
-        {
-            return 'AppBundle\\Entity\\Content\\' . $this->getName();
-        }
-        return 'AppBundle\\Entity\\' . $this->getName();
+        return 'AppBundle\\Entity\\' . $this->getEntityLocationInEntityDirectory();
     }
 
     /**

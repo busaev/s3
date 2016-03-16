@@ -3,6 +3,7 @@
 namespace AppBundle\Services\Entities\Core;
 
 use AppBundle\Services\Entities\EntityInterface;
+use AppBundle\Services\Entities\BaseEntity;
 
 class NavigationItem extends BaseEntity implements EntityInterface 
 {

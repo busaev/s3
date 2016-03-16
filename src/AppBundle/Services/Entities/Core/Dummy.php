@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Services\Entities;
+namespace AppBundle\Services\Entities\Core;
 
 use AppBundle\Services\Entities\EntityInterface;
 use AppBundle\Services\Entities\BaseEntity;
@@ -21,7 +21,7 @@ class Dummy extends BaseEntity implements EntityInterface
     {
         return $this->container;
     }
-    
+
     /**
      * @return type
      */

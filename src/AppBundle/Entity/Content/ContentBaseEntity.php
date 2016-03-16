@@ -4,15 +4,16 @@ namespace AppBundle\Entity\Content;
 use AppBundle\Model\RouteSubjectInterface;
 use AppBundle\Annotations\Description;
 
-use AppBundle\Entity\Route;
+use AppBundle\Entity\Core\Route;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping\MappedSuperclass;
 
 /**
+ * Базовая сущность для любого контента
+ * 
  * @MappedSuperclass
- * @ORM\HasLifecycleCallbacks()
  */
 class ContentBaseEntity implements RouteSubjectInterface
 {
@@ -24,6 +25,8 @@ class ContentBaseEntity implements RouteSubjectInterface
      */
     
     /**
+     * Мета заголовок
+     * 
      * @var string
      *
      * @ORM\Column(name="meta_title", type="string", length=255, nullable=true)
@@ -31,6 +34,8 @@ class ContentBaseEntity implements RouteSubjectInterface
     private $metaTitle;
 
     /**
+     * Мета описание
+     * 
      * @var string
      *
      * @ORM\Column(name="meta_description", type="text", nullable=true)
@@ -38,6 +43,8 @@ class ContentBaseEntity implements RouteSubjectInterface
     private $metaDescription;
 
     /**
+     * Мета ключевые слова
+     * 
      * @var string
      *
      * @ORM\Column(name="meta_keywords", type="text", nullable=true)
@@ -45,6 +52,8 @@ class ContentBaseEntity implements RouteSubjectInterface
     private $metaKeywords;
     
     /**
+     * Путь в адресной строке
+     * 
      * @var string
      * 
      * @Description("routePath", title="Route path", dataType="string",  property="routePath")
@@ -63,6 +72,8 @@ class ContentBaseEntity implements RouteSubjectInterface
      */
     
     /**
+     * Связанный статус записи
+     * 
      * @Description("entryStatus", title="Entry status", dataType="string",  property="entryStatus.title")
      * 
      * @ORM\ManyToOne(targetEntity="\AppBundle\Model\ScrollItemSubjectInterface")
@@ -70,6 +81,8 @@ class ContentBaseEntity implements RouteSubjectInterface
     private $entryStatus;
     
     /**
+     * Связанный маршрут
+     * 
      * @ORM\OneToOne(targetEntity="AppBundle\Model\RouteSubjectInterface", cascade={"persist"})
      */
     private $route;
@@ -82,7 +95,11 @@ class ContentBaseEntity implements RouteSubjectInterface
      */
     
     /**
+     * Тип записи
+     * 
      * @var string
+     * 
+     * @deprecated
      */
     private $contentType="content"; // content|action
     
@@ -105,7 +122,7 @@ class ContentBaseEntity implements RouteSubjectInterface
      *
      * @param string $metaTitle
      *
-     * @return Seo
+     * @return string
      */
     public function setMetaTitle($metaTitle)
     {
@@ -129,7 +146,7 @@ class ContentBaseEntity implements RouteSubjectInterface
      *
      * @param string $metaDescription
      *
-     * @return Seo
+     * @return string
      */
     public function setMetaDescription($metaDescription)
     {
@@ -153,7 +170,7 @@ class ContentBaseEntity implements RouteSubjectInterface
      *
      * @param string $metaKeywords
      *
-     * @return Seo
+     * @return string
      */
     public function setMetaKeywords($metaKeywords)
     {
@@ -224,11 +241,11 @@ class ContentBaseEntity implements RouteSubjectInterface
     /**
      * Set route
      *
-     * @param \AppBundle\Entity\Route $route
+     * @param \AppBundle\Entity\Core\Route $route
      *
      * @return News
      */
-    public function setRoute(\AppBundle\Entity\Route $route = null)
+    public function setRoute(\AppBundle\Entity\Core\Route $route = null)
     {
         $this->route = $route;
         
@@ -238,7 +255,7 @@ class ContentBaseEntity implements RouteSubjectInterface
     /**
      * Get route
      *
-     * @return \AppBundle\Entity\Route
+     * @return \AppBundle\Entity\Core\Route
      */
     public function getRoute()
     {
@@ -258,7 +275,7 @@ class ContentBaseEntity implements RouteSubjectInterface
      * @param entity $entity
      * @return string
      */
-    private function getDefineAction($entity=false)
+    public function getDefineAction($entity=false)
     {
         if(is_object($entity) && is_callable([$entity, 'getAction']))
         {
@@ -287,48 +304,4 @@ class ContentBaseEntity implements RouteSubjectInterface
     {
         return $this->contentType;
     }
-    
-    /**
-     * @return string
-     */
-    public function getEntityCode()
-    {
-        return $this->entityCode;
-    }
-        
-
-    /**
-     * #################################################
-     * #################### Events #####################
-     * #################################################
-     */
-    
-    /**
-     * @ORM\PostPersist
-     */
-   public function initRoute()
-   {
-       $route = new Route;
-       $route->setEntryId($this->getId());
-       $route->setContentType($this->getContentType());
-       $route->setAction($this->getDefineAction($this));
-       $route->setRoutePath($this->getRoutePath());
-       $route->setEntityCode($this->getEntityCode());
-       
-       $this->setRoute($route);
-   }
-   
-   /**
-     * @ORM\PreUpdate
-     */
-   public function updateRoute()
-   {
-       $route = $this->getRoute();
-       $route->setAction($this->getDefineAction($this));
-       $route->setRoutePath($this->getRoutePath());
-       
-       $this->setRoute($route);
-   }
-
-    
 }

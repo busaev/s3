@@ -143,7 +143,7 @@ class NavigationItem
      * 
      * @Description("route", title="Route", dataType="string",  property="route.routePath")
      *
-     * @ORM\ManyToOne(targetEntity="Route", inversedBy="navigationItems")
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Core\Route", inversedBy="navigationItems")
      * @ORM\JoinColumn(name="idRoute", referencedColumnName="id")
      */
     private $route;
@@ -535,11 +535,11 @@ class NavigationItem
     /**
      * Set route
      *
-     * @param \AppBundle\Entity\Route $route
+     * @param \AppBundle\Entity\Core\Route $route
      *
      * @return NavigationItem
      */
-    public function setRoute(\AppBundle\Entity\Route $route = null)
+    public function setRoute(\AppBundle\Entity\Core\Route $route = null)
     {
         $this->route = $route;
 
@@ -549,7 +549,7 @@ class NavigationItem
     /**
      * Get route
      *
-     * @return \AppBundle\Entity\Route
+     * @return \AppBundle\Entity\Core\Route
      */
     public function getRoute()
     {

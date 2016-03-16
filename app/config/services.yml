@@ -9,13 +9,23 @@ services:
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
 
     #############################################
-    ########## Службы ядра ######################
+    #####№№№##### Подписчики ####################
     #############################################
     logger.entity:
         class: AppBundle\EventListener\EntityLogger
         arguments: ["@service_container"]
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+            
+    subscriber.router:
+        class: AppBundle\EventListener\Router
+        arguments: ["@service_container"]
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
+    #############################################
+    ########## Службы ядра ######################
+    #############################################
     
     # Custom route loader
     app.routing_loader:
@@ -72,6 +82,7 @@ services:
     # коллекция служб отмеченных тегом - app.content
     app.entities:
         class: AppBundle\Services\Entities
+        arguments: [ "@service_container" ]
         
 
     ###
@@ -98,13 +109,6 @@ services:
         arguments: [ "@service_container" ]
         tags:
             -  { name: app.entity }
-            
-    # страницы модуля. служба модуля, будет добавлена в коллекцию службы app.entities
-    content_page.entity:
-        class: AppBundle\Services\Entities\Content\ContentPage
-        arguments: [ "@service_container" ]
-        tags:
-            -  { name: app.entity }
     
     ###
     ###  [[ Content ]]
@@ -123,6 +127,13 @@ services:
         arguments: [ "@service_container" ]
         tags:
             -  { name: app.entity }
+            
+    # страницы модуля. служба модуля, будет добавлена в коллекцию службы app.entities
+    content_page.entity:
+        class: AppBundle\Services\Entities\Content\ContentPage
+        arguments: [ "@service_container" ]
+        tags:
+            -  { name: app.entity }
     
     ###
     ###  [[ Shop ]]
@@ -130,7 +141,7 @@ services:
     
     # элемент навигации. служба модуля, будет добавлена в коллекцию службы app.entities
     vendor.entity:
-        class: AppBundle\Services\Entities\Vendor
+        class: AppBundle\Services\Entities\Shop\Vendor
         arguments: [ "@service_container" ]
         tags:
             -  { name: app.entity }

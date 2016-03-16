@@ -31,7 +31,7 @@ class ExtraLoader extends Loader
         $routes = new RouteCollection();
         
         
-        $customRouts = $em->getRepository('AppBundle:Route')->findAll();
+        $customRouts = $em->getRepository('AppBundle:Core\Route')->findAll();
         
         foreach($customRouts as $routeItem)
         {
