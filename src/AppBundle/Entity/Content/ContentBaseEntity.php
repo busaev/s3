@@ -268,34 +268,6 @@ class ContentBaseEntity implements RouteSubjectInterface
      * ###################  Staff  #####################
      * #################################################
      */
-    
-    /**
-     *  Получить экшн по имени сущности
-     * 
-     * @param entity $entity
-     * @return string
-     */
-    public function getDefineAction($entity=false)
-    {
-        if(is_object($entity) && is_callable([$entity, 'getAction']))
-        {
-            return $entity->getAction();
-        }
-        
-        $class = get_class($entity);
-        
-        if(!strpos($class, '\\'))
-        {
-            $controler = $class;
-        }
-        else
-        {
-            $tmp = explode('\\', $class);
-            $controler = end($tmp);
-        }
-        
-        return "AppBundle:".$controler.":route";
-    }
 
     /**
      * @return string

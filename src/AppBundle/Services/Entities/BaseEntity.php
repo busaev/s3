@@ -104,6 +104,14 @@ class BaseEntity
     {
         return 'AppBundle\\Form\\' . $this->getName() . 'Type';
     }
+    
+    /**
+     * @return string
+     */
+    public function getRouteAction()
+    {
+        return "AppBundle:".$this->getEntityLocationInEntityDirectory().":route";
+    }
 
     /**
      * Получить новый объект сущности
