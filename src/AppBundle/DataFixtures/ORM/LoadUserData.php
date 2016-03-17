@@ -7,8 +7,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-use AppBundle\Entity\Scroll;
-use AppBundle\Entity\ScrollItem;
+use AppBundle\Entity\Core\Scroll;
+use AppBundle\Entity\Core\ScrollItem;
 use AppBundle\Entity\Role;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Content;

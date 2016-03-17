@@ -36,7 +36,7 @@ class ScrollType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Scroll'
+            'data_class' => 'AppBundle\Entity\Core\Scroll'
         ));
     }
 }

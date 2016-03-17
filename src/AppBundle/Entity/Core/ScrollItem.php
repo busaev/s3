@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace AppBundle\Entity\Core;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -79,7 +79,7 @@ class ScrollItem implements ScrollItemSubjectInterface
     /**
      * @Description("scroll", title="Scroll", dataType="string")
      *
-     * @ORM\ManyToOne(targetEntity="Scroll", inversedBy="items")
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Core\Scroll", inversedBy="items")
      * @ORM\JoinColumn(name="id_scroll", referencedColumnName="id")
      */
     private $scroll;
@@ -207,7 +207,7 @@ class ScrollItem implements ScrollItemSubjectInterface
      *
      * @return ScrollItem
      */
-    public function setScroll(\AppBundle\Entity\Scroll $scroll = null)
+    public function setScroll(\AppBundle\Entity\Core\Scroll $scroll = null)
     {
         $this->scroll = $scroll;
 

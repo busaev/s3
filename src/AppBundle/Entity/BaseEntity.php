@@ -217,11 +217,11 @@ class BaseEntity implements RouteSubjectInterface
     /**
      * Set entryStatus
      *
-     * @param \AppBundle\Entity\ScrollItem $entryStatus
+     * @param \AppBundle\Entity\Core\ScrollItem $entryStatus
      *
      * @return BaseEntity
      */
-    public function setEntryStatus(\AppBundle\Entity\ScrollItem $entryStatus = null)
+    public function setEntryStatus(\AppBundle\Entity\Core\ScrollItem $entryStatus = null)
     {
         $this->entryStatus = $entryStatus;
 
@@ -231,7 +231,7 @@ class BaseEntity implements RouteSubjectInterface
     /**
      * Get entryStatus
      *
-     * @return \AppBundle\Entity\ScrollItem
+     * @return \AppBundle\Entity\Core\ScrollItem
      */
     public function getEntryStatus()
     {

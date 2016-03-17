@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity\Content;
+namespace AppBundle\Entity\Core;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -69,7 +69,7 @@ class ContentPage extends BaseEntity
     /**
      * @Description("content", title="Content", dataType="string",  property="content.title")
      * 
-     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Content", inversedBy="contentPages")
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Core\Content", inversedBy="contentPages")
      * @ORM\JoinColumn(name="entityCode", referencedColumnName="entityCode")
      */
     private $content;
@@ -193,11 +193,11 @@ class ContentPage extends BaseEntity
     /**
      * Set content
      *
-     * @param \AppBundle\Entity\Content $content
+     * @param \AppBundle\Entity\Core\Content $content
      *
      * @return ContentPage
      */
-    public function setContent(\AppBundle\Entity\Content $content = null)
+    public function setContent(\AppBundle\Entity\Core\Content $content = null)
     {
         $this->content = $content;
 
@@ -207,7 +207,7 @@ class ContentPage extends BaseEntity
     /**
      * Get content
      *
-     * @return \AppBundle\Entity\Content
+     * @return \AppBundle\Entity\Content\Core
      */
     public function getContent()
     {

@@ -127,13 +127,13 @@ class NavigationItem
     private $childrenNavigationItems;
     
     /**
-     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Content", inversedBy="navigationItems")
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Core\Content", inversedBy="navigationItems")
      * @ORM\JoinColumn(name="entityCode", referencedColumnName="entityCode")
      */
     private $content;
     
     /**
-     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Content\ContentPage", inversedBy="navigationItems")
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Core\ContentPage", inversedBy="navigationItems")
      * @ORM\JoinColumn(name="idContentPage", referencedColumnName="id")
      */
     private $contentPage;
@@ -404,11 +404,11 @@ class NavigationItem
     /**
      * Set entryStatus
      *
-     * @param \AppBundle\Entity\ScrollItem $entryStatus
+     * @param \AppBundle\Entity\Core\ScrollItem $entryStatus
      *
      * @return NavigationItem
      */
-    public function setEntryStatus(\AppBundle\Entity\ScrollItem $entryStatus = null)
+    public function setEntryStatus(\AppBundle\Entity\Core\ScrollItem $entryStatus = null)
     {
         $this->entryStatus = $entryStatus;
 
@@ -418,7 +418,7 @@ class NavigationItem
     /**
      * Get entryStatus
      *
-     * @return \AppBundle\Entity\ScrollItem
+     * @return \AppBundle\Entity\Core\ScrollItem
      */
     public function getEntryStatus()
     {
@@ -439,11 +439,11 @@ class NavigationItem
     /**
      * Set content
      *
-     * @param \AppBundle\Entity\Content $content
+     * @param \AppBundle\Entity\Core\\Content $content
      *
      * @return NavigationItem
      */
-    public function setContent(\AppBundle\Entity\Content $content = null)
+    public function setContent(\AppBundle\Entity\Core\Content $content = null)
     {
         $this->content = $content;
 
@@ -453,7 +453,7 @@ class NavigationItem
     /**
      * Get content
      *
-     * @return \AppBundle\Entity\Content
+     * @return \AppBundle\Entity\Core\\Content
      */
     public function getContent()
     {

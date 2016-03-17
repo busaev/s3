@@ -31,7 +31,7 @@ class UserNewType extends AbstractType
                 'second_options' => array('label' => 'Repeat Password'),
             ))
             ->add('entryStatus', EntityType::class, [
-               'class' => 'AppBundle:ScrollItem',
+               'class' => 'AppBundle:Core\\ScrollItem',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('i')
                         ->join('i.scroll', 's')

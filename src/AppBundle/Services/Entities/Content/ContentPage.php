@@ -36,9 +36,12 @@ class ContentPage extends BaseEntity implements EntityInterface
     public function baseQuery()
     {
         $doctrine = $this->container->get('doctrine');
-
+        $entities = $this->container->get('app.entities');
+        
+        $entityScroll = $entities->scroll_item;
+        
         // Основной запрос
-        $status = $doctrine->getRepository("AppBundle:ScrollItem")
+        $status = $doctrine->getRepository($entityScroll->getLogicalName())
                            ->findByScrollItemCodeAndScrollCode('delete', 'entry_status');
 
         // Основной запрос

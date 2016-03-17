@@ -61,7 +61,7 @@ class NavigationItemType extends AbstractType
                 'translation_domain' => 'global'
             ])
             ->add('entryStatus', EntityType::class, [
-                'class' => 'AppBundle:ScrollItem',
+                'class' => 'AppBundle:Core\\ScrollItem',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('i')
                         ->join('i.scroll', 's')

@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace AppBundle\Entity\Core;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -106,7 +106,7 @@ class Content
     private $entryStatus;
     
     /**
-     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\Content\ContentPage", mappedBy="content")
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\Core\ContentPage", mappedBy="content")
      */
     private $contentPages;
     
@@ -227,11 +227,11 @@ class Content
     /**
      * Set entryStatus
      *
-     * @param \AppBundle\Entity\ScrollItem $entryStatus
+     * @param \AppBundle\Entity\Core\ScrollItem $entryStatus
      *
      * @return News
      */
-    public function setEntryStatus(\AppBundle\Entity\ScrollItem $entryStatus = null)
+    public function setEntryStatus(\AppBundle\Entity\Core\ScrollItem $entryStatus = null)
     {
         $this->entryStatus = $entryStatus;
 
@@ -241,7 +241,7 @@ class Content
     /**
      * Get entryStatus
      *
-     * @return \AppBundle\Entity\ScrollItem
+     * @return \AppBundle\Entity\Core\ScrollItem
      */
     public function getEntryStatus()
     {
@@ -251,11 +251,11 @@ class Content
     /**
      * Add contentPage
      *
-     * @param \AppBundle\Entity\Contents\ContentPage $contentPage
+     * @param \AppBundle\Entity\Core\ContentPage $contentPage
      *
      * @return Content
      */
-    public function addContentPage(\AppBundle\Entity\Content\ContentPage $contentPage)
+    public function addContentPage(\AppBundle\Entity\Core\ContentPage $contentPage)
     {
         $this->contentPages[] = $contentPage;
 
@@ -265,9 +265,9 @@ class Content
     /**
      * Remove contentPage
      *
-     * @param \AppBundle\Entity\Contents\ContentPage $contentPage
+     * @param \AppBundle\Entity\Core\ContentPage $contentPage
      */
-    public function removeContentPage(\AppBundle\Entity\Content\ContentPage $contentPage)
+    public function removeContentPage(\AppBundle\Entity\Core\ContentPage $contentPage)
     {
         $this->contentPages->removeElement($contentPage);
     }

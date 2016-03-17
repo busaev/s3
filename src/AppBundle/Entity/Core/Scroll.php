@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace AppBundle\Entity\Core;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -52,17 +52,31 @@ class Scroll
      * @ORM\Column(name="position", type="integer", nullable=true)
      */
     private $position;
+    
+    /**
+     * #################################################
+     * ####################  Связи  ####################
+     * #################################################
+     */
 
     /**
-     * @ORM\OneToMany(targetEntity="ScrollItem", mappedBy="scroll")
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\Core\ScrollItem", mappedBy="scroll")
      */
     private $items;
+    
+    /**
+     * #################################################
+     * #############  Gettrs and Setters  ##############
+     * #################################################
+     */
 
-    public function __construct() {
+    public function __construct() 
+    {
         $this->items = new ArrayCollection();
     }
 
-    public function __toString() {
+    public function __toString() 
+    {
         return $this->getTitle();
     }
 
@@ -151,11 +165,11 @@ class Scroll
     /**
      * Add item
      *
-     * @param \AppBundle\Entity\ScrollItem $item
+     * @param \AppBundle\Entity\Core\ScrollItem $item
      *
      * @return Scroll
      */
-    public function addItem(\AppBundle\Entity\ScrollItem $item)
+    public function addItem(\AppBundle\Entity\Core\ScrollItem $item)
     {
         $this->items[] = $item;
 
@@ -165,9 +179,9 @@ class Scroll
     /**
      * Remove item
      *
-     * @param \AppBundle\Entity\ScrollItem $item
+     * @param \AppBundle\Entity\Core\ScrollItem $item
      */
-    public function removeItem(\AppBundle\Entity\ScrollItem $item)
+    public function removeItem(\AppBundle\Entity\Core\ScrollItem $item)
     {
         $this->items->removeElement($item);
     }

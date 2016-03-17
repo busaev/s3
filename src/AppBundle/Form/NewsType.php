@@ -51,7 +51,7 @@ class NewsType extends AbstractType
                 ]
             ])
             ->add('entryStatus', EntityType::class, [
-               'class' => 'AppBundle:ScrollItem',
+               'class' => 'AppBundle:Core\\ScrollItem',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('i')
                         ->join('i.scroll', 's')

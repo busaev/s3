@@ -16,7 +16,7 @@ class ScrollItemRepository extends \Doctrine\ORM\EntityRepository
      * @param string $scrollItemCode
      * @param string $scrollCode
      * 
-     * @return \AppBundle\Entity\ScrollItem|false
+     * @return \AppBundle\Entity\Core\ScrollItem|false
      */
     public function findByScrollItemCodeAndScrollCode($scrollItemCode, $scrollCode)
     {

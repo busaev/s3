@@ -33,13 +33,16 @@ class News extends BaseEntity implements EntityInterface
     public function init($entity=false)
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
+        
+        $entities = $this->container->get('app.entities');        
+        $entityContent = $entities->content;
 
         if(!$entity)
         {
             $entity = $this->getNew();
         }
 
-        $content = $em->getRepository('AppBundle:Content')->findOneBy([
+        $content = $em->getRepository($entityContent->getLogicalName())->findOneBy([
             'entityCode'=>'news'
         ]);
 
@@ -49,9 +52,12 @@ class News extends BaseEntity implements EntityInterface
     public function baseQuery()
     {
         $doctrine = $this->container->get('doctrine');
-
+        $entities = $this->container->get('app.entities');
+        
+        $entityScroll = $entities->scroll_item;
+        
         // Основной запрос
-        $status = $doctrine->getRepository("AppBundle:ScrollItem")
+        $status = $doctrine->getRepository($entityScroll->getLogicalName())
                            ->findByScrollItemCodeAndScrollCode('delete', 'entry_status');
 
         // Основной запрос

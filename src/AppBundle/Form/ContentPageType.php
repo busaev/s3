@@ -44,7 +44,7 @@ class ContentPageType extends AbstractType
                 'attr' => []
             ])
             ->add('entryStatus', EntityType::class, [
-               'class' => 'AppBundle:ScrollItem',
+               'class' => 'AppBundle:Core\\ScrollItem',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('i')
                         ->join('i.scroll', 's')
@@ -61,7 +61,7 @@ class ContentPageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Content\ContentPage'
+            'data_class' => 'AppBundle\Entity\Core\ContentPage'
         ));
     }
 }

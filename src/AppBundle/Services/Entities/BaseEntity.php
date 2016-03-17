@@ -141,9 +141,12 @@ class BaseEntity
     public function baseQuery()
     {
         $doctrine = $this->container->get('doctrine');
+        $entities = $this->container->get('app.entities');
+        
+        $entityScroll = $entities->scroll_item;
 
         // Статус
-        $status = $doctrine->getRepository("AppBundle:ScrollItem")
+        $status = $doctrine->getRepository($entityScroll->getLogicalName())
                            ->findByScrollItemCodeAndScrollCode('delete', 'entry_status');
 
         // Основной запрос

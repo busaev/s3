@@ -63,7 +63,7 @@ doctrine:
         auto_mapping: true
         
         resolve_target_entities:
-            AppBundle\Model\ScrollItemSubjectInterface: AppBundle\Entity\ScrollItem
+            AppBundle\Model\ScrollItemSubjectInterface: AppBundle\Entity\Core\ScrollItem
             AppBundle\Model\RouteSubjectInterface:      AppBundle\Entity\Core\Route
 
 # Swiftmailer Configuration
