@@ -82,7 +82,7 @@ class NavigationItemType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\NavigationItem',
+            'data_class' => 'AppBundle\Entity\Core\NavigationItem',
         ));
     }
 }

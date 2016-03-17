@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace AppBundle\Entity\Core;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -127,7 +127,7 @@ class NavigationItem
     private $childrenNavigationItems;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Content", inversedBy="navigationItems")
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Content", inversedBy="navigationItems")
      * @ORM\JoinColumn(name="entityCode", referencedColumnName="entityCode")
      */
     private $content;

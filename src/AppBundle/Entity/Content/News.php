@@ -8,6 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
+use AppBundle\Entity\BaseEntity;
 
 
 /**
@@ -18,7 +19,7 @@ use AppBundle\Annotations\DescriptionObject;
  * @ORM\Table(name="news")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\NewsRepository")
  */
-class News extends ContentBaseEntity
+class News extends BaseEntity
 {
     /**
      * @var integer $id

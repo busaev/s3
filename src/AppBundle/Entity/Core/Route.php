@@ -69,7 +69,7 @@ class Route
      */
     
     /**
-     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\NavigationItem", mappedBy="route")
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\Core\NavigationItem", mappedBy="route")
      */
     private $navigationItems;
     
@@ -202,11 +202,11 @@ class Route
     /**
      * Add navigationItem
      *
-     * @param \AppBundle\Entity\NavigationItem $navigationItem
+     * @param \AppBundle\Entity\Core\NavigationItem $navigationItem
      *
      * @return Route
      */
-    public function addNavigationItem(\AppBundle\Entity\NavigationItem $navigationItem)
+    public function addNavigationItem(\AppBundle\Entity\Core\NavigationItem $navigationItem)
     {
         $this->navigationItems[] = $navigationItem;
 
@@ -216,9 +216,9 @@ class Route
     /**
      * Remove navigationItem
      *
-     * @param \AppBundle\Entity\NavigationItem $navigationItem
+     * @param \AppBundle\Entity\Core\NavigationItem $navigationItem
      */
-    public function removeNavigationItem(\AppBundle\Entity\NavigationItem $navigationItem)
+    public function removeNavigationItem(\AppBundle\Entity\Core\NavigationItem $navigationItem)
     {
         $this->navigationItems->removeElement($navigationItem);
     }

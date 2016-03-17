@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\Entity\Content;
+namespace AppBundle\Entity;
 
 use AppBundle\Model\RouteSubjectInterface;
 use AppBundle\Annotations\Description;
@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping\MappedSuperclass;
  * 
  * @MappedSuperclass
  */
-class ContentBaseEntity implements RouteSubjectInterface
+class BaseEntity implements RouteSubjectInterface
 {
     
     /**
@@ -83,7 +83,7 @@ class ContentBaseEntity implements RouteSubjectInterface
     /**
      * Связанный маршрут
      * 
-     * @ORM\OneToOne(targetEntity="AppBundle\Model\RouteSubjectInterface", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="\AppBundle\Model\RouteSubjectInterface", cascade={"persist"})
      */
     private $route;
     
@@ -219,7 +219,7 @@ class ContentBaseEntity implements RouteSubjectInterface
      *
      * @param \AppBundle\Entity\ScrollItem $entryStatus
      *
-     * @return ContentBaseEntity
+     * @return BaseEntity
      */
     public function setEntryStatus(\AppBundle\Entity\ScrollItem $entryStatus = null)
     {

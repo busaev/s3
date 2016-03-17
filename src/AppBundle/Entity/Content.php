@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
 
+use AppBundle\Entity\Core\NavigationItem;
+
 /**
  * Content
  *
@@ -109,7 +111,7 @@ class Content
     private $contentPages;
     
     /**
-     * @ORM\OneToMany(targetEntity="NavigationItem", mappedBy="content")
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\Core\NavigationItem", mappedBy="content")
      */
     private $navigationItems;
     
@@ -283,11 +285,11 @@ class Content
     /**
      * Add navigationItem
      *
-     * @param \AppBundle\Entity\NavigationItem $navigationItem
+     * @param \AppBundle\Entity\Core\NavigationItem $navigationItem
      *
      * @return Content
      */
-    public function addNavigationItem(\AppBundle\Entity\NavigationItem $navigationItem)
+    public function addNavigationItem(\AppBundle\Entity\Core\NavigationItem $navigationItem)
     {
         $this->navigationItems[] = $navigationItem;
 
@@ -297,9 +299,9 @@ class Content
     /**
      * Remove navigationItem
      *
-     * @param \AppBundle\Entity\NavigationItem $navigationItem
+     * @param \AppBundle\Entity\Core\NavigationItem $navigationItem
      */
-    public function removeNavigationItem(\AppBundle\Entity\NavigationItem $navigationItem)
+    public function removeNavigationItem(\AppBundle\Entity\Core\NavigationItem $navigationItem)
     {
         $this->navigationItems->removeElement($navigationItem);
     }

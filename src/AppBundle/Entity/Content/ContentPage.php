@@ -3,11 +3,12 @@
 namespace AppBundle\Entity\Content;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
+use AppBundle\Entity\BaseEntity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * ContentPage
@@ -18,7 +19,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ContentPageRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class ContentPage extends ContentBaseEntity
+class ContentPage extends BaseEntity
 {
     
     
@@ -74,7 +75,7 @@ class ContentPage extends ContentBaseEntity
     private $content;
     
     /**
-     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\NavigationItem", mappedBy="contentPage")
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\Core\NavigationItem", mappedBy="contentPage")
      */
     private $navigationItems;
     
@@ -216,11 +217,11 @@ class ContentPage extends ContentBaseEntity
     /**
      * Add navigationItem
      *
-     * @param \AppBundle\Entity\NavigationItem $navigationItem
+     * @param \AppBundle\Entity\Core\NavigationItem $navigationItem
      *
      * @return ContentPage
      */
-    public function addNavigationItem(\AppBundle\Entity\NavigationItem $navigationItem)
+    public function addNavigationItem(\AppBundle\Entity\Core\NavigationItem $navigationItem)
     {
         $this->navigationItems[] = $navigationItem;
 
@@ -230,9 +231,9 @@ class ContentPage extends ContentBaseEntity
     /**
      * Remove navigationItem
      *
-     * @param \AppBundle\Entity\NavigationItem $navigationItem
+     * @param \AppBundle\Entity\Core\NavigationItem $navigationItem
      */
-    public function removeNavigationItem(\AppBundle\Entity\NavigationItem $navigationItem)
+    public function removeNavigationItem(\AppBundle\Entity\Core\NavigationItem $navigationItem)
     {
         $this->navigationItems->removeElement($navigationItem);
     }

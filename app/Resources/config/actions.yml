@@ -1,12 +1,18 @@
 default:
     default:
+        default: Content:route
         show: Content:show
         index: Content:index
         
-News:
+news:
     Frontend:
-        show: Content:show
+        show: Content:route
         index: Content:index
     Backend:
         show: Content:show
+        index: Content:index
+        
+page:
+    Frontend:
+        show: Content:route
         index: Content:index

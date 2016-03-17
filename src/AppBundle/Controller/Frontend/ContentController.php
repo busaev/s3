@@ -10,8 +10,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\Query;
 
-use AppBundle\Entity\ContentBaseEntity;
-
 /**
  * @Route("/frontend/content")
  */

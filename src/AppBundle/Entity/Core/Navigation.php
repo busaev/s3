@@ -1,12 +1,14 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace AppBundle\Entity\Core;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
+
+use AppBundle\Entity\Core\NavigationItem;
 
 /**
  * Navigation
@@ -67,7 +69,7 @@ class Navigation
     private $entryStatus;
     
     /**
-     * @ORM\OneToMany(targetEntity="NavigationItem", mappedBy="navigation")
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\Core\NavigationItem", mappedBy="navigation")
      */
     private $navigationItems;
 
@@ -133,7 +135,7 @@ class Navigation
      *
      * @param \AppBundle\Entity\ScrollItem $entryStatus
      *
-     * @return ContentBaseEntity
+     * @return BaseEntity
      */
     public function setEntryStatus(\AppBundle\Entity\ScrollItem $entryStatus = null)
     {
@@ -155,11 +157,11 @@ class Navigation
     /**
      * Add navigationItem
      *
-     * @param \AppBundle\Entity\NavigationItem $navigationItem
+     * @param \AppBundle\Entity\Core\NavigationItem $navigationItem
      *
      * @return Navigation
      */
-    public function addNavigationItem(\AppBundle\Entity\NavigationItem $navigationItem)
+    public function addNavigationItem(\AppBundle\Entity\Core\NavigationItem $navigationItem)
     {
         $this->navigationItems[] = $navigationItem;
 
@@ -169,9 +171,9 @@ class Navigation
     /**
      * Remove navigationItem
      *
-     * @param \AppBundle\Entity\NavigationItem $navigationItem
+     * @param \AppBundle\Entity\Core\NavigationItem $navigationItem
      */
-    public function removeNavigationItem(\AppBundle\Entity\NavigationItem $navigationItem)
+    public function removeNavigationItem(\AppBundle\Entity\Core\NavigationItem $navigationItem)
     {
         $this->navigationItems->removeElement($navigationItem);
     }

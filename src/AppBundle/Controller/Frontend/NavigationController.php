@@ -18,9 +18,13 @@ class NavigationController extends Controller
     public function showAction(Request $request, $params=null)
     {
         $em  = $this->getDoctrine()->getManager();
-        $tpl = $this->get('app.tpl');
         
-        $repositoryNavigation = $em->getRepository('AppBundle:Navigation');
+        $entities = $this->get('app.entities');
+        $tpl      = $this->get('app.tpl');
+        
+        $entity = $entities->navigation;
+        
+        $repositoryNavigation = $em->getRepository($entity->getLogicalName());
         
         $navigation = $repositoryNavigation->findOneBy(['code'=>$params['code']]);
         

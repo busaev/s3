@@ -9,8 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
 
-//@todo м.б. перенести
-use AppBundle\Entity\Content\ContentBaseEntity;
+use AppBundle\Entity\BaseEntity;
 
 /**
  * @DescriptionObject("vendors", title="Brends")
@@ -18,7 +17,7 @@ use AppBundle\Entity\Content\ContentBaseEntity;
  * @ORM\Table(name="vendors")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\VendorRepository")
  */
-class Vendor extends ContentBaseEntity
+class Vendor extends BaseEntity
 {
     /**
      * @var integer $id

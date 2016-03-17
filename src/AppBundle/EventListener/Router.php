@@ -5,6 +5,7 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Yaml\Yaml;
 
 use AppBundle\Entity\Core\Route;
 
@@ -42,24 +43,32 @@ class Router implements EventSubscriber
         return [];
     }
 
+    /**
+     * Эвент, выполняемый после добавления записи
+     * Если у добавляемой записи есть routePath - Создаем Route
+     * 
+     * @param LifecycleEventArgs $args
+     */
     public function postPersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-                
+        
         if ( $this->skipCondition($entity) && is_callable(array($entity, 'getRoutePath'))) 
         {
             $em       = $args->getEntityManager();
             $entities = $this->container->get('app.entities');
             
+            $entityCode = $entities->getByObject($entity)->getCode();
+            $action     = $this->getLogicalAction($entityCode, 'show');
+            
             // Создаём маршрут
             $route = new Route;
             $route->setEntryId($entity->getId());
             $route->setRoutePath($entity->getRoutePath());
-
-            $route->setAction($entity->getDefineAction($entity));
+            $route->setEntityCode($entityCode);
+            $route->setAction($action);
 
             $route->setContentType($entity->getContentType());
-            $route->setEntityCode($entities->getByObject($entity)->getCode());
                         
             // Обновляем сущность
             $entity->setRoute($route);
@@ -72,6 +81,12 @@ class Router implements EventSubscriber
         }
     }
 
+    /**
+     * Эвент, выполняемый после обновления записи
+     * Если у записи есть routePath - Обновляем Route
+     * 
+     * @param LifecycleEventArgs $args
+     */
     public function postUpdate(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
@@ -81,14 +96,15 @@ class Router implements EventSubscriber
             $em       = $args->getEntityManager();
             $entities = $this->container->get('app.entities');
             
+            $entityCode = $entities->getByObject($entity)->getCode();
+            
             $route = $em->getRepository('AppBundle:Core\\Route')->findOneBy([
                 'entryId' => $entity->getId(),
-                'entityCode' => $entities->getByObject($entity)->getCode()
+                'entityCode' => $entityCode
             ]);
             
             if(null !== $route)
             {
-                $route->setAction($entity->getDefineAction($entity));
                 $route->setRoutePath($entity->getRoutePath());
 
                 $em->persist($route);
@@ -111,5 +127,77 @@ class Router implements EventSubscriber
             return true;
         }
         return false;
+    }
+    
+    /**
+     * Получить нужный бандл
+     * пока он 1, его и возвращаем
+     * 
+     * @return string
+     */
+    public function getBundle()
+    {
+        return 'AppBundle';
+    }
+    
+    /**
+     * Получить нужное приложение
+     * пока публичное приложение 1 - его и возвращаем
+     * 
+     * @return string
+     */
+    public function getApplication()
+    {
+        return 'Frontend';
+    }
+
+    /**
+     * Найти в конфиге нужный экшн для сущности
+     * 
+     * @param string $entityCode
+     * @param string $action
+     * 
+     * @return string|boolean
+     */
+    protected function getControllerAction($entityCode, $action)
+    {
+        $application = $this->getApplication();
+        $root        = $this->container->getParameter('kernel.root_dir');
+        
+        $yaml        = Yaml::parse(file_get_contents($root . '/Resources/config/actions.yml'));
+        
+        if(isset($yaml[$entityCode][$application][$action]))
+        {
+            return $yaml[$entityCode][$application][$action];
+        }
+        
+        if(isset($yaml[$entityCode]['default'][$action]))
+        {
+            return $yaml[$entityCode]['default'][$action];
+        }
+        
+        if(isset($yaml['default']['default'][$action]))
+        {
+            return $yaml['default']['default'][$action];
+        }
+        
+        if(isset($yaml['default']['default']['default']))
+        {
+            return $yaml['default']['default']['default'];
+        }
+        
+        return false;
+    }
+    
+    /**
+     * Сформировать логичесий путь до контроллера
+     * 
+     * @param string $entityCode
+     * @param string $action
+     * @return string
+     */
+    protected function getLogicalAction($entityCode, $action)
+    {
+        return $this->getBundle() . ':' . $this->getApplication() . '/' . $this->getControllerAction($entityCode, $action);
     }
 }

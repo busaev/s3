@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\Query;
 
-use AppBundle\Entity\ContentBaseEntity;
 
 /**
  * @Route("/backend/content")
