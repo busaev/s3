@@ -3,7 +3,7 @@
         <nav>
     <ul class="nav nav-justified">
         {% for entity in entity.navigationItems %}
-            <li><a href="{{entity.route}}">{{entity.title}}</a></li>
+            <li><a href="{% if app.environment == 'dev' %}/app_dev.php{% endif %}{{entity.route}}">{{entity.title}}</a></li>
         {% endfor %}
     </ul>
 </nav>

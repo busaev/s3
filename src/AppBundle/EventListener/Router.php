@@ -97,6 +97,7 @@ class Router implements EventSubscriber
             $entities = $this->container->get('app.entities');
             
             $entityCode = $entities->getByObject($entity)->getCode();
+            $action     = $this->getLogicalAction($entityCode, 'show');
             
             $route = $em->getRepository('AppBundle:Core\\Route')->findOneBy([
                 'entryId' => $entity->getId(),
@@ -106,6 +107,7 @@ class Router implements EventSubscriber
             if(null !== $route)
             {
                 $route->setRoutePath($entity->getRoutePath());
+                $route->setAction($action);
 
                 $em->persist($route);
                 $em->flush();
