@@ -85,6 +85,59 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $manager->flush();
         
         
+        
+        /**
+         *  Справочник для Вариантов отображения аттрибута
+         */
+        
+        $scrollAttributeViewTypes = new Scroll;
+        $scrollAttributeViewTypes->setCode('attribute_view_types');
+        $scrollAttributeViewTypes->setTitle('Варианты отображения аттрибута');
+        $scrollAttributeViewTypes->setPosition('1');
+        
+        $manager->persist($scrollAttributeViewTypes);
+        
+        
+        $manager->flush();
+        
+        
+        /**
+         *  Cтатусы записи
+         */
+        
+        // string
+        $scrollItemString = new ScrollItem;
+        $scrollItemString->setScroll($scrollAttributeViewTypes);
+        $scrollItemString->setCode('string');
+        $scrollItemString->setTitle('Строка');
+        $scrollItemString->setPosition(1);
+        
+        $manager->persist($scrollItemString);
+        
+        
+        // checkbox
+        $scrollItemCheckbox = new ScrollItem;
+        $scrollItemCheckbox->setScroll($scrollAttributeViewTypes);
+        $scrollItemCheckbox->setCode('select');
+        $scrollItemCheckbox->setTitle('Выбор');
+        $scrollItemCheckbox->setPosition(2);
+        
+        $manager->persist($scrollItemCheckbox);
+        
+        
+        // select
+        $scrollItemSelectd = new ScrollItem;
+        $scrollItemSelectd->setScroll($scrollAttributeViewTypes);
+        $scrollItemSelectd->setCode('checkbox');
+        $scrollItemSelectd->setTitle('Множественный выбор');
+        $scrollItemSelectd->setPosition(3);
+        
+        $manager->persist($scrollItemSelectd);
+        
+        
+        $manager->flush();
+        
+        
         /**
          *  Роли пользователя
          */

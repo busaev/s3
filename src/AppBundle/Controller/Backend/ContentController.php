@@ -181,7 +181,7 @@ class ContentController extends Controller
         
         //крошки
         $breadcrumbs->addItem($translator->trans($currentEntity->getTitle(), [], 'global'),$this->get("router")->generate("backend_content_entry", [ 'entityCode' => $entityCode ]));
-        $breadcrumbs->addItem($entity,  $this->get("router")->generate("backend_content_entry_show", [ 'id' => $id ]));
+        $breadcrumbs->addItem($entity,  $this->get("router")->generate("backend_content_entry_show", [ 'id' => $id, 'entityCode' => $entityCode]));
         $breadcrumbs->addItem($translator->trans('Editing', [], 'global'));
 
         //
