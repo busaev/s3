@@ -322,11 +322,11 @@ class NavigationItem
     /**
      * Set navigation
      *
-     * @param \AppBundle\Entity\Navigation $navigation
+     * @param \AppBundle\Entity\Core\Navigation $navigation
      *
      * @return NavigationItem
      */
-    public function setNavigation(\AppBundle\Entity\Navigation $navigation = null)
+    public function setNavigation(\AppBundle\Entity\Core\Navigation $navigation = null)
     {
         $this->navigation = $navigation;
 
@@ -346,11 +346,11 @@ class NavigationItem
     /**
      * Set parentNavigationItem
      *
-     * @param \AppBundle\Entity\NavigationItem $parentNavigationItem
+     * @param \AppBundle\Entity\Core\NavigationItem $parentNavigationItem
      *
      * @return NavigationItem
      */
-    public function setParentNavigationItem(\AppBundle\Entity\NavigationItem $parentNavigationItem = null)
+    public function setParentNavigationItem(\AppBundle\Entity\Core\NavigationItem $parentNavigationItem = null)
     {
         $this->parentNavigationItem = $parentNavigationItem;
 
@@ -487,11 +487,11 @@ class NavigationItem
     /**
      * Set contentPage
      *
-     * @param \AppBundle\Entity\ContentPage $contentPage
+     * @param \AppBundle\Entity\Core\ContentPage $contentPage
      *
      * @return NavigationItem
      */
-    public function setContentPage(\AppBundle\Entity\Content\ContentPage $contentPage = null)
+    public function setContentPage(\AppBundle\Entity\Core\ContentPage $contentPage = null)
     {
         $this->contentPage = $contentPage;
 
@@ -501,7 +501,7 @@ class NavigationItem
     /**
      * Get contentPage
      *
-     * @return \AppBundle\Entity\ContentPage
+     * @return \AppBundle\Entity\Core\ContentPage
      */
     public function getContentPage()
     {

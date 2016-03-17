@@ -7,15 +7,15 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-use AppBundle\Entity\Core\Scroll;
-use AppBundle\Entity\Core\ScrollItem;
 use AppBundle\Entity\Role;
 use AppBundle\Entity\User;
-use AppBundle\Entity\Content;
-use AppBundle\Entity\Content\ContentPage;
+use AppBundle\Entity\Core\Content;
+use AppBundle\Entity\Core\ContentPage;
 use AppBundle\Entity\Core\Route;
-use AppBundle\Entity\Navigation;
-use AppBundle\Entity\NavigationItem;
+use AppBundle\Entity\Core\Navigation;
+use AppBundle\Entity\Core\NavigationItem;
+use AppBundle\Entity\Core\Scroll;
+use AppBundle\Entity\Core\ScrollItem;
 
 
 class LoadUserData implements FixtureInterface, ContainerAwareInterface
