@@ -91,8 +91,8 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
          */
         
         $scrollAttributeViewTypes = new Scroll;
-        $scrollAttributeViewTypes->setCode('attribute_view_types');
-        $scrollAttributeViewTypes->setTitle('Варианты отображения аттрибута');
+        $scrollAttributeViewTypes->setCode('view_types');
+        $scrollAttributeViewTypes->setTitle('Варианты отображения');
         $scrollAttributeViewTypes->setPosition('1');
         
         $manager->persist($scrollAttributeViewTypes);

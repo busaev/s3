@@ -45,7 +45,7 @@ services:
         public: false
         tags:
             - { name: twig.extension }
-
+            
     history:
         class: AppBundle\Services\History
         arguments: ["@doctrine.orm.entity_manager", "@security.token_storage", "@translator"]

@@ -65,6 +65,7 @@ doctrine:
         resolve_target_entities:
             AppBundle\Model\ScrollItemSubjectInterface: AppBundle\Entity\Core\ScrollItem
             AppBundle\Model\RouteSubjectInterface:      AppBundle\Entity\Core\Route
+            AppBundle\Model\MediaSubjectInterface:      AppBundle\Entity\Core\Media
 
 # Swiftmailer Configuration
 swiftmailer:

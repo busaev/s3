@@ -8,6 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\Query;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\HttpFoundation\FileBag;
 
 
 /**
@@ -57,6 +59,7 @@ class ContentController extends Controller
         $translator  = $this->get('translator');
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $entities    = $this->get("app.entities");
+        $utils       = $this->get("utils");
         
         $currentEntity = $entities->$entityCode;
         
@@ -67,6 +70,41 @@ class ContentController extends Controller
 
         if ($form->isSubmitted() && $form->isValid())
         {
+            
+            // Ищем и сохраняем файл
+            if(isset($request->files) && $request->files instanceof FileBag && NULL !== $request->files->get($entityCode))
+            {
+                $formData = $form->getData();
+                
+                foreach ($request->files->get($entityCode) as $entityProperty => $uploadedFile)
+                {
+                    if(NULL === $uploadedFile)
+                    {
+                        continue;
+                    }
+                    
+                    $extension = $uploadedFile->guessExtension();
+                    
+                    if (!$extension) 
+                    {
+                        $extension = 'bin';
+                    }
+                    
+                    $dir = $this->get('kernel')->getRootDir() . '../web/uploads/';                    
+                    $fileName = rand(1, 99999).'.'.$extension;
+                    
+                    $uploadedFile->move($dir, $fileName);
+                    
+                    $methodName = $utils->getCamelCase('set_' . $entityProperty);
+                    
+                    if(is_callable(array($entity, $methodName)))
+                    {
+                        call_user_func(array($entity, $methodName), $dir . $fileName);
+                    }
+
+                }
+            }
+            
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
