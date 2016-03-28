@@ -262,14 +262,16 @@ class ContentController extends Controller
         
         $currentEntity = $entities->$entityCode;
         
-        $status = $this->getDoctrine()
-                       ->getRepository("AppBundle:ScrollItem")
-                       ->findByScrollItemCodeAndScrollCode('delete', 'entry_status');
-
         //запись
         $entity = $this->getDoctrine()
                        ->getRepository($currentEntity->getLogicalName())
                        ->find($id);
+        
+        $entityScroll  = $entities->scroll_item;
+        
+        $status = $this->getDoctrine()
+                       ->getRepository($entityScroll->getLogicalName())
+                       ->findByScrollItemCodeAndScrollCode('delete', 'entry_status');
         
         $em = $this->getDoctrine()->getManager();
         $entity->setEntryStatus($status);

@@ -16,7 +16,7 @@ class MediaType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('path')
+            ->add('file')
         ;
     }
     
