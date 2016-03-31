@@ -81,3 +81,13 @@ assetic:
     bundles:        [ ]
     filters:
         cssrewrite: ~
+        
+hwi_oauth:
+    firewall_names: ["oauth_seczone"]
+    resource_owners:
+        mail_ru:
+            type:                mailru
+            client_id:           743135
+            client_secret:       e871f0a4aab306380bfd4f6e3fc89594
+            options:
+                csrf: true

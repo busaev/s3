@@ -36,11 +36,11 @@ security:
             form_login:
                 login_path: /backend/security/login
                 check_path: /backend/security/login_check
-            
+
             logout:
                 path:   /backend/security/logout
                 target: /backend
-
+            
             provider: user_db
             
             remember_me:
@@ -63,6 +63,18 @@ security:
                 target: /
                 
             provider: user_db
+            
+        oauth_seczone:
+            anonymous: ~
+            oauth:
+                resource_owners:
+                    mail_ru:       "/login/check-mail-ru"
+                login_path:        /login
+                use_forward:       false
+                failure_path:      /login
+
+                oauth_user_provider:
+                    service: hwi_oauth.user.provider
 
     access_control:
             - { path: ^/security/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

@@ -18,6 +18,7 @@
       <parameter key="SensioFrameworkExtraBundle">Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle</parameter>
       <parameter key="WhiteOctoberBreadcrumbsBundle">WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle</parameter>
       <parameter key="FOSJsRoutingBundle">FOS\JsRoutingBundle\FOSJsRoutingBundle</parameter>
+      <parameter key="HWIOAuthBundle">HWI\Bundle\OAuthBundle\HWIOAuthBundle</parameter>
       <parameter key="AppBundle">AppBundle\AppBundle</parameter>
       <parameter key="DebugBundle">Symfony\Bundle\DebugBundle\DebugBundle</parameter>
       <parameter key="WebProfilerBundle">Symfony\Bundle\WebProfilerBundle\WebProfilerBundle</parameter>
@@ -109,6 +110,9 @@
     <parameter key="security.authentication.session_strategy.strategy">migrate</parameter>
     <parameter key="security.access.always_authenticate_before_granting">false</parameter>
     <parameter key="security.authentication.hide_user_not_found">true</parameter>
+    <parameter key="hwi_oauth.resource_ownermap.configured.oauth_seczone" type="collection">
+      <parameter key="mail_ru">/login/check-mail-ru</parameter>
+    </parameter>
     <parameter key="twig.exception_listener.controller">twig.controller.exception:showAction</parameter>
     <parameter key="twig.form.resources" type="collection">
       <parameter>form_div_layout.html.twig</parameter>
@@ -375,6 +379,86 @@
     <parameter key="fos_js_routing.cache_control" type="collection">
       <parameter key="enabled">false</parameter>
     </parameter>
+    <parameter key="hwi_oauth.authentication.listener.oauth.class">HWI\Bundle\OAuthBundle\Security\Http\Firewall\OAuthListener</parameter>
+    <parameter key="hwi_oauth.authentication.provider.oauth.class">HWI\Bundle\OAuthBundle\Security\Core\Authentication\Provider\OAuthProvider</parameter>
+    <parameter key="hwi_oauth.authentication.entry_point.oauth.class">HWI\Bundle\OAuthBundle\Security\Http\EntryPoint\OAuthEntryPoint</parameter>
+    <parameter key="hwi_oauth.user.provider.class">HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUserProvider</parameter>
+    <parameter key="hwi_oauth.user.provider.entity.class">HWI\Bundle\OAuthBundle\Security\Core\User\EntityUserProvider</parameter>
+    <parameter key="hwi_oauth.user.provider.fosub_bridge.class">HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider</parameter>
+    <parameter key="hwi_oauth.registration.form.handler.fosub_bridge.class">HWI\Bundle\OAuthBundle\Form\FOSUBRegistrationFormHandler</parameter>
+    <parameter key="hwi_oauth.resource_owner.oauth1.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\GenericOAuth1ResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.oauth2.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\GenericOAuth2ResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.amazon.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\AmazonResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.auth0.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\Auth0ResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.azure.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\AzureResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.bitbucket.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\BitbucketResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.bitly.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\BitlyResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.box.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\BoxResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.bufferapp.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\BufferAppResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.dailymotion.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\DailymotionResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.deviantart.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\DeviantartResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.deezer.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\DeezerResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.discogs.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\DiscogsResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.disqus.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\DisqusResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.dropbox.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\DropboxResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.eve_online.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\EveOnlineResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.eventbrite.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\EventbriteResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.facebook.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\FacebookResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.fiware.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\FiwareResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.flickr.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\FlickrResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.foursquare.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\FoursquareResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.github.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\GitHubResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.google.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\GoogleResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.youtube.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\YoutubeResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.hubic.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\HubicResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.instagram.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\InstagramResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.jira.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\JiraResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.linkedin.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\LinkedinResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.mailru.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\MailRuResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.paypal.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\PaypalResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.qq.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\QQResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.reddit.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\RedditResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.runkeeper.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\RunKeeperResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.salesforce.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\SalesforceResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.sensio_connect.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\SensioConnectResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.sina_weibo.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\SinaWeiboResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.slack.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\SlackResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.spotify.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\SpotifyResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.soundcloud.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\SoundcloudResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.stack_exchange.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\StackExchangeResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.stereomood.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\StereomoodResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.strava.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\StravaResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.toshl.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\ToshlResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.trakt.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\TraktResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.trello.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\TrelloResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.twitch.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\TwitchResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.twitter.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\TwitterResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.vkontakte.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\VkontakteResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.wechat.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\WechatResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.windows_live.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\WindowsLiveResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.wordpress.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\WordpressResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.xing.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\XingResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.yahoo.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\YahooResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.yandex.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\YandexResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.odnoklassniki.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\OdnoklassnikiResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_owner.37signals.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\ThirtySevenSignalsResourceOwner</parameter>
+    <parameter key="hwi_oauth.resource_ownermap.class">HWI\Bundle\OAuthBundle\Security\Http\ResourceOwnerMap</parameter>
+    <parameter key="hwi_oauth.security.oauth_utils.class">HWI\Bundle\OAuthBundle\Security\OAuthUtils</parameter>
+    <parameter key="hwi_oauth.storage.session.class">HWI\Bundle\OAuthBundle\OAuth\RequestDataStorage\SessionStorage</parameter>
+    <parameter key="hwi_oauth.templating.helper.oauth.class">HWI\Bundle\OAuthBundle\Templating\Helper\OAuthHelper</parameter>
+    <parameter key="hwi_oauth.twig.extension.oauth.class">HWI\Bundle\OAuthBundle\Twig\Extension\OAuthExtension</parameter>
+    <parameter key="hwi_oauth.http_client.class">Buzz\Client\Curl</parameter>
+    <parameter key="hwi_oauth.firewall_names" type="collection">
+      <parameter>oauth_seczone</parameter>
+    </parameter>
+    <parameter key="hwi_oauth.target_path_parameter">null</parameter>
+    <parameter key="hwi_oauth.use_referer">false</parameter>
+    <parameter key="hwi_oauth.failed_auth_path">hwi_oauth_connect</parameter>
+    <parameter key="hwi_oauth.resource_owners" type="collection">
+      <parameter key="mail_ru">mail_ru</parameter>
+    </parameter>
+    <parameter key="hwi_oauth.connect">false</parameter>
+    <parameter key="hwi_oauth.templating.engine">twig</parameter>
     <parameter key="web_profiler.debug_toolbar.position">bottom</parameter>
     <parameter key="web_profiler.debug_toolbar.intercept_redirects">false</parameter>
     <parameter key="web_profiler.debug_toolbar.mode">2</parameter>
@@ -651,6 +735,7 @@
     </service>
     <service id="service_container" synthetic="true">
       <autowiring-type>Symfony\Component\DependencyInjection\ContainerInterface</autowiring-type>
+      <autowiring-type>Symfony\Component\DependencyInjection\Container</autowiring-type>
     </service>
     <service id="kernel" synthetic="true"/>
     <service id="filesystem" class="Symfony\Component\Filesystem\Filesystem"/>
@@ -793,6 +878,7 @@
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Validator/Resources/translations/validators.hu.xlf</argument>
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Form/Resources/translations/validators.hu.xlf</argument>
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Security/Core/Exception/../Resources/translations/security.hu.xlf</argument>
+            <argument>/var/www/wy/vendor/hwi/oauth-bundle/Resources/translations/HWIOAuthBundle.hu.yml</argument>
           </argument>
           <argument key="ar" type="collection">
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Validator/Resources/translations/validators.ar.xlf</argument>
@@ -824,15 +910,18 @@
           <argument key="tr" type="collection">
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Validator/Resources/translations/validators.tr.xlf</argument>
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Security/Core/Exception/../Resources/translations/security.tr.xlf</argument>
+            <argument>/var/www/wy/vendor/hwi/oauth-bundle/Resources/translations/HWIOAuthBundle.tr.yml</argument>
           </argument>
           <argument key="en" type="collection">
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Validator/Resources/translations/validators.en.xlf</argument>
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Form/Resources/translations/validators.en.xlf</argument>
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Security/Core/Exception/../Resources/translations/security.en.xlf</argument>
+            <argument>/var/www/wy/vendor/hwi/oauth-bundle/Resources/translations/HWIOAuthBundle.en.yml</argument>
           </argument>
           <argument key="uk" type="collection">
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Validator/Resources/translations/validators.uk.xlf</argument>
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Form/Resources/translations/validators.uk.xlf</argument>
+            <argument>/var/www/wy/vendor/hwi/oauth-bundle/Resources/translations/HWIOAuthBundle.uk.yml</argument>
           </argument>
           <argument key="sq" type="collection">
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Validator/Resources/translations/validators.sq.xlf</argument>
@@ -841,6 +930,7 @@
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Validator/Resources/translations/validators.it.xlf</argument>
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Form/Resources/translations/validators.it.xlf</argument>
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Security/Core/Exception/../Resources/translations/security.it.xlf</argument>
+            <argument>/var/www/wy/vendor/hwi/oauth-bundle/Resources/translations/HWIOAuthBundle.it.yml</argument>
           </argument>
           <argument key="pt_BR" type="collection">
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Validator/Resources/translations/validators.pt_BR.xlf</argument>
@@ -851,6 +941,7 @@
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Validator/Resources/translations/validators.fr.xlf</argument>
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Form/Resources/translations/validators.fr.xlf</argument>
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Security/Core/Exception/../Resources/translations/security.fr.xlf</argument>
+            <argument>/var/www/wy/vendor/hwi/oauth-bundle/Resources/translations/HWIOAuthBundle.fr.yml</argument>
           </argument>
           <argument key="sl" type="collection">
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Validator/Resources/translations/validators.sl.xlf</argument>
@@ -871,6 +962,7 @@
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Validator/Resources/translations/validators.nl.xlf</argument>
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Form/Resources/translations/validators.nl.xlf</argument>
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Security/Core/Exception/../Resources/translations/security.nl.xlf</argument>
+            <argument>/var/www/wy/vendor/hwi/oauth-bundle/Resources/translations/HWIOAuthBundle.nl.yml</argument>
           </argument>
           <argument key="id" type="collection">
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Validator/Resources/translations/validators.id.xlf</argument>
@@ -923,6 +1015,7 @@
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Validator/Resources/translations/validators.ru.xlf</argument>
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Form/Resources/translations/validators.ru.xlf</argument>
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Security/Core/Exception/../Resources/translations/security.ru.xlf</argument>
+            <argument>/var/www/wy/vendor/hwi/oauth-bundle/Resources/translations/HWIOAuthBundle.ru.yml</argument>
             <argument>/var/www/wy/app/Resources/translations/messages.ru.yml</argument>
             <argument>/var/www/wy/app/Resources/translations/backend.ru.yml</argument>
             <argument>/var/www/wy/app/Resources/translations/global.ru.yml</argument>
@@ -936,11 +1029,13 @@
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Validator/Resources/translations/validators.de.xlf</argument>
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Form/Resources/translations/validators.de.xlf</argument>
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Security/Core/Exception/../Resources/translations/security.de.xlf</argument>
+            <argument>/var/www/wy/vendor/hwi/oauth-bundle/Resources/translations/HWIOAuthBundle.de.yml</argument>
           </argument>
           <argument key="es" type="collection">
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Validator/Resources/translations/validators.es.xlf</argument>
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Form/Resources/translations/validators.es.xlf</argument>
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Security/Core/Exception/../Resources/translations/security.es.xlf</argument>
+            <argument>/var/www/wy/vendor/hwi/oauth-bundle/Resources/translations/HWIOAuthBundle.es.yml</argument>
           </argument>
           <argument key="ca" type="collection">
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Validator/Resources/translations/validators.ca.xlf</argument>
@@ -951,11 +1046,13 @@
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Validator/Resources/translations/validators.pl.xlf</argument>
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Form/Resources/translations/validators.pl.xlf</argument>
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Security/Core/Exception/../Resources/translations/security.pl.xlf</argument>
+            <argument>/var/www/wy/vendor/hwi/oauth-bundle/Resources/translations/HWIOAuthBundle.pl.yml</argument>
           </argument>
           <argument key="fa" type="collection">
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Validator/Resources/translations/validators.fa.xlf</argument>
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Form/Resources/translations/validators.fa.xlf</argument>
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Security/Core/Exception/../Resources/translations/security.fa.xlf</argument>
+            <argument>/var/www/wy/vendor/hwi/oauth-bundle/Resources/translations/HWIOAuthBundle.fa.yml</argument>
           </argument>
           <argument key="fi" type="collection">
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Validator/Resources/translations/validators.fi.xlf</argument>
@@ -1007,6 +1104,9 @@
           </argument>
           <argument key="pt_PT" type="collection">
             <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Component/Security/Core/Exception/../Resources/translations/security.pt_PT.xlf</argument>
+          </argument>
+          <argument key="zh" type="collection">
+            <argument>/var/www/wy/vendor/hwi/oauth-bundle/Resources/translations/HWIOAuthBundle.zh.yml</argument>
           </argument>
         </argument>
       </argument>
@@ -1944,7 +2044,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>56f9654a123451.63876232</argument>
+            <argument>56fdac18af02e5.83257545</argument>
           </service>
         </argument>
         <argument type="service">
@@ -1958,7 +2058,19 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>56f9654a123451.63876232</argument>
+            <argument>56fdac18af02e5.83257545</argument>
+          </service>
+        </argument>
+        <argument type="service">
+          <service class="HWI\Bundle\OAuthBundle\Security\Core\Authentication\Provider\OAuthProvider" public="false">
+            <argument type="service" id="hwi_oauth.user.provider.entity.oauth_seczone"/>
+            <argument type="service" id="hwi_oauth.resource_ownermap.oauth_seczone"/>
+            <argument type="service" id="security.user_checker.secured_area"/>
+          </service>
+        </argument>
+        <argument type="service">
+          <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
+            <argument>56fdac18af02e5.83257545</argument>
           </service>
         </argument>
       </argument>
@@ -2052,6 +2164,7 @@
                 <argument>^/</argument>
               </service>
             </argument>
+            <argument key="security.firewall.map.context.oauth_seczone">null</argument>
           </argument>
         </service>
       </argument>
@@ -2375,7 +2488,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.token_storage"/>
-            <argument>56f9654a123451.63876232</argument>
+            <argument>56fdac18af02e5.83257545</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -2499,7 +2612,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.token_storage"/>
-            <argument>56f9654a123451.63876232</argument>
+            <argument>56fdac18af02e5.83257545</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -2517,6 +2630,122 @@
               <argument type="service" id="http_kernel"/>
               <argument type="service" id="security.http_utils"/>
               <argument>/security/login</argument>
+              <argument>false</argument>
+            </service>
+          </argument>
+          <argument>null</argument>
+          <argument>null</argument>
+          <argument type="service" id="monolog.logger.security" on-invalid="null"/>
+          <argument>false</argument>
+        </service>
+      </argument>
+    </service>
+    <service id="hwi_oauth.resource_ownermap.oauth_seczone" class="HWI\Bundle\OAuthBundle\Security\Http\ResourceOwnerMap">
+      <argument type="service" id="security.http_utils"/>
+      <argument type="collection">
+        <argument key="mail_ru">mail_ru</argument>
+      </argument>
+      <argument>%hwi_oauth.resource_ownermap.configured.oauth_seczone%</argument>
+      <call method="setContainer">
+        <argument type="service" id="service_container"/>
+      </call>
+    </service>
+    <service id="security.firewall.map.context.oauth_seczone" class="Symfony\Bundle\SecurityBundle\Security\FirewallContext">
+      <argument type="collection">
+        <argument type="service" id="security.channel_listener"/>
+        <argument type="service">
+          <service class="Symfony\Component\Security\Http\Firewall\ContextListener" public="false">
+            <argument type="service" id="security.token_storage"/>
+            <argument type="collection">
+              <argument type="service" id="security.user.provider.concrete.chain_provider"/>
+              <argument type="service" id="security.user.provider.concrete.user_db"/>
+              <argument type="service" id="security.user.provider.concrete.in_memory"/>
+            </argument>
+            <argument>oauth_seczone</argument>
+            <argument type="service" id="monolog.logger.security" on-invalid="null"/>
+            <argument type="service" id="debug.event_dispatcher" on-invalid="null"/>
+          </service>
+        </argument>
+        <argument type="service">
+          <service class="HWI\Bundle\OAuthBundle\Security\Http\Firewall\OAuthListener" public="false">
+            <tag name="security.remember_me_aware" id="oauth_seczone" provider="security.user.provider.concrete.chain_provider"/>
+            <argument type="service" id="security.token_storage"/>
+            <argument type="service" id="security.authentication.manager"/>
+            <argument type="service" id="security.authentication.session_strategy"/>
+            <argument type="service" id="security.http_utils"/>
+            <argument>oauth_seczone</argument>
+            <argument type="service">
+              <service class="Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessHandler" public="false">
+                <argument type="service" id="security.http_utils"/>
+                <argument type="collection"/>
+                <call method="setOptions">
+                  <argument type="collection">
+                    <argument key="login_path">/login</argument>
+                    <argument key="always_use_default_target_path">false</argument>
+                    <argument key="default_target_path">/</argument>
+                    <argument key="target_path_parameter">_target_path</argument>
+                    <argument key="use_referer">false</argument>
+                  </argument>
+                </call>
+                <call method="setProviderKey">
+                  <argument>oauth_seczone</argument>
+                </call>
+              </service>
+            </argument>
+            <argument type="service">
+              <service class="Symfony\Component\Security\Http\Authentication\DefaultAuthenticationFailureHandler" public="false">
+                <argument type="service" id="http_kernel"/>
+                <argument type="service" id="security.http_utils"/>
+                <argument type="collection"/>
+                <argument type="service" id="monolog.logger.security" on-invalid="null"/>
+                <call method="setOptions">
+                  <argument type="collection">
+                    <argument key="login_path">/login</argument>
+                    <argument key="failure_path">/login</argument>
+                    <argument key="failure_forward">false</argument>
+                    <argument key="failure_path_parameter">_failure_path</argument>
+                  </argument>
+                </call>
+              </service>
+            </argument>
+            <argument type="collection">
+              <argument key="use_forward">false</argument>
+              <argument key="check_path">/login_check</argument>
+              <argument key="require_previous_session">true</argument>
+            </argument>
+            <argument type="service" id="monolog.logger.security" on-invalid="null"/>
+            <argument type="service" id="debug.event_dispatcher" on-invalid="null"/>
+            <call method="setResourceOwnerMap">
+              <argument type="service" id="hwi_oauth.resource_ownermap.oauth_seczone"/>
+            </call>
+            <call method="setCheckPaths">
+              <argument type="collection">
+                <argument>/login/check-mail-ru</argument>
+              </argument>
+            </call>
+          </service>
+        </argument>
+        <argument type="service">
+          <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
+            <argument type="service" id="security.token_storage"/>
+            <argument>56fdac18af02e5.83257545</argument>
+            <argument type="service" id="monolog.logger.security" on-invalid="null"/>
+            <argument type="service" id="security.authentication.manager"/>
+          </service>
+        </argument>
+        <argument type="service" id="security.access_listener"/>
+      </argument>
+      <argument type="service">
+        <service class="Symfony\Component\Security\Http\Firewall\ExceptionListener" public="false">
+          <argument type="service" id="security.token_storage"/>
+          <argument type="service" id="security.authentication.trust_resolver"/>
+          <argument type="service" id="security.http_utils"/>
+          <argument>oauth_seczone</argument>
+          <argument type="service">
+            <service class="HWI\Bundle\OAuthBundle\Security\Http\EntryPoint\OAuthEntryPoint" public="false">
+              <argument type="service" id="http_kernel"/>
+              <argument type="service" id="security.http_utils"/>
+              <argument>/login</argument>
               <argument>false</argument>
             </service>
           </argument>
@@ -2712,6 +2941,14 @@
       </call>
       <call method="addExtension">
         <argument type="service" id="white_october_breadcrumbs.twig"/>
+      </call>
+      <call method="addExtension">
+        <argument type="service">
+          <service class="HWI\Bundle\OAuthBundle\Twig\Extension\OAuthExtension" public="false">
+            <tag name="twig.extension"/>
+            <argument type="service" id="hwi_oauth.templating.helper.oauth"/>
+          </service>
+        </argument>
       </call>
       <call method="addExtension">
         <argument type="service">
@@ -3154,6 +3391,7 @@
         <argument key="SensioFrameworkExtraBundle">Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle</argument>
         <argument key="WhiteOctoberBreadcrumbsBundle">WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle</argument>
         <argument key="FOSJsRoutingBundle">FOS\JsRoutingBundle\FOSJsRoutingBundle</argument>
+        <argument key="HWIOAuthBundle">HWI\Bundle\OAuthBundle\HWIOAuthBundle</argument>
         <argument key="AppBundle">AppBundle\AppBundle</argument>
         <argument key="DebugBundle">Symfony\Bundle\DebugBundle\DebugBundle</argument>
         <argument key="WebProfilerBundle">Symfony\Bundle\WebProfilerBundle\WebProfilerBundle</argument>
@@ -3180,6 +3418,53 @@
         <argument key="json" type="service">
           <service class="Symfony\Component\Serializer\Encoder\JsonEncoder" public="false"/>
         </argument>
+      </argument>
+    </service>
+    <service id="hwi_oauth.security.oauth_utils" class="HWI\Bundle\OAuthBundle\Security\OAuthUtils">
+      <argument type="service" id="security.http_utils"/>
+      <argument type="service" id="security.authorization_checker"/>
+      <argument>false</argument>
+      <call method="addResourceOwnerMap">
+        <argument type="service" id="hwi_oauth.resource_ownermap.oauth_seczone"/>
+      </call>
+    </service>
+    <service id="hwi_oauth.templating.helper.oauth" class="HWI\Bundle\OAuthBundle\Templating\Helper\OAuthHelper">
+      <tag name="templating.helper" alias="oauth"/>
+      <argument type="service" id="hwi_oauth.security.oauth_utils"/>
+      <call method="setRequest">
+        <argument type="service" id="request_stack" on-invalid="null"/>
+      </call>
+    </service>
+    <service id="hwi_oauth.http_client" class="Buzz\Client\Curl">
+      <call method="setVerifyPeer">
+        <argument>true</argument>
+      </call>
+      <call method="setTimeout">
+        <argument>5</argument>
+      </call>
+      <call method="setMaxRedirects">
+        <argument>5</argument>
+      </call>
+      <call method="setIgnoreErrors">
+        <argument>true</argument>
+      </call>
+    </service>
+    <service id="hwi_oauth.resource_owner.mail_ru" class="HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\MailRuResourceOwner">
+      <argument type="service" id="hwi_oauth.http_client"/>
+      <argument type="service" id="security.http_utils"/>
+      <argument type="collection">
+        <argument key="client_id">743135</argument>
+        <argument key="client_secret">e871f0a4aab306380bfd4f6e3fc89594</argument>
+        <argument key="options" type="collection">
+          <argument key="csrf">true</argument>
+        </argument>
+        <argument key="paths" type="collection"/>
+      </argument>
+      <argument>mail_ru</argument>
+      <argument type="service">
+        <service class="HWI\Bundle\OAuthBundle\OAuth\RequestDataStorage\SessionStorage" public="false">
+          <argument type="service" id="session"/>
+        </service>
       </argument>
     </service>
     <service id="data_collector.dump" class="Symfony\Component\HttpKernel\DataCollector\DumpDataCollector">
@@ -3488,6 +3773,7 @@
       <argument type="service" id="security.encoder_factory"/>
     </service>
     <service id="security.user_checker.secured_area" class="Symfony\Component\Security\Core\User\UserChecker"/>
+    <service id="hwi_oauth.user.provider.entity.oauth_seczone" class="HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUserProvider"/>
     <service id="twig.loader" class="Symfony\Bundle\TwigBundle\Loader\FilesystemLoader">
       <tag name="twig.loader"/>
       <argument type="service" id="templating.locator"/>
@@ -3515,6 +3801,10 @@
       <call method="addPath">
         <argument>/var/www/wy/vendor/whiteoctober/breadcrumbs-bundle/WhiteOctober/BreadcrumbsBundle/Resources/views</argument>
         <argument>WhiteOctoberBreadcrumbs</argument>
+      </call>
+      <call method="addPath">
+        <argument>/var/www/wy/vendor/hwi/oauth-bundle/Resources/views</argument>
+        <argument>HWIOAuth</argument>
       </call>
       <call method="addPath">
         <argument>/var/www/wy/vendor/symfony/symfony/src/Symfony/Bundle/DebugBundle/Resources/views</argument>
@@ -3606,6 +3896,7 @@
     <service id="session.storage" alias="session.storage.native"/>
     <service id="event_dispatcher" alias="debug.event_dispatcher"/>
     <service id="security.user_checker.main" alias="security.user_checker.secured_area"/>
+    <service id="security.user_checker.oauth_seczone" alias="security.user_checker.secured_area"/>
     <service id="swiftmailer.spool" alias="swiftmailer.mailer.default.spool"/>
     <service id="swiftmailer.transport.real" alias="swiftmailer.mailer.default.transport.real"/>
     <service id="swiftmailer.plugin.messagelogger" alias="swiftmailer.mailer.default.plugin.messagelogger"/>
@@ -3617,6 +3908,7 @@
     <service id="doctrine.orm.default_metadata_cache" alias="doctrine_cache.providers.doctrine.orm.default_metadata_cache"/>
     <service id="doctrine.orm.default_result_cache" alias="doctrine_cache.providers.doctrine.orm.default_result_cache"/>
     <service id="doctrine.orm.default_query_cache" alias="doctrine_cache.providers.doctrine.orm.default_query_cache"/>
+    <service id="hwi_oauth.user_checker" alias="security.user_checker.secured_area"/>
     <service id="console.command.sensiolabs_security_command_securitycheckercommand" alias="sensio_distribution.security_checker.command"/>
   </services>
 </container>
