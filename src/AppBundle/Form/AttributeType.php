@@ -20,13 +20,26 @@ class AttributeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('description')
-            ->add('media', MediaType::class,[
-                'label'=>'Media'
+            ->add('title', null, [
+                'label'=>'Title',
+                'translation_domain' => 'global'
             ])
-            ->add('inPreview')
-            ->add('inFilters')
+            ->add('description', null, [
+                'label'=>'Description',
+                'translation_domain' => 'global'
+            ])
+            ->add('media', MediaType::class, [
+                'label'=>'Media',
+                'translation_domain' => 'global'
+            ])
+            ->add('inPreview', null, [
+                'label'=>'Show in preview',
+                'translation_domain' => 'global'
+            ])
+            ->add('inFilters', null, [
+                'label'=>'Show in filters',
+                'translation_domain' => 'global'
+            ])
             ->add('entryStatus', EntityType::class, [
                 'class' => 'AppBundle:Core\\ScrollItem',
                 'query_builder' => function (EntityRepository $er) {
@@ -36,6 +49,8 @@ class AttributeType extends AbstractType
                         ->andWhere('i.code !=\'delete\'')
                         ->orderBy('i.position', 'ASC');
                 },
+                'label'=>'Entry status',
+                'translation_domain' => 'global'
             ])
             ->add('dataType', EntityType::class, [
                 'class' => 'AppBundle:Core\\ScrollItem',
@@ -46,6 +61,8 @@ class AttributeType extends AbstractType
                         ->andWhere('i.code !=\'delete\'')
                         ->orderBy('i.position', 'ASC');
                 },
+                'label'=>'Data type',
+                'translation_domain' => 'global'
             ])
             ->add('viewType', EntityType::class, [
                 'class' => 'AppBundle:Core\\ScrollItem',
@@ -56,6 +73,8 @@ class AttributeType extends AbstractType
                         ->andWhere('i.code !=\'delete\'')
                         ->orderBy('i.position', 'ASC');
                 },
+                'label'=>'View type',
+                'translation_domain' => 'global'
             ])
         ;
     }

@@ -69,42 +69,7 @@ class ContentController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
-        {
-            
-            // Ищем и сохраняем файл
-            if(isset($request->files) && $request->files instanceof FileBag && NULL !== $request->files->get($entityCode))
-            {
-                $formData = $form->getData();
-                
-                foreach ($request->files->get($entityCode) as $entityProperty => $uploadedFile)
-                {
-                    if(NULL === $uploadedFile)
-                    {
-                        continue;
-                    }
-                    
-                    $extension = $uploadedFile->guessExtension();
-                    
-                    if (!$extension) 
-                    {
-                        $extension = 'bin';
-                    }
-                    
-                    $dir = $this->get('kernel')->getRootDir() . '../web/uploads/';                    
-                    $fileName = rand(1, 99999).'.'.$extension;
-                    
-                    $uploadedFile->move($dir, $fileName);
-                    
-                    $methodName = $utils->getCamelCase('set_' . $entityProperty);
-                    
-                    if(is_callable(array($entity, $methodName)))
-                    {
-                        call_user_func(array($entity, $methodName), $dir . $fileName);
-                    }
-
-                }
-            }
-            
+        {   
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();

@@ -5,6 +5,8 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class MediaType extends AbstractType
 {
@@ -15,8 +17,19 @@ class MediaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('file')
+            ->add('title', null,[
+                'label'=>'Title',
+                'translation_domain' => 'global'
+            ])
+            ->add('file', FileType::class, [
+                'image_path' => 'webPath',
+                'label'=>'File',
+                'translation_domain' => 'global'
+            ])
+            ->add('position', null,[
+                'label'=>'Position',
+                'translation_domain' => 'global'
+            ])
         ;
     }
     

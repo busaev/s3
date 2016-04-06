@@ -87,6 +87,59 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         
         
         /**
+         *  Справочник для Вариантов типа данных аттрибута
+         */
+        
+        $scrollAttributeDataTypes = new Scroll;
+        $scrollAttributeDataTypes->setCode('data_types');
+        $scrollAttributeDataTypes->setTitle('Варианты данных');
+        $scrollAttributeDataTypes->setPosition('2');
+        
+        $manager->persist($scrollAttributeDataTypes);
+        
+        
+        $manager->flush();
+        
+        
+        /**
+         *  Типы записи
+         */
+        
+        // string
+        $scrollItemDataString = new ScrollItem;
+        $scrollItemDataString->setScroll($scrollAttributeDataTypes);
+        $scrollItemDataString->setCode('string');
+        $scrollItemDataString->setTitle('Строка');
+        $scrollItemDataString->setPosition(1);
+        
+        $manager->persist($scrollItemDataString);
+        
+        
+        // numeric
+        $scrollItemDataNumeric = new ScrollItem;
+        $scrollItemDataNumeric->setScroll($scrollAttributeDataTypes);
+        $scrollItemDataNumeric->setCode('numeric');
+        $scrollItemDataNumeric->setTitle('Число');
+        $scrollItemDataNumeric->setPosition(2);
+        
+        $manager->persist($scrollItemDataNumeric);
+        
+        
+        // date
+        $scrollItemDataDate = new ScrollItem;
+        $scrollItemDataDate->setScroll($scrollAttributeDataTypes);
+        $scrollItemDataDate->setCode('date');
+        $scrollItemDataDate->setTitle('Дата');
+        $scrollItemDataDate->setPosition(3);
+        
+        $manager->persist($scrollItemDataDate);
+        
+        
+        $manager->flush();
+        
+        
+        
+        /**
          *  Справочник для Вариантов отображения аттрибута
          */
         

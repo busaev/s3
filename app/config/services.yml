@@ -8,6 +8,16 @@ services:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
 
+
+    #############################################
+    ################### TWIG ####################
+    #############################################
+
+    app.image_type_extension:
+        class: AppBundle\Form\Extension\ImageTypeExtension
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FileType }
+
     #############################################
     #####№№№##### Подписчики ####################
     #############################################

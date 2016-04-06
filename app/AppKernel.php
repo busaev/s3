@@ -19,7 +19,7 @@ class AppKernel extends Kernel
             
             new WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
-            new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
+            //new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             
             new AppBundle\AppBundle(),
         ];

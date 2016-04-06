@@ -121,7 +121,10 @@ class Annotations
     {
         $return = $this->fillProperties($entityCode, [$entities]);
 
-        $return['entity'] = $return['entities'][0];
+        if(isset($return['entities'][0]))
+        {
+            $return['entity'] = $return['entities'][0];
+        }
         unset($return['entities']);
 
         return $return;
