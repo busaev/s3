@@ -90,7 +90,7 @@ class Router implements EventSubscriber
     public function postUpdate(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-
+        
         if ($this->skipCondition($entity) && is_callable(array($entity, 'getRoutePath'))) 
         {
             $em       = $args->getEntityManager();
@@ -108,6 +108,19 @@ class Router implements EventSubscriber
             {
                 $route->setRoutePath($entity->getRoutePath());
                 $route->setAction($action);
+
+                $em->persist($route);
+                $em->flush();
+            }
+            else
+            {
+                $route = new Route();
+                
+                $route->setEntityCode($entityCode);
+                $route->setContentType('content');
+                $route->setRoutePath($entity->getRoutePath());
+                $route->setAction($action);
+                $route->setEntryId($entity->getId());
 
                 $em->persist($route);
                 $em->flush();
