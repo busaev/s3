@@ -12,7 +12,7 @@ use AppBundle\Entity\News;
 /**
  * News controller.
  *
- * @Route("/news")
+ * @Route("/news_orig")
  */
 class NewsController extends Controller
 {

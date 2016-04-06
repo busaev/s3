@@ -27,8 +27,8 @@ function titleToRoutePath()
          original_path = path.val();
          path.attr('data-original_path', original_path);
      }
-
-     var lastChar = path.val().substr(path.val().length - 1);
+     
+     var lastChar = original_path.substr(original_path.length - 1);
 
      if(lastChar == '/')
          compilledPath = original_path + translit(title.val());
