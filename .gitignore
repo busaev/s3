@@ -3,7 +3,8 @@ build/
 phpunit.xml
 var/*
 !var/cache
-var/cache/*
+var/cache/dev
+var/cache/prod
 !var/cache/.gitkeep
 !var/logs
 var/logs/*
