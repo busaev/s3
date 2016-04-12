@@ -69,7 +69,7 @@
             if('__content__' !== $('#navigation_item_contentPage :selected').attr('data-routePath'))
             {
                 $.ajax({
-                    url : Routing.generate('backend_api', { entityCode: 'route', format: 'json' }) + '?param[contentType]=action&param[routePath]='+$('#navigation_item_contentPage :selected').attr('data-routePath')+'&param[entityCode]=' + $('#navigation_item_content :selected').val(),
+                    url : Routing.generate('backend_api', { entityCode: 'route', format: 'json' }) + '?param[contentType]=action&param[routePath]='+$('#navigation_item_contentPage :selected').attr('data-routePath')+'&param[entityCode]=content_page',
                     type: 'json',
                     success: function(json) {
                         $('#navigation_item_route').empty();
@@ -95,7 +95,6 @@
                 }
             });
         });
-        
         
     </script>
 {% endblock javascripts %}
