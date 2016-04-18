@@ -17,12 +17,14 @@ class NavigationController extends Controller
      */
     public function showAction(Request $request, $params=null)
     {
-        $em  = $this->getDoctrine()->getManager();
+        $doctrine = $this->getDoctrine();
+        $em  = $doctrine->getManager();
         
         $entities = $this->get('app.entities');
         $tpl      = $this->get('app.tpl');
         
         $entityScroll = $entities->scroll_item;
+
         // Статус
         $status = $doctrine->getRepository($entityScroll->getLogicalName())
                            ->findByScrollItemCodeAndScrollCode('delete', 'entry_status');
@@ -32,10 +34,7 @@ class NavigationController extends Controller
         $repositoryNavigation = $em->getRepository($entity->getLogicalName());
         
         $navigation = $repositoryNavigation->findOneBy(['code'=>$params['code']]);
-        
-        \Symfony\Component\VarDumper\VarDumper::dump($navigation);
-        die();
-        
+
         return $this->render($tpl->getTpl('navigation', $params['code'].'.html.twig') , array(
             'entity' => $navigation
         ));

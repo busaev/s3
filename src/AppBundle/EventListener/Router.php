@@ -5,6 +5,7 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\VarDumper\VarDumper;
 use Symfony\Component\Yaml\Yaml;
 
 use AppBundle\Entity\Core\Route;
@@ -27,6 +28,14 @@ class Router implements EventSubscriber
      */
     public function getSubscribedEvents()
     {
+        return [
+            'postPersist',
+            'postUpdate',
+            //'postFlush',
+            //'postRemove'
+        ];
+
+
         /**
          * @todo Check if this is running in the console or what...
          */
@@ -52,15 +61,15 @@ class Router implements EventSubscriber
     public function postPersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        
-        if ( $this->skipCondition($entity) && is_callable(array($entity, 'getRoutePath'))) 
+
+        if ( $this->skipCondition($entity) && is_callable(array($entity, 'getRoutePath')))
         {
             $em       = $args->getEntityManager();
             $entities = $this->container->get('app.entities');
-            
+
             $entityCode = $entities->getByObject($entity)->getCode();
             $action     = $this->getLogicalAction($entityCode, 'show');
-            
+
             // Создаём маршрут
             $route = new Route;
             $route->setEntryId($entity->getId());
@@ -68,7 +77,12 @@ class Router implements EventSubscriber
             $route->setEntityCode($entityCode);
             $route->setAction($action);
 
-            $route->setContentType($entity->getContentType());
+            $contentType = 'action';
+            if(is_callable([$entity, 'getContentType']))
+            {
+                $contentType = $entity->getContentType();
+            }
+            $route->setContentType($contentType);
                         
             // Обновляем сущность
             $entity->setRoute($route);
@@ -138,7 +152,7 @@ class Router implements EventSubscriber
 
     protected function skipCondition($entity)
     {
-        if( get_class($entity) != 'AppBundle\\Entity\\Core\\Route' ) {
+        if( get_class($entity) != 'AppBundle\\Entity\\Core\\Route' && get_class($entity) != 'AppBundle\\Entity\\Core\\Content' ) {
             return true;
         }
         return false;

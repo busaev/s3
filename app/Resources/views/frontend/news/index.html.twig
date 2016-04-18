@@ -16,13 +16,15 @@
       
       
       {% for entity in entities %}
-        <h2>{{entity.title}}</h2>
-        <article>
-            {% if entity.shortContent is defined%}
-                {{entity.shortContent|raw}}
-            {% endif %}
-        </article>
-    {% endfor %}
+          <h2>
+              <a href="{{entity.routePath}}" >{{entity.title}}</a>
+          </h2>
+          <article>
+              {% if entity.shortContent is defined%}
+                  {{entity.shortContent|raw}}
+              {% endif %}
+          </article>
+      {% endfor %}
 
       <!-- Site footer -->
       <footer class="footer">

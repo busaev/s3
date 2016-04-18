@@ -2,10 +2,12 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
+use AppBundle\Entity\Content\News;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 use AppBundle\Entity\Role;
 use AppBundle\Entity\User;
@@ -255,8 +257,8 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         
         
         $manager->flush();
-        
-        
+
+
         /**
          *  Модуль
          */
@@ -441,7 +443,62 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         
         
         $manager->flush();
+
+        //авторизуемся
+        $this->container->get('security.token_storage')->setToken(
+            new UsernamePasswordToken($userWY, null, 'secured_area', $userWY->getRoles())
+        );
+
+
+        //IMPORT
+        $this->loadNewsCSV($manager, $scrollItemEnable);
         
+    }
+
+    public function loadNewsCSV(ObjectManager $manager, $enables)
+    {
+        $data = getcwd() . '/src/AppBundle/DataFixtures/ORM/data/news.csv';
+        if (($handle = fopen($data, "r")) !== FALSE)
+        {
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) 
+            {
+                $entity = new News();
+                $entity->setContent($data[4]);
+                $entity->setShortContent($data[3]);
+                $entity->setTitle($data[2]);
+                $entity->setMetaDescription($data[3]);
+                $entity->setMetaTitle($data[2]);
+                $entity->setEntryStatus($enables);
+                $entity->setRoutePath('/news/' . $this->slugify($data[2]));
+
+                $manager->persist($entity);
+
+                $manager->flush();
+
+
+                
+            }
+            fclose($handle);
+        }
+    }
+
+    /**
+     * Продублирую, для быстроты
+     * в остальных случиях брать из Utils
+     *
+     * @param $s string
+     * @return string
+     */
+    function slugify( $s )
+    {
+        $s = strtolower($s);
+
+        $r = array('а','б','в','г','д','е','ё','ж','з','и','й','к','л','м', 'н','о','п','р','с','т','у','ф','х','ц','ч', 'ш', 'щ', 'ъ','ы','ь','э', 'ю', 'я',' ');
+        $l = array('a','b','v','g','d','e','e','g','z','i','y','k','l','m','n', 'o','p','r','s','t','u','f','h','c','ch','sh','sh','', 'y','y', 'e','yu','ya','-');
+        $s = str_replace( $r, $l, strtolower($s) );
+        $s = preg_replace("/[^\w\-]/","$1",$s);
+        $s = preg_replace("/\-{2,}/",'-',$s);
+        return trim($s,'-');
     }
 }
 

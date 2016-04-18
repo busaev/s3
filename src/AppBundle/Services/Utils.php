@@ -76,4 +76,18 @@ class Utils
         
         return $return;
     }
+
+    /**
+     * @param $s string
+     * @return string
+     */
+    function slugify( $s )
+    {
+        $r = array('а','б','в','г','д','е','ё','ж','з','и','й','к','л','м', 'н','о','п','р','с','т','у','ф','х','ц','ч', 'ш', 'щ', 'ъ','ы','ь','э', 'ю', 'я',' ');
+        $l = array('a','b','v','g','d','e','e','g','z','i','y','k','l','m','n', 'o','p','r','s','t','u','f','h','c','ch','sh','sh','', 'y','y', 'e','yu','ya','-');
+        $s = str_replace( $r, $l, strtolower($s) );
+        $s = preg_replace("/[^\w\-]/","$1",$s);
+        $s = preg_replace("/\-{2,}/",'-',$s);
+        return trim($s,'-');
+    }
 }
