@@ -192,7 +192,7 @@ class BaseEntity implements RouteSubjectInterface
     /**
      * Set route
      *
-     * @param string $route
+     * @param string $routePath
      *
      * @return Route
      */

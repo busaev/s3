@@ -463,8 +463,8 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) 
             {
                 $entity = new News();
-                $entity->setContent($data[4]);
-                $entity->setShortContent($data[3]);
+                $entity->setContent(str_replace('\\r\\n', '', $data[4]));
+                $entity->setShortContent(str_replace('\\r\\n', '', $data[3]));
                 $entity->setTitle($data[2]);
                 $entity->setMetaDescription($data[3]);
                 $entity->setMetaTitle($data[2]);
@@ -491,11 +491,9 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
      */
     function slugify( $s )
     {
-        $s = strtolower($s);
-
         $r = array('а','б','в','г','д','е','ё','ж','з','и','й','к','л','м', 'н','о','п','р','с','т','у','ф','х','ц','ч', 'ш', 'щ', 'ъ','ы','ь','э', 'ю', 'я',' ');
         $l = array('a','b','v','g','d','e','e','g','z','i','y','k','l','m','n', 'o','p','r','s','t','u','f','h','c','ch','sh','sh','', 'y','y', 'e','yu','ya','-');
-        $s = str_replace( $r, $l, strtolower($s) );
+        $s = str_replace( $r, $l, mb_strtolower($s) );
         $s = preg_replace("/[^\w\-]/","$1",$s);
         $s = preg_replace("/\-{2,}/",'-',$s);
         return trim($s,'-');

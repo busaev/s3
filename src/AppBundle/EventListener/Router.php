@@ -37,7 +37,7 @@ class Router implements EventSubscriber
 
 
         /**
-         * @todo Check if this is running in the console or what...
+         * если нужно оставить евенты только для хттп запросов
          */
         if (isset($_SERVER['HTTP_HOST'])) {
 
@@ -67,23 +67,36 @@ class Router implements EventSubscriber
             $em       = $args->getEntityManager();
             $entities = $this->container->get('app.entities');
 
-            $entityCode = $entities->getByObject($entity)->getCode();
-            $action     = $this->getLogicalAction($entityCode, 'show');
+
+            $entityCode = $entities->getEntityCode($entity)->getCode();
 
             // Создаём маршрут
             $route = new Route;
             $route->setEntryId($entity->getId());
             $route->setRoutePath($entity->getRoutePath());
             $route->setEntityCode($entityCode);
-            $route->setAction($action);
 
+
+            // определим тип содержимого
             $contentType = 'action';
             if(is_callable([$entity, 'getContentType']))
             {
                 $contentType = $entity->getContentType();
             }
             $route->setContentType($contentType);
-                        
+
+
+            //определим метод
+            $method      = 'index';
+            if('content' == $contentType)
+            {
+                $method = 'show';
+            }
+
+            $action     = $this->getLogicalAction($entity, $entityCode, $method);
+            $route->setAction($action);
+
+
             // Обновляем сущность
             $entity->setRoute($route);
             
@@ -91,7 +104,6 @@ class Router implements EventSubscriber
             $em->persist($entity);
             
             $em->flush();
-            
         }
     }
 
@@ -109,9 +121,24 @@ class Router implements EventSubscriber
         {
             $em       = $args->getEntityManager();
             $entities = $this->container->get('app.entities');
+
+
+            // определим тип содержимого
+            $contentType = 'action';
+            if(is_callable([$entity, 'getContentType']))
+            {
+                $contentType = $entity->getContentType();
+            }
+
+            //определим метод
+            $method      = 'index';
+            if('content' == $contentType)
+            {
+                $method = 'show';
+            }
             
-            $entityCode = $entities->getByObject($entity)->getCode();
-            $action     = $this->getLogicalAction($entityCode, 'show');
+            $entityCode = $entities->getEntityCode($entity)->getCode();
+            $action     = $this->getLogicalAction($entity, $entityCode, $method);
             
             $route = $em->getRepository('AppBundle:Core\\Route')->findOneBy([
                 'entryId' => $entity->getId(),
@@ -131,10 +158,10 @@ class Router implements EventSubscriber
                 $route = new Route();
                 
                 $route->setEntityCode($entityCode);
-                $route->setContentType('content');
                 $route->setRoutePath($entity->getRoutePath());
                 $route->setAction($action);
                 $route->setEntryId($entity->getId());
+                $route->setContentType($contentType);
 
                 $em->persist($route);
                 $em->flush();
@@ -181,7 +208,7 @@ class Router implements EventSubscriber
     }
 
     /**
-     * Найти в конфиге нужный экшн для сущности
+     * Найти в конфиге нужный экшн для сущности и экшена
      * 
      * @param string $entityCode
      * @param string $action
@@ -191,18 +218,18 @@ class Router implements EventSubscriber
     protected function getControllerAction($entityCode, $action)
     {
         $application = $this->getApplication();
-        $root        = $this->container->getParameter('kernel.root_dir');
-        
-        $yaml        = Yaml::parse(file_get_contents($root . '/Resources/config/actions.yml'));
-        
+        $root = $this->container->getParameter('kernel.root_dir');
+
+        $yaml = Yaml::parse(file_get_contents($root . '/Resources/config/actions.yml'));
+
         if(isset($yaml[$entityCode][$application][$action]))
         {
             return $yaml[$entityCode][$application][$action];
         }
         
-        if(isset($yaml[$entityCode]['default'][$action]))
+        if(isset($yaml[$entityCode][$application]['default']))
         {
-            return $yaml[$entityCode]['default'][$action];
+            return $yaml[$entityCode][$application]['default'];
         }
         
         if(isset($yaml['default']['default'][$action]))
@@ -221,12 +248,20 @@ class Router implements EventSubscriber
     /**
      * Сформировать логичесий путь до контроллера
      * 
+     * @param obgect $entity
      * @param string $entityCode
      * @param string $action
      * @return string
      */
-    protected function getLogicalAction($entityCode, $action)
+    protected function getLogicalAction($entity, $entityCode, $action)
     {
+        // если у записи есть экшн
+        // пока только у записей content_page есть action
+        if(is_callable([$entity, 'getAction']))
+        {
+            //return $entity->getAction();
+        }
+
         return $this->getBundle() . ':' . $this->getApplication() . '/' . $this->getControllerAction($entityCode, $action);
     }
 }

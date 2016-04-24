@@ -6,8 +6,8 @@ default:
         
 news:
     Frontend:
+        index: News:index
         show: Content:route
-        index: Content:index
     Backend:
         show: Content:show
         index: Content:index
@@ -16,3 +16,7 @@ page:
     Frontend:
         show: Content:route
         index: Content:index
+
+index:
+    Frontend:
+        default: Index:index

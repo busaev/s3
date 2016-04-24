@@ -360,7 +360,7 @@ class NavigationItem
     /**
      * Get parentNavigationItem
      *
-     * @return \AppBundle\Entity\NavigationItem
+     * @return \AppBundle\Entity\Core\NavigationItem
      */
     public function getParentNavigationItem()
     {
@@ -370,11 +370,11 @@ class NavigationItem
     /**
      * Add childrenNavigationItem
      *
-     * @param \AppBundle\Entity\NavigationItem $childrenNavigationItem
+     * @param \AppBundle\Entity\Core\NavigationItem $childrenNavigationItem
      *
      * @return NavigationItem
      */
-    public function addChildrenNavigationItem(\AppBundle\Entity\NavigationItem $childrenNavigationItem)
+    public function addChildrenNavigationItem(\AppBundle\Entity\Core\NavigationItem $childrenNavigationItem)
     {
         $this->childrenNavigationItems[] = $childrenNavigationItem;
 
@@ -384,9 +384,9 @@ class NavigationItem
     /**
      * Remove childrenNavigationItem
      *
-     * @param \AppBundle\Entity\NavigationItem $childrenNavigationItem
+     * @param \AppBundle\Entity\Core\NavigationItem $childrenNavigationItem
      */
-    public function removeChildrenNavigationItem(\AppBundle\Entity\NavigationItem $childrenNavigationItem)
+    public function removeChildrenNavigationItem(\AppBundle\Entity\Core\NavigationItem $childrenNavigationItem)
     {
         $this->childrenNavigationItems->removeElement($childrenNavigationItem);
     }

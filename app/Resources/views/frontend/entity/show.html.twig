@@ -15,9 +15,9 @@
       </div>
       
       
-        <h1>{{entity.title}}</h1>
+        <h1>{% if entity.title is defined %}{{entity.title}}{% else %}no title{% endif %}</h1>
         <article>
-            {{ entity.content|raw }}
+            {% if entity.content is defined %}{{entity.content}}{% else %}no content{% endif %}
         </article>
       
 

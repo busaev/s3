@@ -63,31 +63,40 @@ class ContentController extends Controller
     }
     
     /**
+     * Находит по пути из адресной строки маршрут
+     * Из маршрута получает сущность и запись
+     * и рендерит
+     *
      * @Method("GET")
      */
     public function routeAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        
+
+        $tpl      = $this->get('app.tpl');
+        $entities = $this->get('app.entities');
+
         $route = $em->getRepository('AppBundle:Core\\Route')->findOneBy([
             'routePath' => $request->getPathInfo()
         ]);
-        
+
+        // маршрут не найден
         if( NULL === $route )
         {
             throw new NotFoundHttpException('Page not found');
         }
-        
-        $entities = $this->get('app.entities');
-        
+
         $entityCode = $route->getEntityCode();
-        $entity = $entities->$entityCode;
-        
-        $entry = $em->getRepository($entity->getLogicalName())->findOneBy([
+
+        // находим запись
+        $entity = $em->getRepository($entities->$entityCode->getLogicalName())->findOneBy([
             'routePath' => $request->getPathInfo()
         ]);
-        
-        return $this->showAction($request, $entityCode, $entry->getId());
+
+        // рендер
+        return $this->render($tpl->getTpl($entityCode, 'show.html.twig'), array(
+            'entity' => $entity,
+        ));
     }
 
     
@@ -99,10 +108,15 @@ class ContentController extends Controller
      */
     public function showAction(Request $request, $entityCode, $id)
     {
+        Symfony\Component\VarDumper\VarDumper::dump(1);
+        die();
+
         $translator  = $this->get('translator');
         $entities    = $this->get("app.entities");
         $tpl         = $this->get('app.tpl');
-        
+
+
+
         $currentEntity = $entities->$entityCode;
 
         $entity = $this->getDoctrine()

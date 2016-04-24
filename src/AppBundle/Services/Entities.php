@@ -39,9 +39,26 @@ class Entities
     {
         $this->entities[$key] = $content;
     }
-    
-    public function getByObject($object)
+
+    /**
+     * Возвращает код сущности.
+     *
+     * 1. пытаемся вызвать метод возвращающий код
+     * 2. возвращаем имя объекта
+     *
+     * @param object $object
+     * @return string
+     */
+    public function getEntityCode($object)
     {
+        //пытаемся дернуть метод
+        if(is_callable([$object, 'getEntityCode']))
+        {
+            $name = $object->getEntityCode();
+            return $this->$name;
+        }
+
+        //определяем исходя из имени объекта
         $utils = $this->container->get('utils');
         
         $class = get_class($object);

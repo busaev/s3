@@ -1,7 +1,5 @@
 <?php
-
 namespace AppBundle\Entity\Core;
-
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
