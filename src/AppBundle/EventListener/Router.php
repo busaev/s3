@@ -6,7 +6,6 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\VarDumper\VarDumper;
-use Symfony\Component\Yaml\Yaml;
 
 use AppBundle\Entity\Core\Route;
 
@@ -66,34 +65,25 @@ class Router implements EventSubscriber
         {
             $em       = $args->getEntityManager();
             $entities = $this->container->get('app.entities');
-
+            $router   = $this->container->get('app.route');
 
             $entityCode = $entities->getEntityCode($entity)->getCode();
-
+            
             // Создаём маршрут
             $route = new Route;
             $route->setEntryId($entity->getId());
             $route->setRoutePath($entity->getRoutePath());
             $route->setEntityCode($entityCode);
 
-
-            // определим тип содержимого
-            $contentType = 'action';
-            if(is_callable([$entity, 'getContentType']))
+            // определим тип экшена
+            $actionType = 'show';
+            if(is_callable([$entity, 'getActionType']))
             {
-                $contentType = $entity->getContentType();
+                $actionType = $entity->getActionType()->getCode();
             }
-            $route->setContentType($contentType);
+            $route->setActionType($actionType);
 
-
-            //определим метод
-            $method      = 'index';
-            if('content' == $contentType)
-            {
-                $method = 'show';
-            }
-
-            $action     = $this->getLogicalAction($entity, $entityCode, $method);
+            $action = $router->getLogicalAction($entity, $entityCode, $actionType);
             $route->setAction($action);
 
 
@@ -121,24 +111,18 @@ class Router implements EventSubscriber
         {
             $em       = $args->getEntityManager();
             $entities = $this->container->get('app.entities');
+            $router   = $this->container->get('app.route');
 
 
-            // определим тип содержимого
-            $contentType = 'action';
-            if(is_callable([$entity, 'getContentType']))
+            // определим тип экшена
+            $actionType = 'show';
+            if(is_callable([$entity, 'getActionType']))
             {
-                $contentType = $entity->getContentType();
-            }
-
-            //определим метод
-            $method      = 'index';
-            if('content' == $contentType)
-            {
-                $method = 'show';
+                $actionType = $entity->getActionType()->getCode();
             }
             
             $entityCode = $entities->getEntityCode($entity)->getCode();
-            $action     = $this->getLogicalAction($entity, $entityCode, $method);
+            $action     = $router->getLogicalAction($entity, $entityCode, $actionType);
             
             $route = $em->getRepository('AppBundle:Core\\Route')->findOneBy([
                 'entryId' => $entity->getId(),
@@ -161,7 +145,7 @@ class Router implements EventSubscriber
                 $route->setRoutePath($entity->getRoutePath());
                 $route->setAction($action);
                 $route->setEntryId($entity->getId());
-                $route->setContentType($contentType);
+                $route->setActionType($actionType);
 
                 $em->persist($route);
                 $em->flush();
@@ -183,85 +167,5 @@ class Router implements EventSubscriber
             return true;
         }
         return false;
-    }
-    
-    /**
-     * Получить нужный бандл
-     * пока он 1, его и возвращаем
-     * 
-     * @return string
-     */
-    public function getBundle()
-    {
-        return 'AppBundle';
-    }
-    
-    /**
-     * Получить нужное приложение
-     * пока публичное приложение 1 - его и возвращаем
-     * 
-     * @return string
-     */
-    public function getApplication()
-    {
-        return 'Frontend';
-    }
-
-    /**
-     * Найти в конфиге нужный экшн для сущности и экшена
-     * 
-     * @param string $entityCode
-     * @param string $action
-     * 
-     * @return string|boolean
-     */
-    protected function getControllerAction($entityCode, $action)
-    {
-        $application = $this->getApplication();
-        $root = $this->container->getParameter('kernel.root_dir');
-
-        $yaml = Yaml::parse(file_get_contents($root . '/Resources/config/actions.yml'));
-
-        if(isset($yaml[$entityCode][$application][$action]))
-        {
-            return $yaml[$entityCode][$application][$action];
-        }
-        
-        if(isset($yaml[$entityCode][$application]['default']))
-        {
-            return $yaml[$entityCode][$application]['default'];
-        }
-        
-        if(isset($yaml['default']['default'][$action]))
-        {
-            return $yaml['default']['default'][$action];
-        }
-        
-        if(isset($yaml['default']['default']['default']))
-        {
-            return $yaml['default']['default']['default'];
-        }
-        
-        return false;
-    }
-    
-    /**
-     * Сформировать логичесий путь до контроллера
-     * 
-     * @param obgect $entity
-     * @param string $entityCode
-     * @param string $action
-     * @return string
-     */
-    protected function getLogicalAction($entity, $entityCode, $action)
-    {
-        // если у записи есть экшн
-        // пока только у записей content_page есть action
-        if(is_callable([$entity, 'getAction']))
-        {
-            //return $entity->getAction();
-        }
-
-        return $this->getBundle() . ':' . $this->getApplication() . '/' . $this->getControllerAction($entityCode, $action);
     }
 }

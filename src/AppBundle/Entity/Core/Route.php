@@ -24,7 +24,7 @@ class Route
     /**
      * @var string
      *
-     * @ORM\Column(name="entityCode", type="string", length=255, nullable=true)
+     * @ORM\Column(name="entity_code", type="string", length=255, nullable=true)
      */
     private $entityCode;
 
@@ -49,9 +49,9 @@ class Route
      * 
      * @var string
      *
-     * @ORM\Column(name="content_type", type="string", length=255, nullable=false)
+     * @ORM\Column(name="action_type", type="string", length=255, nullable=false)
      */
-    private $contentType="content"; // content|content
+    private $actionType="show"; // show|index|...
     
     /**
      * @var int
@@ -176,13 +176,13 @@ class Route
     /**
      * Set contentType
      *
-     * @param string $contentType
+     * @param string $actionType
      *
      * @return Route
      */
-    public function setContentType($contentType)
+    public function setActionType($actionType)
     {
-        $this->contentType = $contentType;
+        $this->actionType = $actionType;
 
         return $this;
     }
@@ -192,9 +192,9 @@ class Route
      *
      * @return string
      */
-    public function getContentType()
+    public function getActionType()
     {
-        return $this->contentType;
+        return $this->actionType;
     }
 
     /**

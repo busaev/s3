@@ -193,6 +193,51 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $manager->flush();
         
         
+        
+        /**
+         *  Справочник типов экшенов
+         */
+        
+        $scrollActionTypes = new Scroll;
+        $scrollActionTypes->setCode('action_types');
+        $scrollActionTypes->setTitle('Варианты экшенов');
+        $scrollActionTypes->setPosition('4');
+        
+        $manager->persist($scrollActionTypes);
+        
+        
+        $manager->flush();
+        
+        
+        
+        
+        /**
+         *  Типы экшенов
+         */
+        
+        // string
+        $scrollItemActionIndex = new ScrollItem;
+        $scrollItemActionIndex->setScroll($scrollActionTypes);
+        $scrollItemActionIndex->setCode('index');
+        $scrollItemActionIndex->setTitle('Индексная страница');
+        $scrollItemActionIndex->setPosition(1);
+        
+        $manager->persist($scrollItemActionIndex);
+        
+        
+        // checkbox
+        $scrollItemActionShow = new ScrollItem;
+        $scrollItemActionShow->setScroll($scrollActionTypes);
+        $scrollItemActionShow->setCode('show');
+        $scrollItemActionShow->setTitle('Обзор');
+        $scrollItemActionShow->setPosition(2);
+        
+        $manager->persist($scrollItemActionShow);
+        
+        
+        $manager->flush();
+        
+        
         /**
          *  Роли пользователя
          */
@@ -315,9 +360,6 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
          */
         
         
-        $contentPageIndexRoutePath = '/page';
-        $contentPageIndexAction    = 'AppBundle:Frontend/Content:index';
-        
         
         // Page - index
         
@@ -327,8 +369,8 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $contentPageIndex->setTitle('Page index');
         $contentPageIndex->setMetaDescription('All our page');
         $contentPageIndex->setMetaKeywords('page, all page');
-        $contentPageIndex->setAction($contentPageIndexAction);
-        $contentPageIndex->setRoutePath($contentPageIndexRoutePath);
+        $contentPageIndex->setRoutePath('/page');
+        $contentPageIndex->setActionType($scrollItemActionIndex);
                 
         $manager->persist($contentPageIndex);
         
@@ -340,8 +382,8 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $contentPageRoute->setTitle('Page route');
         $contentPageRoute->setMetaDescription('Page viewing');
         $contentPageRoute->setMetaKeywords('page, viewing');
-        $contentPageRoute->setAction('AppBundle:Frontend/Content:route');
         $contentPageRoute->setRoutePath('__content__');
+        $contentPageRoute->setActionType($scrollItemActionShow);
                 
         $manager->persist($contentPageRoute);
         
@@ -355,9 +397,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
          *  Страницы модуля NEWS
          */
         
-        
-        $contentNewsIndexRoutePath = '/news';
-        $contentNewsIndexAction    = 'AppBundle:Frontend/Content:index';        
+           
         
         // News - index
         
@@ -367,8 +407,8 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $contentNewsIndex->setTitle('News index');
         $contentNewsIndex->setMetaDescription('All our news');
         $contentNewsIndex->setMetaKeywords('news, all news');
-        $contentNewsIndex->setAction($contentNewsIndexAction);
-        $contentNewsIndex->setRoutePath($contentNewsIndexRoutePath);
+        $contentNewsIndex->setActionType($scrollItemActionIndex);
+        $contentNewsIndex->setRoutePath('/news');
                 
         $manager->persist($contentNewsIndex);
         
@@ -380,9 +420,8 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $contentNewsRoute->setTitle('News route');
         $contentNewsRoute->setMetaDescription('News viewing');
         $contentNewsRoute->setMetaKeywords('news, viewing');
-        $contentNewsRoute->setAction('AppBundle:Frontend/Content:route');
         $contentNewsRoute->setRoutePath('__content__');
-        //$contentNewsRoute->setRoute($contentNewsIndexRoute);
+        $contentNewsRoute->setActionType($scrollItemActionShow);
                 
         $manager->persist($contentNewsRoute);
         
@@ -396,8 +435,6 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
          */
         
         
-        $contentIndexIndexRoutePath = '/';
-        $contentIndexIndexAction    = 'AppBundle:Frontend/Index:index';        
         
         // Index - index
         
@@ -407,8 +444,8 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $contentIndexIndex->setTitle('Index index');
         $contentIndexIndex->setMetaDescription('Index page');
         $contentIndexIndex->setMetaKeywords('Index page');
-        $contentIndexIndex->setRoutePath($contentIndexIndexRoutePath);
-        $contentIndexIndex->setAction($contentIndexIndexAction);
+        $contentIndexIndex->setActionType($scrollItemActionIndex);
+        $contentIndexIndex->setRoutePath('/');
                 
         $manager->persist($contentIndexIndex);
         

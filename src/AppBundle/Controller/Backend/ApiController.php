@@ -58,7 +58,7 @@ class ApiController extends Controller
      *        options={"expose"=true})
      */
     public function routesAction(Request $request, $entityCode, $format)
-    {   
+    {  
         $entities = $this->get("app.entities");        
         $currentEntity = $entities->$entityCode;
 

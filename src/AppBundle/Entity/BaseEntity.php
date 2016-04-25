@@ -95,15 +95,6 @@ class BaseEntity implements RouteSubjectInterface
      */
     
     /**
-     * Тип записи
-     * 
-     * @var string
-     * 
-     * @deprecated
-     */
-    private $contentType="content"; // content|action
-    
-    /**
      * Сущность по-умолчанию
      * 
      * @var string
@@ -260,20 +251,5 @@ class BaseEntity implements RouteSubjectInterface
     public function getRoute()
     {
         return $this->route;
-    }
-    
-        
-    /**
-     * #################################################
-     * ###################  Staff  #####################
-     * #################################################
-     */
-
-    /**
-     * @return string
-     */
-    public function getContentType()
-    {
-        return $this->contentType;
     }
 }

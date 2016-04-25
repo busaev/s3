@@ -55,6 +55,10 @@ services:
         public: false
         tags:
             - { name: twig.extension }
+
+    app.route:
+        class: AppBundle\Services\Route
+        arguments: ['@service_container']
             
     history:
         class: AppBundle\Services\History
