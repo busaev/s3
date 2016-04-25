@@ -7,6 +7,8 @@ use Doctrine\ORM\Event\PostFlushEventArgs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\VarDumper\VarDumper;
 
+use AppBundle\Entity\Core\ContentPage;
+
 use AppBundle\Entity\Core\Route;
 
 
@@ -66,7 +68,7 @@ class Router implements EventSubscriber
             $em       = $args->getEntityManager();
             $entities = $this->container->get('app.entities');
             $router   = $this->container->get('app.route');
-
+            
             $entityCode = $entities->getEntityCode($entity)->getCode();
             
             // Создаём маршрут
@@ -82,6 +84,12 @@ class Router implements EventSubscriber
                 $actionType = $entity->getActionType()->getCode();
             }
             $route->setActionType($actionType);
+            
+            // это страница модуля?
+            if($entity instanceof ContentPage)
+            {
+                $route->setContentPage(true);
+            }
 
             $action = $router->getLogicalAction($entity, $entityCode, $actionType);
             $route->setAction($action);
@@ -128,6 +136,12 @@ class Router implements EventSubscriber
                 'entryId' => $entity->getId(),
                 'entityCode' => $entityCode
             ]);
+            
+            // это страница модуля?
+            if($entity instanceof ContentPage)
+            {
+                $route->setContentPage(true);
+            }
             
             if(null !== $route)
             {

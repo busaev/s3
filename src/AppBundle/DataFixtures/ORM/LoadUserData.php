@@ -313,7 +313,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $contentNews->setEntityCode('news');
         $contentNews->setEntryStatus($scrollItemEnable);
         $contentNews->setRoutePath('/news');
-        $contentNews->setTitle('News');
+        $contentNews->setTitle('Новости');
         
         $manager->persist($contentNews);
         
@@ -324,7 +324,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $contentPage->setEntityCode('page');
         $contentPage->setEntryStatus($scrollItemEnable);
         $contentPage->setRoutePath('/page');
-        $contentPage->setTitle('Page');
+        $contentPage->setTitle('Страницы');
         
         $manager->persist($contentPage);
         
@@ -335,7 +335,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $contentVendor->setEntityCode('vendor');
         $contentVendor->setEntryStatus($scrollItemEnable);
         $contentVendor->setRoutePath('/vendor');
-        $contentVendor->setTitle('Vendor');
+        $contentVendor->setTitle('Производители');
         
         $manager->persist($contentVendor);
         
@@ -346,7 +346,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $contentIndex->setEntityCode('index');
         $contentIndex->setEntryStatus($scrollItemEnable);
         $contentIndex->setRoutePath('/');
-        $contentIndex->setTitle('Index');
+        $contentIndex->setTitle('Главная страница');
         
         $manager->persist($contentIndex);
         
@@ -366,7 +366,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $contentPageIndex = new ContentPage;
         $contentPageIndex->setEntryStatus($scrollItemEnable);
         $contentPageIndex->setContent($contentPage);
-        $contentPageIndex->setTitle('Page index');
+        $contentPageIndex->setTitle('Список страниц');
         $contentPageIndex->setMetaDescription('All our page');
         $contentPageIndex->setMetaKeywords('page, all page');
         $contentPageIndex->setRoutePath('/page');
@@ -379,10 +379,10 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $contentPageRoute = new ContentPage;
         $contentPageRoute->setEntryStatus($scrollItemEnable);
         $contentPageRoute->setContent($contentPage);
-        $contentPageRoute->setTitle('Page route');
+        $contentPageRoute->setTitle('Обзор страницы');
         $contentPageRoute->setMetaDescription('Page viewing');
         $contentPageRoute->setMetaKeywords('page, viewing');
-        $contentPageRoute->setRoutePath('__content__');
+        $contentPageRoute->setRoutePath('');
         $contentPageRoute->setActionType($scrollItemActionShow);
                 
         $manager->persist($contentPageRoute);
@@ -404,7 +404,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $contentNewsIndex = new ContentPage;
         $contentNewsIndex->setEntryStatus($scrollItemEnable);
         $contentNewsIndex->setContent($contentNews);
-        $contentNewsIndex->setTitle('News index');
+        $contentNewsIndex->setTitle('Список новостей');
         $contentNewsIndex->setMetaDescription('All our news');
         $contentNewsIndex->setMetaKeywords('news, all news');
         $contentNewsIndex->setActionType($scrollItemActionIndex);
@@ -417,10 +417,10 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $contentNewsRoute = new ContentPage;
         $contentNewsRoute->setEntryStatus($scrollItemEnable);
         $contentNewsRoute->setContent($contentNews);
-        $contentNewsRoute->setTitle('News route');
+        $contentNewsRoute->setTitle('Обзор новости');
         $contentNewsRoute->setMetaDescription('News viewing');
         $contentNewsRoute->setMetaKeywords('news, viewing');
-        $contentNewsRoute->setRoutePath('__content__');
+        $contentNewsRoute->setRoutePath('');
         $contentNewsRoute->setActionType($scrollItemActionShow);
                 
         $manager->persist($contentNewsRoute);
@@ -441,7 +441,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $contentIndexIndex = new ContentPage;
         $contentIndexIndex->setEntryStatus($scrollItemEnable);
         $contentIndexIndex->setContent($contentIndex);
-        $contentIndexIndex->setTitle('Index index');
+        $contentIndexIndex->setTitle('Индекс');
         $contentIndexIndex->setMetaDescription('Index page');
         $contentIndexIndex->setMetaKeywords('Index page');
         $contentIndexIndex->setActionType($scrollItemActionIndex);

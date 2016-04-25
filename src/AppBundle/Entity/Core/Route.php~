@@ -67,7 +67,7 @@ class Route
      *
      * @ORM\Column(name="content_page", type="boolean", nullable=false)
      */
-    private $contentPage = false;
+    private $contentPage;
     
     /**
      * #################################################
@@ -262,29 +262,5 @@ class Route
     public function getEntityCode()
     {
         return $this->entityCode;
-    }
-
-    /**
-     * Set contentPage
-     *
-     * @param boolean $contentPage
-     *
-     * @return Route
-     */
-    public function setContentPage($contentPage)
-    {
-        $this->contentPage = $contentPage;
-
-        return $this;
-    }
-
-    /**
-     * Get contentPage
-     *
-     * @return boolean
-     */
-    public function getContentPage()
-    {
-        return $this->contentPage;
     }
 }
