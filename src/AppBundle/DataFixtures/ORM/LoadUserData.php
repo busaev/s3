@@ -18,10 +18,15 @@ use AppBundle\Entity\Core\Navigation;
 use AppBundle\Entity\Core\NavigationItem;
 use AppBundle\Entity\Core\Scroll;
 use AppBundle\Entity\Core\ScrollItem;
+use AppBundle\Entity\Shop\Attribute;
 
 
 class LoadUserData implements FixtureInterface, ContainerAwareInterface
 {
+    public function getOrder()
+    {
+       return 1; 
+    }
     
     /**
      * @var ContainerInterface
@@ -35,6 +40,9 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
     
     public function load(ObjectManager $manager)
     {
+        $doctrine = $this->container->get('doctrine');
+        $entities = $this->container->get('app.entities');
+        
         /**
          *  Справочник для статусов записи
          */
@@ -233,6 +241,50 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $scrollItemActionShow->setPosition(2);
         
         $manager->persist($scrollItemActionShow);
+        
+        
+        $manager->flush();
+        
+        
+        
+        
+        /**
+         *  Справочник для Вариантов типа данных аттрибута
+         */
+        
+        $scrollProductTypes = new Scroll;
+        $scrollProductTypes->setCode('shop_product_types');
+        $scrollProductTypes->setTitle('Группы товаров');
+        $scrollProductTypes->setPosition('100');
+        
+        $manager->persist($scrollProductTypes);
+        
+        
+        $manager->flush();
+        
+        
+        /**
+         *  Типы записи
+         */
+        
+        // clothes
+        $scrollItemClothes = new ScrollItem;
+        $scrollItemClothes->setScroll($scrollProductTypes);
+        $scrollItemClothes->setCode('clothes');
+        $scrollItemClothes->setTitle('Одежда');
+        $scrollItemClothes->setPosition(1);
+        
+        $manager->persist($scrollItemClothes);
+        
+        
+        // toys
+        $scrollItemToys = new ScrollItem;
+        $scrollItemToys->setScroll($scrollProductTypes);
+        $scrollItemToys->setCode('toys');
+        $scrollItemToys->setTitle('Игрушки');
+        $scrollItemToys->setPosition(2);
+        
+        $manager->persist($scrollItemToys);
         
         
         $manager->flush();
@@ -480,6 +532,46 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         
         
         $manager->flush();
+        
+        
+        
+        /**
+         *  Аттрибуты товаров
+         */
+        $entityScroll = $entities->scroll_item;
+        
+        $status = $doctrine
+                ->getRepository($entityScroll->getLogicalName())
+                ->findByScrollItemCodeAndScrollCode('enable', 'entry_status');        
+            
+        $dataTypes = $doctrine
+                ->getRepository($entityScroll->getLogicalName())
+                ->findByScrollItemCodeAndScrollCode('numeric', 'data_types');
+        
+        $viewTypes = $doctrine
+                ->getRepository($entityScroll->getLogicalName())
+                ->findByScrollItemCodeAndScrollCode('select', 'view_types');
+        
+        $productTypes = $doctrine
+                ->getRepository($entityScroll->getLogicalName())
+                ->findByScrollItemCodeAndScrollCode('clothes', 'shop_product_types');
+        
+        $attributeSize = new Attribute;
+        $attributeSize->setTitle('Размер');
+        $attributeSize->setDescription('Размеры одежды');
+        $attributeSize->setInFilters(true);
+        $attributeSize->setInPreview(true);
+        $attributeSize->setEntryStatus($status);
+        $attributeSize->setDataType($dataTypes);
+        $attributeSize->setViewType($viewTypes);
+        $attributeSize->setProductType($productTypes);
+        
+        $manager->persist($attributeSize);
+        
+        
+        $manager->flush();
+        
+        
 
         //авторизуемся
         $this->container->get('security.token_storage')->setToken(

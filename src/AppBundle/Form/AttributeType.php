@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use AppBundle\Form\MediaType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 
 class AttributeType extends AbstractType
@@ -28,16 +29,32 @@ class AttributeType extends AbstractType
                 'label'=>'Description',
                 'translation_domain' => 'global'
             ])
-            ->add('media', MediaType::class, [
-                'label'=>'Media',
-                'translation_domain' => 'global'
-            ])
+//            ->add('media', MediaType::class, [
+//                'label'=>'Media',
+//                'translation_domain' => 'global'
+//            ])
+            ->add('media', CollectionType::class, array(
+                'entry_type' => MediaType::class
+            ))
+                
             ->add('inPreview', null, [
                 'label'=>'Show in preview',
                 'translation_domain' => 'global'
             ])
             ->add('inFilters', null, [
                 'label'=>'Show in filters',
+                'translation_domain' => 'global'
+            ])
+            ->add('productType', EntityType::class, [
+                'class' => 'AppBundle:Core\\ScrollItem',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('i')
+                        ->join('i.scroll', 's')
+                        ->where('s.code=\'shop_product_types\'')
+                        ->andWhere('i.code !=\'delete\'')
+                        ->orderBy('i.position', 'ASC');
+                },
+                'label'=>'Product type',
                 'translation_domain' => 'global'
             ])
             ->add('entryStatus', EntityType::class, [

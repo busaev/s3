@@ -48,7 +48,7 @@ class ApiController extends Controller
     }
     
     /**
-     *  Для получения Маршрутов отдельный экшн.
+     * Для получения Маршрутов отдельный экшн.
      * Заполняем Название из Содержания
      * 
      * @Route("/routes/{entityCode}/{format}", 

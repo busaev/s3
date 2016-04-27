@@ -90,6 +90,17 @@ class Attribute implements MediaSubjectInterface
     
     
     /**
+     * Тип товара
+     * 
+     * @Description("productType", title="Product type", dataType="string",  property="productType.title")
+     * 
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Model\ScrollItemSubjectInterface")
+     */
+    private $productType;
+    
+    
+    
+    /**
      * Связанный статус записи
      * 
      * @Description("dataType", title="Data type", dataType="string",  property="dataType.title")
@@ -349,5 +360,29 @@ class Attribute implements MediaSubjectInterface
     public function getMedia()
     {
         return $this->media;
+    }
+
+    /**
+     * Set productType
+     *
+     * @param \AppBundle\Entity\Core\ScrollItem $productType
+     *
+     * @return Attribute
+     */
+    public function setProductType(\AppBundle\Entity\Core\ScrollItem $productType = null)
+    {
+        $this->productType = $productType;
+
+        return $this;
+    }
+
+    /**
+     * Get productType
+     *
+     * @return \AppBundle\Entity\Core\ScrollItem
+     */
+    public function getProductType()
+    {
+        return $this->productType;
     }
 }
