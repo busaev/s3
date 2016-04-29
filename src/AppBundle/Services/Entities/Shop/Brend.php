@@ -5,7 +5,7 @@ namespace AppBundle\Services\Entities\Shop;
 use AppBundle\Services\Entities\EntityInterface;
 use AppBundle\Services\Entities\BaseEntity;
 
-class Vendor extends BaseEntity implements EntityInterface
+class Brend extends BaseEntity implements EntityInterface
 {
     protected $container = null;
 

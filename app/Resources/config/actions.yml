@@ -1,7 +1,7 @@
 default:
     default:
         default: Content:route
-        show: Content:show
+        show: Content:route
         index: Content:index
         
 news:

@@ -44,6 +44,13 @@ class Media
      * @ORM\Column(name="path", type="string", length=255, unique=true, nullable=true)
      */
     private $path;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="entity_code", type="string", length=255, unique=false, nullable=true)
+     */
+    private $entityCode=false;
     
     /**
      * @Assert\File(maxSize="6000000")
@@ -54,7 +61,7 @@ class Media
     
     public function __toString() 
     {
-        return $this->getTitle();
+        return $this->getTitle() != false ?  $this->getTitle() : 'no media';
     }
 
     /**
@@ -90,9 +97,10 @@ class Media
 
     protected function getUploadDir()
     {
-        // get rid of the __DIR__ so it doesn't screw up
-        // when displaying uploaded doc/image in the view.
-        return 'uploads/media';
+        $append = $this->getEntityCode() != false ? '/' . $this->getEntityCode() : '';
+        $dir = 'uploads/media' . $append;
+        
+        return $dir;
     }
     
     /**
@@ -218,6 +226,30 @@ class Media
     public function getPath()
     {
         return $this->path;
+    }
+
+    /**
+     * Set path
+     *
+     * @param string $entityCode
+     *
+     * @return Media
+     */
+    public function setEntityCode($entityCode)
+    {
+        $this->entityCode = $entityCode;
+
+        return $this;
+    }
+
+    /**
+     * Get entityCode
+     *
+     * @return string
+     */
+    public function getEntityCode()
+    {
+        return $this->entityCode;
     }
 
     /**

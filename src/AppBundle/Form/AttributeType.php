@@ -29,14 +29,10 @@ class AttributeType extends AbstractType
                 'label'=>'Description',
                 'translation_domain' => 'global'
             ])
-//            ->add('media', MediaType::class, [
-//                'label'=>'Media',
-//                'translation_domain' => 'global'
-//            ])
-            ->add('media', CollectionType::class, array(
-                'entry_type' => MediaType::class
-            ))
-                
+            ->add('media', MediaType::class, [
+                'label'=>'Media',
+                'translation_domain' => 'global'
+            ])  
             ->add('inPreview', null, [
                 'label'=>'Show in preview',
                 'translation_domain' => 'global'

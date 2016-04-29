@@ -8,11 +8,23 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class VendorType extends AbstractType
+class BrendType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('metaTitle', null, [
+                'label'=>'Meta Title',
+                'translation_domain' => 'global'
+            ])
+            ->add('metaDescription', null, [
+                'label'=>'Meta Description',
+                'translation_domain' => 'global'
+            ])
+            ->add('metaKeywords', null, [
+                'label'=>'Meta Keywords',
+                'translation_domain' => 'global'
+            ])
             ->add('title', null, [
                 'label'=>'Title',
                 'translation_domain' => 'global'
@@ -45,6 +57,10 @@ class VendorType extends AbstractType
                 'translation_domain' => 'global',
                 'attr' => []
             ])
+            ->add('media', MediaType::class, [
+                'label'=>'Media',
+                'translation_domain' => 'global'
+            ])
             ->add('website', null, [
                 'label'=>'Website',
                 'translation_domain' => 'global'
@@ -55,12 +71,12 @@ class VendorType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Content\Vendor'
+            'data_class' => 'AppBundle\Entity\Content\Brend'
         ));
     }
 
     public function getName()
     {
-        return 'Shop_catalogbundle_vendortype';
+        return 'Shop_catalogbundle_brendtype';
     }
 }

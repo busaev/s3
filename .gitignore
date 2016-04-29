@@ -20,4 +20,5 @@ web/bundles/
 web/uploads/*
 !web/uploads/media
 web/uploads/media/*
+!web/uploads/media/brend
 .idea

@@ -129,8 +129,14 @@ class Attribute implements MediaSubjectInterface
      */
     private $media;
     
-    
-    
+    /**
+     * 
+     */
+    public function __construct() 
+    {
+    }
+
+
     public function __toString()
     {
         return $this->getTitle();
@@ -347,6 +353,8 @@ class Attribute implements MediaSubjectInterface
      */
     public function setMedia(\AppBundle\Entity\Core\Media $media = null)
     {
+        
+        $media->setEntityCode('attribute');
         $this->media = $media;
 
         return $this;

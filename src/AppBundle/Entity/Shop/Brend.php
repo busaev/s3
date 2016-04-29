@@ -8,16 +8,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
+use AppBundle\Model\MediaSubjectInterface;
 
 use AppBundle\Entity\BaseEntity;
 
 /**
- * @DescriptionObject("vendors", title="Brends")
+ * @DescriptionObject("brends", title="Brends")
  *
- * @ORM\Table(name="vendors")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\VendorRepository")
+ * @ORM\Table(name="brends")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\BrendRepository")
  */
-class Vendor extends BaseEntity
+class Brend extends BaseEntity implements MediaSubjectInterface
 {
     /**
      * @var integer $id
@@ -55,6 +56,15 @@ class Vendor extends BaseEntity
      * @ORM\Column(name="short_description", type="text", unique=false, nullable=true)
      */
     private $shortDescription;
+    
+    /**
+     * Связанный статус записи
+     * 
+     * @Description("media", title="Media", dataType="string",  property="media.title")
+     * 
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Model\MediaSubjectInterface", cascade={"persist"})
+     */
+    private $media;
 
     /**
      * @var string $website
@@ -71,12 +81,7 @@ class Vendor extends BaseEntity
     private $website;
 
     /**
-     * @ORM\OneToMany(targetEntity="Image", mappedBy="vendor", cascade={"persist"})
-     */
-    //protected $images;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Product", mappedBy="vendor", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="brend", cascade={"persist"})
      */
     //protected $products;
 
@@ -85,21 +90,12 @@ class Vendor extends BaseEntity
      */
     public function __construct()
     {
-//        $this->images = new ArrayCollection();
 //        $this->product = new ArrayCollection();
     }
 
     public function __toString()
     {
         return $this ->getTitle();
-    }
-    
-    /**
-     * @return string
-     */
-    public function getEntityCode()
-    {
-        return 'vendor';
     }
 
     /**
@@ -116,7 +112,7 @@ class Vendor extends BaseEntity
      * Set title
      *
      * @param string $title
-     * @return Vendor
+     * @return Brend
      */
     public function setTitle($title)
     {
@@ -139,7 +135,7 @@ class Vendor extends BaseEntity
      * Set description
      *
      * @param string $description
-     * @return Vendor
+     * @return Brend
      */
     public function setDescription($description)
     {
@@ -163,13 +159,38 @@ class Vendor extends BaseEntity
      * Set website
      *
      * @param string $website
-     * @return Vendor
+     * @return Brend
      */
     public function setWebsite($website)
     {
         $this->website = $website;
 
         return $this;
+    }
+    
+    /**
+     * Set viewType
+     *
+     * @param \AppBundle\Entity\Core\Media $Media
+     *
+     * @return Attribute
+     */
+    public function setMedia(\AppBundle\Entity\Core\Media $media = null)
+    {
+        $media->setEntityCode('brend');
+        $this->media = $media;
+
+        return $this;
+    }
+
+    /**
+     * Get viewType
+     *
+     * @return \AppBundle\Entity\Core\Media
+     */
+    public function getMedia()
+    {
+        return $this->media;
     }
 
     /**
@@ -182,45 +203,12 @@ class Vendor extends BaseEntity
         return $this->website;
     }
 
-    /**
-     * Add images
-     *
-     * @param Shop\CatalogBundle\Entity\Image $images
-     * @return Vendor
-     */
-//    public function addImage(\Shop\CatalogBundle\Entity\Image $images)
-//    {
-//        $images->setVendor($this);
-//        $this->images[] = $images;
-//
-//        return $this;
-//    }
-
-    /**
-     * Remove images
-     *
-     * @param Shop\CatalogBundle\Entity\Image $images
-     */
-//    public function removeImage(\Shop\CatalogBundle\Entity\Image $images)
-//    {
-//        $this->images->removeElement($images);
-//    }
-
-    /**
-     * Get images
-     *
-     * @return Doctrine\Common\Collections\Collection
-     */
-//    public function getImages()
-//    {
-//        return $this->images;
-//    }
-
+    
 //    /**
 //     * Add products
 //     *
 //     * @param Shop\CatalogBundle\Entity\Product $products
-//     * @return Vendor
+//     * @return Brend
 //     */
 //    public function addProduct(\Shop\CatalogBundle\Entity\Product $products)
 //    {
@@ -253,7 +241,7 @@ class Vendor extends BaseEntity
      * Set short_description
      *
      * @param string $shortDescription
-     * @return Vendor
+     * @return Brend
      */
     public function setShortDescription($shortDescription)
     {

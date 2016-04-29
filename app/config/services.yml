@@ -153,9 +153,9 @@ services:
     ###  [[ Shop ]]
     ###
     
-    # элемент навигации. служба модуля, будет добавлена в коллекцию службы app.entities
-    vendor.entity:
-        class: AppBundle\Services\Entities\Shop\Vendor
+    # бренды. служба модуля, будет добавлена в коллекцию службы app.entities
+    brend.entity:
+        class: AppBundle\Services\Entities\Shop\Brend
         arguments: [ "@service_container" ]
         tags:
             -  { name: app.entity }

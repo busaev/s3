@@ -19,6 +19,8 @@ use AppBundle\Entity\Core\NavigationItem;
 use AppBundle\Entity\Core\Scroll;
 use AppBundle\Entity\Core\ScrollItem;
 use AppBundle\Entity\Shop\Attribute;
+use AppBundle\Entity\Shop\Brend;
+use AppBundle\Entity\Core\Media;
 
 
 class LoadUserData implements FixtureInterface, ContainerAwareInterface
@@ -375,21 +377,21 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $contentPage = new Content;
         $contentPage->setEntityCode('page');
         $contentPage->setEntryStatus($scrollItemEnable);
-        $contentPage->setRoutePath('/page');
+        $contentPage->setRoutePath('/pages');
         $contentPage->setTitle('Страницы');
         
         $manager->persist($contentPage);
         
         
         
-        // Vendor
-        $contentVendor = new Content;
-        $contentVendor->setEntityCode('vendor');
-        $contentVendor->setEntryStatus($scrollItemEnable);
-        $contentVendor->setRoutePath('/vendor');
-        $contentVendor->setTitle('Производители');
+        // Brend
+        $contentBrend = new Content;
+        $contentBrend->setEntityCode('brend');
+        $contentBrend->setEntryStatus($scrollItemEnable);
+        $contentBrend->setRoutePath('/brends');
+        $contentBrend->setTitle('Бренды');
         
-        $manager->persist($contentVendor);
+        $manager->persist($contentBrend);
         
         
                 
@@ -401,6 +403,17 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $contentIndex->setTitle('Главная страница');
         
         $manager->persist($contentIndex);
+        
+        
+                
+        // Catalog
+        $contentCatalog = new Content;
+        $contentCatalog->setEntityCode('catalog');
+        $contentCatalog->setEntryStatus($scrollItemEnable);
+        $contentCatalog->setRoutePath('/catalog');
+        $contentCatalog->setTitle('Каталог');
+        
+        $manager->persist($contentCatalog);
         
         
         $manager->flush();
@@ -503,6 +516,80 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         
         
         $manager->flush();
+        
+        
+        
+        /**
+         *  Страницы модуля Catalog
+         */
+        
+           
+        
+        // catalog - index
+        
+        $contentCatalogIndex = new ContentPage;
+        $contentCatalogIndex->setEntryStatus($scrollItemEnable);
+        $contentCatalogIndex->setContent($contentCatalog);
+        $contentCatalogIndex->setTitle('Каталог');
+        $contentCatalogIndex->setMetaDescription('Каталог товаров');
+        $contentCatalogIndex->setMetaKeywords('Каталог, товары');
+        $contentCatalogIndex->setActionType($scrollItemActionIndex);
+        $contentCatalogIndex->setRoutePath('/catalog');
+                
+        $manager->persist($contentCatalogIndex);
+        
+        // catalog - route
+        
+        $contentCatalogRoute = new ContentPage;
+        $contentCatalogRoute->setEntryStatus($scrollItemEnable);
+        $contentCatalogRoute->setContent($contentCatalog);
+        $contentCatalogRoute->setTitle('Обзор категории');
+        $contentCatalogRoute->setMetaDescription('Обзор категории');
+        $contentCatalogRoute->setMetaKeywords('Обзор, категории');
+        $contentCatalogRoute->setRoutePath('');
+        $contentCatalogRoute->setActionType($scrollItemActionShow);
+                
+        $manager->persist($contentCatalogRoute);
+        
+        $manager->flush();
+        
+        
+        
+        
+        
+        /**
+         *  Страницы модуля Brend
+         */
+        
+           
+        
+        // catalog - index
+        
+        $contentBrendsIndex = new ContentPage;
+        $contentBrendsIndex->setEntryStatus($scrollItemEnable);
+        $contentBrendsIndex->setContent($contentBrend);
+        $contentBrendsIndex->setTitle('Бренды');
+        $contentBrendsIndex->setMetaDescription('Список брендов');
+        $contentBrendsIndex->setMetaKeywords('бренды');
+        $contentBrendsIndex->setActionType($scrollItemActionIndex);
+        $contentBrendsIndex->setRoutePath('/brends');
+                
+        $manager->persist($contentBrendsIndex);
+        
+        // catalog - route
+        
+        $contentBrendsRoute = new ContentPage;
+        $contentBrendsRoute->setEntryStatus($scrollItemEnable);
+        $contentBrendsRoute->setContent($contentBrend);
+        $contentBrendsRoute->setTitle('Обзор бренда');
+        $contentBrendsRoute->setMetaDescription('Обзор бренда');
+        $contentBrendsRoute->setMetaKeywords('Обзор, бренд');
+        $contentBrendsRoute->setRoutePath('');
+        $contentBrendsRoute->setActionType($scrollItemActionShow);
+                
+        $manager->persist($contentBrendsRoute);
+        
+        $manager->flush();
                 
         
         /**
@@ -581,6 +668,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
 
         //IMPORT
         $this->loadNewsCSV($manager, $scrollItemEnable);
+        $this->loadBrendsCSV($manager, $scrollItemEnable);
         
     }
 
@@ -609,6 +697,83 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
             }
             fclose($handle);
         }
+    }
+
+    public function loadBrendsCSV(ObjectManager $manager, $enables)
+    {
+        $data = getcwd() . '/src/AppBundle/DataFixtures/ORM/data/brends.csv';
+        if (($handle = fopen($data, "r")) !== FALSE)
+        {
+            $images = $this->getBrendImages();
+            
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) 
+            {
+                $media = false;
+                if(isset($images[$data['0']]))
+                {
+                    $media = new Media;
+                    $media->setPath($images[$data['0']]);
+                    $media->setTitle($data['2']);
+                    $media->setPosition(1);
+                }
+                
+                
+                $entity = new Brend();
+                
+                $entity->setEntryStatus($enables);
+                
+                $entity->setMetaDescription(strip_tags($data['4']));
+                $entity->setMetaKeywords(strip_tags($data['5']));
+                $entity->setMetaTitle($data['2']);
+                
+                $entity->setRoutePath('/brends/' . $this->slugify($data[2]));
+                
+                $entity->setDescription($data['3']);
+                $entity->setShortDescription($data['4']);
+                $entity->setTitle($data['2']);
+                
+                $site = mb_strlen($data[9]) < 5 ? '' : $data[9];
+                $entity->setWebsite($site);
+                
+                if($media)
+                {
+                    $entity->setMedia($media);
+                }
+
+                $manager->persist($entity);
+
+                $manager->flush();
+
+
+                
+            }
+            fclose($handle);
+        }
+    }
+    
+    public function getBrendImages()
+    {
+        $data = getcwd() . '/src/AppBundle/DataFixtures/ORM/data/images.csv';
+        
+        $return = [];
+        
+        if (($handle = fopen($data, "r")) !== FALSE)
+        {
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) 
+            {
+                if(count($data) >= 4)
+                {
+                    $id = (int)$data[1];
+
+                    if($id && $id > 0)
+                    {
+                        $return[$id] = str_replace('/uploads/vendors', '', $data[3]);
+                    }
+                }
+            }
+            fclose($handle);
+        }
+        return $return;
     }
 
     /**
