@@ -42,20 +42,20 @@ class Brend extends BaseEntity implements MediaSubjectInterface
     private $title;
 
     /**
-     * @var string $description
+     * @var string $content
      *
-     * @ORM\Column(name="description", type="text", unique=false, nullable=true)
+     * @Description("shortContent", title="Short content", dataType="string")
+     *
+     * @ORM\Column(name="short_content", type="text", unique=false, nullable=true)
      */
-    private $description;
+    private $shortContent;
 
     /**
-     * @var string $description
+     * @var string $content
      *
-     * @Description("shortDescription", title="Short description", dataType="string")
-     *
-     * @ORM\Column(name="short_description", type="text", unique=false, nullable=true)
+     * @ORM\Column(name="content", type="text", unique=false, nullable=true)
      */
-    private $shortDescription;
+    private $content;
     
     /**
      * Связанный статус записи
@@ -99,6 +99,20 @@ class Brend extends BaseEntity implements MediaSubjectInterface
     }
 
     /**
+     * 
+     * @return string
+     */
+    public function getSlug()
+    {
+        $path = $this->getRoutePath();
+        if('' !== $path)
+        {
+            return $path;
+        }
+        return $this->getId();
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -132,26 +146,49 @@ class Brend extends BaseEntity implements MediaSubjectInterface
     }
 
     /**
-     * Set description
+     * Set short_content
      *
-     * @param string $description
+     * @param string $shortContent
      * @return Brend
      */
-    public function setDescription($description)
+    public function setShortContent($shortContent)
     {
-        $this->description = $description;
+        $this->shortContent = $shortContent;
 
         return $this;
     }
 
     /**
-     * Get description
+     * Get short_content
      *
      * @return string
      */
-    public function getDescription()
+    public function getShortContent()
     {
-        return $this->description;
+        return $this->shortContent;
+    }
+
+    /**
+     * Set content
+     *
+     * @param string $content
+     * @return Brend
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
     }
 
     
@@ -236,37 +273,4 @@ class Brend extends BaseEntity implements MediaSubjectInterface
 //    {
 //        return $this->products;
 //    }
-
-    /**
-     * Set short_description
-     *
-     * @param string $shortDescription
-     * @return Brend
-     */
-    public function setShortDescription($shortDescription)
-    {
-        $this->shortDescription = $shortDescription;
-
-        return $this;
-    }
-
-    /**
-     * Get short_description
-     *
-     * @return string
-     */
-    public function getShortDescription()
-    {
-        return $this->shortDescription;
-    }
-
-    public function getSlug()
-    {
-        $path = $this->getRoutePath();
-        if('' !== $path)
-        {
-            return $path;
-        }
-        return $this->getId();
-    }
 }

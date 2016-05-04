@@ -6,6 +6,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\VarDumper\VarDumper;
+use Symfony\Component\Filesystem\Filesystem;
 
 use AppBundle\Entity\Core\ContentPage;
 
@@ -81,7 +82,11 @@ class Router implements EventSubscriber
             $actionType = 'show';
             if(is_callable([$entity, 'getActionType']))
             {
-                $actionType = $entity->getActionType()->getCode();
+                $actionType = $entity->getActionType();
+                if($actionType instanceof \AppBundle\Entity\Core\ScrollItem)
+                {
+                    $actionType = $actionType->getCode();
+                }
             }
             $route->setActionType($actionType);
             
@@ -126,7 +131,11 @@ class Router implements EventSubscriber
             $actionType = 'show';
             if(is_callable([$entity, 'getActionType']))
             {
-                $actionType = $entity->getActionType()->getCode();
+                $actionType = $entity->getActionType();
+                if($actionType instanceof \AppBundle\Entity\Core\ScrollItem)
+                {
+                    $actionType = $actionType->getCode();
+                }
             }
             
             $entityCode = $entities->getEntityCode($entity)->getCode();
@@ -164,6 +173,9 @@ class Router implements EventSubscriber
                 $em->persist($route);
                 $em->flush();
             }
+            
+            $fs = new Filesystem();
+            $fs->remove($this->container->getParameter('kernel.cache_dir'));
         }
     }
     

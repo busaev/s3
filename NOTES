@@ -22,4 +22,4 @@ disabled - показывается или полностью недоступе
            Контроллер @ShopCatalogBundle:Category
                name="catalog.category_index"
            Контроллер @ShopCatalogBundle:AdminCategory
-               name="catalog.admin_category_index"
+               name="catalog.backend_category_index"

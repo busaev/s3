@@ -37,6 +37,12 @@ class ExtraLoader extends Loader
         {
             // prepare a new route
             $path = $routeItem->getRoutePath();
+            
+            if("" == $path)
+            {
+                continue;
+            }
+            
             $defaults = array(
                 '_controller' => $routeItem->getAction(),
             );

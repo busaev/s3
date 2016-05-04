@@ -728,8 +728,8 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
                 
                 $entity->setRoutePath('/brends/' . $this->slugify($data[2]));
                 
-                $entity->setDescription($data['3']);
-                $entity->setShortDescription($data['4']);
+                $entity->setContent($data['3']);
+                $entity->setShortContent($data['4']);
                 $entity->setTitle($data['2']);
                 
                 $site = mb_strlen($data[9]) < 5 ? '' : $data[9];

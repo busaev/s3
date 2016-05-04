@@ -59,7 +59,6 @@ class ContentController extends Controller
         $translator  = $this->get('translator');
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $entities    = $this->get("app.entities");
-        $utils       = $this->get("utils");
         
         $currentEntity = $entities->$entityCode;
         

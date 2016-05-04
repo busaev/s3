@@ -29,12 +29,12 @@ class BrendType extends AbstractType
                 'label'=>'Title',
                 'translation_domain' => 'global'
             ])
-            ->add('short_description', null, [
+            ->add('short_content', null, [
                 'label'=>'Short description',
                 'translation_domain' => 'global',
                 'required' => false
             ])
-            ->add('description', null, [
+            ->add('content', null, [
                 'label'=>'Description',
                 'translation_domain' => 'global',
                 'required' => false,

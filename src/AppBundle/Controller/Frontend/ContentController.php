@@ -108,9 +108,6 @@ class ContentController extends Controller
      */
     public function showAction(Request $request, $entityCode, $id)
     {
-        Symfony\Component\VarDumper\VarDumper::dump(1);
-        die();
-
         $translator  = $this->get('translator');
         $entities    = $this->get("app.entities");
         $tpl         = $this->get('app.tpl');
