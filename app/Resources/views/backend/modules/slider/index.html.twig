@@ -1,0 +1,50 @@
+{% extends 'backend/base.html.twig' %}
+
+{% block body -%}
+    
+    
+    {{ actions(entityCode, 'list') }}
+                    
+    {% include 'backend/flash_messages.html.twig' %}
+    
+    <h1>Slider list</h1>
+    
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('backend_slider_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.title }}</td>
+                <td>
+        <ul class="record_actions button-group radius">        <li>
+            <a class="tiny button" href="{{ path('backend_slider_show', { 'id': entity.id }) }}">
+                                    Показать
+                
+            </a>
+        </li>        <li>
+            <a class="tiny button" href="{{ path('backend_slider_edit', { 'id': entity.id }) }}">
+                                    Изменить
+                
+            </a>
+        </li>
+</ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+{% endblock %}
+
+
+    
+{% block javascripts -%}
+    {{ parent() }}
+{% endblock %}

@@ -1,0 +1,140 @@
+{% extends '::admin.base.html.twig' %}
+{% form_theme form '::fields.html.twig' %}
+
+{% block content -%}
+        <div class="row"  id="sticker">
+    <div class="large-12 columns">
+        <ul class="record_actions button-group radius">
+            <li>
+                <a class="tiny button" href="{{ path('backend_slider') }}">
+                    Назад, к списку
+                </a>
+            </li>
+        
+                    <li>
+                <a class="tiny success rounded button" href="{{ path('backend_slider_new') }}">
+                    Добавить
+                </a>
+            </li>
+            <li>{{ form(delete_form) }}</li>
+                </ul>
+    </div>
+</div>    
+
+<h1>Изменить слайдер</h1>
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div data-alert class="alert-box">
+                {{ flashMessage }}
+                 <a href="#" class="close">&times;</a>
+         </div>
+    {% endfor %}
+
+    
+    <form action="{{ path('backend_slider_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+        <input type="hidden" value="PUT" name="_method">
+        {{ form_errors(form) }}
+
+        <div class="panel">
+            
+            <div class="row display">
+                <div class="large-3 columns">
+                  {{ form_label(form.disabled, 'Отключен?') }}
+                </div>
+                <div class="large-9 columns">
+                  {{ form_errors(form.disabled) }}
+                  {{ form_widget(form.disabled, { 'attr': {'class': 'switch'} }) }}
+                </div>
+            </div>
+                
+            <br />
+            
+            <div class="row display">
+                <div class="large-3 columns">
+                  {{ form_label(form.title, 'Заголовок') }}
+                </div>
+                <div class="large-9 columns">
+                  {{ form_errors(form.title) }}
+                  {{ form_widget(form.title) }}
+                </div>
+            </div>
+
+            <div class="row display">
+                <div class="large-3 columns">
+                  {{ form_label(form.code, 'Код слайдера') }}
+                </div>
+                <div class="large-9 columns">
+                  {{ form_errors(form.code) }}
+                  {{ form_widget(form.code) }}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row display">
+            <div class="large-3 columns">
+                 <h3>Слайды</h3>
+             </div>
+             <div class="large-9 columns"><div class="placehoder-add-button"></div></div>
+        </div>
+
+
+        <div class="row display">
+            <div class="large-3 columns"></div>
+            <div class="large-9 columns">
+                <ul class="slides embeded-forms" data-prototype="{{ form_widget(form.slides.vars.prototype)|e }}">
+                    {% for slide in form.slides %}
+                        <li>
+                            <div class="panel">
+                                {{ form_row(slide.disabled) }}
+                                {{ form_row(slide.caption) }}
+                                {{ form_row(slide.link) }}
+                                {{ form_row(slide.file) }}
+                                <div class="placehoder-remove-button"></div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        
+        {{ form_rest(form) }}
+        
+    </form>
+
+{% endblock %}
+
+
+{% block sidebar -%}
+
+    <div class="panel">
+        <h5>Страница создана</h5>
+        <p>{{ entity.createdAt|date('Y-m-d H:i:s') }}</p>
+        <h5>Создал</h5>
+        <p>{{ entity.creator.username }}</p>
+        <h5>Страница последний раз редактировалась</h5>
+        <p>{{ entity.editedAt|date('Y-m-d H:i:s') }}</p>
+        <h5>Изменил</h5>
+        <p>{{ entity.editor.username }}</p>
+    </div>
+
+    <div class="panel">
+        <h5>Справка</h5>
+        <p>Изменение записи.</p>
+    </div>
+{% endblock %}
+
+{% block javascripts -%}
+    {{ parent() }}
+    {% javascripts '@ModuleSliderBundle/Resources/public/js/slider.js' filter='?jsqueeze' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script language="JavaScript">
+        $(function() {
+            $( "#sticker" ).sticky({topSpacing: 10});
+            $("input.switch").switchButton({
+                on_label: 'да.',
+                off_label: 'нет.'
+            });
+        });
+    </script>
+{% endblock %}

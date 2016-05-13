@@ -1,0 +1,124 @@
+{% extends 'backend/base.html.twig' %}
+
+{% block body -%}
+    
+    <div class="row">
+        <div class="col-lg-12">
+            {{ wo_render_breadcrumbs({separator: '', listClass: "breadcrumb margin-top-20"}) }}                  
+        </div>
+    </div>
+        
+    {{ actions(entityCode, 'new') }}
+
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'entity-form new-form'}}) }}
+    
+    <div class="slider">
+        <div class="form-group">
+        <label for="slider_title" class="col-sm-2 control-label">{{ form_label(form.title, 'Заголовок') }}</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.title) }}
+                {{ form_errors(form.title) }}
+            </div>
+        </div>
+            <div class="form-group">
+            <label for="slider_code" class="col-sm-2 control-label">{{ form_label(form.code, 'Код слайдера') }}</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.code) }}
+                {{ form_errors(form.code) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="slider_entryStatus" class="col-sm-2 control-label">{{ form_label(form.entryStatus, 'Status') }}</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.entryStatus) }}
+                {{ form_errors(form.entryStatus) }}
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row display">
+        <div class="large-3 columns">
+            <h3>Слайды</h3>
+        </div>
+        <div class="large-9 columns"><div class="placehoder-add-button"></div></div>
+    </div>
+
+
+    <div class="row display">
+        <div class="large-3 columns"></div>
+        <div class="large-9 columns">
+            <ul class="slides embeded-forms" data-prototype="{{ form_widget(form.slides.vars.prototype)|e }}">
+                {% for slide in form.slides %}
+                    <li>
+                        <div class="panel">
+                            {{ form_row(slide.slide) }}
+                            <div class="placehoder-remove-button"></div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+
+
+    {{ form_end(form) }}
+
+
+
+
+{% endblock %}
+
+{% block javascripts -%}
+    <script>
+        var $collectionHolder;
+
+        // setup an "add a slide" link
+        var $addSlideLink = $('<a href="#" class="add_slide_link">Add a slide</a>');
+        var $newLinkLi = $('<li></li>').append($addSlideLink);
+
+        jQuery(document).ready(function() {
+            // Get the ul that holds the collection of slides
+            $collectionHolder = $('ul.slides');
+
+            // add the "add a slide" anchor and li to the slides ul
+            $collectionHolder.append($newLinkLi);
+
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+            $addSlideLink.on('click', function(e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
+
+                // add a new slide form (see next code block)
+                addSlideForm($collectionHolder, $newLinkLi);
+            });
+        });
+        
+        $(".save-form").click(function() {
+            $('.entity-form').submit();
+        });
+        
+        function addSlideForm($collectionHolder, $newLinkLi) {
+            // Get the data-prototype explained earlier
+            var prototype = $collectionHolder.data('prototype');
+
+            // get the new index
+            var index = $collectionHolder.data('index');
+
+            // Replace '__name__' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            var newForm = prototype.replace(/__name__/g, index);
+
+            // increase the index with one for the next item
+            $collectionHolder.data('index', index + 1);
+
+            // Display the form in the page in an li, before the "Add a tag" link li
+            var $newFormLi = $('<li></li>').append(newForm);
+            $newLinkLi.before($newFormLi);
+        }
+    </script>
+{% endblock %}

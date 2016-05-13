@@ -1,0 +1,83 @@
+{% extends '::admin.base.html.twig' %}
+
+{% block content -%}    
+        <div class="row"  id="sticker">
+    <div class="large-12 columns">
+        <ul class="record_actions button-group radius">
+            <li>
+                <a class="tiny button" href="{{ path('backend_slider') }}">
+                    Назад, к списку
+                </a>
+            </li>
+                    <li>
+                <a class="tiny button" href="{{ path('backend_slider_edit', { 'id': entity.id }) }}">
+                    Изменить
+                </a>
+            </li>
+        
+                    <li>
+                <a class="tiny success rounded button" href="{{ path('backend_slider_new') }}">
+                    Добавить
+                </a>
+            </li>
+            <li>{{ form(delete_form) }}</li>
+                </ul>
+    </div>
+</div>
+    <h1>Slider</h1>
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div data-alert class="alert-box">
+                {{ flashMessage }}
+                 <a href="#" class="close">&times;</a>
+         </div>
+    {% endfor %}
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Createdby</th>
+                <td>{{ entity.createdBy }}</td>
+            </tr>
+            <tr>
+                <th>Editedat</th>
+                <td>{{ entity.editedAt|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Editedby</th>
+                <td>{{ entity.editedBy }}</td>
+            </tr>
+            <tr>
+                <th>Disabled</th>
+                <td>{{ entity.disabled }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ entity.title }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
+    
+{% block sidebar -%}
+    <div class="panel">
+        <h5>Справка</h5>
+        <p>Просмотр записи.</p>
+    </div>
+{% endblock %}
+    
+{% block javascripts -%}
+    {{ parent() }}
+    <script language="JavaScript">
+        $(function() {
+            $( "#sticker" ).sticky({topSpacing: 10});
+        });
+    </script>
+{% endblock %}
