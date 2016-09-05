@@ -49,7 +49,7 @@ doctrine:
         default_connection: default
         connections:
             default:
-                driver:   pdo_pgsql
+                driver:   pdo_mysql
                 host:     "%database_host%"
                 port:     "%database_port%"
                 dbname:   "%database_name%"
@@ -81,3 +81,20 @@ assetic:
     bundles:        [ ]
     filters:
         cssrewrite: ~
+        
+
+
+
+#ID:747626
+#Приватный ключ: 1d0d2d765d368708fef43cdfa4be7ef4
+#Секретный ключ: c52019d7de961fa1f302bfd1d508e40a
+
+hwi_oauth:
+    firewall_names: [oauth_public]
+
+
+    resource_owners:
+        mailru:
+            type:                mailru
+            client_id:           747626
+            client_secret:       c52019d7de961fa1f302bfd1d508e40a
