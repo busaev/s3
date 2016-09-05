@@ -20,6 +20,10 @@ security:
                     admin:
                         password: admin
                         roles: 'ROLE_ADMIN'
+        
+        # без этого HWIOAuthBundle не работает... не понятно как это используется
+        hwi:
+            id: hwi_oauth.user.provider.entity
 
     firewalls:
 
@@ -48,33 +52,36 @@ security:
                 lifetime: 604800 # 1 week in seconds
                 path:     ^/backend
             
-        main:
-            
-            pattern:   ^/
-            
-            anonymous: ~
-            
-            form_login:
-                login_path: /security/login
-                check_path: /security/login_check
-            
-            logout:
-                path: /security/logout
-                target: /
-
-            provider: user_db
+#        main:
+#            
+#            pattern:   ^/
+#            
+#            anonymous: ~
+#            
+#            form_login:
+#                login_path: /security/login
+#                check_path: /security/login_check
+#            
+#            logout:
+#                path: /security/logout
+#                target: /
+#
+#            provider: user_db
             
         oauth_public:
             anonymous: ~
+            logout:
+                path:   /logout
+                target: /
             oauth:
                 resource_owners:
-                    mailru:          "/login/check-mailru"
-                login_path:        /login
+                    mailru:        /login_mailru
+                login_path:        /
                 use_forward:       false
                 failure_path:      /login
 
                 oauth_user_provider:
-                    service: my.oauth_aware.user_provider.service
+                    service: hwi_oauth.user.provider.entity
                 
     access_control:
             - { path: ^/security/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
@@ -89,4 +96,4 @@ security:
         ROLE_ADMIN:       ROLE_MANAGER
         ROLE_MANAGER:     [ROLE_MODERATOR, ROLE_CLIENT, ROLE_USER]
         ROLE_MODERATOR:   ROLE_USER
-        ROLE_CLIENT   :   ROLE_USER
+        ROLE_CLIENT:      ROLE_USER

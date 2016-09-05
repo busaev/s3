@@ -10,3 +10,12 @@ parameters:
     mailer_user: null
     mailer_password: null
     secret: ThisTokenIsNotSoSecretChangeIt
+    
+    
+    # OAuth
+    mailru_client_id:     747626
+    mailru_client_secret: c52019d7de961fa1f302bfd1d508e40a
+    
+    admins:
+        mailru:
+            - "747626"

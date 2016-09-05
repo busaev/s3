@@ -49,8 +49,9 @@ class EntityLogger implements EventSubscriber
     public function postPersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
+        $token = $this->container->get('security.token_storage')->getToken();
                 
-        if ( $this->skipCondition($entity)) {
+        if ( $this->skipCondition($entity) && $token) {
             
             $utils = $this->container->get('utils');
             
@@ -59,7 +60,7 @@ class EntityLogger implements EventSubscriber
             $history = new History();
 
             $history->setCreatedAt(new \DateTime);
-            $history->setUser($this->container->get('security.token_storage')->getToken()->getUser());
+            $history->setUser($token->getUser());
 
             $history->setEntityCode($utils->getUnderscore($class));
             $history->setType('add');
@@ -74,6 +75,11 @@ class EntityLogger implements EventSubscriber
     public function preUpdate(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
+        $token = $this->container->get('security.token_storage')->getToken();
+        
+        //OAuth
+        if(!$token)
+            return;
 
         $translator = $this->container->get('translator');
         $annotations = $this->container->get('annotations');
@@ -93,10 +99,23 @@ class EntityLogger implements EventSubscriber
             if(isset($meta['properties']['data'][$field])) {
                 $fieldName =  $meta['properties']['data'][$field]->getTitle();
             }
+            
+            // было
+            if($change[0] instanceof \DateTime)
+                $was = $change[0]->format('Y-m-d H:is');
+            else
+                $was = $change[0];
+            
+            // стало
+            if($change[1] instanceof \DateTime)
+                $became = $change[1]->format('Y-m-d H:is');
+            else
+                $became = $change[1];
+            
         
             $log .= "<strong>" . $translator->trans($fieldName, [], 'global') . "</strong><br />";
-            $log .= " - " . $translator->trans('It was', [], 'global') . ": " . $change[0] . "<br />";
-            $log .= " - " . $translator->trans('It became', [], 'global') . ": " . $change[1] . "<br />";
+            $log .= " - " . $translator->trans('It was', [], 'global') . ": " . $was . "<br />";
+            $log .= " - " . $translator->trans('It became', [], 'global') . ": " . $became . "<br />";
             
             if($idx < count($changes)) {
                 $log .= "<br />";
@@ -109,7 +128,7 @@ class EntityLogger implements EventSubscriber
             $history = new History();
 
             $history->setCreatedAt(new \DateTime);
-            $history->setUser($this->container->get('security.token_storage')->getToken()->getUser());
+            $history->setUser($token->getUser());
 
             $history->setEntityCode($utils->getUnderscore($className));
             $history->setType('update');

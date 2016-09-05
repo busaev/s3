@@ -16,6 +16,9 @@ app_backend:
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
     
+logout:
+    path: /logout
+    
 hwi_oauth_redirect:
     resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
     prefix:   /connect
@@ -29,4 +32,4 @@ hwi_oauth_login:
     prefix:   /login
     
 mailru_login:
-    path: /login/check-mailru
+    path: /login_mailru

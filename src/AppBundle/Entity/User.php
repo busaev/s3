@@ -60,6 +60,7 @@ use AppBundle\Annotations\DescriptionObject;
  * 
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements AdvancedUserInterface, \Serializable
 {
@@ -90,7 +91,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @Assert\NotBlank()
      * 
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=64, nullable=true)
      */
     private $password;
 
@@ -111,6 +112,72 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="api_key", type="string", nullable=true)
      */
     private $apiKey;
+    
+    
+    /**
+     * OAuth
+     */
+    /**
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    protected $realName;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $email2;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $email3;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $avatar;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $mid;
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    protected $social;
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $createdAt;
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $updatedAt;
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $lastLogin;
+    
+    
+    /**
+     * #################################################
+     * ####################  События  ##################
+     * #################################################
+     */
+    
+    /**
+     * @ORM\PrePersist
+     */
+    public function onPrePersist()
+    {
+        //using Doctrine DateTime here
+        $this->createdAt = new \DateTime('now');
+        $this->updatedAt = new \DateTime('now');
+    }
+    /**
+     * @ORM\PreUpdate
+     */
+    public function onPreUpdate()
+    {
+        //using Doctrine DateTime here
+        $this->updatedAt = new \DateTime('now');
+    }
     
     
     /**
@@ -285,7 +352,80 @@ class User implements AdvancedUserInterface, \Serializable
     {
         return $this->getUserRoles()->toArray();
     }
+    
+    public function getRealName() {
+        return $this->realName;
+    }
 
+    public function getEmail2() {
+        return $this->email2;
+    }
+
+    public function getEmail3() {
+        return $this->email3;
+    }
+
+    public function getAvatar() {
+        return $this->avatar;
+    }
+
+    public function getMid() {
+        return $this->mid;
+    }
+
+    public function getSocial() {
+        return $this->social;
+    }
+
+    public function getCreatedAt() {
+        return $this->createdAt;
+    }
+
+    public function getUpdatedAt() {
+        return $this->updatedAt;
+    }
+
+    public function getLastLogin() {
+        return $this->lastLogin;
+    }
+
+    public function setRealName($realName) {
+        $this->realName = $realName;
+    }
+
+    public function setEmail2($email2) {
+        $this->email2 = $email2;
+    }
+
+    public function setEmail3($email3) {
+        $this->email3 = $email3;
+    }
+
+    public function setAvatar($avatar) {
+        $this->avatar = $avatar;
+    }
+
+    public function setMid($mid) {
+        $this->mid = $mid;
+    }
+
+    public function setSocial($social) {
+        $this->social = $social;
+    }
+
+    public function setCreatedAt($createdAt) {
+        $this->createdAt = $createdAt;
+    }
+
+    public function setUpdatedAt($updatedAt) {
+        $this->updatedAt = $updatedAt;
+    }
+
+    public function setLastLogin($lastLogin) {
+        $this->lastLogin = $lastLogin;
+    }
+
+    
     /**
      * Add userRoles
      *

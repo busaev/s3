@@ -96,5 +96,5 @@ hwi_oauth:
     resource_owners:
         mailru:
             type:                mailru
-            client_id:           747626
-            client_secret:       c52019d7de961fa1f302bfd1d508e40a
+            client_id:           "%mailru_client_id%"
+            client_secret:       "%mailru_client_secret%"

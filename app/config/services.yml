@@ -89,6 +89,14 @@ services:
         class: AppBundle\Security\TokenAuthenticator
         arguments: ["@doctrine.orm.entity_manager"]
         
+    hwi_oauth.user.provider.entity:
+        class: AppBundle\Provider\Provider
+        arguments: ["@session", "@doctrine", "@admin.checker", "@request_stack"]
+        
+    admin.checker:
+        class: AppBundle\Provider\AdminChecker
+        arguments: ["@doctrine", "%admins%"]
+        
     #############################################
     ######## Службы сущностей ###################
     #############################################
