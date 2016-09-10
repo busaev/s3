@@ -61,9 +61,9 @@ class NavigationItem
     /**
      * @var int
      *
-     * @ORM\Column(name="idContentPage", type="integer", nullable=true)
+     * @ORM\Column(name="idModulePage", type="integer", nullable=true)
      */
-    private $idContentPage;
+    private $idModulePage;
         
     /**
      * @var int
@@ -127,16 +127,16 @@ class NavigationItem
     private $childrenNavigationItems;
     
     /**
-     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Core\Content", inversedBy="navigationItems")
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Core\Module", inversedBy="navigationItems")
      * @ORM\JoinColumn(name="entityCode", referencedColumnName="entityCode")
      */
-    private $content;
+    private $module;
     
     /**
-     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Core\ContentPage", inversedBy="navigationItems")
-     * @ORM\JoinColumn(name="idContentPage", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Core\ModulePage", inversedBy="navigationItems")
+     * @ORM\JoinColumn(name="idModulePage", referencedColumnName="id")
      */
-    private $contentPage;
+    private $modulePage;
     
     /**
      * @var string
@@ -437,75 +437,75 @@ class NavigationItem
 
     
     /**
-     * Set content
+     * Set module
      *
-     * @param \AppBundle\Entity\Core\\Content $content
+     * @param \AppBundle\Entity\Core\\Module $module
      *
      * @return NavigationItem
      */
-    public function setContent(\AppBundle\Entity\Core\Content $content = null)
+    public function setModule(\AppBundle\Entity\Core\Module $module = null)
     {
-        $this->content = $content;
+        $this->module = $module;
 
         return $this;
     }
 
     /**
-     * Get content
+     * Get module
      *
-     * @return \AppBundle\Entity\Core\\Content
+     * @return \AppBundle\Entity\Core\\Module
      */
-    public function getContent()
+    public function getModule()
     {
-        return $this->content;
+        return $this->module;
     }
 
     /**
-     * Set idContentPage
+     * Set idModulePage
      *
-     * @param integer $idContentPage
+     * @param integer $idModulePage
      *
      * @return NavigationItem
      */
-    public function setIdContentPage($idContentPage)
+    public function setIdModulePage($idModulePage)
     {
-        $this->idContentPage = $idContentPage;
+        $this->idModulePage = $idModulePage;
 
         return $this;
     }
 
     /**
-     * Get idContentPage
+     * Get idModulePage
      *
      * @return integer
      */
-    public function getIdContentPage()
+    public function getIdModulePage()
     {
-        return $this->idContentPage;
+        return $this->idModulePage;
     }
 
     /**
-     * Set contentPage
+     * Set modulePage
      *
-     * @param \AppBundle\Entity\Core\ContentPage $contentPage
+     * @param \AppBundle\Entity\Core\ModulePage $modulePage
      *
      * @return NavigationItem
      */
-    public function setContentPage(\AppBundle\Entity\Core\ContentPage $contentPage = null)
+    public function setModulePage(\AppBundle\Entity\Core\ModulePage $modulePage = null)
     {
-        $this->contentPage = $contentPage;
+        $this->modulePage = $modulePage;
 
         return $this;
     }
 
     /**
-     * Get contentPage
+     * Get modulePage
      *
-     * @return \AppBundle\Entity\Core\ContentPage
+     * @return \AppBundle\Entity\Core\ModulePage
      */
-    public function getContentPage()
+    public function getModulePage()
     {
-        return $this->contentPage;
+        return $this->modulePage;
     }
 
     /**

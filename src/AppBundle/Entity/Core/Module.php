@@ -11,35 +11,35 @@ use AppBundle\Annotations\DescriptionObject;
 use AppBundle\Entity\Core\NavigationItem;
 
 /**
- * Content
+ * Module
  *
- * @DescriptionObject("contents", title="Contents", description="Mega contents", actions={
+ * @DescriptionObject("module", title="Modules", description="Mega modules", actions={
  *   "backend": {
  *     "show": {
  *         "title": "Show",
  *         "icon": "fa-search",
- *         "route_name": "backend_content_entry_show",
+ *         "route_name": "backend_module_entry_show",
  *         "params": {
  *             "id": "entityCode",
- *             "entityCode": "content"
+ *             "entityCode": "module"
  *         }
  *     },
  *     "edit": {
  *         "title": "Edit",
  *         "icon": "fa-pencil",
- *         "route_name": "backend_content_entry_edit",
+ *         "route_name": "backend_module_entry_edit",
  *         "params": {
  *             "id": "entityCode",
- *             "entityCode": "content"
+ *             "entityCode": "module"
  *         }
  *     },
  *     "history": {
  *         "title": "History",
  *         "icon": "fa-history",
- *         "route_name": "backend_content_entry_history",
+ *         "route_name": "backend_module_entry_history",
  *         "params": {
  *             "id": "entityCode",
- *             "entityCode": "content"
+ *             "entityCode": "module"
  *         }
  *     }
  *   },
@@ -53,10 +53,10 @@ use AppBundle\Entity\Core\NavigationItem;
  *   }
  * })
  * 
- * @ORM\Table(name="contents")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ContentRepository")
+ * @ORM\Table(name="modules")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ModuleRepository")
  */
-class Content
+class Module
 {
     
     /**
@@ -68,7 +68,7 @@ class Content
     /**
      * @var string
      * 
-     * @Description("entityCode", title="Content", dataType="string")
+     * @Description("entityCode", title="Module", dataType="string")
      * @ORM\Id
      * @ORM\Column(name="entityCode", type="string", length=255, unique=true, nullable=false)
      */
@@ -106,12 +106,12 @@ class Content
     private $entryStatus;
     
     /**
-     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\Core\ContentPage", mappedBy="content")
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\Core\ModulePage", mappedBy="module")
      */
-    private $contentPages;
+    private $modulePages;
     
     /**
-     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\Core\NavigationItem", mappedBy="content")
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\Core\NavigationItem", mappedBy="module")
      */
     private $navigationItems;
     
@@ -121,7 +121,7 @@ class Content
      */
     public function __construct()
     {
-        $this->contentPages     = new ArrayCollection();
+        $this->modulePages      = new ArrayCollection();
         $this->navigationItems  = new ArrayCollection();
     }
     
@@ -131,8 +131,12 @@ class Content
     public function __toString() 
     {
         $title = $this->getTitle();
+        
         if(is_string($title))
+        {
             return $title;
+        }
+        
         return '';
     }
     
@@ -156,7 +160,7 @@ class Content
      *
      * @param string $entityCode
      *
-     * @return Content
+     * @return Module
      */
     public function setEntityCode($entityCode)
     {
@@ -204,7 +208,7 @@ class Content
      *
      * @param string $title
      *
-     * @return Content
+     * @return Module
      */
     public function setTitle($title)
     {
@@ -249,37 +253,37 @@ class Content
     }
 
     /**
-     * Add contentPage
+     * Add modulePage
      *
-     * @param \AppBundle\Entity\Core\ContentPage $contentPage
+     * @param \AppBundle\Entity\Core\ModulePage $modulePage
      *
-     * @return Content
+     * @return Module
      */
-    public function addContentPage(\AppBundle\Entity\Core\ContentPage $contentPage)
+    public function addModulePage(\AppBundle\Entity\Core\ModulePage $modulePage)
     {
-        $this->contentPages[] = $contentPage;
+        $this->modulePages[] = $modulePage;
 
         return $this;
     }
 
     /**
-     * Remove contentPage
+     * Remove modulePage
      *
-     * @param \AppBundle\Entity\Core\ContentPage $contentPage
+     * @param \AppBundle\Entity\Core\ModulePage $modulePage
      */
-    public function removeContentPage(\AppBundle\Entity\Core\ContentPage $contentPage)
+    public function removeModulePage(\AppBundle\Entity\Core\ModulePage $modulePage)
     {
-        $this->contentPages->removeElement($contentPage);
+        $this->modulePages->removeElement($modulePage);
     }
 
     /**
-     * Get contentPages
+     * Get modulePages
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getContentPages()
+    public function getModulePages()
     {
-        return $this->contentPages;
+        return $this->modulePages;
     }
 
     /**
@@ -287,7 +291,7 @@ class Content
      *
      * @param \AppBundle\Entity\Core\NavigationItem $navigationItem
      *
-     * @return Content
+     * @return Module
      */
     public function addNavigationItem(\AppBundle\Entity\Core\NavigationItem $navigationItem)
     {

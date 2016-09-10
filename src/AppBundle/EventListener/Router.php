@@ -8,8 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\VarDumper\VarDumper;
 use Symfony\Component\Filesystem\Filesystem;
 
-use AppBundle\Entity\Core\ContentPage;
-
+use AppBundle\Entity\Core\ModulePage;
 use AppBundle\Entity\Core\Route;
 
 
@@ -91,9 +90,9 @@ class Router implements EventSubscriber
             $route->setActionType($actionType);
             
             // это страница модуля?
-            if($entity instanceof ContentPage)
+            if($entity instanceof ModulePage)
             {
-                $route->setContentPage(true);
+                $route->setModulePage(true);
             }
 
             $action = $router->getLogicalAction($entity, $entityCode, $actionType);
@@ -147,9 +146,9 @@ class Router implements EventSubscriber
             ]);
             
             // это страница модуля?
-            if($entity instanceof ContentPage)
+            if($entity instanceof ModulePage)
             {
-                $route->setContentPage(true);
+                $route->setModulePage(true);
             }
             
             if(null !== $route)
@@ -189,7 +188,7 @@ class Router implements EventSubscriber
 
     protected function skipCondition($entity)
     {
-        if( get_class($entity) != 'AppBundle\\Entity\\Core\\Route' && get_class($entity) != 'AppBundle\\Entity\\Core\\Content' ) {
+        if( get_class($entity) != 'AppBundle\\Entity\\Core\\Route' && get_class($entity) != 'AppBundle\\Entity\\Core\\Module' ) {
             return true;
         }
         return false;

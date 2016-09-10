@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\Backend\Modules;
+namespace AppBundle\Controller\Backend\Slider;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

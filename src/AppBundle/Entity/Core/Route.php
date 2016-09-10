@@ -65,9 +65,9 @@ class Route
      * 
      * @var boolean
      *
-     * @ORM\Column(name="content_page", type="boolean", nullable=false)
+     * @ORM\Column(name="module_page", type="boolean", nullable=false)
      */
-    private $contentPage = false;
+    private $modulePage = false;
     
     /**
      * #################################################
@@ -183,7 +183,7 @@ class Route
     }
 
     /**
-     * Set contentType
+     * Set moduleType
      *
      * @param string $actionType
      *
@@ -197,7 +197,7 @@ class Route
     }
 
     /**
-     * Get contentType
+     * Get moduleType
      *
      * @return string
      */
@@ -265,26 +265,26 @@ class Route
     }
 
     /**
-     * Set contentPage
+     * Set modulePage
      *
-     * @param boolean $contentPage
+     * @param boolean $modulePage
      *
      * @return Route
      */
-    public function setContentPage($contentPage)
+    public function setModulePage($modulePage)
     {
-        $this->contentPage = $contentPage;
+        $this->modulePage = $modulePage;
 
         return $this;
     }
 
     /**
-     * Get contentPage
+     * Get modulePage
      *
      * @return boolean
      */
-    public function getContentPage()
+    public function getModulePage()
     {
-        return $this->contentPage;
+        return $this->modulePage;
     }
 }

@@ -9,7 +9,7 @@
                     <a href="#"  class="btn btn-success save-form">{{ 'Save'|trans({}, "backend") }}</a>
                 </li>
                 <li>
-                    <a href="{{ path('backend_content_entry_delete_soft', { 'entityCode': entityCode, 'id': entity.id }) }}" class="btn btn-danger delete">{{ 'Delete'|trans({}, "backend") }}</a>
+                    <a href="{{ path('backend_module_entry_delete_soft', { 'entityCode': entityCode, 'id': entity.id }) }}" class="btn btn-danger delete">{{ 'Delete'|trans({}, "backend") }}</a>
                 </li>
             </ul>
         </div>

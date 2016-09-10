@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\Frontend;
+namespace AppBundle\Controller\Frontend\News;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

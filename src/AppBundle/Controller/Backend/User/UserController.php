@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Backend\User;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -19,7 +19,7 @@ use AppBundle\Form\UserPasswordType;
  *
  * @Route("/backend/user")
  */
-class BackendUserController extends Controller
+class UserController extends Controller
 {
     /**
      * Creates a new User entity.
@@ -116,7 +116,7 @@ class BackendUserController extends Controller
         $breadcrumbs->addItem(
                 $translator->trans($utils->getEntityTitle($entityCode), [], 'global'),
                 $this->get("router")->generate("backend_content_entry", [ 'entityCode' => $entityCode ]));
-        $breadcrumbs->addItem($user,  $this->get("router")->generate("backend_content_entry_show", [ 'id' => $user->getId() ]));
+        $breadcrumbs->addItem($user,  $this->get("router")->generate("backend_module_entry_show", [ 'id' => $user->getId() ]));
         $breadcrumbs->addItem($translator->trans('Editing', [], 'global'));
 
         return $this->render('backend/entity/edit.html.twig', array(

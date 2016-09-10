@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity\Modules;
+namespace AppBundle\Entity\Slider;
 
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Model\MediaSubjectInterface;

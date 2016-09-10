@@ -2,7 +2,6 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\Entity\Content\News;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -11,8 +10,9 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 use AppBundle\Entity\Role;
 use AppBundle\Entity\User;
-use AppBundle\Entity\Core\Content;
-use AppBundle\Entity\Core\ContentPage;
+use AppBundle\Entity\Core\Module;
+use AppBundle\Entity\Core\ModulePage;
+use AppBundle\Entity\Content\News;
 use AppBundle\Entity\Core\Route;
 use AppBundle\Entity\Core\Navigation;
 use AppBundle\Entity\Core\NavigationItem;

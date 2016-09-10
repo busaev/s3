@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\Frontend;
+namespace AppBundle\Controller\Frontend\Core;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -103,7 +103,7 @@ class ContentController extends Controller
     /**
      * Finds and displays a News entity.
      *
-     * @Route("/{entityCode}/{id}/show", name="frontend_content_entry_show", defaults={"entityCode" = "news"})
+     * @Route("/{entityCode}/{id}/show", name="frontend_module_entry_show", defaults={"entityCode" = "news"})
      * @Method("GET")
      */
     public function showAction(Request $request, $entityCode, $id)

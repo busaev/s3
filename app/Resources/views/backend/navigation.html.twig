@@ -18,15 +18,15 @@
             </a>
             <ul class="dropdown-menu dropdown-new-actions">
                 <li>
-                    <a href="{{ path('backend_content_entry_new', {'entityCode': 'news'}) }}">{{ 'News'|trans({}, "global") }}</a>
+                    <a href="{{ path('backend_module_entry_new', {'entityCode': 'news'}) }}">{{ 'News'|trans({}, "global") }}</a>
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a href="{{ path('backend_content_entry_new', {'entityCode': 'page'}) }}">{{ 'Page'|trans({}, "global") }}</a>
+                    <a href="{{ path('backend_module_entry_new', {'entityCode': 'page'}) }}">{{ 'Page'|trans({}, "global") }}</a>
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a href="{{ path('backend_content_entry_new', {'entityCode': 'brend'}) }}">{{ 'Brends'|trans({}, "global") }}</a>
+                    <a href="{{ path('backend_module_entry_new', {'entityCode': 'brend'}) }}">{{ 'Brends'|trans({}, "global") }}</a>
                 </li>
                 <li class="divider"></li>
                 <li>
@@ -305,10 +305,10 @@
                     <a href="#"><i class="fa fa-suitcase fa-fw"></i> {{ 'Administration'|trans({}, "backend") }}<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="{{ path('backend_content_entry', {'entityCode': 'content'}) }}">{{ 'Contents'|trans({}, "global") }}</a>
+                            <a href="{{ path('backend_content_entry', {'entityCode': 'module'}) }}">{{ 'Modules'|trans({}, "global") }}</a>
                         </li>
                         <li>
-                            <a href="{{ path('backend_content_entry', {'entityCode': 'content_page'}) }}">{{ 'Content Pages'|trans({}, "global") }}</a>
+                            <a href="{{ path('backend_content_entry', {'entityCode': 'module_page'}) }}">{{ 'Module Pages'|trans({}, "global") }}</a>
                         </li>
                         <li>
                             <a href="{{ path('backend_content_entry', {'entityCode': 'navigation'}) }}">{{ 'Navigation'|trans({}, "global") }}</a>

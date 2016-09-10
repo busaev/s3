@@ -2,7 +2,6 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\Entity\Content\News;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -11,9 +10,10 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 use AppBundle\Entity\Role;
 use AppBundle\Entity\User;
-use AppBundle\Entity\Core\Content;
-use AppBundle\Entity\Core\ContentPage;
+use AppBundle\Entity\Core\Module;
+use AppBundle\Entity\Core\ModulePage;
 use AppBundle\Entity\Core\Route;
+use AppBundle\Entity\Content\News;
 use AppBundle\Entity\Core\Navigation;
 use AppBundle\Entity\Core\NavigationItem;
 use AppBundle\Entity\Core\Scroll;
@@ -350,70 +350,71 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $userWY->setUsername('wy');
         $userWY->setEntryStatus($scrollItemEnable);
         $userWY->setEmail('wy@wy.ru');
+        $userWY->setRealName('Web-You.Ru');
         $userWY->addUserRole($roleAdmin);
         
         $manager->persist($userWY);
         
         
         $manager->flush();
-
+        
 
         /**
          *  Модуль
          */
         
         // News
-        $contentNews = new Content;
-        $contentNews->setEntityCode('news');
-        $contentNews->setEntryStatus($scrollItemEnable);
-        $contentNews->setRoutePath('/news');
-        $contentNews->setTitle('Новости');
+        $moduleNews = new Module;
+        $moduleNews->setEntityCode('news');
+        $moduleNews->setEntryStatus($scrollItemEnable);
+        $moduleNews->setRoutePath('/news');
+        $moduleNews->setTitle('Новости');
         
-        $manager->persist($contentNews);
+        $manager->persist($moduleNews);
         
         
         
         // Page
-        $contentPage = new Content;
-        $contentPage->setEntityCode('page');
-        $contentPage->setEntryStatus($scrollItemEnable);
-        $contentPage->setRoutePath('/pages');
-        $contentPage->setTitle('Страницы');
+        $modulePage = new Module;
+        $modulePage->setEntityCode('page');
+        $modulePage->setEntryStatus($scrollItemEnable);
+        $modulePage->setRoutePath('/pages');
+        $modulePage->setTitle('Страницы');
         
-        $manager->persist($contentPage);
+        $manager->persist($modulePage);
         
         
         
         // Brend
-        $contentBrend = new Content;
-        $contentBrend->setEntityCode('brend');
-        $contentBrend->setEntryStatus($scrollItemEnable);
-        $contentBrend->setRoutePath('/brends');
-        $contentBrend->setTitle('Бренды');
+        $moduleBrend = new Module;
+        $moduleBrend->setEntityCode('brend');
+        $moduleBrend->setEntryStatus($scrollItemEnable);
+        $moduleBrend->setRoutePath('/brends');
+        $moduleBrend->setTitle('Бренды');
         
-        $manager->persist($contentBrend);
+        $manager->persist($moduleBrend);
         
         
                 
         // Index
-        $contentIndex = new Content;
-        $contentIndex->setEntityCode('index');
-        $contentIndex->setEntryStatus($scrollItemEnable);
-        $contentIndex->setRoutePath('/');
-        $contentIndex->setTitle('Главная страница');
+        $moduleIndex = new Module;
+        $moduleIndex->setEntityCode('index');
+        $moduleIndex->setEntryStatus($scrollItemEnable);
+        $moduleIndex->setRoutePath('/');
+        $moduleIndex->setTitle('Главная страница');
         
-        $manager->persist($contentIndex);
+        $manager->persist($moduleIndex);
         
         
                 
         // Catalog
-        $contentCatalog = new Content;
-        $contentCatalog->setEntityCode('catalog');
-        $contentCatalog->setEntryStatus($scrollItemEnable);
-        $contentCatalog->setRoutePath('/catalog');
-        $contentCatalog->setTitle('Каталог');
+        $moduleCatalog = new Module;
+        $moduleCatalog->setEntityCode('catalog');
+        $moduleCatalog->setEntryStatus($scrollItemEnable);
+        $moduleCatalog->setRoutePath('/catalog');
+        $moduleCatalog->setTitle('Каталог');
         
-        $manager->persist($contentCatalog);
+        $manager->persist($moduleCatalog);
         
         
         $manager->flush();
@@ -428,29 +429,29 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         
         // Page - index
         
-        $contentPageIndex = new ContentPage;
-        $contentPageIndex->setEntryStatus($scrollItemEnable);
-        $contentPageIndex->setContent($contentPage);
-        $contentPageIndex->setTitle('Список страниц');
-        $contentPageIndex->setMetaDescription('All our page');
-        $contentPageIndex->setMetaKeywords('page, all page');
-        $contentPageIndex->setRoutePath('/page');
-        $contentPageIndex->setActionType($scrollItemActionIndex);
+        $modulePageIndex = new ModulePage;
+        $modulePageIndex->setEntryStatus($scrollItemEnable);
+        $modulePageIndex->setModule($modulePage);
+        $modulePageIndex->setTitle('Список страниц');
+        $modulePageIndex->setMetaDescription('All our page');
+        $modulePageIndex->setMetaKeywords('page, all page');
+        $modulePageIndex->setRoutePath('/page');
+        $modulePageIndex->setActionType($scrollItemActionIndex);
                 
-        $manager->persist($contentPageIndex);
+        $manager->persist($modulePageIndex);
         
         // Page - route
         
-        $contentPageRoute = new ContentPage;
-        $contentPageRoute->setEntryStatus($scrollItemEnable);
-        $contentPageRoute->setContent($contentPage);
-        $contentPageRoute->setTitle('Обзор страницы');
-        $contentPageRoute->setMetaDescription('Page viewing');
-        $contentPageRoute->setMetaKeywords('page, viewing');
-        $contentPageRoute->setRoutePath('');
-        $contentPageRoute->setActionType($scrollItemActionShow);
+        $modulePageRoute = new ModulePage;
+        $modulePageRoute->setEntryStatus($scrollItemEnable);
+        $modulePageRoute->setModule($modulePage);
+        $modulePageRoute->setTitle('Обзор страницы');
+        $modulePageRoute->setMetaDescription('Page viewing');
+        $modulePageRoute->setMetaKeywords('page, viewing');
+        $modulePageRoute->setRoutePath('');
+        $modulePageRoute->setActionType($scrollItemActionShow);
                 
-        $manager->persist($contentPageRoute);
+        $manager->persist($modulePageRoute);
         
         
         $manager->flush();
@@ -466,29 +467,29 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         
         // News - index
         
-        $contentNewsIndex = new ContentPage;
-        $contentNewsIndex->setEntryStatus($scrollItemEnable);
-        $contentNewsIndex->setContent($contentNews);
-        $contentNewsIndex->setTitle('Список новостей');
-        $contentNewsIndex->setMetaDescription('All our news');
-        $contentNewsIndex->setMetaKeywords('news, all news');
-        $contentNewsIndex->setActionType($scrollItemActionIndex);
-        $contentNewsIndex->setRoutePath('/news');
+        $moduleNewsIndex = new ModulePage;
+        $moduleNewsIndex->setEntryStatus($scrollItemEnable);
+        $moduleNewsIndex->setModule($moduleNews);
+        $moduleNewsIndex->setTitle('Список новостей');
+        $moduleNewsIndex->setMetaDescription('All our news');
+        $moduleNewsIndex->setMetaKeywords('news, all news');
+        $moduleNewsIndex->setActionType($scrollItemActionIndex);
+        $moduleNewsIndex->setRoutePath('/news');
                 
-        $manager->persist($contentNewsIndex);
+        $manager->persist($moduleNewsIndex);
         
         // News - route
         
-        $contentNewsRoute = new ContentPage;
-        $contentNewsRoute->setEntryStatus($scrollItemEnable);
-        $contentNewsRoute->setContent($contentNews);
-        $contentNewsRoute->setTitle('Обзор новости');
-        $contentNewsRoute->setMetaDescription('News viewing');
-        $contentNewsRoute->setMetaKeywords('news, viewing');
-        $contentNewsRoute->setRoutePath('');
-        $contentNewsRoute->setActionType($scrollItemActionShow);
+        $moduleNewsRoute = new ModulePage;
+        $moduleNewsRoute->setEntryStatus($scrollItemEnable);
+        $moduleNewsRoute->setModule($moduleNews);
+        $moduleNewsRoute->setTitle('Обзор новости');
+        $moduleNewsRoute->setMetaDescription('News viewing');
+        $moduleNewsRoute->setMetaKeywords('news, viewing');
+        $moduleNewsRoute->setRoutePath('');
+        $moduleNewsRoute->setActionType($scrollItemActionShow);
                 
-        $manager->persist($contentNewsRoute);
+        $manager->persist($moduleNewsRoute);
         
         $manager->flush();
         
@@ -503,16 +504,16 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         
         // Index - index
         
-        $contentIndexIndex = new ContentPage;
-        $contentIndexIndex->setEntryStatus($scrollItemEnable);
-        $contentIndexIndex->setContent($contentIndex);
-        $contentIndexIndex->setTitle('Индекс');
-        $contentIndexIndex->setMetaDescription('Index page');
-        $contentIndexIndex->setMetaKeywords('Index page');
-        $contentIndexIndex->setActionType($scrollItemActionIndex);
-        $contentIndexIndex->setRoutePath('/');
+        $moduleIndexIndex = new ModulePage;
+        $moduleIndexIndex->setEntryStatus($scrollItemEnable);
+        $moduleIndexIndex->setModule($moduleIndex);
+        $moduleIndexIndex->setTitle('Индекс');
+        $moduleIndexIndex->setMetaDescription('Index page');
+        $moduleIndexIndex->setMetaKeywords('Index page');
+        $moduleIndexIndex->setActionType($scrollItemActionIndex);
+        $moduleIndexIndex->setRoutePath('/');
                 
-        $manager->persist($contentIndexIndex);
+        $manager->persist($moduleIndexIndex);
         
         
         $manager->flush();
@@ -527,29 +528,29 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         
         // catalog - index
         
-        $contentCatalogIndex = new ContentPage;
-        $contentCatalogIndex->setEntryStatus($scrollItemEnable);
-        $contentCatalogIndex->setContent($contentCatalog);
-        $contentCatalogIndex->setTitle('Каталог');
-        $contentCatalogIndex->setMetaDescription('Каталог товаров');
-        $contentCatalogIndex->setMetaKeywords('Каталог, товары');
-        $contentCatalogIndex->setActionType($scrollItemActionIndex);
-        $contentCatalogIndex->setRoutePath('/catalog');
+        $moduleCatalogIndex = new ModulePage;
+        $moduleCatalogIndex->setEntryStatus($scrollItemEnable);
+        $moduleCatalogIndex->setModule($moduleCatalog);
+        $moduleCatalogIndex->setTitle('Каталог');
+        $moduleCatalogIndex->setMetaDescription('Каталог товаров');
+        $moduleCatalogIndex->setMetaKeywords('Каталог, товары');
+        $moduleCatalogIndex->setActionType($scrollItemActionIndex);
+        $moduleCatalogIndex->setRoutePath('/catalog');
                 
-        $manager->persist($contentCatalogIndex);
+        $manager->persist($moduleCatalogIndex);
         
         // catalog - route
         
-        $contentCatalogRoute = new ContentPage;
-        $contentCatalogRoute->setEntryStatus($scrollItemEnable);
-        $contentCatalogRoute->setContent($contentCatalog);
-        $contentCatalogRoute->setTitle('Обзор категории');
-        $contentCatalogRoute->setMetaDescription('Обзор категории');
-        $contentCatalogRoute->setMetaKeywords('Обзор, категории');
-        $contentCatalogRoute->setRoutePath('');
-        $contentCatalogRoute->setActionType($scrollItemActionShow);
+        $moduleCatalogRoute = new ModulePage;
+        $moduleCatalogRoute->setEntryStatus($scrollItemEnable);
+        $moduleCatalogRoute->setModule($moduleCatalog);
+        $moduleCatalogRoute->setTitle('Обзор категории');
+        $moduleCatalogRoute->setMetaDescription('Обзор категории');
+        $moduleCatalogRoute->setMetaKeywords('Обзор, категории');
+        $moduleCatalogRoute->setRoutePath('');
+        $moduleCatalogRoute->setActionType($scrollItemActionShow);
                 
-        $manager->persist($contentCatalogRoute);
+        $manager->persist($moduleCatalogRoute);
         
         $manager->flush();
         
@@ -565,29 +566,29 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         
         // catalog - index
         
-        $contentBrendsIndex = new ContentPage;
-        $contentBrendsIndex->setEntryStatus($scrollItemEnable);
-        $contentBrendsIndex->setContent($contentBrend);
-        $contentBrendsIndex->setTitle('Бренды');
-        $contentBrendsIndex->setMetaDescription('Список брендов');
-        $contentBrendsIndex->setMetaKeywords('бренды');
-        $contentBrendsIndex->setActionType($scrollItemActionIndex);
-        $contentBrendsIndex->setRoutePath('/brends');
+        $moduleBrendsIndex = new ModulePage;
+        $moduleBrendsIndex->setEntryStatus($scrollItemEnable);
+        $moduleBrendsIndex->setModule($moduleBrend);
+        $moduleBrendsIndex->setTitle('Бренды');
+        $moduleBrendsIndex->setMetaDescription('Список брендов');
+        $moduleBrendsIndex->setMetaKeywords('бренды');
+        $moduleBrendsIndex->setActionType($scrollItemActionIndex);
+        $moduleBrendsIndex->setRoutePath('/brends');
                 
-        $manager->persist($contentBrendsIndex);
+        $manager->persist($moduleBrendsIndex);
         
         // catalog - route
         
-        $contentBrendsRoute = new ContentPage;
-        $contentBrendsRoute->setEntryStatus($scrollItemEnable);
-        $contentBrendsRoute->setContent($contentBrend);
-        $contentBrendsRoute->setTitle('Обзор бренда');
-        $contentBrendsRoute->setMetaDescription('Обзор бренда');
-        $contentBrendsRoute->setMetaKeywords('Обзор, бренд');
-        $contentBrendsRoute->setRoutePath('');
-        $contentBrendsRoute->setActionType($scrollItemActionShow);
+        $moduleBrendsRoute = new ModulePage;
+        $moduleBrendsRoute->setEntryStatus($scrollItemEnable);
+        $moduleBrendsRoute->setModule($moduleBrend);
+        $moduleBrendsRoute->setTitle('Обзор бренда');
+        $moduleBrendsRoute->setMetaDescription('Обзор бренда');
+        $moduleBrendsRoute->setMetaKeywords('Обзор, бренд');
+        $moduleBrendsRoute->setRoutePath('');
+        $moduleBrendsRoute->setActionType($scrollItemActionShow);
                 
-        $manager->persist($contentBrendsRoute);
+        $manager->persist($moduleBrendsRoute);
         
         $manager->flush();
                 
@@ -608,12 +609,12 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         // Top menu items
         $topNavigationItemNews = new NavigationItem;
         $topNavigationItemNews->setEntryStatus($scrollItemEnable);
-        $topNavigationItemNews->setContent($contentNews);
+        $topNavigationItemNews->setModule($moduleNews);
         $topNavigationItemNews->setNavigation($topNavigation);
-        $topNavigationItemNews->setRoute($contentNewsIndex->getRoute());
+        $topNavigationItemNews->setRoute($moduleNewsIndex->getRoute());
         $topNavigationItemNews->setPosition(1);
         $topNavigationItemNews->setTitle('News');
-        $topNavigationItemNews->setContentPage($contentNewsIndex);
+        $topNavigationItemNews->setModulePage($moduleNewsIndex);
         
         //$manager->persist($topNavigationItemNews);
         
@@ -665,7 +666,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
             new UsernamePasswordToken($userWY, null, 'secured_area', $userWY->getRoles())
         );
 
-
+        
         //IMPORT
         $this->loadNewsCSV($manager, $scrollItemEnable);
         $this->loadBrendsCSV($manager, $scrollItemEnable);

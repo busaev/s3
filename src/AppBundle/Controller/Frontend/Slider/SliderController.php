@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\Frontend\Modules;
+namespace AppBundle\Controller\Frontend\Slider;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

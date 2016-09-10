@@ -16,7 +16,7 @@ use AppBundle\Annotations\DescriptionObject;
  *     "show": {
  *         "title": "Show",
  *         "icon": "fa-search",
- *         "route_name": "backend_content_entry_show",
+ *         "route_name": "backend_module_entry_show",
  *         "params": {
  *             "id": "id",
  *             "entityCode": "user"
@@ -41,7 +41,7 @@ use AppBundle\Annotations\DescriptionObject;
  *     "history": {
  *         "title": "History",
  *         "icon": "fa-history",
- *         "route_name": "backend_content_entry_history",
+ *         "route_name": "backend_module_entry_history",
  *         "params": {
  *             "id": "id",
  *             "entityCode": "user"
@@ -118,7 +118,7 @@ class User implements AdvancedUserInterface, \Serializable
      * OAuth
      */
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $realName;
     /**
@@ -150,7 +150,7 @@ class User implements AdvancedUserInterface, \Serializable
      */
     protected $updatedAt;
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $lastLogin;
     
