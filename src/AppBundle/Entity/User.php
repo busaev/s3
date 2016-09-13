@@ -16,7 +16,7 @@ use AppBundle\Annotations\DescriptionObject;
  *     "show": {
  *         "title": "Show",
  *         "icon": "fa-search",
- *         "route_name": "backend_module_entry_show",
+ *         "route_name": "backend_entry_show",
  *         "params": {
  *             "id": "id",
  *             "entityCode": "user"
@@ -41,7 +41,7 @@ use AppBundle\Annotations\DescriptionObject;
  *     "history": {
  *         "title": "History",
  *         "icon": "fa-history",
- *         "route_name": "backend_module_entry_history",
+ *         "route_name": "backend_entry_history",
  *         "params": {
  *             "id": "id",
  *             "entityCode": "user"

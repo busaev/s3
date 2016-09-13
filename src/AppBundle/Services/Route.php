@@ -51,7 +51,7 @@ class Route
         $root = $this->container->getParameter('kernel.root_dir');
 
         $yaml = Yaml::parse(file_get_contents($root . '/Resources/config/actions.yml'));
-
+        
         if(isset($yaml[$entityCode][$application][$action]))
         {
             return $yaml[$entityCode][$application][$action];
@@ -91,7 +91,7 @@ class Route
         {
             //return $entity->getAction();
         }
-
+        
         return $this->getBundle() . ':' . $this->getApplication() . '/' . $this->getControllerAction($entityCode, $action);
     }
 }

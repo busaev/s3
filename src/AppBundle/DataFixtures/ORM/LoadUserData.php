@@ -225,7 +225,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
          *  Типы экшенов
          */
         
-        // string
+        // индексная страница
         $scrollItemActionIndex = new ScrollItem;
         $scrollItemActionIndex->setScroll($scrollActionTypes);
         $scrollItemActionIndex->setCode('index');
@@ -235,7 +235,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $manager->persist($scrollItemActionIndex);
         
         
-        // checkbox
+        // обзор
         $scrollItemActionShow = new ScrollItem;
         $scrollItemActionShow->setScroll($scrollActionTypes);
         $scrollItemActionShow->setCode('show');
@@ -243,6 +243,16 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $scrollItemActionShow->setPosition(2);
         
         $manager->persist($scrollItemActionShow);
+        
+        
+        // логин
+        $scrollItemLoginAction = new ScrollItem;
+        $scrollItemLoginAction->setScroll($scrollActionTypes);
+        $scrollItemLoginAction->setCode('login');
+        $scrollItemLoginAction->setTitle('Авторизация');
+        $scrollItemLoginAction->setPosition(3);
+        
+        $manager->persist($scrollItemLoginAction);
         
         
         $manager->flush();
@@ -415,6 +425,17 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleCatalog->setTitle('Каталог');
         
         $manager->persist($moduleCatalog);
+                
+        
+        
+        // User
+        $moduleUser = new Module;
+        $moduleUser->setEntityCode('user');
+        $moduleUser->setEntryStatus($scrollItemEnable);
+        $moduleUser->setRoutePath('/user');
+        $moduleUser->setTitle('Пользователи');
+        
+        $manager->persist($moduleUser);
         
         
         $manager->flush();
@@ -551,6 +572,29 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleCatalogRoute->setActionType($scrollItemActionShow);
                 
         $manager->persist($moduleCatalogRoute);
+        
+        
+        $manager->flush();
+        
+        
+        /**
+         *  Страницы модуля User
+         */
+           
+        
+        // catalog - index
+        
+        $moduleUserAuth = new ModulePage;
+        $moduleUserAuth->setEntryStatus($scrollItemEnable);
+        $moduleUserAuth->setModule($moduleUser);
+        $moduleUserAuth->setTitle('Авторизация');
+        $moduleUserAuth->setMetaDescription('Авторизация');
+        $moduleUserAuth->setMetaKeywords('Авторизация');
+        $moduleUserAuth->setActionType($scrollItemLoginAction);
+        $moduleUserAuth->setRoutePath('/login');
+                
+        $manager->persist($moduleUserAuth);
+        
         
         $manager->flush();
         

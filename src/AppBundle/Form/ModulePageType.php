@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\ORM\EntityRepository;
 
-class ContentPageType extends AbstractType
+class ModulePageType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -17,7 +17,7 @@ class ContentPageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('content')
+            ->add('module')
             ->add('metaTitle', null, [
                 'label'=>'Meta Title',
                 'translation_domain' => 'global'
@@ -66,7 +66,7 @@ class ContentPageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Core\ContentPage'
+            'data_class' => 'AppBundle\Entity\Core\ModulePage'
         ));
     }
 }

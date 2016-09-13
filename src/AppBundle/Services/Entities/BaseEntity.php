@@ -30,8 +30,8 @@ class BaseEntity
         
         $finder->files()->in($root . '/../src/AppBundle/Entity');
         
-        foreach ($finder as $file) {
-            
+        foreach ($finder as $file) 
+        {
             // Удалим из пути все, до директории Entity
             $path = str_replace('/', '\\', str_replace('.php', '', preg_replace('/^.*AppBundle\/Entity\//i', '', $file->getRealpath())));
         }

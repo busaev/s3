@@ -18,7 +18,7 @@ use AppBundle\Entity\Core\NavigationItem;
  *     "show": {
  *         "title": "Show",
  *         "icon": "fa-search",
- *         "route_name": "backend_module_entry_show",
+ *         "route_name": "backend_entry_show",
  *         "params": {
  *             "id": "entityCode",
  *             "entityCode": "module"
@@ -27,7 +27,7 @@ use AppBundle\Entity\Core\NavigationItem;
  *     "edit": {
  *         "title": "Edit",
  *         "icon": "fa-pencil",
- *         "route_name": "backend_module_entry_edit",
+ *         "route_name": "backend_entry_edit",
  *         "params": {
  *             "id": "entityCode",
  *             "entityCode": "module"
@@ -36,7 +36,7 @@ use AppBundle\Entity\Core\NavigationItem;
  *     "history": {
  *         "title": "History",
  *         "icon": "fa-history",
- *         "route_name": "backend_module_entry_history",
+ *         "route_name": "backend_entry_history",
  *         "params": {
  *             "id": "entityCode",
  *             "entityCode": "module"

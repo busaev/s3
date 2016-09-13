@@ -18,15 +18,15 @@
             </a>
             <ul class="dropdown-menu dropdown-new-actions">
                 <li>
-                    <a href="{{ path('backend_module_entry_new', {'entityCode': 'news'}) }}">{{ 'News'|trans({}, "global") }}</a>
+                    <a href="{{ path('backend_entry_new', {'entityCode': 'news'}) }}">{{ 'News'|trans({}, "global") }}</a>
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a href="{{ path('backend_module_entry_new', {'entityCode': 'page'}) }}">{{ 'Page'|trans({}, "global") }}</a>
+                    <a href="{{ path('backend_entry_new', {'entityCode': 'page'}) }}">{{ 'Page'|trans({}, "global") }}</a>
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a href="{{ path('backend_module_entry_new', {'entityCode': 'brend'}) }}">{{ 'Brends'|trans({}, "global") }}</a>
+                    <a href="{{ path('backend_entry_new', {'entityCode': 'brend'}) }}">{{ 'Brends'|trans({}, "global") }}</a>
                 </li>
                 <li class="divider"></li>
                 <li>
@@ -265,10 +265,10 @@
                     <a href="#"><i class="fa fa-cubes fa-fw"></i> {{ 'Contents'|trans({}, "backend") }}<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="{{ path('backend_content_entry', {'entityCode': 'news'}) }}">{{ 'News'|trans({}, "global") }}</a>
+                            <a href="{{ path('backend_entry', {'entityCode': 'news'}) }}">{{ 'News'|trans({}, "global") }}</a>
                         </li>
                         <li>
-                            <a href="{{ path('backend_content_entry', {'entityCode': 'page'}) }}">{{ 'Page'|trans({}, "global") }}</a>
+                            <a href="{{ path('backend_entry', {'entityCode': 'page'}) }}">{{ 'Page'|trans({}, "global") }}</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->
@@ -277,25 +277,25 @@
                     <a href="#"><i class="fa fa-suitcase fa-fw"></i> {{ 'Shop'|trans({}, "backend") }}<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="{{ path('backend_content_entry', {'entityCode': 'attribute'}) }}">{{ 'Attributes'|trans({}, "global") }}</a>
+                            <a href="{{ path('backend_entry', {'entityCode': 'attribute'}) }}">{{ 'Attributes'|trans({}, "global") }}</a>
                         </li>
                         <li>
-                            <a href="{{ path('backend_content_entry', {'entityCode': 'brend'}) }}">{{ 'Brends'|trans({}, "global") }}</a>
+                            <a href="{{ path('backend_entry', {'entityCode': 'brend'}) }}">{{ 'Brends'|trans({}, "global") }}</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
                 <li>
-                    <a href="{{ path('backend_content_entry', {'entityCode': 'user'}) }}"><i class="fa fa-users fa-fw"></i> {{ 'Users'|trans({}, "global") }}</a>
+                    <a href="{{ path('backend_entry', {'entityCode': 'user'}) }}"><i class="fa fa-users fa-fw"></i> {{ 'Users'|trans({}, "global") }}</a>
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-suitcase fa-fw"></i> {{ 'Scrolls'|trans({}, "global") }}<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="{{ path('backend_content_entry', {'entityCode': 'scroll'}) }}">{{ 'Scrolls'|trans({}, "global") }}</a>
+                            <a href="{{ path('backend_entry', {'entityCode': 'scroll'}) }}">{{ 'Scrolls'|trans({}, "global") }}</a>
                         </li>
                         <li>
-                            <a href="{{ path('backend_content_entry', {'entityCode': 'scroll_item'}) }}">{{ 'Scroll items'|trans({}, "global") }}</a>
+                            <a href="{{ path('backend_entry', {'entityCode': 'scroll_item'}) }}">{{ 'Scroll items'|trans({}, "global") }}</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->
@@ -305,16 +305,16 @@
                     <a href="#"><i class="fa fa-suitcase fa-fw"></i> {{ 'Administration'|trans({}, "backend") }}<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="{{ path('backend_content_entry', {'entityCode': 'module'}) }}">{{ 'Modules'|trans({}, "global") }}</a>
+                            <a href="{{ path('backend_entry', {'entityCode': 'module'}) }}">{{ 'Modules'|trans({}, "global") }}</a>
                         </li>
                         <li>
-                            <a href="{{ path('backend_content_entry', {'entityCode': 'module_page'}) }}">{{ 'Module Pages'|trans({}, "global") }}</a>
+                            <a href="{{ path('backend_entry', {'entityCode': 'module_page'}) }}">{{ 'Module Pages'|trans({}, "global") }}</a>
                         </li>
                         <li>
-                            <a href="{{ path('backend_content_entry', {'entityCode': 'navigation'}) }}">{{ 'Navigation'|trans({}, "global") }}</a>
+                            <a href="{{ path('backend_entry', {'entityCode': 'navigation'}) }}">{{ 'Navigation'|trans({}, "global") }}</a>
                         </li>
                         <li>
-                            <a href="{{ path('backend_content_entry', {'entityCode': 'navigation_item'}) }}">{{ 'Navigation items'|trans({}, "global") }}</a>
+                            <a href="{{ path('backend_entry', {'entityCode': 'navigation_item'}) }}">{{ 'Navigation items'|trans({}, "global") }}</a>
                         </li>
                     </ul>
                 </li>

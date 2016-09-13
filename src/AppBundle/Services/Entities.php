@@ -49,7 +49,7 @@ class Entities
      * @param object $object
      * @return string
      */
-    public function getEntityCode($object)
+    public function getEntity($object)
     {
         //пытаемся дернуть метод
         if(is_callable([$object, 'getEntityCode']))

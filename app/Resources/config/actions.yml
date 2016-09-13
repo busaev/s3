@@ -1,22 +1,26 @@
 default:
     default:
-        default: Content:route
-        show: Content:route
-        index: Content:index
+        default: Core/Default:route
+        show: Core/Default:route
+        index: Core/Default:index
         
 news:
     Frontend:
         index: News:index
-        show: Content:route
+        show: Core/Default:route
     Backend:
-        show: Content:show
-        index: Content:index
+        show: Core/Default:show
+        index: Core/Default:index
         
 page:
     Frontend:
-        show: Content:route
-        index: Content:index
+        show: Core/Default:route
+        index: Core/Default:index
 
 index:
     Frontend:
         default: Index:index
+        
+user:
+    Frontend:
+        login: User/Security:login

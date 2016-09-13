@@ -11,9 +11,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\Query;
 
 /**
- * @Route("/frontend/content")
+ * @Route("/frontend")
  */
-class ContentController extends Controller
+class DefaultController extends Controller
 {
     /**
      * @Route("/{entityCode}", 

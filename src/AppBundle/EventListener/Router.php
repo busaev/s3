@@ -69,14 +69,14 @@ class Router implements EventSubscriber
             $entities = $this->container->get('app.entities');
             $router   = $this->container->get('app.route');
             
-            $entityCode = $entities->getEntityCode($entity)->getCode();
+            $entityCode = $entities->getEntity($entity)->getCode();
             
             // Создаём маршрут
             $route = new Route;
             $route->setEntryId($entity->getId());
             $route->setRoutePath($entity->getRoutePath());
             $route->setEntityCode($entityCode);
-
+            
             // определим тип экшена
             $actionType = 'show';
             if(is_callable([$entity, 'getActionType']))
@@ -86,7 +86,7 @@ class Router implements EventSubscriber
                 {
                     $actionType = $actionType->getCode();
                 }
-            }
+            }            
             $route->setActionType($actionType);
             
             // это страница модуля?
@@ -137,7 +137,7 @@ class Router implements EventSubscriber
                 }
             }
             
-            $entityCode = $entities->getEntityCode($entity)->getCode();
+            $entityCode = $entities->getEntity($entity)->getCode();
             $action     = $router->getLogicalAction($entity, $entityCode, $actionType);
             
             $route = $em->getRepository('AppBundle:Core\\Route')->findOneBy([
