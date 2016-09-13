@@ -5,7 +5,7 @@
     <div class="container">
         
     
-     {{ render_esi(controller('AppBundle:Frontend/Navigation:show', { 'params': {'code': 'top_menu'} })) }}
+     {{ render_esi(controller('AppBundle:Frontend/Core/Navigation:show', { 'params': {'code': 'top_menu'} })) }}
 
       <!-- Jumbotron -->
       <div class="jumbotron">
@@ -16,7 +16,7 @@
       
       
       {% for entity in entities.entities %}
-        <h2>{{entity.title}}</h2>
+        <h2>{% if entity.title is defined %}{{entity.title}}{% endif %}</h2>
         <article>
             {% if entity.shortContent is defined%}
                 {{entity.shortContent|raw}}

@@ -417,6 +417,17 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $manager->persist($moduleCatalog);
         
         
+                
+        // User
+        $moduleUser = new Module;
+        $moduleUser->setEntityCode('user');
+        $moduleUser->setEntryStatus($scrollItemEnable);
+        $moduleUser->setRoutePath('/user');
+        $moduleUser->setTitle('Пользователи');
+        
+        $manager->persist($moduleUser);
+        
+        
         $manager->flush();
         
         
@@ -589,6 +600,31 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleBrendsRoute->setActionType($scrollItemActionShow);
                 
         $manager->persist($moduleBrendsRoute);
+        
+        $manager->flush();
+        
+        
+        
+        
+        
+        /**
+         *  Страницы модуля User
+         */
+        
+           
+        
+        // user - auth
+        
+        $moduleBrendsIndex = new ModulePage;
+        $moduleBrendsIndex->setEntryStatus($scrollItemEnable);
+        $moduleBrendsIndex->setModule($moduleUser);
+        $moduleBrendsIndex->setTitle('Авторизация');
+        $moduleBrendsIndex->setMetaDescription('Авторизация на сайте');
+        $moduleBrendsIndex->setMetaKeywords('Авторизация на сайте');
+        $moduleBrendsIndex->setActionType($scrollItemActionIndex);
+        $moduleBrendsIndex->setRoutePath('/login');
+                
+        $manager->persist($moduleBrendsIndex);
         
         $manager->flush();
                 

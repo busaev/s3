@@ -215,7 +215,7 @@ class ContentController extends Controller
     /**
      * Deletes a News entity.
      *
-     * @Route("/{entityCode}/{id}/delete/soft", name="backend_content_entry_delete_soft")
+     * @Route("/{entityCode}/{id}/delete/soft", name="backend_module_entry_delete_soft")
      * @Method("GET")
      */
     public function deleteSoftAction(Request $request, $entityCode, $id)

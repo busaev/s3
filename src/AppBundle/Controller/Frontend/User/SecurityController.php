@@ -18,7 +18,7 @@ class SecurityController extends Controller {
     {
         $user = $this->getUser();
         if ($user instanceof UserInterface) {
-            return $this->redirectToRoute('index_index');
+            return $this->redirectToRoute('frontend_index_index');
         }
 
         /** @var AuthenticationException $exception */
