@@ -36,7 +36,7 @@ class ExtraLoader extends Loader
         foreach($customRouts as $routeItem)
         {
             // prepare a new route
-            $path = $routeItem->getRoutePath();
+            $path = $routeItem->getPath();
             
             if("" == $path)
             {

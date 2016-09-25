@@ -30,18 +30,25 @@ class News extends BaseEntity implements EntityInterface
         return $this->getContainer()->get('request');
     }
 
+    /**
+     * Инициализация новой новости,
+     * добавляем начальный путь
+     * 
+     * @param type $entity
+     * @return type
+     */
     public function init($entity=false)
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
         
         $entities = $this->container->get('app.entities');        
-        $entityContent = $entities->content;
+        $entityContent = $entities->module;
 
         if(!$entity)
         {
             $entity = $this->getNew();
         }
-
+        
         $content = $em->getRepository($entityContent->getLogicalName())->findOneBy([
             'entityCode'=>'news'
         ]);

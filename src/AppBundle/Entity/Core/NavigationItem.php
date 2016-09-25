@@ -54,7 +54,7 @@ class NavigationItem
     /**
      * @var int
      *
-     * @ORM\Column(name="entityCode", type="string", length=255, nullable=false)
+     * @ORM\Column(name="entity_code", type="string", length=255, nullable=false)
      */
     private $entityCode;
         
@@ -128,7 +128,7 @@ class NavigationItem
     
     /**
      * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Core\Module", inversedBy="navigationItems")
-     * @ORM\JoinColumn(name="entityCode", referencedColumnName="entityCode")
+     * @ORM\JoinColumn(name="entity_code", referencedColumnName="entity_code")
      */
     private $module;
     
@@ -434,7 +434,6 @@ class NavigationItem
     {
         $this->entityCode = $entityCode;
     }
-
     
     /**
      * Set module

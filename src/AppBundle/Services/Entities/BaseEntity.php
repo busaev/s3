@@ -9,29 +9,31 @@ use Symfony\Component\Finder\Finder;
  *
  * @author busaev
  */
-class BaseEntity 
-{
+class BaseEntity {
 
     // код сущности
     public $entityCode = false;
-    
+
     /**
      * Получить относительный путь до Сущности из директории Entity
      * Возвращает последнюю найденную по названию сущность
      * 
      * @return string
      */
-    public function getEntityLocationInEntityDirectory()
-    {
+    public function getEntityLocationInEntityDirectory() {
         $root = $this->getContainer()->get('kernel')->getRootDir();
-        
+
         $finder = new Finder();
         $finder->name($this->getName() . '.php');
-        
+        $finder->depth('< 3');
+
         $finder->files()->in($root . '/../src/AppBundle/Entity');
         
-        foreach ($finder as $file) {
-            
+        $path = false;
+
+        foreach ($finder as $file)
+        {
+
             // Удалим из пути все, до директории Entity
             $path = str_replace('/', '\\', str_replace('.php', '', preg_replace('/^.*AppBundle\/Entity\//i', '', $file->getRealpath())));
         }
@@ -42,8 +44,7 @@ class BaseEntity
     /**
      * Получинь название класса сущности
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->container->get('utils')->getCamelCase($this->entityCode);
     }
 
@@ -52,8 +53,7 @@ class BaseEntity
      *
      * @return string
      */
-    public function getCode()
-    {
+    public function getCode() {
         return $this->entityCode;
     }
 
@@ -62,15 +62,13 @@ class BaseEntity
      *
      * @return type
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         $title = $this->getName();
 
         //аннотации
         $annotations = $this->container->get('annotations')->getAll($this->getCode());
 
-        if(isset($annotations['object']['data']) && is_object($annotations['object']['data']))
-        {
+        if (isset($annotations['object']['data']) && is_object($annotations['object']['data'])) {
             $title = $annotations['object']['data']->getTitle();
         }
 
@@ -80,8 +78,7 @@ class BaseEntity
     /**
      * @return string
      */
-    public function getLogicalName()
-    {
+    public function getLogicalName() {
         return "AppBundle:" . $this->getEntityLocationInEntityDirectory();
     }
 
@@ -90,8 +87,7 @@ class BaseEntity
      *
      * @return string
      */
-    public function getNamespace()
-    {
+    public function getNamespace() {
         return 'AppBundle\\Entity\\' . $this->getEntityLocationInEntityDirectory();
     }
 
@@ -100,8 +96,7 @@ class BaseEntity
      *
      * @return string
      */
-    public function getTypeNamspace()
-    {
+    public function getTypeNamspace() {
         return 'AppBundle\\Form\\' . $this->getName() . 'Type';
     }
 
@@ -110,8 +105,7 @@ class BaseEntity
      *
      * @return entity
      */
-    public function getNew()
-    {
+    public function getNew() {
         $entity = $this->getNamespace();
 
         return new $entity;
@@ -123,10 +117,8 @@ class BaseEntity
      * @param entity $entity
      * @return entity
      */
-    public function init($entity=false)
-    {
-        if(!$entity)
-        {
+    public function init($entity = false) {
+        if (!$entity) {
             $entity = $this->getNew();
         }
 
@@ -138,16 +130,15 @@ class BaseEntity
      * 
      * @return type
      */
-    public function baseQuery()
-    {
+    public function baseQuery() {
         $doctrine = $this->container->get('doctrine');
         $entities = $this->container->get('app.entities');
-        
+
         $entityScroll = $entities->scroll_item;
 
         // Статус
         $status = $doctrine->getRepository($entityScroll->getLogicalName())
-                           ->findByScrollItemCodeAndScrollCode('delete', 'entry_status');
+                ->findByScrollItemCodeAndScrollCode('delete', 'entry_status');
 
         // Основной запрос
         return $doctrine->getRepository($this->getLogicalName())
@@ -156,6 +147,5 @@ class BaseEntity
                         ->where('e.entryStatus != :status')
                         ->setParameter('status', $status->getId());
     }
-
 
 }

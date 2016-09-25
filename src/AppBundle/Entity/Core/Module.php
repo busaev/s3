@@ -70,7 +70,7 @@ class Module
      * 
      * @Description("entityCode", title="Module", dataType="string")
      * @ORM\Id
-     * @ORM\Column(name="entityCode", type="string", length=255, unique=true, nullable=false)
+     * @ORM\Column(name="entity_code", type="string", length=255, unique=true, nullable=false)
      */
     private $entityCode;
 

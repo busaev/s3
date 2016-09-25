@@ -447,7 +447,6 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $modulePageIndex->setMetaDescription('All our page');
         $modulePageIndex->setMetaKeywords('page, all page');
         $modulePageIndex->setRoutePath('/page');
-        $modulePageIndex->setActionType($scrollItemActionIndex);
                 
         $manager->persist($modulePageIndex);
         
@@ -460,8 +459,8 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $modulePageRoute->setMetaDescription('Page viewing');
         $modulePageRoute->setMetaKeywords('page, viewing');
         $modulePageRoute->setRoutePath('');
-        $modulePageRoute->setActionType($scrollItemActionShow);
-                
+        $modulePageRoute->setReview(true);
+        
         $manager->persist($modulePageRoute);
         
         
@@ -484,7 +483,6 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleNewsIndex->setTitle('Список новостей');
         $moduleNewsIndex->setMetaDescription('All our news');
         $moduleNewsIndex->setMetaKeywords('news, all news');
-        $moduleNewsIndex->setActionType($scrollItemActionIndex);
         $moduleNewsIndex->setRoutePath('/news');
                 
         $manager->persist($moduleNewsIndex);
@@ -498,7 +496,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleNewsRoute->setMetaDescription('News viewing');
         $moduleNewsRoute->setMetaKeywords('news, viewing');
         $moduleNewsRoute->setRoutePath('');
-        $moduleNewsRoute->setActionType($scrollItemActionShow);
+        $modulePageRoute->setReview(true);
                 
         $manager->persist($moduleNewsRoute);
         
@@ -521,7 +519,6 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleIndexIndex->setTitle('Индекс');
         $moduleIndexIndex->setMetaDescription('Index page');
         $moduleIndexIndex->setMetaKeywords('Index page');
-        $moduleIndexIndex->setActionType($scrollItemActionIndex);
         $moduleIndexIndex->setRoutePath('/');
                 
         $manager->persist($moduleIndexIndex);
@@ -545,7 +542,6 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleCatalogIndex->setTitle('Каталог');
         $moduleCatalogIndex->setMetaDescription('Каталог товаров');
         $moduleCatalogIndex->setMetaKeywords('Каталог, товары');
-        $moduleCatalogIndex->setActionType($scrollItemActionIndex);
         $moduleCatalogIndex->setRoutePath('/catalog');
                 
         $manager->persist($moduleCatalogIndex);
@@ -559,7 +555,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleCatalogRoute->setMetaDescription('Обзор категории');
         $moduleCatalogRoute->setMetaKeywords('Обзор, категории');
         $moduleCatalogRoute->setRoutePath('');
-        $moduleCatalogRoute->setActionType($scrollItemActionShow);
+        $modulePageRoute->setReview(true);
                 
         $manager->persist($moduleCatalogRoute);
         
@@ -583,7 +579,6 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleBrendsIndex->setTitle('Бренды');
         $moduleBrendsIndex->setMetaDescription('Список брендов');
         $moduleBrendsIndex->setMetaKeywords('бренды');
-        $moduleBrendsIndex->setActionType($scrollItemActionIndex);
         $moduleBrendsIndex->setRoutePath('/brends');
                 
         $manager->persist($moduleBrendsIndex);
@@ -597,7 +592,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleBrendsRoute->setMetaDescription('Обзор бренда');
         $moduleBrendsRoute->setMetaKeywords('Обзор, бренд');
         $moduleBrendsRoute->setRoutePath('');
-        $moduleBrendsRoute->setActionType($scrollItemActionShow);
+        $modulePageRoute->setReview(true);
                 
         $manager->persist($moduleBrendsRoute);
         
@@ -621,7 +616,6 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleBrendsIndex->setTitle('Авторизация');
         $moduleBrendsIndex->setMetaDescription('Авторизация на сайте');
         $moduleBrendsIndex->setMetaKeywords('Авторизация на сайте');
-        $moduleBrendsIndex->setActionType($scrollItemActionIndex);
         $moduleBrendsIndex->setRoutePath('/login');
                 
         $manager->persist($moduleBrendsIndex);
@@ -778,7 +772,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
                 }
 
                 $manager->persist($entity);
-
+                
                 $manager->flush();
 
 

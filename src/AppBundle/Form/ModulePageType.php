@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\ORM\EntityRepository;
 
-class ContentPageType extends AbstractType
+class ModulePageType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -17,7 +17,7 @@ class ContentPageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('content')
+            ->add('module')
             ->add('metaTitle', null, [
                 'label'=>'Meta Title',
                 'translation_domain' => 'global'
@@ -38,6 +38,16 @@ class ContentPageType extends AbstractType
                 'label'=>'Route path',
                 'translation_domain' => 'global',
                 'attr' => []
+            ])  
+            ->add('action', null, [
+                'label'=>'Action',
+                'translation_domain' => 'global',
+                'attr' => []
+            ])
+            ->add('review', null, [
+                'label'=>'Review',
+                'translation_domain' => 'global',
+                'attr' => []
             ])
             ->add('entryStatus', EntityType::class, [
                'class' => 'AppBundle:Core\\ScrollItem',
@@ -45,15 +55,6 @@ class ContentPageType extends AbstractType
                     return $er->createQueryBuilder('i')
                         ->join('i.scroll', 's')
                         ->where('s.code=\'entry_status\'')
-                        ->orderBy('i.position', 'ASC');
-                },
-            ])
-            ->add('actionType', EntityType::class, [
-               'class' => 'AppBundle:Core\\ScrollItem',
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('i')
-                        ->join('i.scroll', 's')
-                        ->where('s.code=\'action_types\'')
                         ->orderBy('i.position', 'ASC');
                 },
             ])
@@ -66,7 +67,7 @@ class ContentPageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Core\ContentPage'
+            'data_class' => 'AppBundle\Entity\Core\ModulePage'
         ));
     }
 }

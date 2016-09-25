@@ -70,32 +70,13 @@ class Router implements EventSubscriber
             $router   = $this->container->get('app.route');
             
             $entityCode = $entities->getEntityCode($entity)->getCode();
-            
+            $action = $router->getLogicalAction($entity, $entityCode);
+
             // Создаём маршрут
             $route = new Route;
             $route->setEntryId($entity->getId());
-            $route->setRoutePath($entity->getRoutePath());
+            $route->setPath($entity->getRoutePath());
             $route->setEntityCode($entityCode);
-
-            // определим тип экшена
-            $actionType = 'show';
-            if(is_callable([$entity, 'getActionType']))
-            {
-                $actionType = $entity->getActionType();
-                if($actionType instanceof \AppBundle\Entity\Core\ScrollItem)
-                {
-                    $actionType = $actionType->getCode();
-                }
-            }
-            $route->setActionType($actionType);
-            
-            // это страница модуля?
-            if($entity instanceof ModulePage)
-            {
-                $route->setModulePage(true);
-            }
-
-            $action = $router->getLogicalAction($entity, $entityCode, $actionType);
             $route->setAction($action);
 
 
@@ -103,7 +84,7 @@ class Router implements EventSubscriber
             $entity->setRoute($route);
             
             $em->persist($route);
-            $em->persist($entity);
+            //$em->persist($entity);
             
             $em->flush();
         }
@@ -125,35 +106,18 @@ class Router implements EventSubscriber
             $entities = $this->container->get('app.entities');
             $router   = $this->container->get('app.route');
 
-
-            // определим тип экшена
-            $actionType = 'show';
-            if(is_callable([$entity, 'getActionType']))
-            {
-                $actionType = $entity->getActionType();
-                if($actionType instanceof \AppBundle\Entity\Core\ScrollItem)
-                {
-                    $actionType = $actionType->getCode();
-                }
-            }
             
             $entityCode = $entities->getEntityCode($entity)->getCode();
-            $action     = $router->getLogicalAction($entity, $entityCode, $actionType);
+            $action     = $router->getLogicalAction($entity, $entityCode);
             
             $route = $em->getRepository('AppBundle:Core\\Route')->findOneBy([
-                'entryId' => $entity->getId(),
-                'entityCode' => $entityCode
+                'entityCode' => $entityCode,
+                'entryId' => $entity->getId()
             ]);
-            
-            // это страница модуля?
-            if($entity instanceof ModulePage)
-            {
-                $route->setModulePage(true);
-            }
             
             if(null !== $route)
             {
-                $route->setRoutePath($entity->getRoutePath());
+                $route->setPath($entity->getRoutePath());
                 $route->setAction($action);
 
                 $em->persist($route);
@@ -164,10 +128,9 @@ class Router implements EventSubscriber
                 $route = new Route();
                 
                 $route->setEntityCode($entityCode);
-                $route->setRoutePath($entity->getRoutePath());
+                $route->setPath($entity->getRoutePath());
                 $route->setAction($action);
                 $route->setEntryId($entity->getId());
-                $route->setActionType($actionType);
 
                 $em->persist($route);
                 $em->flush();

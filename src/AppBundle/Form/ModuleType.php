@@ -9,7 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\ORM\EntityRepository;
 
-class ContentType extends AbstractType
+class ModuleType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -50,7 +50,7 @@ class ContentType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Core\Content'
+            'data_class' => 'AppBundle\Entity\Core\Module'
         ));
     }
 }

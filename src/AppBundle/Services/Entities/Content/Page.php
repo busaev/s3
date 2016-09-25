@@ -28,7 +28,7 @@ class Page extends BaseEntity implements EntityInterface
         $em = $this->getContainer()->get('doctrine')->getManager();
         
         $entities = $this->container->get('app.entities');        
-        $entityContent = $entities->content;
+        $entityContent = $entities->module;
         
         if(!$entity)
         {
