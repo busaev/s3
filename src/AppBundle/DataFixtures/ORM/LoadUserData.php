@@ -698,8 +698,8 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
 
         
         //IMPORT
-        $this->loadNewsCSV($manager, $scrollItemEnable);
-        $this->loadBrendsCSV($manager, $scrollItemEnable);
+//        $this->loadNewsCSV($manager, $scrollItemEnable);
+//        $this->loadBrendsCSV($manager, $scrollItemEnable);
         
     }
 

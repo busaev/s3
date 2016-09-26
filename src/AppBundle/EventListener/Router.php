@@ -65,6 +65,12 @@ class Router implements EventSubscriber
 
         if ( $this->skipCondition($entity) && is_callable(array($entity, 'getRoutePath')))
         {
+            $path = $entity->getRoutePath();
+            if('' == $path)
+            {
+                return;
+            }
+            
             $em       = $args->getEntityManager();
             $entities = $this->container->get('app.entities');
             $router   = $this->container->get('app.route');
@@ -75,7 +81,7 @@ class Router implements EventSubscriber
             // Создаём маршрут
             $route = new Route;
             $route->setEntryId($entity->getId());
-            $route->setPath($entity->getRoutePath());
+            $route->setPath($path);
             $route->setEntityCode($entityCode);
             $route->setAction($action);
 
@@ -105,7 +111,12 @@ class Router implements EventSubscriber
             $em       = $args->getEntityManager();
             $entities = $this->container->get('app.entities');
             $router   = $this->container->get('app.route');
-
+            
+            $path = $entity->getRoutePath();
+            if('' == $path)
+            {
+                return;
+            }
             
             $entityCode = $entities->getEntityCode($entity)->getCode();
             $action     = $router->getLogicalAction($entity, $entityCode);
@@ -117,7 +128,7 @@ class Router implements EventSubscriber
             
             if(null !== $route)
             {
-                $route->setPath($entity->getRoutePath());
+                $route->setPath($path);
                 $route->setAction($action);
 
                 $em->persist($route);
@@ -128,7 +139,7 @@ class Router implements EventSubscriber
                 $route = new Route();
                 
                 $route->setEntityCode($entityCode);
-                $route->setPath($entity->getRoutePath());
+                $route->setPath($path);
                 $route->setAction($action);
                 $route->setEntryId($entity->getId());
 

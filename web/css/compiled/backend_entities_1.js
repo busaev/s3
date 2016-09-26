@@ -11,49 +11,47 @@ $('document').ready(function(){
    });
    
    // получаем страницы модуля
-    $('#navigation_item_content').change(function() {
+    $('#navigation_item_module').change(function() {
+        window.console.log('123');
         $.ajax({
-            url : Routing.generate('backend_api', { entityCode: 'content_page', format: 'json' }) + '?param[entityCode]=' + $('#navigation_item_content :selected').val(),
+            url : Routing.generate('backend_api', { entityCode: 'module_page', format: 'json' }) + '?param[entityCode]=' + $('#navigation_item_module :selected').val(),
             type: 'json',
             success: function(json) {
-                $('#navigation_item_contentPage').empty();
+                $('#navigation_item_modulePage').empty();
                 $.each(json, function(i, value) {
-                    $('#navigation_item_contentPage').append($('<option>').text(value.title).attr('value', value.id).attr('data-routePath', value.routePath));
+                    $('#navigation_item_modulePage').append($('<option>').text(value.title).attr('value', value.id));
                 });
                 // получаем дефолтные маршруты
-                $('#navigation_item_contentPage').change();
+                $('#navigation_item_modulePage').change();
             }
         });
     });
     // получаем дефолтные страницы модуля
-    $('#navigation_item_content').change();
+    $('#navigation_item_module').change();
 
     // получаем маршруты, если выбран просмотр
-    $('#navigation_item_contentPage').change(function() 
+    $('#navigation_item_modulePage').change(function() 
     {
-        if('' !== $('#navigation_item_contentPage :selected').attr('data-routePath'))
-        {
-            $.ajax({
-                url : Routing.generate('backend_api', { entityCode: 'route', format: 'json' }) + 
-                        '?param[entityCode]=' + $('#navigation_item_content :selected').val()+
-                        '&param[actionType]=index',
-                type: 'json',
-                success: function(json) {
-                    $('#navigation_item_route').empty();
-                    $.each(json, function(i, value) {
-                        $('#navigation_item_route').append($('<option>').text(value.routePath).attr('value', value.id));
-                    });
-                }
-            });
+        $.ajax({
+            url : Routing.generate('backend_api', { entityCode: 'route', format: 'json' }) + 
+                    '?param[entityCode]=' + $('#navigation_item_module :selected').val(),
+            type: 'json',
+            success: function(json) {
+                $('#navigation_item_route').empty();
+                $.each(json, function(i, value) {
+                    $('#navigation_item_route').append($('<option>').text(value.routePath).attr('value', value.id));
+                });
+            }
+        });
 
-            return;
-        }
+        return;
+        
 
         $('#navigation_item_route').attr('disabled', false);
 
         $.ajax({
-            url : Routing.generate('backend_core_route_content_entries', { entityCode: 'route', format: 'json' }) + 
-                    '?param[entityCode]=' + $('#navigation_item_content :selected').val()+
+            url : Routing.generate('backend_core_route_module_entries', { entityCode: 'route', format: 'json' }) + 
+                    '?param[entityCode]=' + $('#navigation_item_module :selected').val()+
                     '&param[actionType]=show',
             type: 'json',
             success: function(json) {
