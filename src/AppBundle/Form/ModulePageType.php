@@ -44,11 +44,6 @@ class ModulePageType extends AbstractType
                 'translation_domain' => 'global',
                 'attr' => []
             ])
-            ->add('review', null, [
-                'label'=>'Review',
-                'translation_domain' => 'global',
-                'attr' => []
-            ])
             ->add('entryStatus', EntityType::class, [
                'class' => 'AppBundle:Core\\ScrollItem',
                 'query_builder' => function (EntityRepository $er) {

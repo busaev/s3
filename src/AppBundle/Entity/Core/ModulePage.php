@@ -42,14 +42,6 @@ class ModulePage extends BaseEntity
     private $entityCode;
     
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="review", type="boolean", nullable=false)
-     */
-    private $review;
-    
-    
-    /**
      * @var string
      * 
      * @Description("title", title="Title", dataType="string")
@@ -87,7 +79,12 @@ class ModulePage extends BaseEntity
     /**
      * @ORM\OneToMany(targetEntity="\AppBundle\Entity\Core\NavigationItem", mappedBy="modulePage")
      */
-    private $navigationItems;    
+    private $navigationItems;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\Core\Route", mappedBy="modulePage")
+     */
+    private $routes;    
     
     /**
      * #################################################
@@ -98,6 +95,7 @@ class ModulePage extends BaseEntity
     public function __construct()
     {
         $this->navigationItems = new ArrayCollection();
+        $this->routes          = new ArrayCollection();
         
         $this->review = false;
     }
@@ -111,7 +109,6 @@ class ModulePage extends BaseEntity
         {
             return $title;
         }
-        
         return '';
     }    
     
@@ -237,15 +234,12 @@ class ModulePage extends BaseEntity
         return $this;
     }
     
-    public function getReview()
-    {
-        return $this->review;
+    public function getRoutes() {
+        return $this->routes;
     }
 
-    public function setReview($review)
-    {
-        $this->review = $review;
-        return $this;
+    public function setRoutes($routes) {
+        $this->routes = $routes;
     }
 
 

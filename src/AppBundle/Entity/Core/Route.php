@@ -29,13 +29,6 @@ class Route
      * @ORM\Column(name="path", type="string", length=255, unique=false)
      */
     private $path;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="action", type="string", length=255, nullable=true)
-     */
-    private $action;
     
     /**
      * @var int
@@ -43,6 +36,13 @@ class Route
      * @ORM\Column(name="entity_code", type="string", nullable=false)
      */
     private $entityCode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="module_page_id", type="integer", nullable=false, unique=false)
+     */
+    private $modulePageId;
     
     /**
      * @var int
@@ -58,16 +58,23 @@ class Route
      */
     
     /**
+     * @var BaseEntity
+     *
+     * Ссылка на объект сущности
+     */
+    private $entity;
+    
+    /**
      * @ORM\OneToMany(targetEntity="\AppBundle\Entity\Core\NavigationItem", mappedBy="route")
      */
     private $navigationItems;
     
     /**
-     * @var BaseEntity
-     *
-     * ССылка на объект сущности
+     * 
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Core\ModulePage", inversedBy="routes")
+     * @ORM\JoinColumn(name="ModulePageId", referencedColumnName="id")
      */
-    private $entity;
+    private $modulePage;
     
     
     
@@ -127,25 +134,25 @@ class Route
     /**
      * Set controller
      *
-     * @param string $action
+     * @param string $modulePageId
      *
      * @return Route
      */
-    public function setAction($action)
+    public function setModulePageId($modulePageId)
     {
-        $this->action = $action;
+        $this->modulePageId = $modulePageId;
 
         return $this;
     }
 
     /**
-     * Get action
+     * Get modulePageId
      *
      * @return string
      */
-    public function getAction()
+    public function getModulePageId()
     {
-        return $this->action;
+        return $this->modulePageId;
     }
 
     /**
@@ -231,4 +238,16 @@ class Route
     {
         return $this->navigationItems;
     }
+
+    public function getModulePage() {
+        return $this->modulePage;
+    }
+
+    public function setModulePage($modulePage) {
+        $this->modulePage = $modulePage;
+    }
+
+
+    
+    
 }

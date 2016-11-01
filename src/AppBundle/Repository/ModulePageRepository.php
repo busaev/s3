@@ -10,4 +10,13 @@ namespace AppBundle\Repository;
  */
 class ModulePageRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getModulePage($entityCode, $action)
+    {
+        $repositoryProduct = $this->getEntityManager()->getRepository('AppBundle:Core\\ModulePage');
+
+        return $repositoryProduct->findOneBy(array(
+            'entityCode'=>$action,
+            'action'=>false
+        ), array());
+    }
 }

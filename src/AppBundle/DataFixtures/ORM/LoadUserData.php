@@ -447,6 +447,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $modulePageIndex->setMetaDescription('All our page');
         $modulePageIndex->setMetaKeywords('page, all page');
         $modulePageIndex->setRoutePath('/page');
+        $modulePageIndex->setAction('index');
                 
         $manager->persist($modulePageIndex);
         
@@ -458,8 +459,8 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $modulePageRoute->setTitle('Обзор страницы');
         $modulePageRoute->setMetaDescription('Page viewing');
         $modulePageRoute->setMetaKeywords('page, viewing');
-        $modulePageRoute->setRoutePath('');
-        $modulePageRoute->setReview(true);
+        $modulePageRoute->setRoutePath('/page/{slug}');
+        $modulePageRoute->setAction('route');
         
         $manager->persist($modulePageRoute);
         
@@ -484,6 +485,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleNewsIndex->setMetaDescription('All our news');
         $moduleNewsIndex->setMetaKeywords('news, all news');
         $moduleNewsIndex->setRoutePath('/news');
+        $moduleNewsIndex->setAction('route');
                 
         $manager->persist($moduleNewsIndex);
         
@@ -495,8 +497,8 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleNewsRoute->setTitle('Обзор новости');
         $moduleNewsRoute->setMetaDescription('News viewing');
         $moduleNewsRoute->setMetaKeywords('news, viewing');
-        $moduleNewsRoute->setRoutePath('');
-        $modulePageRoute->setReview(true);
+        $moduleNewsRoute->setRoutePath('/news/{slug}');
+        $moduleNewsRoute->setAction('route');
                 
         $manager->persist($moduleNewsRoute);
         
@@ -520,6 +522,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleIndexIndex->setMetaDescription('Index page');
         $moduleIndexIndex->setMetaKeywords('Index page');
         $moduleIndexIndex->setRoutePath('/');
+        $moduleIndexIndex->setAction('route');
                 
         $manager->persist($moduleIndexIndex);
         
@@ -543,6 +546,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleCatalogIndex->setMetaDescription('Каталог товаров');
         $moduleCatalogIndex->setMetaKeywords('Каталог, товары');
         $moduleCatalogIndex->setRoutePath('/catalog');
+        $moduleCatalogIndex->setAction('route');
                 
         $manager->persist($moduleCatalogIndex);
         
@@ -554,8 +558,8 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleCatalogRoute->setTitle('Обзор категории');
         $moduleCatalogRoute->setMetaDescription('Обзор категории');
         $moduleCatalogRoute->setMetaKeywords('Обзор, категории');
-        $moduleCatalogRoute->setRoutePath('');
-        $modulePageRoute->setReview(true);
+        $moduleCatalogRoute->setRoutePath('/catalog/category/{slug}');
+        $moduleCatalogRoute->setAction('route');
                 
         $manager->persist($moduleCatalogRoute);
         
@@ -571,7 +575,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         
            
         
-        // catalog - index
+        // brends - index
         
         $moduleBrendsIndex = new ModulePage;
         $moduleBrendsIndex->setEntryStatus($scrollItemEnable);
@@ -580,10 +584,11 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleBrendsIndex->setMetaDescription('Список брендов');
         $moduleBrendsIndex->setMetaKeywords('бренды');
         $moduleBrendsIndex->setRoutePath('/brends');
+        $moduleBrendsIndex->setAction('route');
                 
         $manager->persist($moduleBrendsIndex);
         
-        // catalog - route
+        // brends - route
         
         $moduleBrendsRoute = new ModulePage;
         $moduleBrendsRoute->setEntryStatus($scrollItemEnable);
@@ -591,8 +596,8 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleBrendsRoute->setTitle('Обзор бренда');
         $moduleBrendsRoute->setMetaDescription('Обзор бренда');
         $moduleBrendsRoute->setMetaKeywords('Обзор, бренд');
-        $moduleBrendsRoute->setRoutePath('');
-        $modulePageRoute->setReview(true);
+        $moduleBrendsRoute->setRoutePath('/brend/{slug}');
+        $moduleBrendsRoute->setAction('route');
                 
         $manager->persist($moduleBrendsRoute);
         
@@ -610,15 +615,16 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         
         // user - auth
         
-        $moduleBrendsIndex = new ModulePage;
-        $moduleBrendsIndex->setEntryStatus($scrollItemEnable);
-        $moduleBrendsIndex->setModule($moduleUser);
-        $moduleBrendsIndex->setTitle('Авторизация');
-        $moduleBrendsIndex->setMetaDescription('Авторизация на сайте');
-        $moduleBrendsIndex->setMetaKeywords('Авторизация на сайте');
-        $moduleBrendsIndex->setRoutePath('/login');
+        $moduleBrendsLogin = new ModulePage;
+        $moduleBrendsLogin->setEntryStatus($scrollItemEnable);
+        $moduleBrendsLogin->setModule($moduleUser);
+        $moduleBrendsLogin->setTitle('Авторизация');
+        $moduleBrendsLogin->setMetaDescription('Авторизация на сайте');
+        $moduleBrendsLogin->setMetaKeywords('Авторизация на сайте');
+        $moduleBrendsLogin->setRoutePath('/login');
+        $moduleBrendsLogin->setAction('login');
                 
-        $manager->persist($moduleBrendsIndex);
+        $manager->persist($moduleBrendsLogin);
         
         $manager->flush();
                 
@@ -698,8 +704,8 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
 
         
         //IMPORT
-//        $this->loadNewsCSV($manager, $scrollItemEnable);
-//        $this->loadBrendsCSV($manager, $scrollItemEnable);
+        $this->loadNewsCSV($manager, $scrollItemEnable);
+        $this->loadBrendsCSV($manager, $scrollItemEnable);
         
     }
 

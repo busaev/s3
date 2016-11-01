@@ -12,7 +12,6 @@ $('document').ready(function(){
    
    // получаем страницы модуля
     $('#navigation_item_module').change(function() {
-        window.console.log('123');
         $.ajax({
             url : Routing.generate('backend_api', { entityCode: 'module_page', format: 'json' }) + '?param[entityCode]=' + $('#navigation_item_module :selected').val(),
             type: 'json',
