@@ -75,30 +75,8 @@ class Router implements EventSubscriber
             $entities = $this->container->get('app.entities');
             $router   = $this->container->get('app.route');
             
-            $entityCode = $entities->getEntity($entity)->getCode();
+            $entityCode = $entities->getEntityCode($entity)->getCode();
             
-<<<<<<< HEAD
-            // Создаём маршрут
-            $route = new Route;
-            $route->setEntryId($entity->getId());
-            $route->setRoutePath($entity->getRoutePath());
-            $route->setEntityCode($entityCode);
-            
-            // определим тип экшена
-            $actionType = 'show';
-            if(is_callable([$entity, 'getActionType']))
-            {
-                $actionType = $entity->getActionType();
-                if($actionType instanceof \AppBundle\Entity\Core\ScrollItem)
-                {
-                    $actionType = $actionType->getCode();
-                }
-            }            
-            $route->setActionType($actionType);
-            
-            // это страница модуля?
-=======
->>>>>>> cf05d614c7737a63ac291942cf0bb18588ee1dc1
             if($entity instanceof ModulePage)
                 $modulePage = $entity;
             else
@@ -117,7 +95,7 @@ class Router implements EventSubscriber
                 $entity->setRoute($route);
 
                 $em->persist($route);
-                //$em->persist($entity);
+                $em->persist($entity);
 
                 $em->flush();
             }
@@ -136,49 +114,62 @@ class Router implements EventSubscriber
         
         if ($this->skipCondition($entity) && is_callable(array($entity, 'getRoutePath'))) 
         {
-            $em       = $args->getEntityManager();
-            $entities = $this->container->get('app.entities');
-            $router   = $this->container->get('app.route');
-            
             $path = $entity->getRoutePath();
             if('' == $path)
             {
                 return;
             }
-            
-<<<<<<< HEAD
-            $entityCode = $entities->getEntity($entity)->getCode();
-            $action     = $router->getLogicalAction($entity, $entityCode, $actionType);
-=======
+
+            $em       = $args->getEntityManager();
+            $entities = $this->container->get('app.entities');
+            $router   = $this->container->get('app.route');
+
             $entityCode = $entities->getEntityCode($entity)->getCode();
-            $action     = $router->getLogicalAction($entity, $entityCode);
->>>>>>> cf05d614c7737a63ac291942cf0bb18588ee1dc1
-            
-            $route = $em->getRepository('AppBundle:Core\\Route')->findOneBy([
-                'entityCode' => $entityCode,
-                'entryId' => $entity->getId()
-            ]);
-            
-            if(null !== $route)
-            {
-                $route->setPath($path);
-                $route->setAction($action);
 
-                $em->persist($route);
-                $em->flush();
-            }
+            if($entity instanceof ModulePage)
+                $modulePage = $entity;
             else
-            {
-                $route = new Route();
-                
-                $route->setPath($path);
-                $route->setAction($action);
-                $route->setEntryId($entity->getId());
+                $modulePage = $em->getRepository('AppBundle:Core\\ModulePage')->getModulePage($entityCode, 'route');
 
-                $em->persist($route);
-                $em->flush();
+
+            if(null !== $modulePage)
+            {
+                $route = $em->getRepository('AppBundle:Core\\Route')->findOneBy([
+                    'modulePageId' => $modulePage->getId(),
+                    'entryId' => $entity->getId()
+                ]);
+
+                if(null !== $route)
+                {
+                    $route->setPath($path);
+
+                    // Обновляем сущность
+                    $entity->setRoute($route);
+
+                    $em->persist($route);
+                    $em->persist($entity);
+
+                    $em->flush();
+                }
+                else
+                {
+                    // Создаём маршрут
+                    $route = new Route;
+                    $route->setEntryId($entity->getId());
+                    $route->setPath($path);
+                    $route->setModulePage($modulePage);
+
+                    // Обновляем сущность
+                    $entity->setRoute($route);
+
+                    $em->persist($route);
+                    $em->persist($entity);
+
+                    $em->flush();
+
+                }
             }
-            
+
             $fs = new Filesystem();
             $fs->remove($this->container->getParameter('kernel.cache_dir'));
         }

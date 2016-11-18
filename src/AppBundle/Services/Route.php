@@ -36,71 +36,16 @@ class Route
     {
         return 'Frontend';
     }
-<<<<<<< HEAD
-
-    /**
-     * Найти в конфиге нужный экшн для сущности и экшена
-     * 
-     * @param string $entityCode
-     * @param string $action
-     * 
-     * @return string|boolean
-     */
-    public function getControllerAction($entityCode, $action)
-    {
-        $application = $this->getApplication();
-        $root = $this->container->getParameter('kernel.root_dir');
-
-        $yaml = Yaml::parse(file_get_contents($root . '/Resources/config/actions.yml'));
-        
-        if(isset($yaml[$entityCode][$application][$action]))
-        {
-            return $yaml[$entityCode][$application][$action];
-        }
-        
-        if(isset($yaml[$entityCode][$application]['default']))
-        {
-            return $yaml[$entityCode][$application]['default'];
-        }
-        
-        if(isset($yaml['default']['default'][$action]))
-        {
-            return $yaml['default']['default'][$action];
-        }
-        
-        if(isset($yaml['default']['default']['default']))
-        {
-            return $yaml['default']['default']['default'];
-        }
-        
-        return false;
-    }
-=======
->>>>>>> cf05d614c7737a63ac291942cf0bb18588ee1dc1
     
     /**
      * Сформировать логичесий путь до контроллера
-     * 
-     * @param obgect $entity
-     * @param string $entityCode
+     *
+     * @param string $controller
      * @param string $action
      * @return string
      */
-<<<<<<< HEAD
-    public function getLogicalAction($entity, $entityCode, $action)
-    {
-        // если у записи есть экшн
-        // пока только у записей content_page есть action
-        if(is_callable([$entity, 'getAction']))
-        {
-            //return $entity->getAction();
-        }
-        
-        return $this->getBundle() . ':' . $this->getApplication() . '/' . $this->getControllerAction($entityCode, $action);
-=======
-    public function getLogicalAction($entityCode, $action)
+    public function getLogicalAction($controller, $action)
     {   
-        return $this->getBundle() . ':' . $this->getApplication() . '/' . ucfirst(strtolower($entityCode)) . ':' . $action;
->>>>>>> cf05d614c7737a63ac291942cf0bb18588ee1dc1
+        return $this->getBundle() . ':' . $controller . ':' . $action;
     }
 }

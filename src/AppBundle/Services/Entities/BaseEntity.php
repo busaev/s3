@@ -20,7 +20,8 @@ class BaseEntity {
      * 
      * @return string
      */
-    public function getEntityLocationInEntityDirectory() {
+    public function getEntityLocationInEntityDirectory()
+    {
         $root = $this->getContainer()->get('kernel')->getRootDir();
 
         $finder = new Finder();
@@ -45,6 +46,71 @@ class BaseEntity {
         
         return $path;
     }
+
+    /**
+     * Получить логический путь
+     * @return string
+     */
+    public function getLogicalName() {
+        return "AppBundle:" . $this->getEntityLocationInEntityDirectory();
+    }
+
+    /**
+     * Получить namespace для сущности
+     *
+     * @return string
+     */
+    public function getNamespace() {
+        return 'AppBundle\\Entity\\' . $this->getEntityLocationInEntityDirectory();
+    }
+
+    /**
+     * Получить namespace для формы
+     *
+     * @return string
+     */
+    public function getTypeNamspace() {
+        return 'AppBundle\\Form\\' . $this->getName() . 'Type';
+    }
+
+    /**
+     * Получить контроллер сущности
+     *
+     * @param string $application
+     * @return bool|string
+     */
+    public function getApplicationController($application = 'Frontend')
+    {
+        if(!in_array($application, ['Frontend', 'Backend']))
+            $application = 'Frontend';
+
+        $root = $this->getContainer()->get('kernel')->getRootDir();
+
+        $names = [$this->getName() . 'Controller.php', 'ContentController.php'];
+
+        foreach($names as $name)
+        {
+            $finder = new Finder();
+            $finder->name( $name );
+            $finder->depth('< 3');
+
+            $finder->files()->in($root . '/../src/AppBundle/Controller/' . $application);
+
+            $path = false;
+
+            foreach ($finder as $file)
+            {
+
+                // Удалим из пути все, до директории Entity
+                $path = str_replace('Controller', '', str_replace('.php', '', preg_replace('/^.*AppBundle\/Controller\//i', '', $file->getRealpath())));
+            }
+
+            if($path)
+                return $path;
+        }
+        return false;
+    }
+
 
     /**
      * Получинь название класса сущности
@@ -78,31 +144,6 @@ class BaseEntity {
         }
 
         return $title;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLogicalName() {
-        return "AppBundle:" . $this->getEntityLocationInEntityDirectory();
-    }
-
-    /**
-     * Получить namespace для сущности
-     *
-     * @return string
-     */
-    public function getNamespace() {
-        return 'AppBundle\\Entity\\' . $this->getEntityLocationInEntityDirectory();
-    }
-
-    /**
-     * Получить namespace для формы сущности
-     *
-     * @return string
-     */
-    public function getTypeNamspace() {
-        return 'AppBundle\\Form\\' . $this->getName() . 'Type';
     }
 
     /**

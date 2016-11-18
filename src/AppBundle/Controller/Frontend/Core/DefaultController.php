@@ -31,7 +31,7 @@ class DefaultController extends Controller
         $tpl      = $this->get('app.tpl');
         
         $route = $em->getRepository('AppBundle:Core\\Route')->findOneBy([
-            'routePath' => $request->getPathInfo()
+            'path' => $request->getPathInfo()
         ]);
         
         if( NULL === $route )
@@ -40,7 +40,7 @@ class DefaultController extends Controller
         }
         
         
-        $entityCode = $route->getEntityCode();
+        $entityCode = $route->getModulePage()->getEntityCode();
         $entity = $entities->$entityCode;
         
         $query = $entity->baseQuery();
@@ -77,7 +77,7 @@ class DefaultController extends Controller
         $entities = $this->get('app.entities');
 
         $route = $em->getRepository('AppBundle:Core\\Route')->findOneBy([
-            'routePath' => $request->getPathInfo()
+            'path' => $request->getPathInfo()
         ]);
 
         // маршрут не найден
@@ -86,7 +86,7 @@ class DefaultController extends Controller
             throw new NotFoundHttpException('Page not found');
         }
 
-        $entityCode = $route->getEntityCode();
+        $entityCode = $route->getModulePage()->getEntityCode();
 
         // находим запись
         $entity = $em->getRepository($entities->$entityCode->getLogicalName())->findOneBy([
@@ -111,9 +111,6 @@ class DefaultController extends Controller
         $translator  = $this->get('translator');
         $entities    = $this->get("app.entities");
         $tpl         = $this->get('app.tpl');
-
-
-
         $currentEntity = $entities->$entityCode;
 
         $entity = $this->getDoctrine()
