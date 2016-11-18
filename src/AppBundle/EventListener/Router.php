@@ -95,7 +95,7 @@ class Router implements EventSubscriber
                 $entity->setRoute($route);
 
                 $em->persist($route);
-                //$em->persist($entity);
+                $em->persist($entity);
 
                 $em->flush();
             }
@@ -114,44 +114,62 @@ class Router implements EventSubscriber
         
         if ($this->skipCondition($entity) && is_callable(array($entity, 'getRoutePath'))) 
         {
-            $em       = $args->getEntityManager();
-            $entities = $this->container->get('app.entities');
-            $router   = $this->container->get('app.route');
-            
             $path = $entity->getRoutePath();
             if('' == $path)
             {
                 return;
             }
-            
+
+            $em       = $args->getEntityManager();
+            $entities = $this->container->get('app.entities');
+            $router   = $this->container->get('app.route');
+
             $entityCode = $entities->getEntityCode($entity)->getCode();
-            $action     = $router->getLogicalAction($entity, $entityCode);
-            
-            $route = $em->getRepository('AppBundle:Core\\Route')->findOneBy([
-                'entityCode' => $entityCode,
-                'entryId' => $entity->getId()
-            ]);
-            
-            if(null !== $route)
-            {
-                $route->setPath($path);
-                $route->setAction($action);
 
-                $em->persist($route);
-                $em->flush();
-            }
+            if($entity instanceof ModulePage)
+                $modulePage = $entity;
             else
-            {
-                $route = new Route();
-                
-                $route->setPath($path);
-                $route->setAction($action);
-                $route->setEntryId($entity->getId());
+                $modulePage = $em->getRepository('AppBundle:Core\\ModulePage')->getModulePage($entityCode, 'route');
 
-                $em->persist($route);
-                $em->flush();
+
+            if(null !== $modulePage)
+            {
+                $route = $em->getRepository('AppBundle:Core\\Route')->findOneBy([
+                    'modulePageId' => $modulePage->getId(),
+                    'entryId' => $entity->getId()
+                ]);
+
+                if(null !== $route)
+                {
+                    $route->setPath($path);
+
+                    // Обновляем сущность
+                    $entity->setRoute($route);
+
+                    $em->persist($route);
+                    $em->persist($entity);
+
+                    $em->flush();
+                }
+                else
+                {
+                    // Создаём маршрут
+                    $route = new Route;
+                    $route->setEntryId($entity->getId());
+                    $route->setPath($path);
+                    $route->setModulePage($modulePage);
+
+                    // Обновляем сущность
+                    $entity->setRoute($route);
+
+                    $em->persist($route);
+                    $em->persist($entity);
+
+                    $em->flush();
+
+                }
             }
-            
+
             $fs = new Filesystem();
             $fs->remove($this->container->getParameter('kernel.cache_dir'));
         }

@@ -522,7 +522,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleIndexIndex->setMetaDescription('Index page');
         $moduleIndexIndex->setMetaKeywords('Index page');
         $moduleIndexIndex->setRoutePath('/');
-        $moduleIndexIndex->setAction('route');
+        $moduleIndexIndex->setAction('index');
                 
         $manager->persist($moduleIndexIndex);
         

@@ -39,14 +39,13 @@ class Route
     
     /**
      * Сформировать логичесий путь до контроллера
-     * 
-     * @param obgect $entity
-     * @param string $entityCode
+     *
+     * @param string $controller
      * @param string $action
      * @return string
      */
-    public function getLogicalAction($entityCode, $action)
+    public function getLogicalAction($controller, $action)
     {   
-        return $this->getBundle() . ':' . $this->getApplication() . '/' . ucfirst(strtolower($entityCode)) . ':' . $action;
+        return $this->getBundle() . ':' . $controller . ':' . $action;
     }
 }

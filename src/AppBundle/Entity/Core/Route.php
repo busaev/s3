@@ -110,7 +110,7 @@ class Route
     /**
      * Set route
      *
-     * @param string $route
+     * @param string $path
      *
      * @return Route
      */

@@ -429,7 +429,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Add userRoles
      *
-     * @param Core\UserBundle\Entity\Role $userRoles
+     * @param AppBundle\Entity\Role $userRoles
      * @return User
      */
     public function addUserRole(Role $userRoles)
@@ -442,7 +442,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Remove userRoles
      *
-     * @param Core\UserBundle\Entity\Role $userRoles
+     * @param AppBundle\Entity\Role $userRoles
      */
     public function removeUserRole(Role $userRoles)
     {

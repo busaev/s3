@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\VarDumper\VarDumper;
 
 class ExtraLoader extends Loader
 {
@@ -25,8 +26,9 @@ class ExtraLoader extends Loader
             throw new \RuntimeException('Do not add the "extra" loader twice');
         }
         
-        $em = $this->container->get('doctrine.orm.entity_manager');
-        $rs = $this->container->get('app.route');
+        $em       = $this->container->get('doctrine.orm.entity_manager');
+        $rs       = $this->container->get('app.route');
+        $entities = $this->container->get('app.entities');
         
 
         $routes = new RouteCollection();
@@ -34,9 +36,7 @@ class ExtraLoader extends Loader
         
         $customRouts = $em->getRepository('AppBundle:Core\Route')->findAll();
         
-//        \Symfony\Component\VarDumper\VarDumper::dump($customRouts);
-//        die();
-        
+
         foreach($customRouts as $routeItem)
         {
             // prepare a new route
@@ -46,16 +46,19 @@ class ExtraLoader extends Loader
             {
                 continue;
             }
+
+            $entityCode = $routeItem->getModulePage()->getEntityCode();
+
+            $es = $entities->$entityCode;
+
+
             
             $modulePage = $routeItem->getModulePage();
             
-            \Symfony\Component\VarDumper\VarDumper::dump($modulePage->getEntityCode());
-            \Symfony\Component\VarDumper\VarDumper::dump($modulePage->getAction());
-            \Symfony\Component\VarDumper\VarDumper::dump($rs->getLogicalAction($modulePage->getEntityCode(), $modulePage->getAction()));
-            die();
-            
+
+
             $defaults = array(
-                '_controller' => $rs->getLogicalAction($modulePage->getEntityCode(), $modulePage->getAction()),
+                '_controller' => $rs->getLogicalAction($es->getApplicationController(), $modulePage->getAction()),
             );
             $requirements = array();
             $route = new Route($path, $defaults, $requirements, [], null, null, array('GET'));
