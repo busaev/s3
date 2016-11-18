@@ -45,13 +45,8 @@ class Route
      * @param string $action
      * @return string
      */
-    public function getLogicalAction($entity, $entityCode)
+    public function getLogicalAction($entityCode, $action)
     {   
-        if(is_callable([$entity, 'getAction']))
-        {
-            return $entity->getAction();
-        }
-
-        return $this->getBundle() . ':' . $this->getApplication() . '/' . ucfirst(strtolower($entityCode)) . ':route';
+        return $this->getBundle() . ':' . $this->getApplication() . '/' . ucfirst(strtolower($entityCode)) . ':' . $action;
     }
 }

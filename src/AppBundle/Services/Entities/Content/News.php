@@ -42,14 +42,14 @@ class News extends BaseEntity implements EntityInterface
         $em = $this->getContainer()->get('doctrine')->getManager();
         
         $entities = $this->container->get('app.entities');        
-        $entityContent = $entities->module;
+        $entityModule = $entities->module;
 
         if(!$entity)
         {
             $entity = $this->getNew();
         }
         
-        $content = $em->getRepository($entityContent->getLogicalName())->findOneBy([
+        $content = $em->getRepository($entityModule->getLogicalName())->findOneBy([
             'entityCode'=>'news'
         ]);
 

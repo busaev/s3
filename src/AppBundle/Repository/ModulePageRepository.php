@@ -15,8 +15,8 @@ class ModulePageRepository extends \Doctrine\ORM\EntityRepository
         $repositoryProduct = $this->getEntityManager()->getRepository('AppBundle:Core\\ModulePage');
 
         return $repositoryProduct->findOneBy(array(
-            'entityCode'=>$action,
-            'action'=>false
+            'entityCode'=>$entityCode,
+            'action'=>$action
         ), array());
     }
 }

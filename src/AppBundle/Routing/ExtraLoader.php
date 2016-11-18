@@ -26,12 +26,16 @@ class ExtraLoader extends Loader
         }
         
         $em = $this->container->get('doctrine.orm.entity_manager');
+        $rs = $this->container->get('app.route');
         
 
         $routes = new RouteCollection();
         
         
         $customRouts = $em->getRepository('AppBundle:Core\Route')->findAll();
+        
+//        \Symfony\Component\VarDumper\VarDumper::dump($customRouts);
+//        die();
         
         foreach($customRouts as $routeItem)
         {
@@ -43,8 +47,15 @@ class ExtraLoader extends Loader
                 continue;
             }
             
+            $modulePage = $routeItem->getModulePage();
+            
+            \Symfony\Component\VarDumper\VarDumper::dump($modulePage->getEntityCode());
+            \Symfony\Component\VarDumper\VarDumper::dump($modulePage->getAction());
+            \Symfony\Component\VarDumper\VarDumper::dump($rs->getLogicalAction($modulePage->getEntityCode(), $modulePage->getAction()));
+            die();
+            
             $defaults = array(
-                '_controller' => $routeItem->getAction(),
+                '_controller' => $rs->getLogicalAction($modulePage->getEntityCode(), $modulePage->getAction()),
             );
             $requirements = array();
             $route = new Route($path, $defaults, $requirements, [], null, null, array('GET'));

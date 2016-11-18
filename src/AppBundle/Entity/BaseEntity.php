@@ -62,7 +62,7 @@ class BaseEntity implements RouteSubjectInterface
      *
      * @ORM\Column(name="route_path", type="string", length=255, unique=false)
      */
-    private $routePath;
+    protected $routePath;
     
     
     /**

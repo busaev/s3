@@ -35,7 +35,7 @@ class Route
      *
      * @ORM\Column(name="entity_code", type="string", nullable=false)
      */
-    private $entityCode;
+    //private $entityCode;
 
     /**
      * @var string
@@ -72,7 +72,7 @@ class Route
     /**
      * 
      * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Core\ModulePage", inversedBy="routes")
-     * @ORM\JoinColumn(name="ModulePageId", referencedColumnName="id")
+     * @ORM\JoinColumn(name="module_page_id", referencedColumnName="id")
      */
     private $modulePage;
     
@@ -188,22 +188,22 @@ class Route
      *
      * @return Route
      */
-    public function setEntityCode($entityCode)
-    {
-        $this->entityCode = $entityCode;
-
-        return $this;
-    }
+//    public function setEntityCode($entityCode)
+//    {
+//        $this->entityCode = $entityCode;
+//
+//        return $this;
+//    }
 
     /**
      * Get entityCode
      *
      * @return integer
      */
-    public function getEntityCode()
-    {
-        return $this->entityCode;
-    }
+//    public function getEntityCode()
+//    {
+//        return $this->entityCode;
+//    }
 
     /**
      * Add navigationItem

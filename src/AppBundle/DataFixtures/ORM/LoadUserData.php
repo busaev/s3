@@ -459,7 +459,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $modulePageRoute->setTitle('Обзор страницы');
         $modulePageRoute->setMetaDescription('Page viewing');
         $modulePageRoute->setMetaKeywords('page, viewing');
-        $modulePageRoute->setRoutePath('/page/{slug}');
+        //$modulePageRoute->setRoutePath('/page/{slug}');
         $modulePageRoute->setAction('route');
         
         $manager->persist($modulePageRoute);
@@ -485,7 +485,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleNewsIndex->setMetaDescription('All our news');
         $moduleNewsIndex->setMetaKeywords('news, all news');
         $moduleNewsIndex->setRoutePath('/news');
-        $moduleNewsIndex->setAction('route');
+        $moduleNewsIndex->setAction('index');
                 
         $manager->persist($moduleNewsIndex);
         
@@ -497,7 +497,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleNewsRoute->setTitle('Обзор новости');
         $moduleNewsRoute->setMetaDescription('News viewing');
         $moduleNewsRoute->setMetaKeywords('news, viewing');
-        $moduleNewsRoute->setRoutePath('/news/{slug}');
+        //$moduleNewsRoute->setRoutePath('/news/{slug}');
         $moduleNewsRoute->setAction('route');
                 
         $manager->persist($moduleNewsRoute);
@@ -546,7 +546,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleCatalogIndex->setMetaDescription('Каталог товаров');
         $moduleCatalogIndex->setMetaKeywords('Каталог, товары');
         $moduleCatalogIndex->setRoutePath('/catalog');
-        $moduleCatalogIndex->setAction('route');
+        $moduleCatalogIndex->setAction('index');
                 
         $manager->persist($moduleCatalogIndex);
         
@@ -558,7 +558,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleCatalogRoute->setTitle('Обзор категории');
         $moduleCatalogRoute->setMetaDescription('Обзор категории');
         $moduleCatalogRoute->setMetaKeywords('Обзор, категории');
-        $moduleCatalogRoute->setRoutePath('/catalog/category/{slug}');
+        //$moduleCatalogRoute->setRoutePath('/catalog/category/{slug}');
         $moduleCatalogRoute->setAction('route');
                 
         $manager->persist($moduleCatalogRoute);
@@ -584,7 +584,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleBrendsIndex->setMetaDescription('Список брендов');
         $moduleBrendsIndex->setMetaKeywords('бренды');
         $moduleBrendsIndex->setRoutePath('/brends');
-        $moduleBrendsIndex->setAction('route');
+        $moduleBrendsIndex->setAction('index');
                 
         $manager->persist($moduleBrendsIndex);
         
@@ -596,7 +596,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleBrendsRoute->setTitle('Обзор бренда');
         $moduleBrendsRoute->setMetaDescription('Обзор бренда');
         $moduleBrendsRoute->setMetaKeywords('Обзор, бренд');
-        $moduleBrendsRoute->setRoutePath('/brend/{slug}');
+        //$moduleBrendsRoute->setRoutePath('/brend/{slug}');
         $moduleBrendsRoute->setAction('route');
                 
         $manager->persist($moduleBrendsRoute);

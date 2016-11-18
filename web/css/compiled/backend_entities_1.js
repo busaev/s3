@@ -12,7 +12,6 @@ $('document').ready(function(){
    
    // получаем страницы модуля
     $('#navigation_item_module').change(function() {
-        window.console.log('123');
         $.ajax({
             url : Routing.generate('backend_api', { entityCode: 'module_page', format: 'json' }) + '?param[entityCode]=' + $('#navigation_item_module :selected').val(),
             type: 'json',
@@ -34,12 +33,12 @@ $('document').ready(function(){
     {
         $.ajax({
             url : Routing.generate('backend_api', { entityCode: 'route', format: 'json' }) + 
-                    '?param[entityCode]=' + $('#navigation_item_module :selected').val(),
+                    '?param[modulePageId]=' + $('#navigation_item_modulePage :selected').val(),
             type: 'json',
             success: function(json) {
                 $('#navigation_item_route').empty();
                 $.each(json, function(i, value) {
-                    $('#navigation_item_route').append($('<option>').text(value.routePath).attr('value', value.id));
+                    $('#navigation_item_route').append($('<option>').text(value.path).attr('value', value.id));
                 });
             }
         });
@@ -49,18 +48,18 @@ $('document').ready(function(){
 
         $('#navigation_item_route').attr('disabled', false);
 
-        $.ajax({
-            url : Routing.generate('backend_core_route_module_entries', { entityCode: 'route', format: 'json' }) + 
-                    '?param[entityCode]=' + $('#navigation_item_module :selected').val()+
-                    '&param[actionType]=show',
-            type: 'json',
-            success: function(json) {
-                $('#navigation_item_route').empty();
-                $.each(json, function(i, value) {
-                    $('#navigation_item_route').append($('<option>').text(value.title).attr('value', value.id));
-                });
-            }
-        });
+//        $.ajax({
+//            url : Routing.generate('backend_core_route_module_entries', { entityCode: 'route', format: 'json' }) + 
+//                    '?param[entityCode]=' + $('#navigation_item_module :selected').val()+
+//                    '&param[actionType]=show',
+//            type: 'json',
+//            success: function(json) {
+//                $('#navigation_item_route').empty();
+//                $.each(json, function(i, value) {
+//                    $('#navigation_item_route').append($('<option>').text(value.title).attr('value', value.id));
+//                });
+//            }
+//        });
     });
    
 });

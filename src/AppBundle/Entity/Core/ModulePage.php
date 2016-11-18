@@ -60,6 +60,17 @@ class ModulePage extends BaseEntity
      * @ORM\Column(name="action", type="string", length=255, nullable=true)
      */
     private $action;
+    
+    /**
+     * Путь в адресной строке
+     * 
+     * @var string
+     * 
+     * @Description("routePath", title="Route path", dataType="string",  property="routePath")
+     *
+     * @ORM\Column(name="route_path", type="string", length=255, unique=false, nullable=true)
+     */
+    protected $routePath;
 
 
     /**
@@ -241,8 +252,5 @@ class ModulePage extends BaseEntity
     public function setRoutes($routes) {
         $this->routes = $routes;
     }
-
-
-
 
 }

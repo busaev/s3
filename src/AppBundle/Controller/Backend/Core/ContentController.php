@@ -147,7 +147,7 @@ class ContentController extends Controller
         $entity = $this->getDoctrine()
                        ->getRepository($currentEntity->getLogicalName())
                        ->find($id);
-
+        
         // крошки
         $breadcrumbs->addItem(
                 $translator->trans($currentEntity->getTitle(), [], 'global'),

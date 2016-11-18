@@ -17,11 +17,13 @@ use Symfony\Component\VarDumper\VarDumper;
 class RouteController extends Controller
 {
     /**
+     *  depricated
+     * 
      * Для получения Маршрутов отдельный экшн.
      * Заполняем Название из Содержания
      * 
      * @Route("/routes/{entityCode}/{format}", 
-     *        name="backend_core_route_content_entries", 
+     *        name="backend_core_route_module_entries", 
      *        requirements={"format" = "json"}, 
      *        defaults={"entityCode" = "news", "format" = "json"}, 
      *        options={"expose"=true})

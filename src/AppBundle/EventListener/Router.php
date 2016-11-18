@@ -76,14 +76,11 @@ class Router implements EventSubscriber
             $router   = $this->container->get('app.route');
             
             $entityCode = $entities->getEntityCode($entity)->getCode();
-//            \Symfony\Component\VarDumper\VarDumper::dump($entityCode);
-//            die();
             
-            $modulePage = $em->getRepository('AppBundle:Core\\ModulePage')->getModulePage($entityCode, 'route');
-//            \Symfony\Component\VarDumper\VarDumper::dump($entityCode);
-//            \Symfony\Component\VarDumper\VarDumper::dump($modulePage);
-//            die();
-            
+            if($entity instanceof ModulePage)
+                $modulePage = $entity;
+            else
+                $modulePage = $em->getRepository('AppBundle:Core\\ModulePage')->getModulePage($entityCode, 'route');
             
             if(null !== $modulePage)
             {
@@ -91,7 +88,6 @@ class Router implements EventSubscriber
                 $route = new Route;
                 $route->setEntryId($entity->getId());
                 $route->setPath($path);
-                $route->setEntityCode($entityCode);
                 $route->setModulePage($modulePage);
 
 
@@ -148,7 +144,6 @@ class Router implements EventSubscriber
             {
                 $route = new Route();
                 
-                $route->setEntityCode($entityCode);
                 $route->setPath($path);
                 $route->setAction($action);
                 $route->setEntryId($entity->getId());
