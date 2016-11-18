@@ -6,6 +6,7 @@ var/*
 var/cache/dev
 var/cache/prod
 var/cache/test
+var/cache/pro_
 !var/cache/.gitkeep
 !var/logs
 var/logs/*
