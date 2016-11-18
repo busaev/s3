@@ -63,13 +63,13 @@ class ContentControllerTest extends WebTestCase
         $this->logIn();
         
         $client = $this->client;
-        
+                
         // индексные странички сущностей
         foreach($this->entities as $entity)
         {
             $crawler = $client->request('GET', '/backend/content/' . $entity);
             $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        }        
+        }  
     }
     
     public function testNew()
@@ -87,7 +87,7 @@ class ContentControllerTest extends WebTestCase
                 
             $crawler = $client->request('GET', '/backend/content/' . $entity . '/new');
             $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        }
+}
         
         //пользователь
         $crawler = $client->request('GET', '/backend/user/new');

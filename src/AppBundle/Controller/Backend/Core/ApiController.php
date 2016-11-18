@@ -28,7 +28,7 @@ class ApiController extends Controller
     {   
         $entities = $this->get("app.entities");        
         $currentEntity = $entities->$entityCode;
-
+        
         // Основной запрос
         $query = $this->getDoctrine()
                 ->getRepository($currentEntity->getLogicalName())

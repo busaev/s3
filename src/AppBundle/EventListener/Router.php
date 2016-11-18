@@ -61,16 +61,23 @@ class Router implements EventSubscriber
      */
     public function postPersist(LifecycleEventArgs $args)
     {
+        $em     = $args->getEntityManager();
         $entity = $args->getEntity();
 
         if ( $this->skipCondition($entity) && is_callable(array($entity, 'getRoutePath')))
         {
-            $em       = $args->getEntityManager();
+            $path = $entity->getRoutePath();
+            if('' == $path)
+            {
+                return;
+            }
+            
             $entities = $this->container->get('app.entities');
             $router   = $this->container->get('app.route');
             
             $entityCode = $entities->getEntity($entity)->getCode();
             
+<<<<<<< HEAD
             // Создаём маршрут
             $route = new Route;
             $route->setEntryId($entity->getId());
@@ -90,22 +97,30 @@ class Router implements EventSubscriber
             $route->setActionType($actionType);
             
             // это страница модуля?
+=======
+>>>>>>> cf05d614c7737a63ac291942cf0bb18588ee1dc1
             if($entity instanceof ModulePage)
+                $modulePage = $entity;
+            else
+                $modulePage = $em->getRepository('AppBundle:Core\\ModulePage')->getModulePage($entityCode, 'route');
+            
+            if(null !== $modulePage)
             {
-                $route->setModulePage(true);
+                // Создаём маршрут
+                $route = new Route;
+                $route->setEntryId($entity->getId());
+                $route->setPath($path);
+                $route->setModulePage($modulePage);
+
+
+                // Обновляем сущность
+                $entity->setRoute($route);
+
+                $em->persist($route);
+                //$em->persist($entity);
+
+                $em->flush();
             }
-
-            $action = $router->getLogicalAction($entity, $entityCode, $actionType);
-            $route->setAction($action);
-
-
-            // Обновляем сущность
-            $entity->setRoute($route);
-            
-            $em->persist($route);
-            $em->persist($entity);
-            
-            $em->flush();
         }
     }
 
@@ -124,36 +139,29 @@ class Router implements EventSubscriber
             $em       = $args->getEntityManager();
             $entities = $this->container->get('app.entities');
             $router   = $this->container->get('app.route');
-
-
-            // определим тип экшена
-            $actionType = 'show';
-            if(is_callable([$entity, 'getActionType']))
+            
+            $path = $entity->getRoutePath();
+            if('' == $path)
             {
-                $actionType = $entity->getActionType();
-                if($actionType instanceof \AppBundle\Entity\Core\ScrollItem)
-                {
-                    $actionType = $actionType->getCode();
-                }
+                return;
             }
             
+<<<<<<< HEAD
             $entityCode = $entities->getEntity($entity)->getCode();
             $action     = $router->getLogicalAction($entity, $entityCode, $actionType);
+=======
+            $entityCode = $entities->getEntityCode($entity)->getCode();
+            $action     = $router->getLogicalAction($entity, $entityCode);
+>>>>>>> cf05d614c7737a63ac291942cf0bb18588ee1dc1
             
             $route = $em->getRepository('AppBundle:Core\\Route')->findOneBy([
-                'entryId' => $entity->getId(),
-                'entityCode' => $entityCode
+                'entityCode' => $entityCode,
+                'entryId' => $entity->getId()
             ]);
-            
-            // это страница модуля?
-            if($entity instanceof ModulePage)
-            {
-                $route->setModulePage(true);
-            }
             
             if(null !== $route)
             {
-                $route->setRoutePath($entity->getRoutePath());
+                $route->setPath($path);
                 $route->setAction($action);
 
                 $em->persist($route);
@@ -163,11 +171,9 @@ class Router implements EventSubscriber
             {
                 $route = new Route();
                 
-                $route->setEntityCode($entityCode);
-                $route->setRoutePath($entity->getRoutePath());
+                $route->setPath($path);
                 $route->setAction($action);
                 $route->setEntryId($entity->getId());
-                $route->setActionType($actionType);
 
                 $em->persist($route);
                 $em->flush();

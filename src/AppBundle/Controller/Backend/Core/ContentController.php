@@ -147,7 +147,7 @@ class ContentController extends Controller
         $entity = $this->getDoctrine()
                        ->getRepository($currentEntity->getLogicalName())
                        ->find($id);
-
+        
         // крошки
         $breadcrumbs->addItem(
                 $translator->trans($currentEntity->getTitle(), [], 'global'),
@@ -215,7 +215,11 @@ class ContentController extends Controller
     /**
      * Deletes a News entity.
      *
+<<<<<<< HEAD
      * @Route("/{entityCode}/{id}/delete/soft", name="backend_entry_delete_soft")
+=======
+     * @Route("/{entityCode}/{id}/delete/soft", name="backend_module_entry_delete_soft")
+>>>>>>> cf05d614c7737a63ac291942cf0bb18588ee1dc1
      * @Method("GET")
      */
     public function deleteSoftAction(Request $request, $entityCode, $id)

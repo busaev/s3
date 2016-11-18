@@ -38,6 +38,11 @@ class ModulePageType extends AbstractType
                 'label'=>'Route path',
                 'translation_domain' => 'global',
                 'attr' => []
+            ])  
+            ->add('action', null, [
+                'label'=>'Action',
+                'translation_domain' => 'global',
+                'attr' => []
             ])
             ->add('entryStatus', EntityType::class, [
                'class' => 'AppBundle:Core\\ScrollItem',
@@ -45,15 +50,6 @@ class ModulePageType extends AbstractType
                     return $er->createQueryBuilder('i')
                         ->join('i.scroll', 's')
                         ->where('s.code=\'entry_status\'')
-                        ->orderBy('i.position', 'ASC');
-                },
-            ])
-            ->add('actionType', EntityType::class, [
-               'class' => 'AppBundle:Core\\ScrollItem',
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('i')
-                        ->join('i.scroll', 's')
-                        ->where('s.code=\'action_types\'')
                         ->orderBy('i.position', 'ASC');
                 },
             ])

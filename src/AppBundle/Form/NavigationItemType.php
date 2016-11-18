@@ -11,8 +11,13 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 
+<<<<<<< HEAD
 use AppBundle\Entity\Core\Module;
 use AppBundle\Entity\Core\ModulePage;
+=======
+use AppBundle\Entity\Modules\Module;
+use AppBundle\Entity\ModulePage;
+>>>>>>> cf05d614c7737a63ac291942cf0bb18588ee1dc1
 
 class NavigationItemType extends AbstractType
 {
@@ -34,11 +39,19 @@ class NavigationItemType extends AbstractType
             ])
             ->add('module', null, [
                 'label'=>'Module',
+<<<<<<< HEAD
+=======
+                'translation_domain' => 'global',
+>>>>>>> cf05d614c7737a63ac291942cf0bb18588ee1dc1
                 'translation_domain' => 'global',
                 'required' => true
             ])
             ->add('modulePage', null, [
                 'label'=>'Module page',
+<<<<<<< HEAD
+=======
+                'translation_domain' => 'global',
+>>>>>>> cf05d614c7737a63ac291942cf0bb18588ee1dc1
                 'translation_domain' => 'global'
             ])
             ->add('route', null, [
@@ -67,6 +80,10 @@ class NavigationItemType extends AbstractType
                         ->andWhere('i.code !=\'delete\'')
                         ->orderBy('i.position', 'ASC');
                 },
+<<<<<<< HEAD
+=======
+                'translation_domain' => 'global',
+>>>>>>> cf05d614c7737a63ac291942cf0bb18588ee1dc1
                 'translation_domain' => 'global'
             ])
         ;

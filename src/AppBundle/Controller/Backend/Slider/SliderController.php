@@ -92,8 +92,6 @@ class SliderController extends Controller
 
             foreach ($entity->getSlides() as $slide) 
             {
-                VarDumper::dump($slide);
-                die();
                 $slide->setSlider($entity);
             }
 

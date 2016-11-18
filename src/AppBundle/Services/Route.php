@@ -36,6 +36,7 @@ class Route
     {
         return 'Frontend';
     }
+<<<<<<< HEAD
 
     /**
      * Найти в конфиге нужный экшн для сущности и экшена
@@ -74,6 +75,8 @@ class Route
         
         return false;
     }
+=======
+>>>>>>> cf05d614c7737a63ac291942cf0bb18588ee1dc1
     
     /**
      * Сформировать логичесий путь до контроллера
@@ -83,6 +86,7 @@ class Route
      * @param string $action
      * @return string
      */
+<<<<<<< HEAD
     public function getLogicalAction($entity, $entityCode, $action)
     {
         // если у записи есть экшн
@@ -93,5 +97,10 @@ class Route
         }
         
         return $this->getBundle() . ':' . $this->getApplication() . '/' . $this->getControllerAction($entityCode, $action);
+=======
+    public function getLogicalAction($entityCode, $action)
+    {   
+        return $this->getBundle() . ':' . $this->getApplication() . '/' . ucfirst(strtolower($entityCode)) . ':' . $action;
+>>>>>>> cf05d614c7737a63ac291942cf0bb18588ee1dc1
     }
 }

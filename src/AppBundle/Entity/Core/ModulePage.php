@@ -37,7 +37,7 @@ class ModulePage extends BaseEntity
     /**
      * @var int
      *
-     * @ORM\Column(name="entityCode", type="string", length=255, nullable=false)
+     * @ORM\Column(name="entity_code", type="string", length=255, nullable=false)
      */
     private $entityCode;
     
@@ -50,7 +50,30 @@ class ModulePage extends BaseEntity
      */
     private $title;
     
-   /**
+    /**
+     * Логический путь до контроллера, если его необходимо переопределить
+     * 
+     * @var string
+     * 
+     * @Description("action", title="Action", dataType="string")
+     *
+     * @ORM\Column(name="action", type="string", length=255, nullable=true)
+     */
+    private $action;
+    
+    /**
+     * Путь в адресной строке
+     * 
+     * @var string
+     * 
+     * @Description("routePath", title="Route path", dataType="string",  property="routePath")
+     *
+     * @ORM\Column(name="route_path", type="string", length=255, unique=false, nullable=true)
+     */
+    protected $routePath;
+
+
+    /**
      * #################################################
      * ####################  Связи  ####################
      * #################################################
@@ -60,7 +83,7 @@ class ModulePage extends BaseEntity
      * @Description("module", title="Module", dataType="string",  property="module.title")
      * 
      * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Core\Module", inversedBy="modulePages")
-     * @ORM\JoinColumn(name="entityCode", referencedColumnName="entityCode")
+     * @ORM\JoinColumn(name="entity_code", referencedColumnName="entity_code")
      */
     private $module;
     
@@ -70,14 +93,9 @@ class ModulePage extends BaseEntity
     private $navigationItems;
     
     /**
-     * Связанный статус записи
-     * 
-     * @Description("actionType", title="Action type", dataType="string",  property="actionType.title")
-     * 
-     * @ORM\ManyToOne(targetEntity="\AppBundle\Model\ScrollItemSubjectInterface")
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\Core\Route", mappedBy="modulePage")
      */
-    private $actionType;
-    
+    private $routes;    
     
     /**
      * #################################################
@@ -88,6 +106,9 @@ class ModulePage extends BaseEntity
     public function __construct()
     {
         $this->navigationItems = new ArrayCollection();
+        $this->routes          = new ArrayCollection();
+        
+        $this->review = false;
     }
 
 
@@ -99,7 +120,6 @@ class ModulePage extends BaseEntity
         {
             return $title;
         }
-        
         return '';
     }    
     
@@ -118,7 +138,18 @@ class ModulePage extends BaseEntity
      */
     public function getEntityCode()
     {
+        //return $this->entityCode;
         return $this->getModule()->getEntityCode();
+    }
+    
+    /**
+     * @return string
+     */
+    public function setEntityCode($entityCode)
+    {
+        $this->entityCode = $entityCode;
+        //return $this->getModule()->getEntityCode();
+        return $this;
     }
 
     /**
@@ -203,26 +234,23 @@ class ModulePage extends BaseEntity
         return $this->navigationItems;
     }
     
-    /**
-     * Set entryStatus
-     *
-     * @param \AppBundle\Entity\Core\ScrollItem $actionType
-     *
-     */
-    public function setActionType(\AppBundle\Entity\Core\ScrollItem $actionType = null)
+    public function getAction() 
     {
-        $this->actionType = $actionType;
+        return $this->action;
+    }
 
+    public function setAction($action)
+    {
+        $this->action = $action;
         return $this;
     }
-
-    /**
-     * Get entryStatus
-     *
-     * @return \AppBundle\Entity\Core\ScrollItem
-     */
-    public function getActionType()
-    {
-        return $this->actionType;
+    
+    public function getRoutes() {
+        return $this->routes;
     }
+
+    public function setRoutes($routes) {
+        $this->routes = $routes;
+    }
+
 }

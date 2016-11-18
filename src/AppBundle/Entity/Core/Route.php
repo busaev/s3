@@ -4,6 +4,8 @@ namespace AppBundle\Entity\Core;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use AppBundle\Entity\BaseEntity;
+
 /**
  * Route
  *
@@ -19,55 +21,35 @@ class Route
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;   
-    
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="entity_code", type="string", length=255, nullable=true)
-     */
-    private $entityCode;
+    private $id;  
 
     /**
      * @var string
      *
-     * @ORM\Column(name="route_path", type="string", length=255, unique=false)
+     * @ORM\Column(name="path", type="string", length=255, unique=false)
      */
-    private $routePath;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="action", type="string", length=255, nullable=true)
-     */
-    private $action;
-    
-    
-    /**
-     * Говорит нам о том, к какому типу принадлежит путь - просмотр контента или 
-     * какой-то экшн контроллера
-     * 
-     * @var string
-     *
-     * @ORM\Column(name="action_type", type="string", length=255, nullable=false)
-     */
-    private $actionType="show"; // show|index|...
+    private $path;
     
     /**
      * @var int
      *
-     * @ORM\Column(name="entryId", type="integer", nullable=true)
+     * @ORM\Column(name="entity_code", type="string", nullable=false)
      */
-    private $entryId;
+    //private $entityCode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="module_page_id", type="integer", nullable=false, unique=false)
+     */
+    private $modulePageId;
     
     /**
-     * Флаг, показывает, является ли маршрут "страницей" Содержания (Модуля)
-     * 
-     * @var boolean
+     * @var int
      *
-     * @ORM\Column(name="module_page", type="boolean", nullable=false)
+     * @ORM\Column(name="entry_id", type="integer", nullable=true)
      */
-    private $modulePage = false;
+    private $entryId;
     
     /**
      * #################################################
@@ -76,9 +58,24 @@ class Route
      */
     
     /**
+     * @var BaseEntity
+     *
+     * Ссылка на объект сущности
+     */
+    private $entity;
+    
+    /**
      * @ORM\OneToMany(targetEntity="\AppBundle\Entity\Core\NavigationItem", mappedBy="route")
      */
     private $navigationItems;
+    
+    /**
+     * 
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Core\ModulePage", inversedBy="routes")
+     * @ORM\JoinColumn(name="module_page_id", referencedColumnName="id")
+     */
+    private $modulePage;
+    
     
     
     public function __construct()
@@ -90,7 +87,7 @@ class Route
      * @return string
      */
     public function __toString() {
-        return $this->getRoutePath();
+        return $this->getPath();
     }
     
     /**
@@ -117,9 +114,9 @@ class Route
      *
      * @return Route
      */
-    public function setRoutePath($routePath)
+    public function setPath($path)
     {
-        $this->routePath = $routePath;
+        $this->path = $path;
 
         return $this;
     }
@@ -129,33 +126,33 @@ class Route
      *
      * @return string
      */
-    public function getRoutePath()
+    public function getPath()
     {
-        return $this->routePath;
+        return $this->path;
     }
 
     /**
      * Set controller
      *
-     * @param string $action
+     * @param string $modulePageId
      *
      * @return Route
      */
-    public function setAction($action)
+    public function setModulePageId($modulePageId)
     {
-        $this->action = $action;
+        $this->modulePageId = $modulePageId;
 
         return $this;
     }
 
     /**
-     * Get action
+     * Get modulePageId
      *
      * @return string
      */
-    public function getAction()
+    public function getModulePageId()
     {
-        return $this->action;
+        return $this->modulePageId;
     }
 
     /**
@@ -182,29 +179,31 @@ class Route
         return $this->entryId;
     }
 
+    
+
     /**
-     * Set moduleType
+     * Set entityCode
      *
-     * @param string $actionType
+     * @param integer $entityCode
      *
      * @return Route
      */
-    public function setActionType($actionType)
-    {
-        $this->actionType = $actionType;
-
-        return $this;
-    }
+//    public function setEntityCode($entityCode)
+//    {
+//        $this->entityCode = $entityCode;
+//
+//        return $this;
+//    }
 
     /**
-     * Get moduleType
+     * Get entityCode
      *
-     * @return string
+     * @return integer
      */
-    public function getActionType()
-    {
-        return $this->actionType;
-    }
+//    public function getEntityCode()
+//    {
+//        return $this->entityCode;
+//    }
 
     /**
      * Add navigationItem
@@ -240,51 +239,15 @@ class Route
         return $this->navigationItems;
     }
 
-    /**
-     * Set entityCode
-     *
-     * @param string $entityCode
-     *
-     * @return Route
-     */
-    public function setEntityCode($entityCode)
-    {
-        $this->entityCode = $entityCode;
-
-        return $this;
-    }
-
-    /**
-     * Get entityCode
-     *
-     * @return string
-     */
-    public function getEntityCode()
-    {
-        return $this->entityCode;
-    }
-
-    /**
-     * Set modulePage
-     *
-     * @param boolean $modulePage
-     *
-     * @return Route
-     */
-    public function setModulePage($modulePage)
-    {
-        $this->modulePage = $modulePage;
-
-        return $this;
-    }
-
-    /**
-     * Get modulePage
-     *
-     * @return boolean
-     */
-    public function getModulePage()
-    {
+    public function getModulePage() {
         return $this->modulePage;
     }
+
+    public function setModulePage($modulePage) {
+        $this->modulePage = $modulePage;
+    }
+
+
+    
+    
 }

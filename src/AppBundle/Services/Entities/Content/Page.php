@@ -28,36 +28,17 @@ class Page extends BaseEntity implements EntityInterface
         $em = $this->getContainer()->get('doctrine')->getManager();
         
         $entities = $this->container->get('app.entities');        
-        $entityContent = $entities->content;
+        $entityModule = $entities->module;
         
         if(!$entity)
         {
             $entity = $this->getNew();
         }
 
-        $content = $em->getRepository($entityContent->getLogicalName())->findOneBy([
-            'entityCode'=>'page'
+        $content = $em->getRepository($entityModule->getLogicalName())->findOneBy([
+            'entityCode'=>$this->getCode()
         ]);
 
         return $entity->setRoutePath($content->getRoutePath());
-    }
-
-    public function baseQuery()
-    {
-        $doctrine = $this->container->get('doctrine');
-        $entities = $this->container->get('app.entities');
-        
-        $entityScroll = $entities->scroll_item;
-        
-        // Основной запрос
-        $status = $doctrine->getRepository($entityScroll->getLogicalName())
-                           ->findByScrollItemCodeAndScrollCode('delete', 'entry_status');
-
-        // Основной запрос
-        return $doctrine->getRepository($this->getLogicalName())
-                        ->createQueryBuilder('e')
-                        ->select('e')
-                        ->where('e.entryStatus != :status')
-                        ->setParameter('status', $status->getId());
     }
 }

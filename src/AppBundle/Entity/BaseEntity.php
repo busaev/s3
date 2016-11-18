@@ -62,7 +62,7 @@ class BaseEntity implements RouteSubjectInterface
      *
      * @ORM\Column(name="route_path", type="string", length=255, unique=false)
      */
-    private $routePath;
+    protected $routePath;
     
     
     /**
@@ -99,7 +99,7 @@ class BaseEntity implements RouteSubjectInterface
      * 
      * @var string
      */
-    private $entityCode ="page";
+    private $entityCode = false;
     
     
     /**
@@ -251,5 +251,36 @@ class BaseEntity implements RouteSubjectInterface
     public function getRoute()
     {
         return $this->route;
+    }
+    
+    
+    /**
+     * Set entityCode
+     * 
+     * @return string
+     */
+    public function getEntityCode()
+    {
+        if($this->entityCode)
+        {
+            return $this->entityCode;
+        }
+        
+        $ar = (array)explode('\\', static::class);
+        end($ar);
+        
+        return strtolower(current($ar));
+    }
+    
+    /**
+     * @param string $entityCode
+     * 
+     * @return \AppBundle\Entity\BaseEntity
+     */
+    public function setEntityCode($entityCode)
+    {
+        $this->entityCode = $entityCode;
+        
+        return $this;
     }
 }
