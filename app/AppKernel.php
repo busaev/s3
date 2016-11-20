@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
+            new Liip\ImagineBundle\LiipImagineBundle(),
             
             new AppBundle\AppBundle(),
         ];

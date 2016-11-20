@@ -123,7 +123,7 @@ class Attribute implements MediaSubjectInterface
     /**
      * Связанный статус записи
      * 
-     * @Description("media", title="Media", dataType="string",  property="media.title")
+     * @Description("media", title="Media", dataType="image",  property="media.webPath")
      * 
      * @ORM\ManyToOne(targetEntity="\AppBundle\Model\MediaSubjectInterface", cascade={"persist"})
      */

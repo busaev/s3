@@ -55,8 +55,7 @@ class Slider
     
 
     public function __construct() 
-    {
-        
+    {   
         $this -> slides = new ArrayCollection();
     }
 
@@ -99,7 +98,7 @@ class Slider
      *
      * @return Slider
      */
-    public function addSlide(\AppBundle\Entity\Modules\Slide $slide)
+    public function addSlide(\AppBundle\Entity\Slider\Slide $slide)
     {
         $slide->addSlider($this);
 
@@ -113,7 +112,7 @@ class Slider
      *
      * @param \Module\SliderBundle\Entity\Slide $slide
      */
-    public function removeSlide(\AppBundle\Entity\Modules\Slide $slide)
+    public function removeSlide(\AppBundle\Entity\Slider\Slide $slide)
     {
         $this->slides->removeElement($slide);
     }

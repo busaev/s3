@@ -45,7 +45,7 @@ use AppBundle\Entity\Core\NavigationItem;
  *   },
  *   "frontend": {
  *     "add": {
- *         "route_name": "news_show",
+ *         "route_name": "module_show",
  *         "params": {
  *             "id": "id"
  *         }

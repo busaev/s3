@@ -64,8 +64,9 @@ class BaseEntity {
      *
      * @return string
      */
-    public function getTypeNamspace() {
-        return 'AppBundle\\Form\\' . $this->getName() . 'Type';
+    public function getTypeNamspace($entityFormType=false) {
+        $name = $entityFormType ? $entityFormType : $this->getName();
+        return 'AppBundle\\Form\\' . $name . 'Type';
     }
 
     /**

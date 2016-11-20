@@ -61,7 +61,7 @@ class Slide implements MediaSubjectInterface
      * @param \Module\SliderBundle\Entity\Slider $slider
      * @return Slide
      */
-    public function setSlider(\AppBundle\Entity\Modules\Slider $slider = null)
+    public function setSlider(\AppBundle\Entity\Slider\Slider $slider = null)
     {
         $this->slider = $slider;
 

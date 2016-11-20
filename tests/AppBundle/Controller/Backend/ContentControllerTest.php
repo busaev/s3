@@ -6,6 +6,21 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
+
+use AppBundle\Entity\Role;
+use AppBundle\Entity\User;
+use AppBundle\Entity\Core\Module;
+use AppBundle\Entity\Core\ModulePage;
+use AppBundle\Entity\Core\Route;
+use AppBundle\Entity\Content\News;
+use AppBundle\Entity\Core\Navigation;
+use AppBundle\Entity\Core\NavigationItem;
+use AppBundle\Entity\Core\Scroll;
+use AppBundle\Entity\Core\ScrollItem;
+use AppBundle\Entity\Shop\Attribute;
+use AppBundle\Entity\Shop\Brend;
+use AppBundle\Entity\Core\Media;
+
 /**
  * Description of ContentControllerTest
  *
@@ -21,8 +36,8 @@ class ContentControllerTest extends WebTestCase
     
     // на проверку
     private $entities = [
-        'news', 'page', 'vendor', 'user', 'scroll', 'scroll_item',
-        'content', 'content_page', 'navigation', 'navigation_item'
+        'news', 'page', 'brend', 'user', 'scroll', 'scroll_item',
+        'module', 'module_page', 'navigation', 'navigation_item'
     ];
 
     public function setUp()
@@ -34,7 +49,7 @@ class ContentControllerTest extends WebTestCase
         $this->em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         $this->utils = $kernel->getContainer()->get('utils');
         $this->appEntities = $kernel->getContainer()->get('app.entities');
-        $this->em->beginTransaction();
+        //$this->em->beginTransaction();
     }
     
     /**
@@ -42,7 +57,7 @@ class ContentControllerTest extends WebTestCase
      */
     public function tearDown()
     {
-        $this->em->rollback();
+        //$this->em->rollback();
     }
 
     private function logIn()
@@ -54,7 +69,7 @@ class ContentControllerTest extends WebTestCase
         $session->set('_security_'.$firewall, serialize($token));
         $session->save();
 
-        $cookie = new Cookie($session->getName(), $session->getId());
+        $cookie = new Cookie($session->getName(), $session->getId(), time()+60*10);
         $this->client->getCookieJar()->set($cookie);
     }
     
@@ -84,7 +99,7 @@ class ContentControllerTest extends WebTestCase
             //пользователь добавляется по другому
             if('user' == $entity)
                 continue;
-                
+            
             $crawler = $client->request('GET', '/backend/content/' . $entity . '/new');
             $this->assertEquals(200, $client->getResponse()->getStatusCode());
 }
@@ -97,17 +112,44 @@ class ContentControllerTest extends WebTestCase
     
     function testNewsCrud()
     {
+        $this->logIn();
+        
+        $client = $this->client;
+        
         $entity = $this->appEntities->news;
+
         
+        //$entityScroll = $this->appEntities->scroll_item;
+        
+        // Запись активна
+        //$status = $this->em->getRepository($entityScroll->getLogicalName())
+        //                    ->findByScrollItemCodeAndScrollCode('enable', 'entry_status');
+        
+        //index
+        $crawler = $client->request('GET', '/backend/content/news');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        
+        //new
+        $crawler = $client->request('GET', '/backend/content/news/new');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        
+        //get news
         $repositoryNews = $this->em->getRepository($entity->getLogicalName());
+        $news = $repositoryNews->findBy([], [], 1);
         
-        $allNews = $repositoryNews->findAll();
+        $this->greaterThan(0, count($news));
         
-        $news = reset($allNews);
+        //show
+        $crawler = $client->request('GET', '/backend/content/news/'.$news[0]->getId().'/show');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
         
-        if(!$news)
-            $this->assertEquals(false, $news);
+        //edit
+        $crawler = $client->request('GET', '/backend/content/news/'.$news[0]->getId().'/edit');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
         
-        $this->greaterThan(0, $news->getId());
+        //history
+        $crawler = $client->request('GET', '/backend/content/news/'.$news[0]->getId().'/history');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    
     }
 }

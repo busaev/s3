@@ -85,8 +85,11 @@ class UserController extends Controller
         $translator  = $this->get('translator');
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $utils       = $this->get('utils');
-
+        $entities    = $this->get("app.entities");
+        
         $entityCode = 'user';
+        
+        $currentEntity = $entities->$entityCode;
 
         $em = $this->getDoctrine()->getManager();
 
@@ -114,7 +117,7 @@ class UserController extends Controller
 
         //крошки
         $breadcrumbs->addItem(
-                $translator->trans($utils->getEntityTitle($entityCode), [], 'global'),
+                $translator->trans($currentEntity->getTitle(), [], 'global'),
                 $this->get("router")->generate("backend_content_entry", [ 'entityCode' => $entityCode ]));
         $breadcrumbs->addItem($user,  $this->get("router")->generate("backend_module_entry_show", [ 'id' => $user->getId() ]));
         $breadcrumbs->addItem($translator->trans('Editing', [], 'global'));

@@ -5,6 +5,9 @@
     {{ actions(entityCode, 'list') }}
                     
     {% include 'backend/flash_messages.html.twig' %}
+    
+{#    {{dump(entities)}}
+    {{dump(entities.entities[0])}}#}
 
     <div class="row">
         <div class="col-lg-12">
@@ -42,6 +45,12 @@
                                     {% else %}
                                         <i class="fa fa-square-o"></i>
                                     {% endif %}
+                                </td>
+                            {% elseif entities.dataTypes[field] == 'image' %}
+                                <td>
+                                    {% if entity[field] != '' %}
+                                        <img src="{{entity[field]  | imagine_filter('backend_module_list') }}" />
+                                    {% else %}{% endif %}
                                 </td>
                             {% else %}
                                 <td>{{ entity[field] }}</td>

@@ -75,7 +75,7 @@ class Annotations
             'dataTypes'  => [],
             'entities'   => []
         ];
-
+        
         $return['object'] = $this->getObject($entityCode);
 
         // accessor
