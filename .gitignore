@@ -25,3 +25,5 @@ web/uploads/media/*
 !web/uploads/media/brend
 .idea
 /nbproject/private/
+!web/media
+web/media/*
