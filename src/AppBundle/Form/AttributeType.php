@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use AppBundle\Form\MediaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use AppBundle\Form\AttributeValueType;
 
 
 class AttributeType extends AbstractType
@@ -89,6 +90,12 @@ class AttributeType extends AbstractType
                 'label'=>'View type',
                 'translation_domain' => 'global'
             ])
+            ->add('values', CollectionType::class, array(
+                'entry_type' => AttributeValueType::class,
+                'allow_add'    => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+            ))
         ;
     }
     

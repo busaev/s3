@@ -15,8 +15,24 @@
             
             <h1>{{ 'Creating'|trans({}, "backend") }}</h1>
 
-            {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'entity-form new-form'}}) }}
-            {{ form_widget(form) }}
+            {{ form_start(form, {'attr': {'class': 'entity-form new-form'}}) }}
+                {{ form_row(form.title) }}
+                {{ form_row(form.description) }}
+                {{ form_row(form.media) }}
+                {{ form_row(form.inPreview) }}
+                {{ form_row(form.inFilters) }}
+                {{ form_row(form.productType) }}
+                {{ form_row(form.entryStatus) }}
+                {{ form_row(form.dataType) }}
+                {{ form_row(form.viewType) }}
+                
+                <h3>Values</h3>
+                <ul class="values" data-prototype="{{ form_widget(form.values.vars.prototype)|e('html_attr') }}">
+                    {% for value in form.values %}
+                        <li>{{ form_row(value) }}</li>
+                    {% endfor %}
+                </ul>
+                
             {{ form_end(form) }}
 
         </div>
@@ -34,7 +50,8 @@
 
 {% block javascripts %}
     {% javascripts output="css/compiled/backend.js"
-       '../app/Resources/public/backend/js/entities.js' 
+       '../app/Resources/public/backend/js/entities.js'
+       '../app/Resources/public/backend/js/modules/shop/attribute.js' 
     %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}

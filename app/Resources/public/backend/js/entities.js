@@ -42,26 +42,15 @@ $('document').ready(function(){
                 });
             }
         });
-
         return;
-        
-
-        $('#navigation_item_route').attr('disabled', false);
-
-//        $.ajax({
-//            url : Routing.generate('backend_core_route_module_entries', { entityCode: 'route', format: 'json' }) + 
-//                    '?param[entityCode]=' + $('#navigation_item_module :selected').val()+
-//                    '&param[actionType]=show',
-//            type: 'json',
-//            success: function(json) {
-//                $('#navigation_item_route').empty();
-//                $.each(json, function(i, value) {
-//                    $('#navigation_item_route').append($('<option>').text(value.title).attr('value', value.id));
-//                });
-//            }
-//        });
     });
-   
+});
+
+$(document).ready(function() {
+    $(".wysiwyg").summernote();
+});
+$(".save-form").click(function() {
+    $('.entity-form').submit();
 });
 
 function titleToRoutePath()

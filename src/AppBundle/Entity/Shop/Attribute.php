@@ -10,11 +10,41 @@ use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
 use AppBundle\Model\MediaSubjectInterface;
 
+
 /**
  * Атрибуты товаров
  * 
- * @DescriptionObject("attribute", title="Свойства товаров")
- *
+ * @DescriptionObject("attribute", title="Свойства товаров", description="Свойства товаров", actions={
+ *   "backend": {
+ *     "show": {
+ *         "title": "Show",
+ *         "icon": "fa-search",
+ *         "route_name": "backend_module_entry_show",
+ *         "params": {
+ *             "id": "id",
+ *             "entityCode": "attribute"
+ *         }
+ *     },
+ *     "edit": {
+ *         "title": "Edit",
+ *         "icon": "fa-pencil",
+ *         "route_name": "backend_shop_attribute_edit",
+ *         "params": {
+ *             "id": "id"
+ *         }
+ *     },
+ *     "history": {
+ *         "title": "History",
+ *         "icon": "fa-history",
+ *         "route_name": "backend_module_entry_history",
+ *         "params": {
+ *             "id": "id",
+ *             "entityCode": "attribute"
+ *         }
+ *     }
+ *   },
+ * })
+ * 
  * @ORM\Table(name="attributes")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Shop\AttributeRepository")
  */
@@ -71,7 +101,7 @@ class Attribute implements MediaSubjectInterface
      * @ORM\Column(name="in_filters", type="boolean")
      */
     private $inFilters;
-
+    
     /**
      * #################################################
      * ####################  Связи  ####################
@@ -130,10 +160,16 @@ class Attribute implements MediaSubjectInterface
     private $media;
     
     /**
-     * 
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\Shop\AttributeValue", mappedBy="attribute", cascade={"persist"})
+     */
+    private $values;
+    
+    /**
+     * Construct
      */
     public function __construct() 
     {
+        $this->values = new ArrayCollection;
     }
 
 
@@ -392,5 +428,41 @@ class Attribute implements MediaSubjectInterface
     public function getProductType()
     {
         return $this->productType;
+    }
+    
+    /**
+     * Add values
+     *
+     * @param AttributeValue $value
+     *
+     * @return Navigation
+     */
+    public function addValue(AttributeValue $value)
+    {
+        $value->setAttribute($this);
+        
+        $this->values->add($value);
+
+        return $this;
+    }
+
+    /**
+     * Remove values
+     *
+     * @param AttributeValue $value
+     */
+    public function removeValue(AttributeValue $value)
+    {
+        $this->values->removeElement($value);
+    }
+
+    /**
+     * Get values
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getValues()
+    {
+        return $this->values;
     }
 }

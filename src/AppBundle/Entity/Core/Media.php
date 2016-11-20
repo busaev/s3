@@ -127,7 +127,7 @@ class Media
      */
     public function preUpload()
     {
-        if (null !== $this->getFile()) {
+        if (null !== $this->getFile() && "" !== $this->getFile()) {
             // do whatever you want to generate a unique name
             $filename = sha1(uniqid(mt_rand(), true));
             $this->path = $filename.'.'.$this->getFile()->guessExtension();

@@ -147,6 +147,16 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $manager->persist($scrollItemDataDate);
         
         
+        // image
+        $scrollItemImage = new ScrollItem;
+        $scrollItemImage->setScroll($scrollAttributeDataTypes);
+        $scrollItemImage->setCode('image');
+        $scrollItemImage->setTitle('Картинка');
+        $scrollItemImage->setPosition(4);
+        
+        $manager->persist($scrollItemImage);
+        
+        
         $manager->flush();
         
         
