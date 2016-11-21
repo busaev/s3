@@ -51,7 +51,7 @@ class EntityLogger implements EventSubscriber
         $entity = $args->getEntity();
         $token = $this->container->get('security.token_storage')->getToken();
                 
-        if ( $this->skipCondition($entity) && $token) {
+        if ( $this->skipCondition($entity) && $token && $token->getUser() != 'anon.') {
             
             $utils = $this->container->get('utils');
             

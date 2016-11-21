@@ -39,16 +39,37 @@ class UserController extends Controller
     /**
      * Creates a new User entity.
      *
-     * @Route("/new", name="user_new")
+     * @Route("/registration", name="frontend_user_registration")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function registrationAction(Request $request)
     {
+        $entities = $this->get('app.entities');
+        $entityService = $entities->user;
+        $entityScroll  = $entities->scrollItem;
+        
         $user = new User();
-        $form = $this->createForm('AppBundle\Form\UserType', $user);
+        $form = $this->createForm($entityService->getTypeNamspace('UserNew', 'Frontend'), $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            $status = $this->getDoctrine()
+                ->getRepository('AppBundle\Entity\Core\ScrollItem')
+                ->findByScrollItemCodeAndScrollCode('enable', 'entry_status');
+            
+            $user->setEntryStatus($status);
+            
+            
+            $encoder = $this->container->get('security.password_encoder');
+            $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
+            
+            
+            $userRole = $this->getDoctrine()
+                ->getRepository('AppBundle\Entity\Role')
+                ->findOneBy(['name' => 'ROLE_USER']);
+            $user->addUserRole($userRole);
+            
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
@@ -56,7 +77,8 @@ class UserController extends Controller
             return $this->redirectToRoute('user_show', array('id' => $user->getId()));
         }
 
-        return $this->render('user/new.html.twig', array(
+        return $this->render('frontend/user/registration.html.twig', array(
+            'error' => [],
             'user' => $user,
             'form' => $form->createView(),
         ));

@@ -13,15 +13,4 @@ class User extends BaseEntity implements EntityInterface
     {
         $this->container=$container;
     }
-
-    /**
-     * Получить namespace для формы
-     *
-     * @return string
-     */
-    public function getTypeNamspace($entityFormType=false) 
-    {
-        $name = $entityFormType ? $entityFormType : $this->getName();
-        return 'AppBundle\\Form\\' . $name . 'Type';
-    }
 }

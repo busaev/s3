@@ -339,7 +339,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $manager->persist($roleClient);
         
         
-        // manager
+        // user
         $roleUser = new Role;
         $roleUser->setName('ROLE_USER');  
         
@@ -623,18 +623,30 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         
            
         
-        // user - auth
-        
-        $moduleBrendsLogin = new ModulePage;
-        $moduleBrendsLogin->setEntryStatus($scrollItemEnable);
-        $moduleBrendsLogin->setModule($moduleUser);
-        $moduleBrendsLogin->setTitle('Авторизация');
-        $moduleBrendsLogin->setMetaDescription('Авторизация на сайте');
-        $moduleBrendsLogin->setMetaKeywords('Авторизация на сайте');
-        $moduleBrendsLogin->setRoutePath('/login');
-        $moduleBrendsLogin->setAction('login');
+        // user - auth        
+        $moduleUserLogin = new ModulePage;
+        $moduleUserLogin->setEntryStatus($scrollItemEnable);
+        $moduleUserLogin->setModule($moduleUser);
+        $moduleUserLogin->setTitle('Авторизация');
+        $moduleUserLogin->setMetaDescription('Авторизация на сайте');
+        $moduleUserLogin->setMetaKeywords('Авторизация на сайте');
+        $moduleUserLogin->setRoutePath('/login');
+        $moduleUserLogin->setAction('login');
                 
-        $manager->persist($moduleBrendsLogin);
+        $manager->persist($moduleUserLogin);
+        
+        
+        // user - registration        
+        $moduleUserRegistration = new ModulePage;
+        $moduleUserRegistration->setEntryStatus($scrollItemEnable);
+        $moduleUserRegistration->setModule($moduleUser);
+        $moduleUserRegistration->setTitle('Регистрация');
+        $moduleUserRegistration->setMetaDescription('Регистрация на сайте');
+        $moduleUserRegistration->setMetaKeywords('Регистрация на сайте');
+        $moduleUserRegistration->setRoutePath('/user/registration');
+        $moduleUserRegistration->setAction('registration');
+                
+        $manager->persist($moduleUserRegistration);
         
         $manager->flush();
                 
@@ -652,6 +664,13 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         
         $manager->persist($topNavigation);
         
+        $manager->flush();
+        
+        
+        /**
+         * Элементы навигации
+         */
+        
         // Top menu items
         $topNavigationItemNews = new NavigationItem;
         $topNavigationItemNews->setEntryStatus($scrollItemEnable);
@@ -659,13 +678,25 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $topNavigationItemNews->setNavigation($topNavigation);
         $topNavigationItemNews->setRoute($moduleNewsIndex->getRoute());
         $topNavigationItemNews->setPosition(1);
-        $topNavigationItemNews->setTitle('News');
+        $topNavigationItemNews->setTitle('Новости');
         $topNavigationItemNews->setModulePage($moduleNewsIndex);
         
-        //$manager->persist($topNavigationItemNews);
+        $manager->persist($topNavigationItemNews);
         
+        
+        $userRegistrationLink = new NavigationItem;
+        $userRegistrationLink->setEntryStatus($scrollItemEnable);
+        $userRegistrationLink->setNavigation($topNavigation);
+        $userRegistrationLink->setModulePage($moduleUserRegistration);
+        $userRegistrationLink->setModule($moduleUser);
+        $userRegistrationLink->setTitle('Регистрация');
+        $userRegistrationLink->setRoute($moduleUserRegistration->getRoute());        
+        $topNavigationItemNews->setPosition(2);
+        
+        $manager->persist($userRegistrationLink);        
         
         $manager->flush();
+        
         
         
         
