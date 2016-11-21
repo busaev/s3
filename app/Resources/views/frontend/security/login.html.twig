@@ -11,21 +11,19 @@
                         <h3 class="panel-title">Авторизация</h3>
                     </div>
                     <div class="panel-body">
-                        <form action="{{ path('security_login') }}" method="POST">
+                        <form action="{{ path('frontend_security_login') }}" method="POST">
                             <fieldset>
-                                <div class="form-group{% if error %} has-error{% endif %}">
-                                    <input class="form-control" placeholder="Логин" name="username" type="text" autofocus>
-                                </div>
-                                <div class="form-group{% if error %} has-error{% endif %}">
-                                    <input class="form-control" placeholder="Пароль" name="password" type="password" value="">
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input name="remember" type="checkbox" value="Remember Me">Запомнить меня
-                                    </label>
-                                </div>
-                                <!-- Change this to a button or input when using this as a form -->
-                                <button type="submit" class="btn btn-lg btn-info btn-block">войти</button>
+                                <label for="username">{{ 'Username'|trans({}, "backend") }}:</label>
+                                <input type="text"  class="form-control" id="username" name="_username" value="{{ last_username }}" />
+
+                                <label for="password">{{ 'Password'|trans({}, "backend") }}:</label>
+                                <input type="password"  class="form-control" id="password" name="_password" />
+
+                                <input type="checkbox" id="remember_me" name="_remember_me" checked />
+                                <label for="remember_me">{{ 'Keep me logged in'|trans({}, "backend") }}</label>
+
+
+                                <button class="btn btn-lg btn-primary btn-block margin-top-20" type="submit">{{ 'Login'|trans({}, "backend") }}</button>
                             </fieldset>
                         </form>
                     </div>

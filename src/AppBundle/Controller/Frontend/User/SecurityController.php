@@ -12,22 +12,30 @@ use Symfony\Component\HttpFoundation\Request;
 class SecurityController extends Controller {
 
     /**
-     * @Route("/login", name="security_login")
+     * @Route("/login", name="frontend_security_login")
      */
     public function loginAction(Request $request)
     {
-        $user = $this->getUser();
-        if ($user instanceof UserInterface) {
-            return $this->redirectToRoute('frontend_index_index');
-        }
+        $authenticationUtils = $this->get('security.authentication_utils');
 
-        /** @var AuthenticationException $exception */
-        $exception = $this->get('security.authentication_utils')
-                          ->getLastAuthenticationError();
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
 
-        return $this->render('frontend/security/login.html.twig', [
-                    'error' => $exception ? $exception->getMessage() : NULL,
-        ]);
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+        
+//        echo '<pre>';
+//        var_export($lastUsername);
+//        die();
+
+        return $this->render(
+            'frontend/security/login.html.twig',
+            array(
+                // last username entered by the user
+                'last_username' => $lastUsername,
+                'error'         => $error,
+            )
+        );
     }
         
     /**
