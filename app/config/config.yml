@@ -91,7 +91,7 @@ assetic:
 #Секретный ключ: c52019d7de961fa1f302bfd1d508e40a
 
 hwi_oauth:
-    firewall_names: [oauth_public]
+    firewall_names: [secured_area]
 
 
     resource_owners:

@@ -23,26 +23,25 @@ class SecurityController extends Controller {
 
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-        
-//        echo '<pre>';
-//        var_export($lastUsername);
-//        die();
 
-        return $this->render(
-            'frontend/security/login.html.twig',
-            array(
-                // last username entered by the user
-                'last_username' => $lastUsername,
-                'error'         => $error,
-            )
-        );
+        return $this->render('frontend/security/login.html.twig', array(
+            'last_username' => $lastUsername,
+            'error'         => $error,
+        ));
     }
         
     /**
-     * @Route("/logout", name="security_logout")
+     * @Route("/login_check", name="frontend_security_login_check")
+     */
+    public function loginCheckAction(Request $request) {
+        
+    }
+
+    /**
+     * @Route("/logout", name="frontend_security_logout")
      */
     public function logoutAction(Request $request) {
-        
+
     }
 
 }

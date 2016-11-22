@@ -1,36 +1,26 @@
 {% extends 'frontend/base.html.twig' %}
 
 {% block body %}
-    {{ error }}
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                <div class="login-panel panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Авторизация</h3>
-                    </div>
-                    <div class="panel-body">
-                        <form action="{{ path('frontend_security_login') }}" method="POST">
-                            <fieldset>
-                                <label for="username">{{ 'Username'|trans({}, "backend") }}:</label>
-                                <input type="text"  class="form-control" id="username" name="_username" value="{{ last_username }}" />
+    {% if error %}
+        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
 
-                                <label for="password">{{ 'Password'|trans({}, "backend") }}:</label>
-                                <input type="password"  class="form-control" id="password" name="_password" />
+    <form action="{{ path('frontend_security_login') }}" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="_username" value="{{ last_username }}" />
 
-                                <input type="checkbox" id="remember_me" name="_remember_me" checked />
-                                <label for="remember_me">{{ 'Keep me logged in'|trans({}, "backend") }}</label>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="_password" />
 
+        {#
+            If you want to control the URL the user
+            is redirected to on success (more details below)
+            <input type="hidden" name="_target_path" value="/account" />
+        #}
 
-                                <button class="btn btn-lg btn-primary btn-block margin-top-20" type="submit">{{ 'Login'|trans({}, "backend") }}</button>
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        <button type="submit">login</button>
+    </form>
 
  
 {% endblock %}
