@@ -89,7 +89,7 @@ class User implements AdvancedUserInterface, \Serializable
     private $username;
 
     /**
-     * @Assert\NotBlank()
+     * Assert\NotBlank()
      * 
      * @ORM\Column(type="string", length=64, nullable=true)
      */

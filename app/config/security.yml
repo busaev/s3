@@ -36,21 +36,13 @@ security:
             pattern:   ^/
             
             anonymous: ~
-            
-#            form_login:
-#                login_path: /backend/security/login
-#                check_path: /backend/security/login_check
-#
-#            logout:
-#                path:   /backend/security/logout
-#                target: /backend
 
             form_login:
-                login_path: frontend_security_login
-                check_path: frontend_security_login_check
+                login_path: /user/login
+                check_path: /user/login_check
 
             logout:
-                path: frontend_security_logout
+                path: /user/logout
                 target: /
             
             provider: user_db
@@ -58,66 +50,23 @@ security:
             remember_me:
                 secret:   '%secret%'
                 lifetime: 604800 # 1 week in seconds
-                path:     ^/backend
+                path:     ^/
 
             oauth:
                   resource_owners:
                       mailru:        /login_mailru
                   login_path:        /
                   use_forward:       false
-                  failure_path:      /login
+                  failure_path:      /user/login
 
                   oauth_user_provider:
                       service: hwi_oauth.user.provider.entity
-            
-#        main:
-#
-#            pattern:   ^/
-#
-#            anonymous: ~
-#
-#            form_login:
-#                login_path: frontend_security_login
-#                check_path: frontend_security_login_check
-#
-#            logout:
-#                path: frontend_security_logout
-#                target: /
-#
-#            provider: user_db
-#
-#            oauth:
-#                resource_owners:
-#                    mailru:        /login_mailru
-#                login_path:        /
-#                use_forward:       false
-#                failure_path:      /login
-#
-#                oauth_user_provider:
-#                    service: hwi_oauth.user.provider.entity
-            
-#        oauth_public:
-#            anonymous: ~
-#            logout:
-#                path:   /logout
-#                target: /
-#            oauth:
-#                resource_owners:
-#                    mailru:        /login_mailru
-#                login_path:        /
-#                use_forward:       false
-#                failure_path:      /login
-#
-#                oauth_user_provider:
-#                    service: hwi_oauth.user.provider.entity
                 
     access_control:
-            - { path: ^/security/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-            - { path: ^/security/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/user/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/user/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/user/registration, roles: IS_AUTHENTICATED_ANONYMOUSLY }
             - { path: ^/user, roles: ROLE_USER }
-#            - { path: ^/backend/security/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-#            - { path: ^/backend/security/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-#            - { path: ^/backend/security/logout, roles: ROLE_MANAGER }
             - { path: ^/backend, roles: ROLE_MANAGER }
 
 

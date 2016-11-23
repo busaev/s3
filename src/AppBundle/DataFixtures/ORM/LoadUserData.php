@@ -630,10 +630,22 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleUserLogin->setTitle('Авторизация');
         $moduleUserLogin->setMetaDescription('Авторизация на сайте');
         $moduleUserLogin->setMetaKeywords('Авторизация на сайте');
-        $moduleUserLogin->setRoutePath('/login');
+        $moduleUserLogin->setRoutePath('/user/login');
         $moduleUserLogin->setAction('login');
-                
+
         $manager->persist($moduleUserLogin);
+
+        // user - logout
+        $moduleUserLogout = new ModulePage;
+        $moduleUserLogout->setEntryStatus($scrollItemEnable);
+        $moduleUserLogout->setModule($moduleUser);
+        $moduleUserLogout->setTitle('Выход');
+        $moduleUserLogout->setMetaDescription('Выход');
+        $moduleUserLogout->setMetaKeywords('Выход');
+        $moduleUserLogout->setRoutePath('/user/logout');
+        $moduleUserLogout->setAction('logout');
+                
+        $manager->persist($moduleUserLogout);
         
         
         // user - registration        
@@ -690,11 +702,41 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $userRegistrationLink->setModulePage($moduleUserRegistration);
         $userRegistrationLink->setModule($moduleUser);
         $userRegistrationLink->setTitle('Регистрация');
-        $userRegistrationLink->setRoute($moduleUserRegistration->getRoute());        
-        $topNavigationItemNews->setPosition(2);
+        $userRegistrationLink->setRoute($moduleUserRegistration->getRoute());
+        $userRegistrationLink->setPosition(2);
         
-        $manager->persist($userRegistrationLink);        
-        
+        $manager->persist($userRegistrationLink);
+
+
+
+
+        // login
+        $userLoginLink = new NavigationItem;
+        $userLoginLink->setEntryStatus($scrollItemEnable);
+        $userLoginLink->setNavigation($topNavigation);
+        $userLoginLink->setModulePage($moduleUserLogin);
+        $userLoginLink->setModule($moduleUser);
+        $userLoginLink->setTitle('Вход');
+        $userLoginLink->setRoute($moduleUserLogin->getRoute());
+        $userLoginLink->setPosition(3);
+
+        $manager->persist($userLoginLink);
+
+
+
+        // logout
+        $userLogoutLink = new NavigationItem;
+        $userLogoutLink->setEntryStatus($scrollItemEnable);
+        $userLogoutLink->setNavigation($topNavigation);
+        $userLogoutLink->setModulePage($moduleUserLogout);
+        $userLogoutLink->setModule($moduleUser);
+        $userLogoutLink->setTitle('Выход');
+        $userLogoutLink->setRoute($moduleUserLogout->getRoute());
+        $userLogoutLink->setPosition(4);
+
+        $manager->persist($userLogoutLink);
+
+
         $manager->flush();
         
         

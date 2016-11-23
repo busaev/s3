@@ -17,6 +17,39 @@ use AppBundle\Form\UserType;
 class UserController extends Controller
 {
     /**
+     * @Route("/login", name="frontend_user_login")
+     */
+    public function loginAction(Request $request)
+    {
+        $authenticationUtils = $this->get('security.authentication_utils');
+
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return $this->render('frontend/security/login.html.twig', array(
+            'last_username' => $lastUsername,
+            'error'         => $error,
+        ));
+    }
+
+    /**
+     * @Route("/login_check", name="frontend_user_login_check")
+     */
+    public function loginCheckAction(Request $request) {
+
+    }
+
+    /**
+     * @Route("/logout", name="frontend_user_logout")
+     */
+    public function logoutAction(Request $request) {
+
+    }
+
+    /**
      * Lists all User entities.
      *
      * @Route("/", name="user_index")
@@ -74,7 +107,8 @@ class UserController extends Controller
             $em->persist($user);
             $em->flush();
 
-            return $this->redirectToRoute('user_show', array('id' => $user->getId()));
+            return $this->redirectToRoute('frontend_index_index');
+            //return $this->redirectToRoute('user_show', array('id' => $user->getId()));
         }
 
         return $this->render('frontend/user/registration.html.twig', array(

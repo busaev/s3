@@ -133,7 +133,7 @@ class NavigationItem
     private $module;
     
     /**
-     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Core\ModulePage", inversedBy="navigationItems")
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\Core\ModulePage", inversedBy="navigationItems", cascade={"persist"})
      * @ORM\JoinColumn(name="idModulePage", referencedColumnName="id")
      */
     private $modulePage;
