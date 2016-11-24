@@ -30,6 +30,10 @@
                 </li>
                 <li class="divider"></li>
                 <li>
+                    <a href="{{ path('backend_module_entry_new', {'entityCode': 'category'}) }}">{{ 'Category'|trans({}, "global") }}</a>
+                </li>
+                <li class="divider"></li>
+                <li>
                     <a href="/app_dev.php/backend/user/new">{{ 'Users'|trans({}, "global") }}</a>
                 </li>
             </ul>
@@ -281,6 +285,9 @@
                         </li>
                         <li>
                             <a href="{{ path('backend_content_entry', {'entityCode': 'brend'}) }}">{{ 'Brends'|trans({}, "global") }}</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('backend_content_entry', {'entityCode': 'category'}) }}">{{ 'Categories'|trans({}, "global") }}</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->
