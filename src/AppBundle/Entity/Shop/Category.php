@@ -105,6 +105,12 @@ class Category extends BaseEntity implements MediaSubjectInterface
     {
         return $this ->getTitle();
     }
+    
+    public function toStringWithParent()
+    {
+        
+        return '--------'.$this->getTitle();
+    }
 
     /**
      *
