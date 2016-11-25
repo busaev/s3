@@ -27,7 +27,10 @@ class CategoryType extends AbstractType
             ])
             ->add('title', null, [
                 'label'=>'Title',
-                'translation_domain' => 'global'
+                'translation_domain' => 'global',
+                'attr' => [
+                    'class'=>'property-title'
+                ]
             ])
             ->add('parentCategory', null, [
                 'label'=>'Parent category',
@@ -60,7 +63,9 @@ class CategoryType extends AbstractType
             ->add('routePath', null, [
                 'label'=>'Route path',
                 'translation_domain' => 'global',
-                'attr' => []
+                'attr' => [
+                    'class'=>'property-routePath'
+                ]
             ])
             ->add('media', MediaType::class, [
                 'label'=>'Media',

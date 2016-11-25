@@ -81,6 +81,9 @@ class ContentController extends Controller
         //крошки
         $breadcrumbs->addItem($translator->trans($currentEntity->getTitle(), [], 'global'), $this->get("router")->generate("backend_content_entry", ['entityCode' => $entityCode]));
         $breadcrumbs->addItem($translator->trans('Creating', [], 'global'));
+//        
+//        \Symfony\Component\VarDumper\VarDumper::dump($entity);
+//        die();
         
         return $this->render('backend/entity/new.html.twig', array(
             'entityCode' => $entityCode,

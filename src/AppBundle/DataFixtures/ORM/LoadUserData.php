@@ -427,6 +427,18 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $manager->persist($moduleCatalog);
         
         
+        
+                
+        // Category
+        $moduleCategory = new Module;
+        $moduleCategory->setEntityCode('category');
+        $moduleCategory->setEntryStatus($scrollItemEnable);
+        $moduleCategory->setRoutePath('/category');
+        $moduleCategory->setTitle('Категории');
+        
+        $manager->persist($moduleCategory);
+        
+        
                 
         // User
         $moduleUser = new Module;
@@ -555,23 +567,37 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $moduleCatalogIndex->setTitle('Каталог');
         $moduleCatalogIndex->setMetaDescription('Каталог товаров');
         $moduleCatalogIndex->setMetaKeywords('Каталог, товары');
-        $moduleCatalogIndex->setRoutePath('/catalog');
+        $moduleCatalogIndex->setRoutePath('/module/catalog');
         $moduleCatalogIndex->setAction('index');
                 
         $manager->persist($moduleCatalogIndex);
         
-        // catalog - route
         
-        $moduleCatalogRoute = new ModulePage;
-        $moduleCatalogRoute->setEntryStatus($scrollItemEnable);
-        $moduleCatalogRoute->setModule($moduleCatalog);
-        $moduleCatalogRoute->setTitle('Обзор категории');
-        $moduleCatalogRoute->setMetaDescription('Обзор категории');
-        $moduleCatalogRoute->setMetaKeywords('Обзор, категории');
-        //$moduleCatalogRoute->setRoutePath('/catalog/category/{slug}');
-        $moduleCatalogRoute->setAction('route');
+        // category - index
+        
+        $moduleCategoryIndex = new ModulePage;
+        $moduleCategoryIndex->setEntryStatus($scrollItemEnable);
+        $moduleCategoryIndex->setModule($moduleCategory);
+        $moduleCategoryIndex->setTitle('Категории');
+        $moduleCategoryIndex->setMetaDescription('Категории товаров');
+        $moduleCategoryIndex->setMetaKeywords('Категории, товары');
+        $moduleCategoryIndex->setRoutePath('/catalog');
+        $moduleCategoryIndex->setAction('index');
                 
-        $manager->persist($moduleCatalogRoute);
+        $manager->persist($moduleCategoryIndex);
+        
+        
+        // category - route
+        
+        $moduleCategoryRoute = new ModulePage;
+        $moduleCategoryRoute->setEntryStatus($scrollItemEnable);
+        $moduleCategoryRoute->setModule($moduleCategory);
+        $moduleCategoryRoute->setTitle('Обзор категории');
+        $moduleCategoryRoute->setMetaDescription('Обзор категории');
+        $moduleCategoryRoute->setMetaKeywords('Обзор, категории');
+        $moduleCategoryRoute->setAction('route');
+                
+        $manager->persist($moduleCategoryRoute);
         
         $manager->flush();
         

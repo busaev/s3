@@ -64,7 +64,7 @@ class Category extends BaseEntity implements MediaSubjectInterface
      * @ORM\Column(name="category_id", type="integer", nullable=true)
      */
     private $categoryId = false;
-
+    
     /**
      * Связанный статус записи
      *

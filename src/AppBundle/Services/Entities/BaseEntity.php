@@ -169,7 +169,7 @@ class BaseEntity {
         if (!$entity) {
             $entity = $this->getNew();
         }
-
+        
         return $entity;
     }
 
