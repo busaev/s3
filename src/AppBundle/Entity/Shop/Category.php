@@ -58,8 +58,7 @@ class Category extends BaseEntity implements MediaSubjectInterface
     private $content;
 
     /**
-     * @var integer
-     *
+     * @var 
      *
      * @ORM\Column(name="category_id", type="integer", nullable=true)
      */
@@ -74,7 +73,10 @@ class Category extends BaseEntity implements MediaSubjectInterface
      */
     private $media;
 
-
+    /**
+     * @ORM\ManyToMany(targetEntity="Goods", mappedBy="categories", cascade={"persist"})
+     */
+    private $goods;
 
     /**
      * @ORM\OneToMany(targetEntity="Category", mappedBy="parentCategory", cascade={"persist"})
@@ -99,6 +101,7 @@ class Category extends BaseEntity implements MediaSubjectInterface
     {
 //        $this->product = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->goods = new ArrayCollection();
     }
 
     public function __toString()
@@ -108,8 +111,14 @@ class Category extends BaseEntity implements MediaSubjectInterface
     
     public function toStringWithParent()
     {
+        $prepend = '';
         
-        return '--------'.$this->getTitle();
+        $parent = $this->getParentCategory();
+        if($parent instanceof Category) {
+            $prepend = $parent->getTitle() . ' / ';
+        }
+        
+        return $prepend.$this->getTitle();
     }
 
     /**
@@ -247,42 +256,6 @@ class Category extends BaseEntity implements MediaSubjectInterface
         $this->categoryId = $categoryId;
     }
 
-
-
-
-//    /**
-//     * Add products
-//     *
-//     * @param Shop\CatalogBundle\Entity\Product $products
-//     * @return Brend
-//     */
-//    public function addProduct(\Shop\CatalogBundle\Entity\Product $products)
-//    {
-//        $this->products[] = $products;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Remove products
-//     *
-//     * @param Shop\CatalogBundle\Entity\Product $products
-//     */
-//    public function removeProduct(\Shop\CatalogBundle\Entity\Product $products)
-//    {
-//        $this->products->removeElement($products);
-//    }
-//
-//    /**
-//     * Get products
-//     *
-//     * @return Doctrine\Common\Collections\Collection
-//     */
-//    public function getProducts()
-//    {
-//        return $this->products;
-//    }
-
     /**
      * Add category
      *
@@ -339,5 +312,40 @@ class Category extends BaseEntity implements MediaSubjectInterface
     public function getParentCategory()
     {
         return $this->parentCategory;
+    }
+
+    /**
+     * Add good
+     *
+     * @param \AppBundle\Entity\Shop\Goods $good
+     *
+     * @return Category
+     */
+    public function addGood(\AppBundle\Entity\Shop\Goods $good)
+    {
+        $good->addCategory($this);
+        $this->goods[] = $good;
+
+        return $this;
+    }
+
+    /**
+     * Remove good
+     *
+     * @param \AppBundle\Entity\Shop\Goods $good
+     */
+    public function removeGood(\AppBundle\Entity\Shop\Goods $good)
+    {
+        $this->goods->removeElement($good);
+    }
+
+    /**
+     * Get goods
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGoods()
+    {
+        return $this->goods;
     }
 }

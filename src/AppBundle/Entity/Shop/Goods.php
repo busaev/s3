@@ -13,12 +13,12 @@ use AppBundle\Model\MediaSubjectInterface;
 use AppBundle\Entity\BaseEntity;
 
 /**
- * @DescriptionObject("categories", title="Categories")
+ * @DescriptionObject("goods", title="Goods")
  *
- * @ORM\Table(name="categories")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\Shop\CategoryRepository")
+ * @ORM\Table(name="goods")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\Shop\GoodsRepository")
  */
-class Category extends BaseEntity implements MediaSubjectInterface
+class Goods extends BaseEntity implements MediaSubjectInterface
 {
     /**
      * @var integer $id
@@ -44,26 +44,50 @@ class Category extends BaseEntity implements MediaSubjectInterface
     /**
      * @var string $content
      *
-     * @Description("shortContent", title="Short content", dataType="string")
-     *
-     * @ORM\Column(name="short_content", type="text", unique=false, nullable=true)
-     */
-    private $shortContent;
-
-    /**
-     * @var string $content
-     *
      * @ORM\Column(name="content", type="text", unique=false, nullable=true)
      */
     private $content;
+    
+    /**
+     * @var string $content
+     *
+     * @ORM\Column(name="article", type="string", unique=false, nullable=true)
+     */
+    private $article;    
+    
+    /**
+     * @var string $price
+     * @Assert\NotBlank()
+     *
+     * @ORM\Column(name="price", type="decimal", precision=8, scale=2, unique=false, nullable=true)
+     */
+    private $price;
+    
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id_brend", type="integer")
+     */
+    private $idBrend;
 
     /**
      * @var 
      *
      * @ORM\Column(name="category_id", type="integer", nullable=true)
      */
-    private $categoryId = false;
+    //private $categoryId = false;    
     
+    /**
+     * @Assert\NotBlank()
+     * 
+     * @ORM\ManyToMany(targetEntity="Category", inversedBy="goods", cascade={"persist"})
+     * @ORM\JoinTable(name="goods_categories",
+     *  joinColumns={@ORM\JoinColumn(name="goods_id", referencedColumnName="id")},
+     *  inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")}
+     * )
+     */
+    private $categories;
+
     /**
      * Связанный статус записи
      *
@@ -72,27 +96,14 @@ class Category extends BaseEntity implements MediaSubjectInterface
      * @ORM\ManyToOne(targetEntity="\AppBundle\Model\MediaSubjectInterface", cascade={"persist"})
      */
     private $media;
-
+    
     /**
-     * @ORM\ManyToMany(targetEntity="Goods", mappedBy="categories", cascade={"persist"})
+     * @Assert\NotBlank()
+     * 
+     * @ORM\ManyToOne(targetEntity="Brend", inversedBy="goods")
+     * @ORM\JoinColumn(name="id_brend", referencedColumnName="id")
      */
-    private $goods;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Category", mappedBy="parentCategory", cascade={"persist"})
-     */
-    private $categories;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="categories")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
-     */
-    protected $parentCategory;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Product", mappedBy="brend", cascade={"persist"})
-     */
-    //protected $products;
+    private $brend;
 
     /**
      * Constructor
@@ -101,7 +112,6 @@ class Category extends BaseEntity implements MediaSubjectInterface
     {
 //        $this->product = new ArrayCollection();
         $this->categories = new ArrayCollection();
-        $this->goods = new ArrayCollection();
     }
 
     public function __toString()
@@ -163,29 +173,6 @@ class Category extends BaseEntity implements MediaSubjectInterface
     }
 
     /**
-     * Set short_content
-     *
-     * @param string $shortContent
-     * @return Brend
-     */
-    public function setShortContent($shortContent)
-    {
-        $this->shortContent = $shortContent;
-
-        return $this;
-    }
-
-    /**
-     * Get short_content
-     *
-     * @return string
-     */
-    public function getShortContent()
-    {
-        return $this->shortContent;
-    }
-
-    /**
      * Set content
      *
      * @param string $content
@@ -218,7 +205,7 @@ class Category extends BaseEntity implements MediaSubjectInterface
      */
     public function setMedia(\AppBundle\Entity\Core\Media $media = null)
     {
-        $media->setEntityCode('brend');
+        $media->setEntityCode('goods');
         $this->media = $media;
 
         return $this;
@@ -234,30 +221,63 @@ class Category extends BaseEntity implements MediaSubjectInterface
         return $this->media;
     }
 
+
     /**
-     * @return int
+     * Set article
+     *
+     * @param string $article
+     *
+     * @return Goods
      */
-    public function getCategoryId()
+    public function setArticle($article)
     {
-        return $this->categoryId;
+        $this->article = $article;
+
+        return $this;
     }
 
     /**
-     * @param int $categoryId
+     * Get article
+     *
+     * @return string
      */
-    public function setCategoryId($categoryId)
+    public function getArticle()
     {
-        $this->categoryId = $categoryId;
+        return $this->article;
+    }
+
+    /**
+     * Set price
+     *
+     * @param string $price
+     *
+     * @return Goods
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return string
+     */
+    public function getPrice()
+    {
+        return $this->price;
     }
 
     /**
      * Add category
      *
-     * @param \AppBundle\Entity\Shop\Category $category
+     * @param \Yoda\UserBundle\Entity\User $category
      *
-     * @return Category
+     * @return Goods
      */
-    public function addCategory(\AppBundle\Entity\Shop\Category $category)
+    public function addCategory(\Yoda\UserBundle\Entity\User $category)
     {
         $this->categories[] = $category;
 
@@ -267,9 +287,9 @@ class Category extends BaseEntity implements MediaSubjectInterface
     /**
      * Remove category
      *
-     * @param \AppBundle\Entity\Shop\Category $category
+     * @param \Yoda\UserBundle\Entity\User $category
      */
-    public function removeCategory(\AppBundle\Entity\Shop\Category $category)
+    public function removeCategory(\Yoda\UserBundle\Entity\User $category)
     {
         $this->categories->removeElement($category);
     }
@@ -285,61 +305,50 @@ class Category extends BaseEntity implements MediaSubjectInterface
     }
 
     /**
-     * Set parentCategory
+     * Set idBrend
      *
-     * @param \AppBundle\Entity\Shop\Category $parentCategory
+     * @param integer $idBrend
      *
-     * @return Category
+     * @return Goods
      */
-    public function setParentCategory(\AppBundle\Entity\Shop\Category $parentCategory = null)
+    public function setIdBrend($idBrend)
     {
-        $this->parentCategory = $parentCategory;
+        $this->idBrend = $idBrend;
 
         return $this;
     }
 
     /**
-     * Get parentCategory
+     * Get idBrend
      *
-     * @return \AppBundle\Entity\Shop\Category
+     * @return integer
      */
-    public function getParentCategory()
+    public function getIdBrend()
     {
-        return $this->parentCategory;
+        return $this->idBrend;
     }
 
     /**
-     * Add good
+     * Set brend
      *
-     * @param \AppBundle\Entity\Shop\Goods $good
+     * @param \AppBundle\Entity\Shop\Brend $brend
      *
-     * @return Category
+     * @return Goods
      */
-    public function addGood(\AppBundle\Entity\Shop\Goods $good)
+    public function setBrend(\AppBundle\Entity\Shop\Brend $brend = null)
     {
-        $good->addCategory($this);
-        $this->goods[] = $good;
+        $this->brend = $brend;
 
         return $this;
     }
 
     /**
-     * Remove good
+     * Get brend
      *
-     * @param \AppBundle\Entity\Shop\Goods $good
+     * @return \AppBundle\Entity\Shop\Brend
      */
-    public function removeGood(\AppBundle\Entity\Shop\Goods $good)
+    public function getBrend()
     {
-        $this->goods->removeElement($good);
-    }
-
-    /**
-     * Get goods
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getGoods()
-    {
-        return $this->goods;
+        return $this->brend;
     }
 }

@@ -4,12 +4,18 @@ namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
+
+
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class CategoryType extends AbstractType
+class GoodsType extends AbstractType
 {
+    /**
+     * {@inheritdoc}
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -27,23 +33,7 @@ class CategoryType extends AbstractType
             ])
             ->add('title', null, [
                 'label'=>'Title',
-                'translation_domain' => 'global',
-                'attr' => [
-                    'class'=>'property-title'
-                ]
-            ])
-            ->add('parentCategory', null, [
-                'label'=>'Parent category',
-                'translation_domain' => 'global',
-                'required' => false,
-                'choice_label' => function($category, $key, $index) {
-                    return $category->toStringWithParent();
-                },
-            ])
-            ->add('short_content', null, [
-                'label'=>'Short description',
-                'translation_domain' => 'global',
-                'required' => false
+                'translation_domain' => 'global'
             ])
             ->add('content', null, [
                 'label'=>'Description',
@@ -53,6 +43,17 @@ class CategoryType extends AbstractType
                     'class'=>'wysiwyg'
                 ]
             ])
+            ->add('article', null, [
+                'label'=>'Article',
+                'translation_domain' => 'global'
+            ])
+            ->add('price', MoneyType::class, [
+                'label'=>'Price',
+                'translation_domain' => 'global',
+                'scale' => 2,
+                'empty_data' => 0,
+                'currency' => 'RUB'
+                ])
             ->add('entryStatus', EntityType::class, [
                'class' => 'AppBundle:Core\\ScrollItem',
                 'query_builder' => function (EntityRepository $er) {
@@ -60,32 +61,46 @@ class CategoryType extends AbstractType
                         ->join('i.scroll', 's')
                         ->where('s.code=\'entry_status\'')
                         ->andWhere('i.code !=\'delete\'')
-            ->orderBy('i.position', 'ASC');
+                        ->orderBy('i.position', 'ASC');
                 },
             ])
             ->add('routePath', null, [
                 'label'=>'Route path',
                 'translation_domain' => 'global',
-                'attr' => [
-                    'class'=>'property-routePath'
-                ]
+                'attr' => []
             ])
             ->add('media', MediaType::class, [
                 'label'=>'Media',
                 'translation_domain' => 'global'
             ])
-        ;
+            ->add('categories', null, [
+                'multiple' => true,
+                'choice_label' => function($category, $key, $index) {
+                    return $category->toStringWithParent();
+                }
+                
+            ])
+            ->add('brend')
+                ;
     }
-
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Content\Brend'
+            'data_class' => 'AppBundle\Entity\Shop\Goods'
         ));
     }
 
-    public function getName()
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
     {
-        return 'Shop_catalogbundle_brendtype';
+        return 'appbundle_shop_goods';
     }
+
+
 }
