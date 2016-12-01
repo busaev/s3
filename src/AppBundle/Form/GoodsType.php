@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityRepository;
 
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class GoodsType extends AbstractType
 {
@@ -19,6 +20,25 @@ class GoodsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('title', null, [
+                'label'=>'Title',
+                'translation_domain' => 'global'
+            ])
+            ->add('article', null, [
+                'label'=>'Article',
+                'translation_domain' => 'global'
+            ])
+            ->add('brend', null, [
+                'label'=>'Brend',
+                'translation_domain' => 'global',
+            ])
+            ->add('price', MoneyType::class, [
+                'label'=>'Price',
+                'translation_domain' => 'global',
+                'scale' => 2,
+                'empty_data' => 0,
+                'currency' => 'RUB'
+                ])
             ->add('metaTitle', null, [
                 'label'=>'Meta Title',
                 'translation_domain' => 'global'
@@ -31,10 +51,6 @@ class GoodsType extends AbstractType
                 'label'=>'Meta Keywords',
                 'translation_domain' => 'global'
             ])
-            ->add('title', null, [
-                'label'=>'Title',
-                'translation_domain' => 'global'
-            ])
             ->add('content', null, [
                 'label'=>'Description',
                 'translation_domain' => 'global',
@@ -43,17 +59,6 @@ class GoodsType extends AbstractType
                     'class'=>'wysiwyg'
                 ]
             ])
-            ->add('article', null, [
-                'label'=>'Article',
-                'translation_domain' => 'global'
-            ])
-            ->add('price', MoneyType::class, [
-                'label'=>'Price',
-                'translation_domain' => 'global',
-                'scale' => 2,
-                'empty_data' => 0,
-                'currency' => 'RUB'
-                ])
             ->add('entryStatus', EntityType::class, [
                'class' => 'AppBundle:Core\\ScrollItem',
                 'query_builder' => function (EntityRepository $er) {
@@ -69,9 +74,13 @@ class GoodsType extends AbstractType
                 'translation_domain' => 'global',
                 'attr' => []
             ])
-            ->add('media', MediaType::class, [
+            ->add('media', CollectionType::class, [
                 'label'=>'Media',
-                'translation_domain' => 'global'
+                'translation_domain' => 'global',
+                'entry_type' => MediaType::class,
+                'allow_add'    => true,
+                'by_reference' => false,
+                'allow_delete' => true,
             ])
             ->add('categories', null, [
                 'multiple' => true,
@@ -80,7 +89,6 @@ class GoodsType extends AbstractType
                 }
                 
             ])
-            ->add('brend')
                 ;
     }
     

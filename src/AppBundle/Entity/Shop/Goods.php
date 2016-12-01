@@ -13,7 +13,36 @@ use AppBundle\Model\MediaSubjectInterface;
 use AppBundle\Entity\BaseEntity;
 
 /**
- * @DescriptionObject("goods", title="Goods")
+ * @DescriptionObject("goods", title="Свойства товаров", description="Свойства товаров", actions={
+ *   "backend": {
+ *     "show": {
+ *         "title": "Show",
+ *         "icon": "fa-search",
+ *         "route_name": "backend_module_entry_show",
+ *         "params": {
+ *             "id": "id",
+ *             "entityCode": "goods"
+ *         }
+ *     },
+ *     "edit": {
+ *         "title": "Edit",
+ *         "icon": "fa-pencil",
+ *         "route_name": "backend_shop_goods_edit",
+ *         "params": {
+ *             "id": "id"
+ *         }
+ *     },
+ *     "history": {
+ *         "title": "History",
+ *         "icon": "fa-history",
+ *         "route_name": "backend_module_entry_history",
+ *         "params": {
+ *             "id": "id",
+ *             "entityCode": "goods"
+ *         }
+ *     }
+ *   },
+ * })
  *
  * @ORM\Table(name="goods")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Shop\GoodsRepository")
@@ -91,7 +120,7 @@ class Goods extends BaseEntity implements MediaSubjectInterface
     /**
      * Связанный статус записи
      *
-     * @Description("media", title="Media", dataType="image",  property="media.webPath")
+     * @ Description("media", title="Media", dataType="image",  property="media.webPath")
      *
      * @ORM\ManyToOne(targetEntity="\AppBundle\Model\MediaSubjectInterface", cascade={"persist"})
      */
@@ -110,19 +139,13 @@ class Goods extends BaseEntity implements MediaSubjectInterface
      */
     public function __construct()
     {
-//        $this->product = new ArrayCollection();
+        $this->media = new ArrayCollection();
         $this->categories = new ArrayCollection();
     }
 
     public function __toString()
     {
         return $this ->getTitle();
-    }
-    
-    public function toStringWithParent()
-    {
-        
-        return '--------'.$this->getTitle();
     }
 
     /**
@@ -193,32 +216,6 @@ class Goods extends BaseEntity implements MediaSubjectInterface
     public function getContent()
     {
         return $this->content;
-    }
-
-
-    /**
-     * Set viewType
-     *
-     * @param \AppBundle\Entity\Core\Media $media
-     *
-     * @return Attribute
-     */
-    public function setMedia(\AppBundle\Entity\Core\Media $media = null)
-    {
-        $media->setEntityCode('goods');
-        $this->media = $media;
-
-        return $this;
-    }
-
-    /**
-     * Get viewType
-     *
-     * @return \AppBundle\Entity\Core\Media
-     */
-    public function getMedia()
-    {
-        return $this->media;
     }
 
 
@@ -350,5 +347,40 @@ class Goods extends BaseEntity implements MediaSubjectInterface
     public function getBrend()
     {
         return $this->brend;
+    }
+
+
+    /**
+     * Get viewType
+     *
+     * @return \AppBundle\Entity\Core\Media
+     */
+    public function getMedia()
+    {
+        return $this->media;
+    }
+
+    /**
+     * Add medium
+     *
+     * @param \AppBundle\Entity\Core\Media $medium
+     *
+     * @return Goods
+     */
+    public function addMedia(\AppBundle\Entity\Core\Media $medium)
+    {
+        $this->media[] = $medium;
+
+        return $this;
+    }
+
+    /**
+     * Remove medium
+     *
+     * @param \AppBundle\Entity\Core\Media $medium
+     */
+    public function removeMedia(\AppBundle\Entity\Core\Media $medium)
+    {
+        $this->media->removeElement($medium);
     }
 }

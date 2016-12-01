@@ -13,7 +13,36 @@ use AppBundle\Model\MediaSubjectInterface;
 use AppBundle\Entity\BaseEntity;
 
 /**
- * @DescriptionObject("goods", title="Goods")
+ * @DescriptionObject("goods", title="Свойства товаров", description="Свойства товаров", actions={
+ *   "backend": {
+ *     "show": {
+ *         "title": "Show",
+ *         "icon": "fa-search",
+ *         "route_name": "backend_module_entry_show",
+ *         "params": {
+ *             "id": "id",
+ *             "entityCode": "goods"
+ *         }
+ *     },
+ *     "edit": {
+ *         "title": "Edit",
+ *         "icon": "fa-pencil",
+ *         "route_name": "backend_shop_goods_edit",
+ *         "params": {
+ *             "id": "id"
+ *         }
+ *     },
+ *     "history": {
+ *         "title": "History",
+ *         "icon": "fa-history",
+ *         "route_name": "backend_module_entry_history",
+ *         "params": {
+ *             "id": "id",
+ *             "entityCode": "goods"
+ *         }
+ *     }
+ *   },
+ * })
  *
  * @ORM\Table(name="goods")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Shop\GoodsRepository")
@@ -51,12 +80,13 @@ class Goods extends BaseEntity implements MediaSubjectInterface
     /**
      * @var string $content
      *
-     * @ORM\Column(name="article", type="text", unique=false, nullable=true)
+     * @ORM\Column(name="article", type="string", unique=false, nullable=true)
      */
     private $article;    
     
     /**
      * @var string $price
+     * @Assert\NotBlank()
      *
      * @ORM\Column(name="price", type="decimal", precision=8, scale=2, unique=false, nullable=true)
      */
@@ -77,6 +107,8 @@ class Goods extends BaseEntity implements MediaSubjectInterface
     //private $categoryId = false;    
     
     /**
+     * @Assert\NotBlank()
+     * 
      * @ORM\ManyToMany(targetEntity="Category", inversedBy="goods", cascade={"persist"})
      * @ORM\JoinTable(name="goods_categories",
      *  joinColumns={@ORM\JoinColumn(name="goods_id", referencedColumnName="id")},
@@ -90,11 +122,13 @@ class Goods extends BaseEntity implements MediaSubjectInterface
      *
      * @Description("media", title="Media", dataType="image",  property="media.webPath")
      *
-     * @ORM\ManyToOne(targetEntity="\AppBundle\Model\MediaSubjectInterface", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="\AppBundle\Model\MediaSubjectInterface", cascade={"persist"})
      */
     private $media;
     
     /**
+     * @Assert\NotBlank()
+     * 
      * @ORM\ManyToOne(targetEntity="Brend", inversedBy="goods")
      * @ORM\JoinColumn(name="id_brend", referencedColumnName="id")
      */
@@ -105,7 +139,7 @@ class Goods extends BaseEntity implements MediaSubjectInterface
      */
     public function __construct()
     {
-//        $this->product = new ArrayCollection();
+        $this->media = new ArrayCollection();
         $this->categories = new ArrayCollection();
     }
 
@@ -192,32 +226,6 @@ class Goods extends BaseEntity implements MediaSubjectInterface
 
 
     /**
-     * Set viewType
-     *
-     * @param \AppBundle\Entity\Core\Media $media
-     *
-     * @return Attribute
-     */
-    public function setMedia(\AppBundle\Entity\Core\Media $media = null)
-    {
-        $media->setEntityCode('brend');
-        $this->media = $media;
-
-        return $this;
-    }
-
-    /**
-     * Get viewType
-     *
-     * @return \AppBundle\Entity\Core\Media
-     */
-    public function getMedia()
-    {
-        return $this->media;
-    }
-
-
-    /**
      * Set article
      *
      * @param string $article
@@ -297,5 +305,88 @@ class Goods extends BaseEntity implements MediaSubjectInterface
     public function getCategories()
     {
         return $this->categories;
+    }
+
+    /**
+     * Set idBrend
+     *
+     * @param integer $idBrend
+     *
+     * @return Goods
+     */
+    public function setIdBrend($idBrend)
+    {
+        $this->idBrend = $idBrend;
+
+        return $this;
+    }
+
+    /**
+     * Get idBrend
+     *
+     * @return integer
+     */
+    public function getIdBrend()
+    {
+        return $this->idBrend;
+    }
+
+    /**
+     * Set brend
+     *
+     * @param \AppBundle\Entity\Shop\Brend $brend
+     *
+     * @return Goods
+     */
+    public function setBrend(\AppBundle\Entity\Shop\Brend $brend = null)
+    {
+        $this->brend = $brend;
+
+        return $this;
+    }
+
+    /**
+     * Get brend
+     *
+     * @return \AppBundle\Entity\Shop\Brend
+     */
+    public function getBrend()
+    {
+        return $this->brend;
+    }
+
+
+    /**
+     * Get viewType
+     *
+     * @return \AppBundle\Entity\Core\Media
+     */
+    public function getMedia()
+    {
+        return $this->media;
+    }
+
+    /**
+     * Add medium
+     *
+     * @param \AppBundle\Entity\Core\Media $medium
+     *
+     * @return Goods
+     */
+    public function addMedia(\AppBundle\Entity\Core\Media $medium)
+    {
+        $this->media[] = $medium;
+
+        return $this;
+    }
+
+    /**
+     * Remove medium
+     *
+     * @param \AppBundle\Entity\Core\Media $medium
+     */
+    public function removeMedia(\AppBundle\Entity\Core\Media $medium)
+    {
+        $this->media->removeElement($medium);
     }
 }

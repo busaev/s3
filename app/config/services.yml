@@ -174,3 +174,10 @@ services:
         arguments: [ "@service_container" ]
         tags:
             -  { name: app.entity }
+            
+                # category. служба модуля, будет добавлена в коллекцию службы app.entities
+    goods.entity:
+        class: AppBundle\Services\Entities\Shop\Goods
+        arguments: [ "@service_container" ]
+        tags:
+            -  { name: app.entity }

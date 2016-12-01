@@ -21,6 +21,7 @@ use AppBundle\Entity\Core\ScrollItem;
 use AppBundle\Entity\Shop\Attribute;
 use AppBundle\Entity\Shop\Brend;
 use AppBundle\Entity\Core\Media;
+use AppBundle\Entity\Shop\Category;
 
 
 class LoadUserData implements FixtureInterface, ContainerAwareInterface
@@ -815,7 +816,96 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         //IMPORT
         $this->loadNewsCSV($manager, $scrollItemEnable);
         $this->loadBrendsCSV($manager, $scrollItemEnable);
+        $this->loadCategories($manager, $scrollItemEnable, $moduleCategoryRoute);
         
+    }
+    
+    public function loadCategories(ObjectManager $manager, $enables, $moduleCategoryRoute)
+    {
+        $girlsCategory = new Category;        
+        $girlsCategory->setTitle('Одежда для девочек');
+        $girlsCategory->setRoutePath('/category/girls');
+        $girlsCategory->setEntryStatus($enables);
+        $girlsCategory->setMetaDescription('Куртки, ветровки');
+        $girlsCategory->setMetaKeywords('Куртки, ветровки');
+        $girlsCategory->setMetaTitle('Куртки, ветровки');
+        $girlsCategory->setContent('Куртки, ветровки');        
+        $manager->persist($girlsCategory);
+        
+        $boysCategory = new Category;
+        $boysCategory->setTitle('Одежда для мальчиков');
+        $boysCategory->setRoutePath('/category/boys');
+        $boysCategory->setEntryStatus($enables);
+        $boysCategory->setMetaDescription('Куртки, ветровки');
+        $boysCategory->setMetaKeywords('Куртки, ветровки');
+        $boysCategory->setMetaTitle('Куртки, ветровки');
+        $boysCategory->setContent('Куртки, ветровки');        
+        $manager->persist($boysCategory);
+        
+        
+        $girlsCategory1 = new Category;        
+        $girlsCategory1->setTitle('Куртки, ветровки');
+        $girlsCategory1->setRoutePath('/category/girls-jackets');
+        $girlsCategory1->setEntryStatus($enables);
+        $girlsCategory1->setMetaDescription('Куртки, ветровки');
+        $girlsCategory1->setMetaKeywords('Куртки, ветровки');
+        $girlsCategory1->setMetaTitle('Куртки, ветровки');
+        $girlsCategory1->setContent('Куртки, ветровки');
+        $girlsCategory1->setParentCategory($girlsCategory);
+        $manager->persist($girlsCategory1);
+        
+        
+        $girlsCategory2 = new Category;        
+        $girlsCategory2->setTitle('Праздничные платья');
+        $girlsCategory2->setRoutePath('/category/girls-holiday-dresses');
+        $girlsCategory2->setEntryStatus($enables);
+        $girlsCategory2->setMetaDescription('Праздничные платья');
+        $girlsCategory2->setMetaKeywords('Праздничные платья');
+        $girlsCategory2->setMetaTitle('Праздничные платья');
+        $girlsCategory2->setContent('Праздничные платья');
+        $girlsCategory2->setParentCategory($girlsCategory);
+        $manager->persist($girlsCategory2);
+        
+        
+        
+        $girlsCategory3 = new Category;        
+        $girlsCategory3->setTitle('Школьная форма');
+        $girlsCategory3->setRoutePath('/category/girls-school-uniform');
+        $girlsCategory3->setEntryStatus($enables);
+        $girlsCategory3->setMetaDescription('Школьная форма');
+        $girlsCategory3->setMetaKeywords('Школьная форма');
+        $girlsCategory3->setMetaTitle('Школьная форма');
+        $girlsCategory3->setContent('Школьная форма');
+        $girlsCategory3->setParentCategory($girlsCategory);
+        $manager->persist($girlsCategory3);
+        
+        
+        
+        $girlsCategory4 = new Category;        
+        $girlsCategory4->setTitle('Школьная форма');
+        $girlsCategory4->setRoutePath('/category/platya-dlya-devochek');
+        $girlsCategory4->setEntryStatus($enables);
+        $girlsCategory4->setMetaDescription('Платья');
+        $girlsCategory4->setMetaKeywords('Платья');
+        $girlsCategory4->setMetaTitle('Платья');
+        $girlsCategory4->setContent('Платья');
+        $girlsCategory4->setParentCategory($girlsCategory);
+        $manager->persist($girlsCategory4);
+        
+        
+        
+        $girlsCategory5 = new Category;        
+        $girlsCategory5->setTitle('Джинсы, брюки, юбки');
+        $girlsCategory5->setRoutePath('/category/girls-jeans-pants-skirts');
+        $girlsCategory5->setEntryStatus($enables);
+        $girlsCategory5->setMetaDescription('Джинсы, брюки, юбки');
+        $girlsCategory5->setMetaKeywords('Джинсы, брюки, юбки');
+        $girlsCategory5->setMetaTitle('Джинсы, брюки, юбки');
+        $girlsCategory5->setContent('Джинсы, брюки, юбки');
+        $girlsCategory5->setParentCategory($girlsCategory);
+        $manager->persist($girlsCategory5);
+        
+        $manager->flush();
     }
 
     public function loadNewsCSV(ObjectManager $manager, $enables)

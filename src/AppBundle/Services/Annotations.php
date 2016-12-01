@@ -76,6 +76,10 @@ class Annotations
             'entities'   => []
         ];
         
+//        \Symfony\Component\VarDumper\VarDumper::dump($entityCode);
+//        \Symfony\Component\VarDumper\VarDumper::dump($entities);
+//        die();
+        
         $return['object'] = $this->getObject($entityCode);
 
         // accessor
