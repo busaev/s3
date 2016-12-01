@@ -67,6 +67,7 @@ doctrine:
             AppBundle\Model\ScrollItemSubjectInterface: AppBundle\Entity\Core\ScrollItem
             AppBundle\Model\RouteSubjectInterface:      AppBundle\Entity\Core\Route
             AppBundle\Model\MediaSubjectInterface:      AppBundle\Entity\Core\Media
+            AppBundle\Model\MultimediaSubjectInterface: AppBundle\Entity\Core\Multimedia
 
 # Swiftmailer Configuration
 swiftmailer:

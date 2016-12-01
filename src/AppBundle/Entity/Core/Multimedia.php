@@ -1,0 +1,342 @@
+<?php
+
+namespace AppBundle\Entity\Core;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
+/**
+ * Media
+ *
+ * @ORM\Table(name="multimedia")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\Core\MultimediaRepository")
+ * @ORM\HasLifecycleCallbacks
+ */
+class Multimedia
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="position", type="integer", nullable=true)
+     */
+    private $position=1;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="path", type="string", length=255, unique=true, nullable=true)
+     */
+    private $path;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="entity_code", type="string", length=255, unique=false, nullable=true)
+     */
+    private $entityCode=false;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="entry_hash", type="string", length=255, unique=true, nullable=false)
+     */
+    private $entryHash=false;    
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="\AppBundle\Model\MultimediaSubjectInterface")
+     * @ORM\JoinColumn(name="entry_hash", referencedColumnName="entry_hash")
+     * @var InvoiceSubjectInterface
+     */
+    private $entry;
+
+
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    private $file;
+    
+    private $temp;
+    
+    public function __toString() 
+    {
+        return $this->getTitle() != false ?  $this->getTitle() : 'no media';
+    }
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    public function getAbsolutePath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getUploadRootDir().'/'.$this->path;
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getUploadDir().'/'.$this->path;
+    }
+
+    protected function getUploadRootDir()
+    {
+        // the absolute directory path where uploaded
+        // documents should be saved
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    protected function getUploadDir()
+    {
+        $append = $this->getEntityCode() != false ? '/' . $this->getEntityCode() : '';
+        $dir = 'uploads/media' . $append;
+        
+        return $dir;
+    }
+    
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+        // check if we have an old image path
+        if (isset($this->path)) {
+            // store the old name to delete after the update
+            $this->temp = $this->path;
+            $this->path = null;
+        } else {
+            $this->path = 'initial';
+        }
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload()
+    {
+        if (null !== $this->getFile() && "" !== $this->getFile()) {
+            // do whatever you want to generate a unique name
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->path = $filename.'.'.$this->getFile()->guessExtension();
+        }
+    }
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload()
+    {
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        // if there is an error when moving the file, an exception will
+        // be automatically thrown by move(). This will properly prevent
+        // the entity from being persisted to the database on error
+        $this->getFile()->move($this->getUploadRootDir(), $this->path);
+
+        // check if we have an old image
+        if (isset($this->temp)) {
+            // delete the old image
+            unlink($this->getUploadRootDir().'/'.$this->temp);
+            // clear the temp image path
+            $this->temp = null;
+        }
+        $this->file = null;
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload()
+    {
+        $file = $this->getAbsolutePath();
+        if ($file) {
+            unlink($file);
+        }
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return Media
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set path
+     *
+     * @param string $path
+     *
+     * @return Media
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * Get path
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * Set path
+     *
+     * @param string $entityCode
+     *
+     * @return Media
+     */
+    public function setEntityCode($entityCode)
+    {
+        $this->entityCode = $entityCode;
+
+        return $this;
+    }
+
+    /**
+     * Get entityCode
+     *
+     * @return string
+     */
+    public function getEntityCode()
+    {
+        return $this->entityCode;
+    }
+
+    /**
+     * Set position
+     *
+     * @param integer $position
+     *
+     * @return Media
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position
+     *
+     * @return integer
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+    
+
+    /**
+     * Set entryHash
+     *
+     * @param string $entryHash
+     *
+     * @return Multimedia
+     */
+    public function setEntryHash($entryHash)
+    {
+        $this->entryHash = $entryHash;
+
+        return $this;
+    }
+
+    /**
+     * Get entryHash
+     *
+     * @return string
+     */
+    public function getEntryHash()
+    {
+        return $this->entryHash;
+    }
+
+    /**
+     * Set entry
+     *
+     * @param \AppBundle\Entity\Core\Multimedia $entry
+     *
+     * @return Multimedia
+     */
+    public function setEntry(\AppBundle\Entity\Core\Multimedia $entry = null)
+    {
+        $this->entry = $entry;
+
+        return $this;
+    }
+
+    /**
+     * Get entry
+     *
+     * @return \AppBundle\Entity\Core\Multimedia
+     */
+    public function getEntry()
+    {
+        return $this->entry;
+    }
+}

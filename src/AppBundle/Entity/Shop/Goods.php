@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 use AppBundle\Annotations\Description;
 use AppBundle\Annotations\DescriptionObject;
-use AppBundle\Model\MediaSubjectInterface;
+use AppBundle\Model\MultimediaSubjectInterface;
 
 use AppBundle\Entity\BaseEntity;
 
@@ -47,7 +47,7 @@ use AppBundle\Entity\BaseEntity;
  * @ORM\Table(name="goods")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Shop\GoodsRepository")
  */
-class Goods extends BaseEntity implements MediaSubjectInterface
+class Goods extends BaseEntity implements MultimediaSubjectInterface
 {
     /**
      * @var integer $id
@@ -98,13 +98,13 @@ class Goods extends BaseEntity implements MediaSubjectInterface
      * @ORM\Column(name="id_brend", type="integer")
      */
     private $idBrend;
-
+    
     /**
-     * @var 
+     * @var string
      *
-     * @ORM\Column(name="category_id", type="integer", nullable=true)
+     * @ORM\Column(name="entry_hash", type="string", length=255, unique=true, nullable=false)
      */
-    //private $categoryId = false;    
+    private $entryHash=false;
     
     /**
      * @Assert\NotBlank()
@@ -117,14 +117,6 @@ class Goods extends BaseEntity implements MediaSubjectInterface
      */
     private $categories;
 
-    /**
-     * Связанный статус записи
-     *
-     * @ Description("media", title="Media", dataType="image",  property="media.webPath")
-     *
-     * @ORM\ManyToOne(targetEntity="\AppBundle\Model\MediaSubjectInterface", cascade={"persist"})
-     */
-    private $media;
     
     /**
      * @Assert\NotBlank()
@@ -353,7 +345,7 @@ class Goods extends BaseEntity implements MediaSubjectInterface
     /**
      * Get viewType
      *
-     * @return \AppBundle\Entity\Core\Media
+     * @return \AppBundle\Entity\Core\Multimedia
      */
     public function getMedia()
     {
@@ -363,11 +355,11 @@ class Goods extends BaseEntity implements MediaSubjectInterface
     /**
      * Add medium
      *
-     * @param \AppBundle\Entity\Core\Media $medium
+     * @param \AppBundle\Entity\Core\Multimedia $medium
      *
      * @return Goods
      */
-    public function addMedia(\AppBundle\Entity\Core\Media $medium)
+    public function addMedia(\AppBundle\Entity\Core\Multimedia $medium)
     {
         $this->media[] = $medium;
 
@@ -377,10 +369,15 @@ class Goods extends BaseEntity implements MediaSubjectInterface
     /**
      * Remove medium
      *
-     * @param \AppBundle\Entity\Core\Media $medium
+     * @param \AppBundle\Entity\Core\Multimedia $medium
      */
-    public function removeMedia(\AppBundle\Entity\Core\Media $medium)
+    public function removeMedia(\AppBundle\Entity\Core\Multimedia $medium)
     {
         $this->media->removeElement($medium);
+    }
+    
+    public function getEntryHash()
+    {
+        return md5($this->getEntityCode() . $this->getId());
     }
 }
