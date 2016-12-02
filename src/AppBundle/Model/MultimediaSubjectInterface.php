@@ -5,7 +5,7 @@ namespace AppBundle\Model;
 use AppBundle\Entity\Core\Multimedia;
 
 interface  MultimediaSubjectInterface
-{
+{    
     public function getMedia();
     
     public function addMedia(Multimedia $multimedia);

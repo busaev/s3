@@ -44,6 +44,13 @@ class Multimedia
      * @ORM\Column(name="path", type="string", length=255, unique=true, nullable=true)
      */
     private $path;
+    
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id_entry", type="integer")
+     */
+    private $idEntry;
 
     /**
      * @var string
@@ -61,8 +68,10 @@ class Multimedia
     
     /**
      * @ORM\ManyToOne(targetEntity="\AppBundle\Model\MultimediaSubjectInterface")
-     * @ORM\JoinColumn(name="entry_hash", referencedColumnName="entry_hash")
-     * @var InvoiceSubjectInterface
+     * @ORM\JoinColumns({
+     *     @ORM\JoinColumn(name="id_entry", referencedColumnName="id"),
+     *     @ORM\JoinColumn(name="entity_code", referencedColumnName="id")
+     * })
      */
     private $entry;
 
